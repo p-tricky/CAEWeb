@@ -1,0 +1,39 @@
+/*	HEADER STYLING */
+
+#header {
+	height: 60px;
+	display:block;
+	margin: 0 auto;
+	background-color: lightyellow;
+	width: 1260px;
+	position: relative;
+}
+
+#header-logo {
+	float:left;
+	height: 60px;
+	width: 160px;
+	position: relative;
+	margin: 0 auto;
+}
+
+#header-panel {
+	float:left;
+	height: 60px;
+	width: 1090px;
+	margin-left: 10px;
+}
+
+#label {
+	float: left;
+}
+
+#greeting {
+	float:right;
+	text-align: right;
+}
+
+#footer {
+	background-color: lightyellow;
+	text-align: center;
+}
