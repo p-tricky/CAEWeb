@@ -1,39 +1,151 @@
+html {
+	display: block;
+	border: none;
+
+}
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+div {
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	margin: 0;
+	padding: 0;
+}
+
+img {
+	margin: 0;
+	padding: 0;
+}
+
+
 /*	HEADER STYLING */
 
+#header-wrapper {
+	height: auto;
+}
 #header {
-	height: 60px;
 	display:block;
 	margin: 0 auto;
 	background-color: lightyellow;
 	width: 1260px;
-	position: relative;
+	height: 85px;
 }
 
-#header-logo {
-	float:left;
+#header-left {
+	width: 990px;
+	float: left;
+	height: 85px;
+}
+
+#header-right {
+	width:270px;
+	float: right;
+	height: 85px;
+	text-align: right;
+
+}
+#right-top {
+	height: 40px;
+}
+#right-bottom {
+	height: 45px;
+	vertical-align: text-bottom;
+}
+
+#left-top {
 	height: 60px;
-	width: 160px;
-	position: relative;
-	margin: 0 auto;
 }
 
-#header-panel {
+#left-top > * {
 	float:left;
-	height: 60px;
-	width: 1090px;
-	margin-left: 10px;
+	vertical-align: bottom;
 }
 
-#label {
+#menu {
+	height: 25px;
 	float: left;
 }
 
-#greeting {
+#menu > a {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+#head {
 	float:right;
 	text-align: right;
 }
 
+
 #footer {
 	background-color: lightyellow;
 	text-align: center;
+	width: 1260px;
+	display: block;
+	margin: 0 auto;
 }
+
+#content {
+	background-color: lightblue;
+	width: 1260px;
+	display: block;
+	margin: 0 auto;
+	height: 1200px;
+}
+
+#jsddm
+{	margin: 0;
+	padding: 0}
+	
+	#jsddm li
+	{	float: left;
+		list-style: none;
+		font: 12px Tahoma, Arial}
+
+	#jsddm li a
+	{	display: block;
+		background: #20548E;
+		padding: 5px 12px;
+		text-decoration: none;
+		border-right: 1px solid white;
+		width: 120px;
+		color: #EAFFED;
+		white-space: nowrap;
+		height: 15px;}
+
+	#jsddm li a:hover
+	{	background: #1A4473}
+		
+		#jsddm li ul
+		{	margin: 0;
+			padding: 0;
+			position: absolute;
+			visibility: hidden;
+			border-top: 1px solid white}
+		
+		#jsddm li ul li
+		{	float: none;
+			display: inline}
+		
+		#jsddm li ul li a
+		{	width: auto;
+			background: #9F1B1B}
+		
+		#jsddm li ul li a:hover
+		{	background: #7F1616}
+
+
+
+
