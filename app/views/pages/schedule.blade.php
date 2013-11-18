@@ -60,10 +60,12 @@
                     url:"classroom/new",
                     type: 'POST',
                     dataType: "json"
-                  }//,
-                  //destroy: {
-
-                  //}
+                  },
+                  destroy: {
+                    url:"classroom/destroy",
+                    type:'DELETE',
+                    dataType: "json"
+                  }
                 },
                 schema: {
                     model: {

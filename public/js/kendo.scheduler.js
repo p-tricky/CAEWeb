@@ -1054,10 +1054,8 @@ kendo_module({
 
         _confirmation: function(callback) {
             var editable = this.options.editable;
-
             if (editable === true || editable.confirmation) {
                 var messages = this.options.messages;
-
                 var text = typeof editable.confirmation === STRING ? editable.confirmation : DELETECONFIRM;
 
                 this.showDialog({
@@ -1544,6 +1542,7 @@ kendo_module({
             }
 
             var deleteOcurrence = function() {
+
                 if (!model.recurrenceId) {
                     id = model.id;
                     idField = model.idField;
@@ -1557,8 +1556,10 @@ kendo_module({
                     model.uid = kendo.guid();
                     model.recurrenceId = id;
                 }
-
-                that._addExceptionDate(model);
+                var origin = that.dataSource.get(model.recurrenceId);
+                if (origin) {
+                    that._addExceptionDate(model);
+                }
                 that._removeEvent(model);
             };
 
@@ -1590,7 +1591,7 @@ kendo_module({
             for (; idx < length; idx++) {
                 dataItem = data[idx];
 
-                if (dataItem.recurrenceId === id) {
+                if (Number(dataItem.recurrenceId) === Number(id)) {
                     dataSource.remove(dataItem);
                     length -= 1;
                     idx -= 1;

@@ -23,7 +23,9 @@ class RoomScheduleController extends BaseController {
       $newClassroom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
       $newClassroom->Attendee = $model['Attendee'];
       $newClassroom->RecurrenceId = $model['RecurrenceId'];
-      $newClassroom->RecurrenceRule = $model['RecurrenceRule'];
+      if (array_key_exists('RecurrenceRule',$model)) {
+        $newClassroom->RecurrenceRule = $model['RecurrenceRule'];
+      }
       $newClassroom->RecurrenceException = $model['RecurrenceException'];
 
       $newClassroom->save();
@@ -57,10 +59,17 @@ class RoomScheduleController extends BaseController {
     echo $returnModels->toJson();
   }
 
-  public function deleteClassroom()
+  public function deleteDestroy()
   {
-    $theModel = Input::get("models");
-    return json_encode($theModel);
+    $modelArray = array();
+    $deleteModels = Input::get('models');
+    foreach ($deleteModels as $model) {
+      $deleteClassroom = Classroom::find($model['id']);
+      $deleteClassroom->delete();
+      array_push($modelArray, $deleteClassroom);
+      $returnModels = BaseCollection::make($modelArray);
+    }
+    echo $returnModels->toJson();
   }
 
 }
