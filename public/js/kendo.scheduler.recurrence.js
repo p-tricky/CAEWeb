@@ -1211,7 +1211,7 @@ kendo_module({
 
         for (; idx < length; idx++) {
             shortName = shortNames[idx];
-            result += '<label><input class="k-recur-weekday-checkbox" type="checkbox" value="' + WEEK_DAYS_IDX[shortName.toUpperCase()] + '" /> ' + shortName + "</label>";
+            result += '<label><input class="k-recur-weekday-checkbox" type="checkbox" value="' + WEEK_DAYS_IDX[shortName.toUpperCase()] + '" /> ' + shortName + "&nbsp&nbsp&nbsp&nbsp&nbsp</label>";
         }
 
         return result;
