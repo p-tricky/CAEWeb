@@ -245,7 +245,10 @@ kendo_module({
                 var endPicker = kendo.widgetInstance(endInput, kendo.ui);
 
                 if (startPicker && endPicker) {
-                    return startPicker.value() <= endPicker.value();
+                    var startCompareDate = new Date(startPicker.value());
+                    var endCompareDate = new Date(endPicker.value());
+                    return startPicker.value() <= endPicker.value() &&
+                      startCompareDate.toDateString() === endCompareDate.toDateString();
                 }
             }
         }
@@ -300,7 +303,7 @@ kendo_module({
             title: { defaultValue: "", type: "string" },
             start: { type: "date", validation: { required: true } },
             startTimezone: { type: "string" },
-            end: { type: "date", validation: { required: true, dateCompare: { value: dateCompareValidator, message: "End date should be greater than or equal to the start date"}} },
+            end: { type: "date", validation: { required: true, dateCompare: { value: dateCompareValidator, message: "End time should be greater than or equal to the start time, and the end date should be the same as the start date"}} },
             endTimezone: { type: "string" },
             recurrenceRule: { defaultValue: "", type: "string" },
             recurrenceException: { defaultValue: "", type: "string" },

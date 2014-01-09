@@ -44,6 +44,7 @@
             views: [
                 "day"
             ],
+            timezone: "Etc/UTC",
             dataSource: {
               batch: true,
                 transport: {
