@@ -13,26 +13,23 @@ class RoomScheduleController extends BaseController {
 
   public function postNew()
   {
-    $NewModels = Input::get("models");
-    foreach ($NewModels as $model) {
+    $NewModel = Input::json('models.0');
 
-      $newClassroom = new Classroom;
-      $newClassroom->RoomId = $model['RoomId'];
-      $newClassroom->Title = $model['Title'];
-      $newClassroom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
-      $newClassroom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
-      $newClassroom->Attendee = $model['Attendee'];
-      $newClassroom->RecurrenceId = $model['RecurrenceId'];
-      if (array_key_exists('RecurrenceRule',$model)) {
-        $newClassroom->RecurrenceRule = $model['RecurrenceRule'];
-      }
-      $newClassroom->RecurrenceException = $model['RecurrenceException'];
-
-      $newClassroom->save();
-
-      return $newClassroom->toJson();
-
+    $newClassroom = new Classroom;
+    $newClassroom->RoomId = $NewModel['RoomId'];
+    $newClassroom->Title = $NewModel['Title'];
+    $newClassroom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
+    $newClassroom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
+    $newClassroom->Attendee = $NewModel['Attendee'];
+    $newClassroom->RecurrenceId = $NewModel['RecurrenceId'];
+    if (array_key_exists('RecurrenceRule',$NewModel)) {
+      $newClassroom->RecurrenceRule = $NewModel['RecurrenceRule'];
     }
+    $newClassroom->RecurrenceException = $NewModel['RecurrenceException'];
+
+    $newClassroom->save();
+
+    return $newClassroom->toJson();
   }
 
   public function putUpdate()

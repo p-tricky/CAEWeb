@@ -66,6 +66,9 @@
                     url:"classroom/destroy",
                     type:'DELETE',
                     dataType: "json"
+                  },
+                  parameterMap: function(data, type) {
+                    return kendo.stringify(data);
                   }
                 },
                 schema: {
