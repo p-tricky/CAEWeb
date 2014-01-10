@@ -35,7 +35,7 @@ class RoomScheduleController extends BaseController {
   public function putUpdate()
   {
     $modelArray = array();
-    $updateModels = Input::get("models");
+    $updateModels = Input::json('models');
     foreach ($updateModels as $model) {
       
       $updateClassroom = Classroom::find($model['id']);
@@ -59,7 +59,7 @@ class RoomScheduleController extends BaseController {
   public function deleteDestroy()
   {
     $modelArray = array();
-    $deleteModels = Input::get('models');
+    $deleteModels = Input::json('models');
     foreach ($deleteModels as $model) {
       $deleteClassroom = Classroom::find($model['id']);
       $deleteClassroom->delete();
