@@ -1,14 +1,6 @@
 /*GENERAL PAGE STYLING*/
 
-html {background: rgb(153,102,51); /* Old browsers */
-background: -moz-radial-gradient(center, ellipse cover,  rgba(153,102,51,1) 38%, rgba(188,155,106,1) 100%); /* FF3.6+ */
-background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(38%,rgba(153,102,51,1)), color-stop(100%,rgba(188,155,106,1))); /* Chrome,Safari4+ */
-background: -webkit-radial-gradient(center, ellipse cover,  rgba(153,102,51,1) 38%,rgba(188,155,106,1) 100%); /* Chrome10+,Safari5.1+ */
-background: -o-radial-gradient(center, ellipse cover,  rgba(153,102,51,1) 38%,rgba(188,155,106,1) 100%); /* Opera 12+ */
-background: -ms-radial-gradient(center, ellipse cover,  rgba(153,102,51,1) 38%,rgba(188,155,106,1) 100%); /* IE10+ */
-background: radial-gradient(ellipse at center,  rgba(153,102,51,1) 38%,rgba(188,155,106,1) 100%); /* W3C */
-filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#996633', endColorstr='#bc9b6a',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
-
+html {background: #d8cfc0;
 }
 
 *, body, div, a {
