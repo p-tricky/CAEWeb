@@ -128,7 +128,7 @@ kendo_module({
     }
 
     function isInTimeRange(value, min, max) {
-        return value > min && value < max;
+        return value >= min && value <= max;
     }
 
     function allDaySlotByPosition(rows, x, y) {

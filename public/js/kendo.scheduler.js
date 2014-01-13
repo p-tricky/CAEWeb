@@ -743,11 +743,6 @@ kendo_module({
                     startSlot = view._slotByPosition(e.x.location, e.y.location);
 
                     endSlot = startSlot;
-                    console.log("dragstart");
-                    console.log("startSlot = ");
-                    console.log(startSlot);
-                    console.log("endSlot = ");
-                    console.log(endSlot);
                 },
                 drag: function(e) {
                     var view = that.view();
@@ -757,8 +752,14 @@ kendo_module({
                     }
                     var newEndSlot = slot;
                     var distance = newEndSlot.start.getTime() - startSlot.start.getTime();
-                    if (event.start.getTime() + distance >= that.options.startTime.getTime() &&
-                        event.end.getTime() + distance <= that.options.endTime.getTime()) {
+
+                    var optionSTime = that.options.startTime;
+                    var optionETime = that.options.endTime;
+
+                    var sTime = new Date(event.start.getFullYear(), event.start.getMonth(), event.start.getDate(), optionSTime.getHours(), optionSTime.getMinutes(), optionSTime.getSeconds());
+                    var eTime = new Date(event.end.getFullYear(), event.end.getMonth(), event.end.getDate(), optionETime.getHours(), optionETime.getMinutes(), optionETime.getSeconds());
+                    if (event.start.getTime() + distance >= sTime.getTime() &&
+                        event.end.getTime() + distance <= eTime.getTime()) {
                         endSlot = slot;
                         view._updateMoveHint(event, startSlot, endSlot);
                     }
@@ -776,7 +777,7 @@ kendo_module({
                     */
                 },
                 dragend: function() {
-                    console.log("dragend");
+                    
                     that.view()._removeMoveHint();
 
                     var distance = endSlot.start.getTime() - startSlot.start.getTime();
