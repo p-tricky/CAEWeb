@@ -757,25 +757,12 @@ kendo_module({
                     }
                     var newEndSlot = slot;
                     var distance = newEndSlot.start.getTime() - startSlot.start.getTime();
-                    if (event.start.getTime() + distance >= that.options.startTime.getTime()) {
+                    if (event.start.getTime() + distance >= that.options.startTime.getTime() &&
+                        event.end.getTime() + distance <= that.options.endTime.getTime()) {
                         endSlot = slot;
                         view._updateMoveHint(event, startSlot, endSlot);
                     }
-                    
-
                     /*
-                    var distance = endSlot.start.getTime() - startSlot.start.getTime();
-
-                    var duration = event.end.getTime() - event.start.getTime();
-
-                    var start = new Date(event.start.getTime());
-
-                    kendo.date.setTime(start, distance);
-
-                    var end = new Date(start.getTime());
-
-                    kendo.date.setTime(end, duration);
-//original stuff
                     var view = that.view();
 
                     var slot = view._slotByPosition(e.x.location, e.y.location);
@@ -783,23 +770,10 @@ kendo_module({
                     if (!slot) {
                         return;
                     }
-//end original
-                    console.log("distance = " + distance);
-                    console.log("duration = " + duration);
-                    console.log("start = " + start.getTime());
-                    console.log("startTime = " + that.options.startTime.getTime());
-//original stuff
                     endSlot = slot;
 
-                    if ((start.getTime() + distance) >= that.options.startTime.getTime()) { //added stuff
-
                     view._updateMoveHint(event, startSlot, endSlot);
-//end original
-                    console.log("drag");
-                    console.log("Slot = ");
-                    console.log(slot);
-                }
-                */
+                    */
                 },
                 dragend: function() {
                     console.log("dragend");
