@@ -761,6 +761,7 @@ kendo_module({
                         endSlot = slot;
                         view._updateMoveHint(event, startSlot, endSlot);
                     }
+                    
 
                     /*
                     var distance = endSlot.start.getTime() - startSlot.start.getTime();
