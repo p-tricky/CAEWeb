@@ -247,8 +247,18 @@ kendo_module({
                 if (startPicker && endPicker) {
                     var startCompareDate = new Date(startPicker.value());
                     var endCompareDate = new Date(endPicker.value());
+                    var startCompareTime = new Date(startPicker.options.min);
+                    var endCompareTime = new Date(endPicker.options.max);
+
+                    var startTimeStamp = new Date(startCompareDate.getFullYear(), startCompareDate.getMonth(), startCompareDate.getDate(),
+                                                                    startCompareTime.getHours(), startCompareTime.getMinutes(), startCompareTime.getSeconds()).getTime();
+                    var endTimeStamp = new Date(endCompareDate.getFullYear(), endCompareDate.getMonth(), endCompareDate.getDate(),
+                                                                    endCompareTime.getHours(), endCompareTime.getMinutes(), endCompareTime.getSeconds()).getTime();
+
                     return startPicker.value() <= endPicker.value() &&
-                      startCompareDate.toDateString() === endCompareDate.toDateString();
+                      startCompareDate.toDateString() === endCompareDate.toDateString() &&
+                      startPicker.value().getTime() >= startTimeStamp &&
+                      endPicker.value().getTime() <= endTimeStamp;
                 }
             }
         }
@@ -303,7 +313,7 @@ kendo_module({
             title: { defaultValue: "", type: "string" },
             start: { type: "date", validation: { required: true } },
             startTimezone: { type: "string" },
-            end: { type: "date", validation: { required: true, dateCompare: { value: dateCompareValidator, message: "End time should be greater than or equal to the start time, and the end date should be the same as the start date"}} },
+            end: { type: "date", validation: { required: true, dateCompare: { value: dateCompareValidator, message: "Start and end times must be selected from the time picker. End time should be greater than the start time. Start and end dates must be the same."}} },
             endTimezone: { type: "string" },
             recurrenceRule: { defaultValue: "", type: "string" },
             recurrenceException: { defaultValue: "", type: "string" },
@@ -777,7 +787,7 @@ kendo_module({
                     */
                 },
                 dragend: function() {
-                    
+
                     that.view()._removeMoveHint();
 
                     var distance = endSlot.start.getTime() - startSlot.start.getTime();

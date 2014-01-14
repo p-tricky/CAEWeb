@@ -117,7 +117,7 @@
                         { text: "D-206", value: 10, capacity:"28"  },
                         { text: "D-208", value: 11, capacity:"50"  },
                         { text: "D-210", value: 12, capacity:"32"  },
-                        { text: "D-212", value: 12, capacity:"32"  },
+                        { text: "D-212", value: 13, capacity:"32"  },
                         { text: "D-109", value: 14, capacity:"150"  },
                         { text: "D-115", value: 15, capacity:"80"  },
                         { text: "E-124", value: 16, capacity:"24"  }
