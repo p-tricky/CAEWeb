@@ -977,7 +977,7 @@ kendo_module({
             var updateSeries = function() {
                 var head = recurrenceHead(event);
 
-                if (dir == "south" || dir == "north") {
+                if (dir == "south" || dir == "north" || dir === null) {
                     if (eventInfo.start) {
                         var start = kendo.date.getDate(head.start);
                         kendo.date.setTime(start, getMilliseconds(eventInfo.start));
