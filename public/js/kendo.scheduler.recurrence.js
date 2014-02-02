@@ -1164,15 +1164,16 @@ kendo_module({
     };
 
     //TODO: REFACTOR Recurrence Widget
+    //The Three list items have had the name changed from end to end-never,count,or until. This fixed a error message issue.
     var INTERVAL = '<div class="k-edit-label"><label>{0}</label></div><div class="k-edit-field"><input class="k-recur-interval" />{1}</div>';
     var END_COUNT = '<input class="k-recur-count" />{0}';
     var END_UNTIL = '<input class="k-recur-until" />';
     var END_HTML = '<div class="k-edit-label"><label>{0}</label></div>' +
                    '<div class="k-edit-field">' +
                    '<ul class="k-reset">' +
-                       '<li><label><input class="k-recur-end-never" type="radio" name="end" value="never" />{1}</label></li>' +
-                       '<li><label><input class="k-recur-end-count" type="radio" name="end" value="count" />{2}</label>{3}</li>' +
-                       '<li><label><input class="k-recur-end-until" type="radio" name="end" value="until" />{4}</label>{5}</li>' +
+                       '<li><label><input class="k-recur-end-never" type="radio" name="end-never" value="never" />{1}</label></li>' +
+                       '<li><label><input class="k-recur-end-count" type="radio" name="end-count" value="count" />{2}</label>{3}</li>' +
+                       '<li><label><input class="k-recur-end-until" type="radio" name="end-until" value="until" />{4}</label>{5}</li>' +
                    '</ul></div>';
 
     var ROW_HTML = '<div class="k-edit-label"><label>{0}</label></div>' +

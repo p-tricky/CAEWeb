@@ -948,17 +948,18 @@ kendo_module({
             var that = this;
 
             var updateEvent = function(event) {
-                if (event.recurrenceId) {
-                    that._removeExceptionDate(event);
-                }
+                //debugger;
+                //if (event.recurrenceId) {
+                //    that._removeExceptionDate(event);
+                //}
 
                 for (var field in eventInfo) {
                     event.set(field, eventInfo[field]);
                 }
 
-                if (event.recurrenceId) {
-                    that._addExceptionDate(event);
-                }
+                //if (event.recurrenceId) {
+                //   that._addExceptionDate(event);
+                //}
 
                 if (!that.trigger(SAVE, { model: event })) {
                     that._updateSelection(event);
@@ -975,6 +976,7 @@ kendo_module({
             };
 
             var updateSeries = function() {
+                //debugger;
                 var head = recurrenceHead(event);
 
                 if (dir == "south" || dir == "north" || dir === null) {
@@ -994,6 +996,7 @@ kendo_module({
             };
 
             var updateOcurrence = function() {
+                //debugger;
                 var head = recurrenceHead(event);
 
                 var exception = head.toJSON();

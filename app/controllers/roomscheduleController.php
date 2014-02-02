@@ -45,7 +45,9 @@ class RoomScheduleController extends BaseController {
       $updateClassroom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
       $updateClassroom->Attendee = $model['Attendee'];
       $updateClassroom->RecurrenceId = $model['RecurrenceId'];
-      $updateClassroom->RecurrenceRule = $model['RecurrenceRule'];
+      if (array_key_exists('RecurrenceRule', $model)) {
+        $updateClassroom->RecurrenceRule = $model['RecurrenceRule'];
+      }
       $updateClassroom->RecurrenceException = $model['RecurrenceException'];
 
       $updateClassroom->save();
