@@ -961,6 +961,11 @@ kendo_module({
                 //   that._addExceptionDate(event);
                 //}
 
+                if (event.recurrenceException) {
+                    that._updateExceptionForSeries(event);
+                }
+                console.log(event);
+
                 if (!that.trigger(SAVE, { model: event })) {
                     that._updateSelection(event);
                     that.dataSource.sync();
@@ -976,7 +981,6 @@ kendo_module({
             };
 
             var updateSeries = function() {
-                //debugger;
                 var head = recurrenceHead(event);
 
                 if (dir == "south" || dir == "north" || dir === null) {
@@ -996,7 +1000,6 @@ kendo_module({
             };
 
             var updateOcurrence = function() {
-                //debugger;
                 var head = recurrenceHead(event);
 
                 var exception = head.toJSON();
@@ -1513,7 +1516,25 @@ kendo_module({
                 }
             }
         },
+//**********************************************
+        _updateExceptionForSeries: function(model) {
+                var exceptionDates, exceptionDate, exception = "", length, idx = 0,
+                zone = model.startTimezone || model.endTimezone || this.dataSource.reader.timezone,
+                start = model.start;
 
+                start = kendo.timezone.convert(start, zone || start.getTimezoneOffset(), "Etc/UTC");
+                exception = model.recurrenceException;
+                exceptionDates = model.recurrenceException.split(';');
+                length = exceptionDates.length-1;
+
+                for (; idx < length; idx++) {
+                    var newStartString = exceptionDates[idx].split('T')[0] + "T" + ('0' + start.getHours()).slice(-2) + ('0' + start.getMinutes()).slice(-2) + ('0' + start.getSeconds()).slice(-2) + "Z";
+                    exception = exception.replace(exceptionDates[idx], newStartString);
+                }
+
+                model.set("recurrenceException", exception);
+            },
+//***********************************************************
         _destroyEditable: function() {
             var that = this;
 
