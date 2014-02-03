@@ -948,7 +948,7 @@ kendo_module({
             var that = this;
 
             var updateEvent = function(event) {
-                //debugger;
+                //removed these decision/functions to get desired result with event updates.
                 //if (event.recurrenceId) {
                 //    that._removeExceptionDate(event);
                 //}
@@ -964,7 +964,6 @@ kendo_module({
                 if (event.recurrenceException) {
                     that._updateExceptionForSeries(event);
                 }
-                console.log(event);
 
                 if (!that.trigger(SAVE, { model: event })) {
                     that._updateSelection(event);
@@ -1516,7 +1515,7 @@ kendo_module({
                 }
             }
         },
-//**********************************************
+//Added method to allow the update of the exceptions properly.
         _updateExceptionForSeries: function(model) {
                 var exceptionDates, exceptionDate, exception = "", length, idx = 0,
                 zone = model.startTimezone || model.endTimezone || this.dataSource.reader.timezone,
@@ -1534,7 +1533,7 @@ kendo_module({
 
                 model.set("recurrenceException", exception);
             },
-//***********************************************************
+
         _destroyEditable: function() {
             var that = this;
 
