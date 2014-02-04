@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <title>CAE Web</title>
+  
+  <link type="text/css" href="../css/layouts.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/roomschedule/tabs.css">
+  <link rel="stylesheet" href="../css/roomschedule/scheduleSpike.css" type="text/css" media="screen" charset="utf-8">
+
+  <link rel="stylesheet" href="../css/roomschedule/kendo/kendo.common.css" type="text/css" media="screen" charset="utf-8" />
+  <link rel="stylesheet" href="../css/roomschedule/kendo/kendo.default.css" type="text/css" media="screen" charset="utf-8">
+
+
+  <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.core.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.data.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.popup.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.list.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.dropdownlist.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.calendar.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.datepicker.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.timepicker.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.datetimepicker.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.userevents.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.numerictextbox.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.validator.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.binder.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.editable.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.multiselect.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.draganddrop.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.window.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.scheduler.recurrence.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.scheduler.view.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.scheduler.dayview.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.scheduler.agendaview.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.scheduler.monthview.js"></script>
+  <script type="text/javascript" src="../js/roomschedule/kendo/kendo.scheduler.js"></script>
+
+  <script src="http://underscorejs.org/underscore-min.js"></script>
+  <script src="http://backbonejs.org/backbone-min.js"></script>
+  <script src="../js/backbone.marionette.min.js"></script>
+  <script src="../js/handlebars-v1.3.0.js"></script>
+
+  <script src="../js/roomschedule/views/roomView.js"></script>
+  <script src="../js/roomschedule/util.js"></script>
+  <script src="../js/roomschedule/main.js"></script>
+
+</head>
+<body class="nosidebar">
+  <div id="header-wrapper">
+    <div id="header">
+      <div id="header-logo">
+        <a title="CAE" href="/">
+            <img src="../img/caeweb.png" alt="CAE" id="logo" height="55"/>
+        </a>
+      </div>
+      <div id="header-greet">
+        <p><a href="/">Logout</a> <br/>Welcome, CAE User!</p>
+      </div>
+      <div id="header-menu">
+        <ul id="jsddm">
+          <li><a href="/">Home</a>
+            <li><a href="#">Directory</a></li>
+            <li><a href="#">Room Scheduling</a></li>
+            <li><a href="#">Audio/Visual</a></li>
+            <li><a href="inventory">Inventory</a></li>
+            <li><a href="#">Employee</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="content-wrapper">
+    <div id="content">
+      <div id="tabsDiv">
+        <div>
+          {{{ contentTabHolder }}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer-wrapper">
+    <div id="footer">
+      <p><b>This is the footer.</b></p>
+    </div>
+  </div>
+</body>
+</html>
