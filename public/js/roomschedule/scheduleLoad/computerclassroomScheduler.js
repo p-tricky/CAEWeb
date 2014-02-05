@@ -75,8 +75,8 @@
                         { text: "C-224", value: 3, capacity:"26"  },
                         { text: "C-226", value: 4, capacity:"28"  },
                         { text: "C-227", value: 5, capacity:"24"  },
-                        { text: "D-228", value: 6, capacity:"24"  },
-                        { text: "D-229", value: 7, capacity:"24"  }
+                        { text: "C-228", value: 6, capacity:"24"  },
+                        { text: "C-229", value: 7, capacity:"24"  }
                     ],
                     title: "Room"
                 }
