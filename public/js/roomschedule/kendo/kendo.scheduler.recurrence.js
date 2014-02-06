@@ -1171,9 +1171,9 @@ kendo_module({
     var END_HTML = '<div class="k-edit-label"><label>{0}</label></div>' +
                    '<div class="k-edit-field">' +
                    '<ul class="k-reset">' +
-                       '<li><label><input class="k-recur-end-never" type="radio" name="end-never" value="never" />{1}</label></li>' +
-                       '<li><label><input class="k-recur-end-count" type="radio" name="end-count" value="count" />{2}</label>{3}</li>' +
-                       '<li><label><input class="k-recur-end-until" type="radio" name="end-until" value="until" />{4}</label>{5}</li>' +
+                       '<li><label><input class="k-recur-end-never" type="radio" name="recur-end" value="never" />{1}</label></li>' +
+                       '<li><label><input class="k-recur-end-count" type="radio" name="recur-end" value="count" />{2}</label>{3}</li>' +
+                       '<li><label><input class="k-recur-end-until" type="radio" name="recur-end" value="until" />{4}</label>{5}</li>' +
                    '</ul></div>';
 
     var ROW_HTML = '<div class="k-edit-label"><label>{0}</label></div>' +

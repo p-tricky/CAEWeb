@@ -4,6 +4,8 @@ window.RoomView = Backbone.Marionette.ItemView.extend({
     this.options = options || {};
     this.template = Handlebars.compile(tpl.get(this.options.tabName));
   },
+
+  id:'innerTabsDiv',
   
   events : {
     'click .classroom' : 'navigateToClassroom',

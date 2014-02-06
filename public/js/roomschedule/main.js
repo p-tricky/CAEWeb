@@ -10,7 +10,11 @@ RoomTabsMVC.navigate = function(route,  options){
 
 RoomTabsMVC.on('initialize:after', function() {
   tpl.loadTemplates(['classroomTab','computerclassroomTab','breakoutroomTab','specialroomTab'], function() {
-    var result = Backbone.history.start({pushState: true, root: "/caeweb/roomschedule/"});//, silent:true});
+    //setup an inital view and attach it to the content from the server.
+    var contentDiv = new  RoomView({el:$('#innerTabsDiv'),'tabName':'classroomTab'});
+    RoomTabsMVC.tabContent.attachView(contentDiv);
+    //start the backbone history
+    var result = Backbone.history.start({pushState: true, root: "/caeweb/roomschedule/", silent:true});
   });
 });
 

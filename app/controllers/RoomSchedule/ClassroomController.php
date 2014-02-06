@@ -2,7 +2,7 @@
  
 use Illuminate\Database\Eloquent\Collection as BaseCollection;
 
-class RoomScheduleController extends BaseController {
+class ClassroomController extends BaseController {
   
   public function getIndex()
   {
