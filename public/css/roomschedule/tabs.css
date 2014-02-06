@@ -1,20 +1,5 @@
 body, html {
-          height: 100%;
-          margin: 0;
-          -webkit-font-smoothing: antialiased;
-          font-weight: 100;
-          text-align: center;
-          font-family: helvetica;
-
-          background: rgb(51,25,0); /* Old browsers */
-          background: -moz-linear-gradient(top,  rgba(51,25,0,1) 0%, rgba(102,51,0,1) 83%); /* FF3.6+ */
-          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(51,25,0,1)), color-stop(83%,rgba(102,51,0,1))); /* Chrome,Safari4+ */
-          background: -webkit-linear-gradient(top,  rgba(51,25,0,1) 0%,rgba(102,51,0,1) 83%); /* Chrome10+,Safari5.1+ */
-          background: -o-linear-gradient(top,  rgba(51,25,0,1) 0%,rgba(102,51,0,1) 83%); /* Opera 11.10+ */
-          background: -ms-linear-gradient(top,  rgba(51,25,0,1) 0%,rgba(102,51,0,1) 83%); /* IE10+ */
-          background: linear-gradient(to bottom,  rgba(51,25,0,1) 0%,rgba(102,51,0,1) 83%); /* W3C */
-          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#331900', endColorstr='#663300',GradientType=0 ); /* IE6-9 */
-      }
+ }
        
       .tabs {
         width: 100%;

@@ -61,57 +61,6 @@ a {
 
 
 
-#header-left {
-	width: 990px;
-	float: left;
-	height: 85px;
-}
-
-#header-right {
-	width:270px;
-	float: right;
-	height: 85px;
-	text-align: right;
-
-}
-#right-top {
-	height: 40px;
-}
-#right-bottom {
-	height: 45px;
-	vertical-align: text-bottom;
-}
-#right-bottom > * {
-	color: #FBF7ED;
-}
-
-#left-top {
-	height: 60px;
-}
-
-#left-top > * {
-	float:left;
-}
-#left-top > h1 {
-	font-size: 38pt;
-	font-family: arial;
-}
-
-#menu {
-	height: 25px;
-	float: left;
-}
-
-#menu > a {
-	padding-left: 30px;
-	padding-right: 30px;
-}
-
-#head {
-	float:right;
-	text-align: right;
-}
-
 
 #footer {
 	background-color: black;
