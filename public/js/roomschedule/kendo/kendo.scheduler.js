@@ -318,7 +318,8 @@ kendo_module({
             recurrenceRule: { defaultValue: "", type: "string" },
             recurrenceException: { defaultValue: "", type: "string" },
             isAllDay: { type: "boolean", defaultValue: false },
-            description: { type: "string" }
+            description: { type: "string" },
+            host: { type: "string" }
         }
     });
 
@@ -655,6 +656,7 @@ kendo_module({
                     end: "End",
                     allDayEvent: "All day event",
                     description: "Description",
+                    host: "Host",
                     repeat: "Repeat",
                     timezone: " ",
                     startTimezone: "Start timezone",
@@ -1136,8 +1138,10 @@ kendo_module({
                 container = that._editContainer,
                 model = that._modelForContainer(container),
                 editable = that.editable;
+
             if (container && editable && editable.end() &&
                 !that.trigger(SAVE, { container: container, model: model } )) {
+
                 that.dataSource.sync();
             }
         },
@@ -1331,6 +1335,8 @@ kendo_module({
                 if ("description" in model) {
                     fields.push({ field: "description", title: messages.editor.description, editor: '<textarea name="description" class="k-textbox"/>' });
                 }
+
+                fields.push({field: "host", title: messages.editor.host });
 
                 for (var resourceIndex = 0; resourceIndex < that.resources.length; resourceIndex++) {
                     var resource = that.resources[resourceIndex];

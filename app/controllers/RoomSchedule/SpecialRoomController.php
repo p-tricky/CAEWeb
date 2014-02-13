@@ -20,6 +20,7 @@ class SpecialRoomController extends BaseController {
     $newSpecialRoom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
     $newSpecialRoom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
     $newSpecialRoom->Attendee = $NewModel['Attendee'];
+    $newSpecialRoom->Host = $NewModel['Host'];
     $newSpecialRoom->RecurrenceId = $NewModel['RecurrenceId'];
     if (array_key_exists('RecurrenceRule',$NewModel)) {
       $newSpecialRoom->RecurrenceRule = $NewModel['RecurrenceRule'];
@@ -43,6 +44,7 @@ class SpecialRoomController extends BaseController {
       $updateSpecialRoom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
       $updateSpecialRoom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
       $updateSpecialRoom->Attendee = $model['Attendee'];
+      $updateSpecialRoom->Host = $model['Host'];
       $updateSpecialRoom->RecurrenceId = $model['RecurrenceId'];
       if (array_key_exists('RecurrenceRule', $model)) {
         $updateSpecialRoom->RecurrenceRule = $model['RecurrenceRule'];

@@ -20,6 +20,7 @@ class ComputerClassroomController extends BaseController {
     $newComputerClassroom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
     $newComputerClassroom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
     $newComputerClassroom->Attendee = $NewModel['Attendee'];
+    $newComputerClassroom->Host = $NewModel['Host'];
     $newComputerClassroom->RecurrenceId = $NewModel['RecurrenceId'];
     if (array_key_exists('RecurrenceRule',$NewModel)) {
       $newComputerClassroom->RecurrenceRule = $NewModel['RecurrenceRule'];
@@ -43,6 +44,7 @@ class ComputerClassroomController extends BaseController {
       $updateComputerClassroom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
       $updateComputerClassroom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
       $updateComputerClassroom->Attendee = $model['Attendee'];
+      $updateComputerClassroom->Host = $model['Host'];
       $updateComputerClassroom->RecurrenceId = $model['RecurrenceId'];
       if (array_key_exists('RecurrenceRule', $model)) {
         $updateComputerClassroom->RecurrenceRule = $model['RecurrenceRule'];

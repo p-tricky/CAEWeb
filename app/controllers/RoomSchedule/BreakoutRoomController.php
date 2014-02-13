@@ -20,6 +20,7 @@ class BreakoutRoomController extends BaseController {
     $newBreakoutRoom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
     $newBreakoutRoom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
     $newBreakoutRoom->Attendee = $NewModel['Attendee'];
+    $newBreakoutRoom->Host = $NewModel['Host'];
     $newBreakoutRoom->RecurrenceId = $NewModel['RecurrenceId'];
     if (array_key_exists('RecurrenceRule',$NewModel)) {
       $newBreakoutRoom->RecurrenceRule = $NewModel['RecurrenceRule'];
@@ -43,6 +44,7 @@ class BreakoutRoomController extends BaseController {
       $updateBreakoutRoom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
       $updateBreakoutRoom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
       $updateBreakoutRoom->Attendee = $model['Attendee'];
+      $updateBreakoutRoom->Host = $model['Host'];
       $updateBreakoutRoom->RecurrenceId = $model['RecurrenceId'];
       if (array_key_exists('RecurrenceRule', $model)) {
         $updateBreakoutRoom->RecurrenceRule = $model['RecurrenceRule'];

@@ -18,6 +18,7 @@ class CreateClassroomTable extends Migration {
 			$table->dateTime('Start');
 			$table->dateTime('End');
 			$table->integer('Attendee');
+			$table->string('Host');
 			$table->string('RecurrenceId')->nullable;
 			$table->string('RecurrenceRule')->nullable;
 			$table->string('RecurrenceException')->nullable;

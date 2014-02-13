@@ -50,7 +50,8 @@
                             isAllDay: { type: "boolean" },
                             recurrenceId: { from: "RecurrenceId" },
                             recurrenceRule: { from: "RecurrenceRule" },
-                            recurrenceException: { from: "RecurrenceException" }
+                            recurrenceException: { from: "RecurrenceException" },
+                            host: {from: "Host"}
                         }
                     }
                 }
