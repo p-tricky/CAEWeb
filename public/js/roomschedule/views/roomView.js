@@ -19,7 +19,6 @@ window.RoomView = Backbone.Marionette.ItemView.extend({
   },
 
   navigateToComputerClassroom : function() {
-    console.log('working');
     RoomTabsMVC.navigate('computerclassroom',true);
   },
 
