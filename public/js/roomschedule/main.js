@@ -15,7 +15,7 @@ RoomTabsMVC.on('initialize:after', function() {
     RoomTabsMVC.tabContent.attachView(contentDiv);
     //start the backbone history
     console.log('about to start history');
-    var result = Backbone.history.start({pushState: true, root: "/caeweb/roomschedule/"});//, silent:true});
+    var result = Backbone.history.start({pushState: true, root: "/caeweb/roomschedule/", silent:true});
   });
 });
 
