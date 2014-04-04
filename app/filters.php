@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest()) 
+	if(Auth::guest())
 		return Redirect::route('login');
 });
 
@@ -43,6 +43,37 @@ Route::filter('auth', function()
 Route::filter('auth.basic', function()
 {
 	return Auth::basic();
+});
+
+// Directory Filter
+Route::filter('auth_dir', function()
+{
+	if(Auth::guest() || (Auth::user()->acc_dir == 0))
+		return Redirect::route('login');
+});
+// Room Scheduling Filter
+Route::filter('auth_room', function()
+{
+	if(Auth::guest() || (Auth::user()->acc_room == 0))
+		return Redirect::route('login');
+});
+// Audio/Visual Filter
+Route::filter('auth_audio', function()
+{
+	if(Auth::guest() || (Auth::user()->acc_audio == 0))
+		return Redirect::route('login');
+});
+// Inventory Filter
+Route::filter('auth_inv', function()
+{
+	if(Auth::guest() || (Auth::user()->acc_inv == 0))
+		return Redirect::route('login');
+});
+// Employee Filter
+Route::filter('auth_emp', function()
+{
+	if(Auth::guest() || (Auth::user()->acc_emp == 0))
+		return Redirect::route('login');
 });
 
 /*
