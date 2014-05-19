@@ -35,7 +35,11 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if(Auth::guest())
+	// if(Auth::guest())
+	// 	return Redirect::route('login');
+
+	// Testing
+	if(!Auth::check())
 		return Redirect::route('login');
 });
 
@@ -48,31 +52,51 @@ Route::filter('auth.basic', function()
 // Directory Filter
 Route::filter('auth_dir', function()
 {
-	if(Auth::guest() || (Auth::user()->acc_dir == 0))
+	$uHelper = new UserHelper();
+	$uModel = $uHelper->getUserModel();
+	if(!is_object($uModel))	
+		return Redirect::route('login');
+	if(Auth::guest() || ($uModel->acc_dir == 0))
 		return Redirect::route('login');
 });
 // Room Scheduling Filter
 Route::filter('auth_room', function()
 {
-	if(Auth::guest() || (Auth::user()->acc_room == 0))
+	$uHelper = new UserHelper();
+	$uModel = $uHelper->getUserModel();
+	if(!is_object($uModel))	
+		return Redirect::route('login');
+	if(Auth::guest() || ($uModel->acc_room == 0))
 		return Redirect::route('login');
 });
 // Audio/Visual Filter
 Route::filter('auth_audio', function()
 {
-	if(Auth::guest() || (Auth::user()->acc_audio == 0))
+	$uHelper = new UserHelper();
+	$uModel = $uHelper->getUserModel();
+	if(!is_object($uModel))	
+		return Redirect::route('login');
+	if(Auth::guest() || ($uModel->acc_audio == 0))
 		return Redirect::route('login');
 });
 // Inventory Filter
 Route::filter('auth_inv', function()
 {
-	if(Auth::guest() || (Auth::user()->acc_inv == 0))
+	$uHelper = new UserHelper();
+	$uModel = $uHelper->getUserModel();
+	if(!is_object($uModel))	
+		return Redirect::route('login');
+	if(Auth::guest() || ($uModel->acc_inv == 0))
 		return Redirect::route('login');
 });
 // Employee Filter
 Route::filter('auth_emp', function()
 {
-	if(Auth::guest() || (Auth::user()->acc_emp == 0))
+	$uHelper = new UserHelper();
+	$uModel = $uHelper->getUserModel();
+	if(!is_object($uModel))	
+		return Redirect::route('login');
+	if(Auth::guest() || ($uModel->acc_emp == 0))
 		return Redirect::route('login');
 });
 
@@ -89,9 +113,8 @@ Route::filter('auth_emp', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) 
-		return Redirect::route('home')
-				->with('flash_notice', 'You are alredy logged in!');
+	if (Auth::check())
+		return Redirect::route('home');
 });
 
 /*

@@ -15,7 +15,6 @@ class CreateUsersTable extends Migration {
 		{
 			$t->increments('id');
 			$t->string('username', 16);
-			$t->string('password', 64);
 			$t->boolean('acc_dir');
 			$t->boolean('acc_room');
 			$t->boolean('acc_audio');

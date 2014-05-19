@@ -113,7 +113,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-		'Conarwelsh\MustacheL4\MustacheL4ServiceProvider'
+		'Conarwelsh\MustacheL4\MustacheL4ServiceProvider',
+		'Djbarnes\L4LdapAuth\L4LdapAuthServiceProvider'
 
 	),
 
