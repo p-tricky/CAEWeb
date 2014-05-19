@@ -1,0 +1,1 @@
+window.RoomScheduleApp = new Backbone.Marionette.Application();

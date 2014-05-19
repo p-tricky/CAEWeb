@@ -20,6 +20,18 @@ tpl = {
   },
   
   get : function(name) {
-    return this.templates[name];
+    var that = this.templates;
+    if (name in that) {
+      return that[name];
+    } else {
+      $.ajax({url:'../template/roomschedule/' + name + '.mustache',
+                  success: function(data) {
+                    that[name] = data;
+                    return that[name];
+                  },
+                  async: false
+      });
+      return that[name];
+    }
   }
 };
