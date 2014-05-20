@@ -1,0 +1,183 @@
+#content { 
+  font-size: 12px;
+  text-align: center;
+  min-height: 1010px;
+  height: auto;
+}
+
+#loadingDiv {
+  height: 500px;
+  background-color: #ebd29b;
+}
+
+#loadingCircleDiv {
+  position: relative;
+  top: 35%;
+}
+
+#loadingCircle {
+  display: block;
+  width:150px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.odd {
+  background-color: #ebd29b;
+}
+
+.even {
+  background-color: #d4b77d;
+}
+
+.number {
+  text-align: right;
+}
+
+.inventory, .orders, .log {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.addQty, .removeQty {
+  height: 26px;
+  width: 26px;
+  border-radius: 13px;
+  color: #331900;
+  background-color: #BFA163;
+  font-size: 19px;
+  font-weight: bold;
+  border-color:#bc9b6a;
+}
+
+.addNew, .placeOrder {
+  border-radius: 6px;
+  color: #331900;
+  background-color: #BFA163;
+  font-size: 20px;
+  font-weight: bold;
+  border-color:#bc9b6a;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin-right: 10px;
+}
+
+tr {
+  -webkit-user-select: none; /* Chrome/Safari */        
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+ */
+  user-select: none;
+}
+
+td, th{
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+input {
+  font-size: 16px;
+  background-color: #ebd29b;
+  border-color: #663300;
+}
+
+.modalBox {
+    /*display: none; /* ensures it’s invisible until it’s called */
+    position: fixed; /* makes the div go into a position that’s absolute to the browser viewing area */
+    left: 25%; /* positions the div half way horizontally */
+    top: 25%; /* positions the div half way vertically */
+    padding: 25px; 
+    border: 2px solid black;
+    background-color: #ffffff;
+    width: 630px;
+    /*height: 310px;*/
+    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+}
+
+.fade {
+    /*display: none;  /* ensures it’s invisible until it’s called */
+    position: absolute;  /* makes the div go into a position that’s absolute to the browser viewing area */
+    left: 0%; /* makes the div span all the way across the viewing area */
+    top: 0%; /* makes the div span all the way across the viewing area */
+    background-color: black;
+    -moz-opacity: 0.7; /* makes the div transparent, so you have a cool overlay effect */
+    opacity: .70;
+    filter: alpha(opacity=70);
+    width: 100%;
+    height: 100%;
+    z-index: 90; /* makes the div the second most top layer, so it’ll lay on top of everything else EXCEPT for divs with a higher z-index (meaning the #overlay ruleset) */
+}
+
+.div-table{
+  display:table;         
+  width:100%;         
+  background-color:#d4b77d;
+  color: #331900;         
+  border:1px solid  #666666;         
+  border-spacing:5px;/*cellspacing:poor IE support for  this*/
+  border-radius: 5px;
+  font-size: 16px;
+}
+.div-table-row{
+  display:table-row;
+  width:auto;
+  clear:both;
+}
+.div-table-col-label{
+  float:left;/*fix for  buggy browsers*/
+  display:table-cell;         
+  width:166px;
+  text-align: right;
+}
+.div-table-col-data{
+  float:left;/*fix for  buggy browsers*/
+  display:table-cell;         
+  width:430px;
+  text-align: left;
+  padding-left: 4px;
+  margin-left: 4px;
+}
+.div-table-col-input{
+  font-size: 16px;
+  width: 400px;
+  background-color: #ebd29b;
+  border-color: #663300;
+}
+.div-table-col-textarea{
+  font-size: 16px;
+  height: 72px;
+  width: 400px;
+  background-color: #ebd29b;
+  border-color: #663300;
+}
+.div-table-button{
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #ebd29b;
+  border-color: #663300;
+  color: #331900;
+  padding: 6px;
+}
+.select-vendor-list {
+  font-size: 16px;
+  background-color: #ebd29b;
+  color: #331900;
+  width: 400px;
+}
+.div-modal-box{
+  background: rgb(153,102,51); /* Old browsers */
+  background: -moz-linear-gradient(top,  rgba(153,102,51,1) 0%, rgba(102,51,0,1) 45%, rgba(102,51,0,1) 51%, rgba(153,102,51,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(153,102,51,1)), color-stop(45%,rgba(102,51,0,1)), color-stop(51%,rgba(102,51,0,1)), color-stop(100%,rgba(153,102,51,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(153,102,51,1) 0%,rgba(102,51,0,1) 45%,rgba(102,51,0,1) 51%,rgba(153,102,51,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(153,102,51,1) 0%,rgba(102,51,0,1) 45%,rgba(102,51,0,1) 51%,rgba(153,102,51,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(153,102,51,1) 0%,rgba(102,51,0,1) 45%,rgba(102,51,0,1) 51%,rgba(153,102,51,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(153,102,51,1) 0%,rgba(102,51,0,1) 45%,rgba(102,51,0,1) 51%,rgba(153,102,51,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#996633', endColorstr='#996633',GradientType=0 ); /* IE6-9 */
+  border-radius: 10px;
+}
+.cancel {
+  margin-left: 340px;
+}
+.accept-div {
+  width:166px;
+  height:34px;
+}

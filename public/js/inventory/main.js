@@ -45,7 +45,7 @@ InventoryApp.on('initialize:after', function() {
   tpl.loadTemplates(['currentInventoryTab','placeOrderTab','viewLogTab','viewOrdersTab'], function() {
     //start the backbone history
 
-    var result = Backbone.history.start({pushState: true, root: "/invspike/inventory/"});//, silent:true});
+    var result = Backbone.history.start({pushState: true, root: "/caeweb/inventory/"});//, silent:true});
   });
 });
 
