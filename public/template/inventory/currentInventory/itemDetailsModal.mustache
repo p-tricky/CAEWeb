@@ -1,0 +1,49 @@
+<div class='div-table'>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Name:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='name' name='name' type='text' value='{{name}}' maxlength='15' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Quantity:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='quantity' name='quantity' type='text' value='{{quantity}}' maxlength='3' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Vendor:</label></div>
+    <div class="div-table-col-data" id='vendor'>
+      <select id="vendor-list" class="select-vendor-list"></select>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Email Threshold:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='emailThreshold' name='emailThreshold' type='text' value='{{email_threshold}}' maxlength='3'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Item Url:</label></div>
+    <div class="div-table-col-data"><textarea class="div-table-col-textarea" id='itemUrl' maxlength='250' name='item_url'>{{item_url}}</textarea></div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Description:</label></div>
+    <div class="div-table-col-data"><textarea class="div-table-col-textarea" id='description' maxlength='250' name='description'>{{description}}</textarea></div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label">
+      <button id="save" class='save div-table-button'>
+        Save
+      </button>
+      <button id="delete" class='delete div-table-button'>
+        Delete
+      </button>
+    </div>
+    <div class="div-table-col-label">
+      <button id="cancel" class='cancel div-table-button'>
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

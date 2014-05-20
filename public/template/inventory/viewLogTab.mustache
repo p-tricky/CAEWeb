@@ -1,0 +1,24 @@
+<ul class="tabs">
+  <li id="currentinventory" class="currentinventory">Current Inventory</li>
+  <li id="vieworders" class="vieworders">View Orders</li>
+  <li id="placeorder" class="placeorder">Place Order</li>
+  <li id="viewlog" class="viewlog selectedTab">View Log</li>
+</ul>
+<div id="tabsContent" class="tab-content">
+  <table class="log">
+    <tr>
+      <th>Username</th>
+      <th>Date</th>
+      <th>Item</th>
+      <th>Action</th>
+    </tr>
+    {{#logs}}
+    <tr class="{{#row}}{{.}}{{/row}}"  id="{{#id}}{{.}}{{/id}}">
+      <td class='userName'>{{userName}}</td>
+      <td class='logDate'>{{logDate}}</td>
+      <td class='item'>{{itemName}}</td>
+      <td class='action'> {{action}} </td>
+    </tr>
+    {{/logs}}
+  </table>
+</div>

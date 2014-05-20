@@ -70,7 +70,7 @@ Route::filter('auth_room', function()
 		return Redirect::route('login');
 });
 // Audio/Visual Filter
-Route::filter('auth_audio', function()
+Route::filter('auth_avlog', function()
 {
 	$uHelper = new UserHelper();
 	$uModel = $uHelper->getUserModel();

@@ -1,0 +1,1 @@
+window.InventoryApp = new Backbone.Marionette.Application();

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+  <title>CAE Web</title>
+  
+  <link type="text/css" href="../css/layouts.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/inventory/tabs.css">
+  <link rel="stylesheet" href="../css/inventory/inventory.css" type="text/css" media="screen" charset="utf-8">
+
+  <!--Load jQuery dependency -->
+  <script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+
+  <!--Load Libs for applicaion -->
+  <script src="http://underscorejs.org/underscore-min.js"></script>
+  <script src="http://backbonejs.org/backbone-min.js"></script>
+  <script src="../js/backbone.marionette.min.js"></script>
+  <script src="../js/handlebars-v1.3.0.js"></script>
+
+  <!--Initialize the Marionette app object -->
+  <script src="../js/inventory/inventoryInit.js"></script>
+
+  <!--Create modules in the app object that contain controllers -->
+  <script src="../js/inventory/controllers/inventoryController.js"></script>
+  <script src="../js/inventory/controllers/ordersController.js"></script>
+  <script src="../js/inventory/controllers/placeOrdersController.js"></script>
+  <script src="../js/inventory/controllers/viewLogController.js"></script>
+  
+    <!--Create backbone models inside modules -->
+  <script src="../js/inventory/models/itemModel.js"></script>
+  <script src="../js/inventory/models/orderModel.js"></script>
+  <script src="../js/inventory/models/vendorModel.js"></script>
+
+  <!--Create Initial Tab view for app -->
+  <script src="../js/inventory/views/inventoryTabView.js"></script>
+
+  <!--Create all the item views -->
+  <script src="../js/inventory/views/InventoryViews/inventoryItemView.js"></script>
+  <script src="../js/inventory/views/InventoryViews/inventoryCompositeView.js"></script>
+  <script src="../js/inventory/views/InventoryViews/itemDetailsModalVendorListView.js"></script>
+  <script src="../js/inventory/views/InventoryViews/itemDetailsModalView.js"></script>
+  <script src="../js/inventory/views/InventoryViews/itemAddModalView.js"></script>
+
+  <!--Create all of the accept order views -->
+  <script src="../js/inventory/views/OrderViews/orderItemView.js"></script>
+  <script src="../js/inventory/views/OrderViews/orderCompositeView.js"></script>
+  <script src="../js/inventory/views/OrderViews/orderDetailsModalView.js"></script>
+
+  <!--Create all of the place order views -->
+  <script src="../js/inventory/views/PlaceOrderViews/placeOrderItemView.js"></script>
+  <script src="../js/inventory/views/PlaceOrderViews/placeOrderCompositeView.js"></script>
+  <!--<script src="../js/inventory/views/PlaceOrderViews/orderDetailsModalView.js"></script>-->
+
+  <!--Define util for templates, and main to kick the main application off -->
+  <script src="../js/inventory/util.js"></script>
+  <script src="../js/inventory/main.js"></script>
+
+</head>
+<body class="nosidebar">
+  <div  id="fade">
+  </div>
+  <div id="header-wrapper">
+    <div id="header">
+      <div id="header-logo">
+        <a title="CAE" href="/">
+            <img src="../img/caeweb.png" alt="CAE" id="logo" height="55"/>
+        </a>
+      </div>
+      <div id="header-greet">
+        <p><a href="/">Logout</a> <br/>Welcome, CAE User!</p>
+      </div>
+      <div id="header-menu">
+        <ul id="jsddm">
+          <li><a href="/">Home</a>
+            <li><a href="#">Directory</a></li>
+            <li><a href="#">Room Scheduling</a></li>
+            <li><a href="../avlog">Audio/Visual</a></li>
+            <li><a href="../inventory">Inventory</a></li>
+            <li><a href="#">Employee</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div id="content-wrapper">
+    <div id="content">
+      <div id="tabsDiv">
+        <div id="innerTabsDiv">
+          {{{ contentTabHolder }}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="footer-wrapper">
+    <div id="footer">
+      <p><b>This is the footer.</b></p>
+    </div>
+  </div>
+</body>
+</html>

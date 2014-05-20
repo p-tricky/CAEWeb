@@ -1,0 +1,63 @@
+<div class='div-table'>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Order Number:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='orderNum' name='orderNum' type='text' value='{{id}}' maxlength='8' disabled/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Order Date:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='orderDate' name='orderDate' type='text' value='{{created_at}}' maxlength='8' disabled/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Vendor:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='vendor' name='vendor' type='text' value='{{vendor_name}}' maxlength='3' disabled/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Open:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='open' name='open' type='text' value='{{open}}' maxlength='8' disabled/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Number of Items:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='numOfItems' name='numOfItems' type='text' value='{{item_count}}' maxlength='3' disabled/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Items:</label></div>
+    <div class="div-table-col-data">
+      <table>
+        <thead>
+          <th>Name</th>
+          <th>Quantity</th>
+        </thead>
+        <tbody>
+          {{#items}}
+            <tr>
+              <td class='name'> {{name}} </td>
+              <td class='quantity number'> {{order_qty}} </td>
+            </tr>
+          {{/items}}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="div-table-row">
+  <div class="div-table-col-label accept-div">
+    <button id="acceptOrder" class='acceptOrder div-table-button'>
+      Accept
+    </button>
+  </div>
+  <div class="div-table-col-data">
+    <button id="cancel" class='cancel div-table-button'>
+      Cancel
+    </button>
+  </div>
+</div>
+</div>
