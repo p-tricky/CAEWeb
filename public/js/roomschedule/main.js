@@ -1,5 +1,5 @@
 RoomScheduleApp.addRegions({
-  tabContent: '#tabsDiv'
+  tabArea: '#tabsDiv'
 });
 
 RoomScheduleApp.navigate = function(route,  options){
@@ -8,26 +8,26 @@ RoomScheduleApp.navigate = function(route,  options){
 
 RoomScheduleApp.RoomController = {
     classroom : function() {
-      var contentDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'classroomTab'});
-      RoomScheduleApp.tabContent.show(contentDiv);
+      RoomScheduleApp.tabDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'classroomTab'});
+      RoomScheduleApp.tabArea.show(RoomScheduleApp.tabDiv);
       RoomScheduleApp.RoomScheduleClassroomTab.ClassroomController.showRoomSchedule();
     },
 
     computerclassroom : function() {
-      var contentDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'computerclassroomTab'});
-      RoomScheduleApp.tabContent.show(contentDiv);
+      RoomScheduleApp.tabDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'computerclassroomTab'});
+      RoomScheduleApp.tabArea.show(RoomScheduleApp.tabDiv);
       RoomScheduleApp.RoomScheduleComputerClassroomTab.ComputerClassroomController.showRoomSchedule();
     },
 
     breakoutroom : function() {
-      var contentDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'breakoutroomTab'});
-      RoomScheduleApp.tabContent.show(contentDiv);
+      RoomScheduleApp.tabDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'breakoutroomTab'});
+      RoomScheduleApp.tabArea.show(RoomScheduleApp.tabDiv);
       RoomScheduleApp.RoomScheduleBreakoutRoomTab.BreakoutRoomController.showRoomSchedule();
     },
 
     specialroom : function() {
-      var contentDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'specialroomTab'});
-      RoomScheduleApp.tabContent.show(contentDiv);
+      RoomScheduleApp.tabDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'specialroomTab'});
+      RoomScheduleApp.tabArea.show(RoomScheduleApp.tabDiv);
       RoomScheduleApp.RoomScheduleSpecialRoomTab.SpecialRoomController.showRoomSchedule();
     }
 };
@@ -44,9 +44,6 @@ RoomScheduleApp.Router = new Marionette.AppRouter({
 
 RoomScheduleApp.on('initialize:after', function() {
   tpl.loadTemplates(['classroomTab','computerclassroomTab','breakoutroomTab','specialroomTab'], function() {
-    //setup an inital view and attach it to the content from the server.
-    var contentDiv = new  RoomScheduleApp.RoomTabsList.RoomView({el:$('#innerTabsDiv'),'tabName':'classroomTab'});
-    RoomScheduleApp.tabContent.attachView(contentDiv);
     //start the backbone history
     var result = Backbone.history.start({pushState: true, root: "/caeweb/roomschedule/"});//, silent:true});
   });
