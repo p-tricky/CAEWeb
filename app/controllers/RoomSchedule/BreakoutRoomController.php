@@ -14,11 +14,21 @@ class BreakoutRoomController extends BaseController {
   {
     $NewModel = Input::json('models.0');
 
+    $startDatetime = new DateTime();
+    $endDatetime = new DateTime();
+
+    $Eastern = new DateTimeZone('America/Detroit');
+    $startDatetime->setTimezone($Eastern);
+    $endDatetime->setTimezone($Eastern);
+
+    $startDatetime->setTimestamp(strtotime($NewModel['Start']));
+    $endDatetime->setTimestamp(strtotime($NewModel['End']));
+
     $newBreakoutRoom = new BreakoutRoom;
     $newBreakoutRoom->RoomId = $NewModel['RoomId'];
     $newBreakoutRoom->Title = $NewModel['Title'];
-    $newBreakoutRoom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
-    $newBreakoutRoom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
+    $newBreakoutRoom->Start = $startDatetime->format('Y-m-d H:i:s');
+    $newBreakoutRoom->End = $endDatetime->format('Y-m-d H:i:s');
     $newBreakoutRoom->Attendee = $NewModel['Attendee'];
     $newBreakoutRoom->Host = $NewModel['Host'];
     $newBreakoutRoom->RecurrenceId = $NewModel['RecurrenceId'];
@@ -37,12 +47,22 @@ class BreakoutRoomController extends BaseController {
     $modelArray = array();
     $updateModels = Input::json('models');
     foreach ($updateModels as $model) {
+
+      $startDatetime = new DateTime();
+      $endDatetime = new DateTime();
+
+      $Eastern = new DateTimeZone('America/Detroit');
+      $startDatetime->setTimezone($Eastern);
+      $endDatetime->setTimezone($Eastern);
+
+      $startDatetime->setTimestamp(strtotime($model['Start']));
+      $endDatetime->setTimestamp(strtotime($model['End']));
       
       $updateBreakoutRoom = BreakoutRoom::find($model['id']);
       $updateBreakoutRoom->RoomId = $model['RoomId'];
       $updateBreakoutRoom->Title = $model['Title'];
-      $updateBreakoutRoom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
-      $updateBreakoutRoom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
+      $updateBreakoutRoom->Start = $startDatetime->format('Y-m-d H:i:s');
+      $updateBreakoutRoom->End = $endDatetime->format('Y-m-d H:i:s');
       $updateBreakoutRoom->Attendee = $model['Attendee'];
       $updateBreakoutRoom->Host = $model['Host'];
       $updateBreakoutRoom->RecurrenceId = $model['RecurrenceId'];

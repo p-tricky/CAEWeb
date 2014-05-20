@@ -15,11 +15,21 @@ class ClassroomController extends BaseController {
   {
     $NewModel = Input::json('models.0');
 
+    $startDatetime = new DateTime();
+    $endDatetime = new DateTime();
+
+    $Eastern = new DateTimeZone('America/Detroit');
+    $startDatetime->setTimezone($Eastern);
+    $endDatetime->setTimezone($Eastern);
+
+    $startDatetime->setTimestamp(strtotime($NewModel['Start']));
+    $endDatetime->setTimestamp(strtotime($NewModel['End']));
+
     $newClassroom = new Classroom;
     $newClassroom->RoomId = $NewModel['RoomId'];
     $newClassroom->Title = $NewModel['Title'];
-    $newClassroom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
-    $newClassroom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
+    $newClassroom->Start = $startDatetime->format('Y-m-d H:i:s');
+    $newClassroom->End = $endDatetime->format('Y-m-d H:i:s');
     $newClassroom->Attendee = $NewModel['Attendee'];
     $newClassroom->Host = $NewModel['Host'];
     $newClassroom->RecurrenceId = $NewModel['RecurrenceId'];
@@ -38,12 +48,22 @@ class ClassroomController extends BaseController {
     $modelArray = array();
     $updateModels = Input::json('models');
     foreach ($updateModels as $model) {
+
+      $startDatetime = new DateTime();
+      $endDatetime = new DateTime();
+
+      $Eastern = new DateTimeZone('America/Detroit');
+      $startDatetime->setTimezone($Eastern);
+      $endDatetime->setTimezone($Eastern);
+
+      $startDatetime->setTimestamp(strtotime($model['Start']));
+      $endDatetime->setTimestamp(strtotime($model['End']));
       
       $updateClassroom = Classroom::find($model['id']);
       $updateClassroom->RoomId = $model['RoomId'];
       $updateClassroom->Title = $model['Title'];
-      $updateClassroom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
-      $updateClassroom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
+      $updateClassroom->Start = $startDatetime->format('Y-m-d H:i:s');
+      $updateClassroom->End = $endDatetime->format('Y-m-d H:i:s');
       $updateClassroom->Attendee = $model['Attendee'];
       $updateClassroom->Host = $model['Host'];
       $updateClassroom->RecurrenceId = $model['RecurrenceId'];

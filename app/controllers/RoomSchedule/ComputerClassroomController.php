@@ -14,11 +14,21 @@ class ComputerClassroomController extends BaseController {
   {
     $NewModel = Input::json('models.0');
 
+    $startDatetime = new DateTime();
+    $endDatetime = new DateTime();
+
+    $Eastern = new DateTimeZone('America/Detroit');
+    $startDatetime->setTimezone($Eastern);
+    $endDatetime->setTimezone($Eastern);
+
+    $startDatetime->setTimestamp(strtotime($NewModel['Start']));
+    $endDatetime->setTimestamp(strtotime($NewModel['End']));
+
     $newComputerClassroom = new ComputerClassroom;
     $newComputerClassroom->RoomId = $NewModel['RoomId'];
     $newComputerClassroom->Title = $NewModel['Title'];
-    $newComputerClassroom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
-    $newComputerClassroom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
+    $newComputerClassroom->Start = $startDatetime->format('Y-m-d H:i:s');
+    $newComputerClassroom->End = $endDatetime->format('Y-m-d H:i:s');
     $newComputerClassroom->Attendee = $NewModel['Attendee'];
     $newComputerClassroom->Host = $NewModel['Host'];
     $newComputerClassroom->RecurrenceId = $NewModel['RecurrenceId'];
@@ -37,12 +47,22 @@ class ComputerClassroomController extends BaseController {
     $modelArray = array();
     $updateModels = Input::json('models');
     foreach ($updateModels as $model) {
+
+      $startDatetime = new DateTime();
+      $endDatetime = new DateTime();
+
+      $Eastern = new DateTimeZone('America/Detroit');
+      $startDatetime->setTimezone($Eastern);
+      $endDatetime->setTimezone($Eastern);
+
+      $startDatetime->setTimestamp(strtotime($model['Start']));
+      $endDatetime->setTimestamp(strtotime($model['End']));
       
       $updateComputerClassroom = ComputerClassroom::find($model['id']);
       $updateComputerClassroom->RoomId = $model['RoomId'];
       $updateComputerClassroom->Title = $model['Title'];
-      $updateComputerClassroom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
-      $updateComputerClassroom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
+      $updateComputerClassroom->Start = $startDatetime->format('Y-m-d H:i:s');
+      $updateComputerClassroom->End = $endDatetime->format('Y-m-d H:i:s');
       $updateComputerClassroom->Attendee = $model['Attendee'];
       $updateComputerClassroom->Host = $model['Host'];
       $updateComputerClassroom->RecurrenceId = $model['RecurrenceId'];

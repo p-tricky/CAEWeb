@@ -14,11 +14,21 @@ class SpecialRoomController extends BaseController {
   {
     $NewModel = Input::json('models.0');
 
+    $startDatetime = new DateTime();
+    $endDatetime = new DateTime();
+
+    $Eastern = new DateTimeZone('America/Detroit');
+    $startDatetime->setTimezone($Eastern);
+    $endDatetime->setTimezone($Eastern);
+
+    $startDatetime->setTimestamp(strtotime($NewModel['Start']));
+    $endDatetime->setTimestamp(strtotime($NewModel['End']));
+
     $newSpecialRoom = new SpecialRoom;
     $newSpecialRoom->RoomId = $NewModel['RoomId'];
     $newSpecialRoom->Title = $NewModel['Title'];
-    $newSpecialRoom->Start = date('Y-m-d H:i:s',(strtotime($NewModel['Start'])-18000));
-    $newSpecialRoom->End = date('Y-m-d H:i:s',(strtotime($NewModel['End'])-18000));
+    $newSpecialRoom->Start = $startDatetime->format('Y-m-d H:i:s');
+    $newSpecialRoom->End = $endDatetime->format('Y-m-d H:i:s');
     $newSpecialRoom->Attendee = $NewModel['Attendee'];
     $newSpecialRoom->Host = $NewModel['Host'];
     $newSpecialRoom->RecurrenceId = $NewModel['RecurrenceId'];
@@ -37,12 +47,22 @@ class SpecialRoomController extends BaseController {
     $modelArray = array();
     $updateModels = Input::json('models');
     foreach ($updateModels as $model) {
+
+      $startDatetime = new DateTime();
+      $endDatetime = new DateTime();
+
+      $Eastern = new DateTimeZone('America/Detroit');
+      $startDatetime->setTimezone($Eastern);
+      $endDatetime->setTimezone($Eastern);
+
+      $startDatetime->setTimestamp(strtotime($model['Start']));
+      $endDatetime->setTimestamp(strtotime($model['End']));
       
       $updateSpecialRoom = SpecialRoom::find($model['id']);
       $updateSpecialRoom->RoomId = $model['RoomId'];
       $updateSpecialRoom->Title = $model['Title'];
-      $updateSpecialRoom->Start = date('Y-m-d H:i:s',(strtotime($model['Start'])-18000));
-      $updateSpecialRoom->End = date('Y-m-d H:i:s',(strtotime($model['End'])-18000));
+      $updateSpecialRoom->Start = $startDatetime->format('Y-m-d H:i:s');
+      $updateSpecialRoom->End = $endDatetime->format('Y-m-d H:i:s');
       $updateSpecialRoom->Attendee = $model['Attendee'];
       $updateSpecialRoom->Host = $model['Host'];
       $updateSpecialRoom->RecurrenceId = $model['RecurrenceId'];
