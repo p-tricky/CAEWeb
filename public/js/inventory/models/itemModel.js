@@ -27,7 +27,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       });
       this.save();
       if (this.isValid()) {
-      //  app.logCollection.logTransaction("Quantity Adjusted by " + adjustment, this);
+        App.ViewLogTab.ViewLogController.logTransaction("Quantity Adjusted by " + adjustment, this);
       }
     },
 

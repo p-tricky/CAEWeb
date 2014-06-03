@@ -14,8 +14,8 @@ class CreateTransactionLogTable extends Migration {
 	{
 	  Schema::create('trans_log', function($table) {
 	    $table->increments('id');
-	    $table->integer('user_id');
-	    $table->integer('item_id');
+	    $table->string('username',30);
+	    $table->string('itemname',25);
 	    $table->string('action');
 	    $table->dateTime('updated_at');
 	    $table->dateTime('created_at');

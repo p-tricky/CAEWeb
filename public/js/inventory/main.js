@@ -28,6 +28,7 @@ InventoryApp.InventoryAppController = {
     viewlog : function() {
       InventoryApp.tabDiv = new InventoryApp.InventoryTab.InventoryView({'tabName':'viewLogTab'});
       InventoryApp.tabArea.show(InventoryApp.tabDiv);
+      InventoryApp.ViewLogTab.ViewLogController.getLog(InventoryApp.ViewLogTab.ViewLogController.showLog);
     }
 };
 
@@ -44,8 +45,10 @@ InventoryApp.Router = new Marionette.AppRouter({
 InventoryApp.on('initialize:after', function() {
   tpl.loadTemplates(['currentInventoryTab','placeOrderTab','viewLogTab','viewOrdersTab'], function() {
     //start the backbone history
-
-    var result = Backbone.history.start({pushState: true, root: "/caeweb/inventory/"});//, silent:true});
+    InventoryApp.ViewLogTab.logCollection = new InventoryApp.ViewLogTab.LogCollection();
+    InventoryApp.ViewLogTab.logCollection.fetch({success : function() {
+      var result = Backbone.history.start({pushState: true, root: "/caeweb/inventory/"});//, silent:true});
+    }});
   });
 });
 
