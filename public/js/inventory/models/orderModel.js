@@ -11,9 +11,6 @@ InventoryApp.module('ViewOrdersTab', function (ViewOrdersTab, App, Backbone, Mar
         'status' : 0
       });
       this.save();
-      if (this.isValid()) {
-      //  app.logCollection.logTransaction("Quantity Adjusted by " + adjustment, this);
-      }
     }
     
   });
