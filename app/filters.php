@@ -52,52 +52,87 @@ Route::filter('auth.basic', function()
 // Directory Filter
 Route::filter('auth_dir', function()
 {
-	$uHelper = new UserHelper();
-	$uModel = $uHelper->getUserModel();
-	if(!is_object($uModel))	
+	if(!Auth::check())
+	{
 		return Redirect::route('login');
-	if(Auth::guest() || ($uModel->acc_dir == 0))
-		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_dir == 0)
+			return Redirect::route('login');
+	}
 });
 // Room Scheduling Filter
 Route::filter('auth_room', function()
 {
-	$uHelper = new UserHelper();
-	$uModel = $uHelper->getUserModel();
-	if(!is_object($uModel))	
+	if(!Auth::check())
+	{
 		return Redirect::route('login');
-	if(Auth::guest() || ($uModel->acc_room == 0))
-		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_room == 0)
+			return Redirect::route('login');
+	}
 });
 // Audio/Visual Filter
 Route::filter('auth_avlog', function()
 {
-	$uHelper = new UserHelper();
-	$uModel = $uHelper->getUserModel();
-	if(!is_object($uModel))	
+	if(!Auth::check())
+	{
 		return Redirect::route('login');
-	if(Auth::guest() || ($uModel->acc_audio == 0))
-		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_audio == 0)
+			return Redirect::route('login');
+	}
 });
 // Inventory Filter
 Route::filter('auth_inv', function()
 {
-	$uHelper = new UserHelper();
-	$uModel = $uHelper->getUserModel();
-	if(!is_object($uModel))	
+	if(!Auth::check())
+	{
 		return Redirect::route('login');
-	if(Auth::guest() || ($uModel->acc_inv == 0))
-		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_inv == 0)
+			return Redirect::route('login');
+	}
 });
 // Employee Filter
 Route::filter('auth_emp', function()
 {
-	$uHelper = new UserHelper();
-	$uModel = $uHelper->getUserModel();
-	if(!is_object($uModel))	
+	if(!Auth::check())
+	{
 		return Redirect::route('login');
-	if(Auth::guest() || ($uModel->acc_emp == 0))
-		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_emp == 0)
+			return Redirect::route('login');
+	}
 });
 
 /*
