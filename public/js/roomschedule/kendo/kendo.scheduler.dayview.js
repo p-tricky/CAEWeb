@@ -1403,8 +1403,8 @@ kendo_module({
                 singleDay: this._dates.length == 1 || this._isGroupedByDate(),
                 resources: this.eventResources(event)
             }, event, {
-                start: event.startTime || event.start,
-                end: event.endTime || event.end
+                start: event.start || event.startTime,
+                end: event.end || event.endTime
             })));
         },
 

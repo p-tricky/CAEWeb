@@ -14,7 +14,7 @@ class CreateItemTable extends Migration {
 	{
 	  Schema::create('item', function($table) {
 	    $table->increments('id');
-	    $table->string('name',15);
+	    $table->string('name',25);
 	    $table->string('description',100);
 	    $table->integer('quantity');
 	    $table->integer('vendor_id');

@@ -16,23 +16,42 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     urlRoot : 'api/items',
 
     initialize : function() {
+      this.logTracker = 0;
+      this.logTrackerBool = true;
       this.on("invalid", function(model, error) {
         alert("Unable to save " + model.get("name") + "\n" + error);
       });
     },
 
     adjustQty : function(adjustment) {
+      var that = this;
       this.set({
         'adjustmentQty' : adjustment
       });
-      this.save();
+
+      //An attempt to write to the log only once with the adjustment.
       if (this.isValid()) {
-      //  app.logCollection.logTransaction("Quantity Adjusted by " + adjustment, this);
+        if (that.logTrackerBool) {
+          that.logTrackerBool = false;
+        } else {
+          clearTimeout(that.logTrackerTimerId);
+        }
+        that.logTracker += adjustment;
+        that.logTrackerTimerId = setTimeout(function() {
+          var amount = that.logTracker;
+          that.logTrackerBool = true;
+          that.logTracker = 0;
+          App.ViewLogTab.ViewLogController.logTransaction("Quantity Adjusted by " + amount, that);
+        }, 2000);
+
       }
+
+      this.save();
     },
 
     saveItem : function(updateModelProperties) {
       if (this.save(updateModelProperties) === false) {
+        App.ViewLogTab.ViewLogController.logTransaction("Item Information Updated", that);
         return false;
       }
       return true;
@@ -44,6 +63,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       if (this.isValid()) {
         returnValue = InventoryApp.InventoryTab.currentInventory.create(this, {
           success: function() {
+            App.ViewLogTab.ViewLogController.logTransaction("Item Created");
             return true;
           },
           error : function() {
@@ -53,7 +73,6 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
           wait : true
         });
       }
-      console.log(returnValue);
       return returnValue;
     },
 
@@ -65,7 +84,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       });
       this.save();
       if (this.isValid()) {
-      //  app.logCollection.logTransaction("Quantity Adjusted by " + adjustment, this);
+        App.ViewLogTab.ViewLogController.logTransaction("Quantity of " + amount + " Added From Received Order", this);
       }
     },
 

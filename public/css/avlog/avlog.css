@@ -40,6 +40,14 @@
   display:table;
 }
 
+tr.selectedRoom {
+  background-color: #ffcc66;
+}
+
+.roomRow {
+  cursor: pointer;
+}
+
 .logEntryDetails {
   background-color:#d4b77d;
   border-radius: 10px;

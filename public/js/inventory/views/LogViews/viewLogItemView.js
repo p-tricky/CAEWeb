@@ -1,15 +1,16 @@
-AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone, Marionette, $, _) {
-  AVLogClassroomTab.RoomDetailsItemView = Backbone.Marionette.ItemView.extend({
+InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionette, $, _) {
+  ViewLogTab.ViewLogItemView = Backbone.Marionette.ItemView.extend({
 
     tagName: 'tr',
 
     initialize : function(options) {
       this.options = options || {};
-      this.template = Handlebars.compile(tpl.get('_roomDetailRow'));
+      this.template = Handlebars.compile(tpl.get('viewLog/_logRow'));
+      this.model.bind('change', this.render, this);
     },
 
     attributes : function(){
-      var classValue = AVLogClassroomTab.classroomList.indexOf(this.model);
+      var classValue = ViewLogTab.logCollection.indexOf(this.model);
       var classProperty = '';
       if ((Number(classValue)%2) === 0) {
         classProperty = 'even';
@@ -18,7 +19,7 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
       }
       return {
         id : this.model.get('id'),
-        class : classProperty + ' roomDetailsRow'
+        class : classProperty + ' itemRow'
       };
     },
 

@@ -105,7 +105,7 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
                 alert("There was an error creating the order");
               }
               App.ViewOrdersTab.currentOrders.sort();
-              //app.logCollection.logTransaction('Order of ' + item.orderQty + ' added', app.itemCollection.where({'id' : item.itemId})[0]);
+              App.ViewLogTab.ViewLogController.logTransaction('Quantity of ' + item.order_qty + ' On Order From Placed Order', App.InventoryTab.currentInventory.where({'id' : item.item_id})[0]);
             });
             counter++;
             if (counter == tempOrderCollection.length) {
