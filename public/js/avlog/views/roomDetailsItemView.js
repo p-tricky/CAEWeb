@@ -18,7 +18,7 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
       }
       return {
         id : this.model.get('id'),
-        class : classProperty + ' roomRow'
+        class : classProperty + ' roomDetailsRow'
       };
     },
 

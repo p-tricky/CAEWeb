@@ -1,4 +1,6 @@
 body, html {
+  min-height: 1010px;
+  position: relative;
  }
        
       .tabs {

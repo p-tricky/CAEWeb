@@ -32,6 +32,14 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
     },
 
     showLog : function(e) {
+      if (typeof(AVLogClassroomTab.selectedElement) === 'undefined') {
+        AVLogClassroomTab.selectedElement = e.delegateTarget;
+        $(AVLogClassroomTab.selectedElement).addClass('selectedRoom');
+      } else {
+        $(AVLogClassroomTab.selectedElement).removeClass('selectedRoom');
+        AVLogClassroomTab.selectedElement = e.delegateTarget;
+        $(AVLogClassroomTab.selectedElement).addClass('selectedRoom');
+      }
       AVLogClassroomTab.ClassroomController.getLogForRoom(this.model,AVLogClassroomTab.ClassroomController.showRoomDetails);
     }
 

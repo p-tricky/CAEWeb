@@ -1,6 +1,7 @@
 /*GENERAL PAGE STYLING*/
 
-html {background: #d8cfc0;
+html {
+	background: #d8cfc0;
 }
 
 *, body, div, a {
@@ -85,7 +86,7 @@ a {
 	width: 1260px;
 	display: block;
 	margin: 0 auto;
-	height: 1010px;
+	min-height: 1010px;
 	background: rgb(51,25,0); /* Old browsers */
 	background: -moz-linear-gradient(top,  rgba(51,25,0,1) 0%, rgba(102,51,0,1) 83%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(51,25,0,1)), color-stop(83%,rgba(102,51,0,1))); /* Chrome,Safari4+ */
