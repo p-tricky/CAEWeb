@@ -24,7 +24,7 @@ tpl = {
     if (name in that) {
       return that[name];
     } else {
-      $.ajax({url:'../template/avlog/' + name + '.mustache',
+      $.ajax({url:'../template/employee/' + name + '.mustache',
                   success: function(data) {
                     that[name] = data;
                     return that[name];

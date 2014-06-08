@@ -7,14 +7,18 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     },
 
     regions: {
-        
+      tabsList:'#tabsRow',
+      tabContent: '#tabsContent',
+      modalArea: '#modalBox'
     },
 
     id:'innerTabsDiv',
     
     events : {
       'click .myhours' : 'navigateToMyHours',
-      'click .schedule':'navigateToSchedule',
+      'click .adminschedule':'navigateToAdminSchedule',
+      'click .attendentschedule':'navigateToAttendentSchedule',
+      'click .programmerschedule':'navigateToProgrammerSchedule',
       'click .timesheet':'navigateToTimesheet',
       'click .management':'navigateToManagement'
     },
@@ -23,8 +27,16 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       EmployeeApp.navigate('myhours',true);
     },
 
-    navigateToSchedule : function() {
-      EmployeeApp.navigate('schedule',true);
+    navigateToAdminSchedule : function() {
+      EmployeeApp.navigate('adminschedule',true);
+    },
+
+    navigateToAttendentSchedule : function() {
+      EmployeeApp.navigate('attendentschedule',true);
+    },
+
+    navigateToProgrammerSchedule : function() {
+      EmployeeApp.navigate('programmerschedule',true);
     },
 
     navigateToTimesheet : function() {

@@ -8,14 +8,34 @@ EmployeeApp.navigate = function(route,  options){
 
 EmployeeApp.EmployeeAppController = {
   myhours : function() {
-    EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'myhoursTab'});
+    //EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'myhoursTab'});
+    //EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
+    EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'employeeTab'});
+    EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
+    EmployeeApp.tabsCollection = new Backbone.Collection({tabs:[
+      {id:'0',tab:'myhours', name:'My Hours'},
+      {id:'1', tab:'adminschedule', name:'Admin Schedule'},
+      {id:'2', tab:'attendentschedule', name:'Attendent Schedule'},
+      {id:'3', tab:'programmerschedule', name:'Programmer Schedule'},
+      {id:'4', tab:'timesheet', name:'Timesheet'},
+      {id:'5', tab:'management', name:'Management'}
+    ]});
+    EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({model:EmployeeApp.tabsCollection});
+    EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
+    $('#myhours').addClass('selectedTab');
+  },
+
+  adminschedule : function() {
+    EmployeeApp.tabDiv= new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'scheduleTab'});
     EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
 
   },
 
-  schedule : function() {
-    EmployeeApp.tabDiv= new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'scheduleTab'});
-    EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
+  attendentschedule : function() {
+
+  },
+
+  programmerschedule : function() {
 
   },
 
@@ -36,14 +56,16 @@ EmployeeApp.Router = new Marionette.AppRouter({
   controller:EmployeeApp.EmployeeAppController,
   appRoutes: {
     "myhours" : "myhours",
-    "schedule" : "schedule",
+    "adminschedule" : "adminschedule",
+    "attendentschedule" : "attendentschedule",
+    "programmerschedule" : "programmerschedule",
     "timesheet" : "timesheet",
     "management" : "management",
   }
 });
 
 EmployeeApp.on('initialize:after', function() {
-  tpl.loadTemplates(['myhoursTab','scheduleTab','timesheetTab','managementTab'], function() {
+  tpl.loadTemplates(['myhoursTab','scheduleTab','timesheetTab','managementTab','employeeTab'], function() {
 
     //start the backbone history
     var result = Backbone.history.start({pushState: true, root: "/caeweb/employee/"});//, silent:true});
