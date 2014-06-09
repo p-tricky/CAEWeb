@@ -12,15 +12,8 @@ EmployeeApp.EmployeeAppController = {
     //EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
     EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'employeeTab'});
     EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
-    EmployeeApp.tabsCollection = new Backbone.Collection({tabs:[
-      {id:'0',tab:'myhours', name:'My Hours'},
-      {id:'1', tab:'adminschedule', name:'Admin Schedule'},
-      {id:'2', tab:'attendentschedule', name:'Attendent Schedule'},
-      {id:'3', tab:'programmerschedule', name:'Programmer Schedule'},
-      {id:'4', tab:'timesheet', name:'Timesheet'},
-      {id:'5', tab:'management', name:'Management'}
-    ]});
-    EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({model:EmployeeApp.tabsCollection});
+    EmployeeApp.tabsCollection = EmployeeApp.EmployeeTab.EmployeeController.getViewableTabs();
+    EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({collection:EmployeeApp.tabsCollection});
     EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
     $('#myhours').addClass('selectedTab');
   },
