@@ -13,13 +13,16 @@ class CreateUsersTable extends Migration {
 	{
 		Schema::create('users', function($t)
 		{
-			$t->increments('id');
 			$t->string('username', 16);
-			$t->boolean('acc_dir');
 			$t->boolean('acc_room');
 			$t->boolean('acc_audio');
 			$t->boolean('acc_inv');
 			$t->boolean('acc_emp');
+			$t->boolean('acc_useradm');
+			$t->boolean('acc_crud_timesheet');
+			$t->boolean('acc_view_timesheet');
+			$t->boolean('acc_gen_timesheet');
+			$t->boolean('acc_crud_schedule');
 			$t->timestamps();
 		});
 	}

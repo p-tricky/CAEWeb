@@ -50,7 +50,7 @@ Route::filter('auth.basic', function()
 });
 
 // Directory Filter
-Route::filter('auth_dir', function()
+Route::filter('auth_useradm', function()
 {
 	if(!Auth::check())
 	{
@@ -62,7 +62,7 @@ Route::filter('auth_dir', function()
 		$uModel = $uHelper->getUserModel();
 		if(!is_object($uModel))	
 			return Redirect::route('login');
-		if($uModel->acc_dir == 0)
+		if($uModel->acc_useradm == 0)
 			return Redirect::route('login');
 	}
 });
