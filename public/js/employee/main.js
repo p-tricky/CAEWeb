@@ -36,12 +36,6 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'timesheetTab'});
     EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
 
-  },
-
-  management : function() {
-    EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'managementTab'});
-    EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
-
   }
 };
 
@@ -53,7 +47,6 @@ EmployeeApp.Router = new Marionette.AppRouter({
     "attendentschedule" : "attendentschedule",
     "programmerschedule" : "programmerschedule",
     "timesheet" : "timesheet",
-    "management" : "management",
   }
 });
 
