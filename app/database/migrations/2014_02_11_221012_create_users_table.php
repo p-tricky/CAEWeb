@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration {
 		{
 			$t->string('username', 16);
 			$t->boolean('acc_room');
-			$t->boolean('acc_audio');
+			$t->boolean('acc_avlog');
 			$t->boolean('acc_inv');
 			$t->boolean('acc_emp');
 			$t->boolean('acc_useradm');

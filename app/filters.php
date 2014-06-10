@@ -96,7 +96,7 @@ Route::filter('auth_avlog', function()
 		$uModel = $uHelper->getUserModel();
 		if(!is_object($uModel))	
 			return Redirect::route('login');
-		if($uModel->acc_audio == 0)
+		if($uModel->acc_avlog == 0)
 			return Redirect::route('login');
 	}
 });
