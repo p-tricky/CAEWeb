@@ -7,34 +7,50 @@ EmployeeApp.navigate = function(route,  options){
 };
 
 EmployeeApp.EmployeeAppController = {
-  myhours : function() {
-    //EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'myhoursTab'});
-    //EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
+  _showBaseView : function() {
     EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'employeeTab'});
     EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
-    EmployeeApp.tabsCollection = EmployeeApp.EmployeeTab.EmployeeController.getViewableTabs();
-    EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({collection:EmployeeApp.tabsCollection});
-    EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
+  },
+
+  _showViewableTabs : function() {
+    if (typeof(EmployeeApp.tabRow) === 'undefined') {
+      EmployeeApp.tabsCollection = EmployeeApp.EmployeeTab.EmployeeController.getViewableTabs();
+      EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({collection:EmployeeApp.tabsCollection});
+      EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
+    } else {
+      EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
+    }
+  },
+
+  myhours : function() {
+    this._showBaseView();
+    this._showViewableTabs();
     $('#myhours').addClass('selectedTab');
   },
 
   adminschedule : function() {
-    EmployeeApp.tabDiv= new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'scheduleTab'});
-    EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
+    this._showBaseView();
+    this._showViewableTabs();
+    $('#adminschedule').addClass('selectedTab');
 
   },
 
   attendentschedule : function() {
-
+    this._showBaseView();
+    this._showViewableTabs();
+    $('#attendentschedule').addClass('selectedTab');
   },
 
   programmerschedule : function() {
-
+    this._showBaseView();
+    this._showViewableTabs();
+    $('#programmerschedule').addClass('selectedTab');
   },
 
   timesheet : function() {
-    EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'timesheetTab'});
-    EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
+    this._showBaseView();
+    this._showViewableTabs();
+    $('#timesheet').addClass('selectedTab');
 
   }
 };
@@ -51,7 +67,7 @@ EmployeeApp.Router = new Marionette.AppRouter({
 });
 
 EmployeeApp.on('initialize:after', function() {
-  tpl.loadTemplates(['myhoursTab','scheduleTab','timesheetTab','managementTab','employeeTab'], function() {
+  tpl.loadTemplates(['employeeTab'], function() {
 
     //start the backbone history
     var result = Backbone.history.start({pushState: true, root: "/caeweb/employee/"});//, silent:true});

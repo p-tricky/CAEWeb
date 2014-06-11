@@ -8,7 +8,6 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     initialize : function(options) {
       this.options = options || {};
       this.template = Handlebars.compile(tpl.get('_tabRow'));
-      //this.model.bind('change', this.render, this);
     },
 
     events : {
