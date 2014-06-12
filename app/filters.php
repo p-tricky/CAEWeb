@@ -202,6 +202,7 @@ Route::filter('auth_crud_schedule', function()
 			return Redirect::route('login');
 	}
 });
+
 /*
 |--------------------------------------------------------------------------
 | Guest Filter
