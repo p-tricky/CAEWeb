@@ -135,6 +135,23 @@ Route::filter('auth_emp', function()
 	}
 });
 
+// Timesheet Filter
+Route::filter('auth_view_timesheet', function()
+{
+	if(!Auth::check())
+	{
+		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_view_timesheet == 0)
+			return Redirect::route('login');
+	}
+});
 /*
 |--------------------------------------------------------------------------
 | Guest Filter

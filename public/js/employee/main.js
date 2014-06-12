@@ -12,45 +12,54 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
   },
 
-  _showViewableTabs : function() {
+  _showViewableTabs : function(callback) {
     if (typeof(EmployeeApp.tabRow) === 'undefined') {
-      EmployeeApp.tabsCollection = EmployeeApp.EmployeeTab.EmployeeController.getViewableTabs();
-      EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({collection:EmployeeApp.tabsCollection});
-      EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
+      EmployeeApp.tabsCollection = new EmployeeApp.EmployeeTab.ViewableTabCollection();
+      EmployeeApp.tabsCollection.fetch({callback: callback, success : function() {
+        EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({collection:EmployeeApp.tabsCollection});
+        EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
+        callback();
+      }});
     } else {
       EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
+      callback();
     }
   },
 
   myhours : function() {
     this._showBaseView();
-    this._showViewableTabs();
-    $('#myhours').addClass('selectedTab');
+    this._showViewableTabs(function() {
+      $('#myhours').addClass('selectedTab');
+    });
   },
 
   adminschedule : function() {
     this._showBaseView();
-    this._showViewableTabs();
-    $('#adminschedule').addClass('selectedTab');
+    this._showViewableTabs(function() {
+      $('#adminschedule').addClass('selectedTab');
+    });
 
   },
 
   attendentschedule : function() {
     this._showBaseView();
-    this._showViewableTabs();
-    $('#attendentschedule').addClass('selectedTab');
+    this._showViewableTabs(function() {
+      $('#attendentschedule').addClass('selectedTab');
+    });
   },
 
   programmerschedule : function() {
     this._showBaseView();
-    this._showViewableTabs();
-    $('#programmerschedule').addClass('selectedTab');
+    this._showViewableTabs(function() {
+      $('#programmerschedule').addClass('selectedTab');
+    });
   },
 
   timesheet : function() {
     this._showBaseView();
-    this._showViewableTabs();
-    $('#timesheet').addClass('selectedTab');
+    this._showViewableTabs(function() {
+      $('#timesheet').addClass('selectedTab');
+    });
 
   }
 };
