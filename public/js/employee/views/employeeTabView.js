@@ -41,10 +41,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
 
     navigateToTimesheet : function() {
       EmployeeApp.navigate('timesheet',true);
-    },
-
-    navigateToManagement : function() {
-      EmployeeApp.navigate('management',true);
     }
+    
   });
 });
