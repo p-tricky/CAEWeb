@@ -6,7 +6,7 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
       $("#tabsContent").kendoScheduler({
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 8, 0, 0),
-          endTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + 1, 1, 0, 0),
+          endTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 24, 0, 0),
           height: 970,
           allDaySlot: false,
           minorTickCount: 4,
@@ -55,12 +55,13 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
                       id: "Id",
                       fields: {
                           Id: { from: "id", type: "number" },
+                          title: { from: "Title", defaultValue: "" },
                           start: { type: "date", from: "Start" },
                           end: { type: "date", from: "End" },
                           employee: { from: "Employee", defaultValue: 1 },
                           recurrenceId: { from: "RecurrenceId" },
                           recurrenceRule: { from: "RecurrenceRule" },
-                          recurrenceException: { from: "RecurrenceException" }
+                          recurrenceException: { from: "RecurrenceException" },
                       }
                   }
               }
@@ -73,23 +74,24 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
                   field: "employee",
                   dataSource: {
                       batch: true,
-                        transport: {
+                      transport: {
                           read: {
                             url: "../employee/api/adminscheduleinfo",
                             dataType: "json"
                           }
-                        },
-                        schema: {
-                            model: {
-                                id: "Id",
-                                fields: {
-                                    value: { from: "id", type: "number" },
-                                    text: { type: "string", from: "username" },
-                                    color: { type: "string", from: "schedule_color" }
-                                }
-                            }
-                        }
-                    },
+                      },
+                      schema: {
+                          model: {
+                              id: "id",
+                              color: "color",
+                              fields: {
+                                  value: { from: "id", type: "number" },
+                                  text: { type: "string", from: "username" },
+                                  color: { type: "string", from: "schedule_color" }
+                              }
+                          }
+                      }
+                  },
                   title: "Employee"
               }
           ]
