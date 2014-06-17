@@ -27,7 +27,7 @@ class AdminScheduleApiController extends BaseController {
 
     $newAdminSchedule = new AdminSchedule;
     $newAdminSchedule->Title = $NewModel['Title'];
-    //$newAdminSchedule->Description = $NewModel['Description'];
+    $newAdminSchedule->Availability = $NewModel['Availability'];
     $newAdminSchedule->Employee = $NewModel['Employee'];
     $newAdminSchedule->Start = $startDatetime->format('Y-m-d H:i:s');
     $newAdminSchedule->End = $endDatetime->format('Y-m-d H:i:s');
@@ -60,6 +60,7 @@ class AdminScheduleApiController extends BaseController {
       
       $updateAdminSchedule = AdminSchedule::find($model['id']);
       $updateAdminSchedule->Title = $model['Title'];
+      $updateAdminSchedule->Availability = $model['Availability'];
       $updateAdminSchedule->Start = $startDatetime->format('Y-m-d H:i:s');
       $updateAdminSchedule->End = $endDatetime->format('Y-m-d H:i:s');
       $updateAdminSchedule->Employee = $model['Employee'];

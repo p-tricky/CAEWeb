@@ -15,6 +15,7 @@ class CreateUsersTable extends Migration {
 		{
 			$t->increments('id');
 			$t->string('username', 16);
+			$t->string('fullname', 40);
 			$t->integer('position_id')->unsigned();
 			$t->string('email','40');
 			$t->string('phone','10');

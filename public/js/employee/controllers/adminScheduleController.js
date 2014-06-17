@@ -3,24 +3,30 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
   ScheduleTab.AdminScheduleController = {
     showEditableAdminSchedule : function() {
       var TODAY = new Date();
+      var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); # <div class="employee-template">#: kendo.toString(start, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(end, "hh:mm") #</div>';
       $("#tabsContent").kendoScheduler({
           date: new Date(),
-          startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 8, 0, 0),
+          startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
           endTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 24, 0, 0),
           height: 970,
           allDaySlot: false,
           minorTickCount: 4,
+          eventTemplate: eventTemplate,
 
           views: [
+            //{
+            //  type: "day",
+            //  group: {
+            //    resources: ["employee"],
+            //    orientation: "horizontal"
+            //  }
+            //},
             {
-              type: "day",
+              type: "week",
               group: {
-                resources: ["employee"],
+                resources: ["date","employee"],
                 orientation: "horizontal"
               }
-            },
-            {
-              type: "week"
             }
           ],
           timezone: "Etc/UTC",
@@ -58,7 +64,8 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
                           title: { from: "Title", defaultValue: "" },
                           start: { type: "date", from: "Start" },
                           end: { type: "date", from: "End" },
-                          employee: { from: "Employee", defaultValue: 1 },
+                          employee: { from: "Employee", defaultValue: 2 },
+                          availability: { from: "Availability", defaultValue: 0 },
                           recurrenceId: { from: "RecurrenceId" },
                           recurrenceRule: { from: "RecurrenceRule" },
                           recurrenceException: { from: "RecurrenceException" },
@@ -70,6 +77,14 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
           //    resources: [ "employee" ]
           //},
           resources: [
+              {
+                  field: "availability",
+                  dataSource: [
+                      { text: "Unavailable", value: 1, color: "#AAAAAA"}
+                      //{ text: "Available", value: 2 }
+                  ],
+                  title: "Availability"
+              },
               {
                   field: "employee",
                   dataSource: {
@@ -86,7 +101,7 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
                               color: "color",
                               fields: {
                                   value: { from: "id", type: "number" },
-                                  text: { type: "string", from: "username" },
+                                  text: { type: "string", from: "fullname" },
                                   color: { type: "string", from: "schedule_color" }
                               }
                           }

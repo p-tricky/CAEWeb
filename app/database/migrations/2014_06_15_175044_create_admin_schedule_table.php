@@ -14,6 +14,7 @@ class CreateAdminScheduleTable extends Migration {
 		Schema::create('adminschedule', function($table) {
 			$table->increments('id');
 			$table->string('Title');
+			$table->integer('Availability');
 			$table->dateTime('Start');
 			$table->dateTime('End');
 			$table->integer('Employee');
