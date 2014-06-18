@@ -9,6 +9,8 @@
 * For GPL requirements, please review: http://www.gnu.org/copyleft/gpl.html
 */
 
+//There are some added lines of code starting on line 781 that are used to offset the displayed
+//times. This is so that the schedule can go to 12:30 without having to wrap to the next day.
 
 kendo_module({
     id: "scheduler.dayview",
@@ -778,11 +780,18 @@ kendo_module({
                 rows.push( { text: options.messages.allDay, allDay: true });
             }
 
+            //There are some added rows here to offset the time in the left side a bit so that we can trick
+            //the view into showing times up to 1:00am. Offically the times are  7:00am to 12:00am, but with this
+            //adjustment they are now a hour later. So they show up as 8:00am to 1:00am. This is need since the lab
+            //is open until 12:30am. This will require the server side to do some addition and subtraction in order
+            //for the dates to be stored and be accurate. Altered lines have been commented. 
             this._forTimeRange(options.startTime, options.endTime, function(date, majorTick, middleRow, lastSlotRow) {
                 var template = majorTick ? that.majorTimeHeaderTemplate : that.minorTimeHeaderTemplate;
-
-                var row = {
-                    text: template({ date: date }),
+                var alteredTime = new Date(date); //Added line for offset time
+                var row = {}; //decleare row before assigning to it since var declarations are bubbled to top
+                alteredTime.setHours(alteredTime.getHours()+1); //set the time to one hour later
+                row = { //This line had the var keyword in front of it because it was not predefined in the original
+                    text: template({ date: alteredTime }),
                     className: lastSlotRow ? "k-slot-cell" : ""
                 };
 

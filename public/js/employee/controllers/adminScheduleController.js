@@ -3,7 +3,7 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
   ScheduleTab.AdminScheduleController = {
     showEditableAdminSchedule : function() {
       var TODAY = new Date();
-      var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); # <div class="employee-template">#: kendo.toString(start, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(end, "hh:mm") #</div>';
+      var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
       $("#tabsContent").kendoScheduler({
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
