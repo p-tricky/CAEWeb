@@ -7,7 +7,7 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
       $("#tabsContent").kendoScheduler({
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
-          endTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 24, 0, 0),
+          endTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 23, 30, 0),
           height: 970,
           allDaySlot: false,
           minorTickCount: 4,

@@ -1102,6 +1102,18 @@ kendo_module({
                 model = that._modelForContainer(container),
                 editable = that.editable;
 
+            //Some more date manipulation for getting to 1am
+            console.log(model);
+            if (model.dirty === false) {
+                var startD = new Date(model.start);
+                var endD = new Date(model.end);
+                startD.setHours(startD.getHours() - 1);
+                endD.setHours(endD.getHours() - 1);
+                model.start = startD;
+                model.end = endD;
+            }
+
+
             if (container && editable && editable.end() &&
                 !that.trigger(SAVE, { container: container, model: model } )) {
                 that.dataSource.sync();
@@ -1128,6 +1140,14 @@ kendo_module({
         editEvent: function(uid) {
             var that = this,
                 model = typeof uid == "string" ? that.dataSource.getByUid(uid) : uid;
+            //Some more date manipulation for getting to 1am
+            console.log(model);
+            var startD = new Date(model.start);
+            var endD = new Date(model.end);
+            startD.setHours(startD.getHours() + 1);
+            endD.setHours(endD.getHours() + 1);
+            model.start = startD;
+            model.end = endD;
 
             that.cancelEvent();
 
