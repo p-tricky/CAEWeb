@@ -189,6 +189,9 @@ kendo_module({
             var container = this.content;
             var format;
 
+            var startD; //some variables for changing the date display
+            var endD;
+
             var hintSize = function(slots, startIndex, endIndex, size) {
                 var result = 0;
 
@@ -278,9 +281,15 @@ kendo_module({
 
             this._resizeHint.find(".k-label-top,.k-label-bottom").text("");
 
-            this._resizeHint.first().addClass("k-first").find(".k-label-top").text(kendo.toString(startSlot.start, format));
+            //Some code added to adjust the time being displayed for the resize hint.
+            startD = new Date(startSlot.start);
+            endD = new Date(endSlot.end);
+            startD.setHours(startD.getHours() + 1);
+            endD.setHours(endD.getHours() + 1);
 
-            this._resizeHint.last().addClass("k-last").find(".k-label-bottom").text(kendo.toString(endSlot.end, format));
+            this._resizeHint.first().addClass("k-first").find(".k-label-top").text(kendo.toString(startD, format));//startSlot.start, format));
+
+            this._resizeHint.last().addClass("k-last").find(".k-label-bottom").text(kendo.toString(endD, format));//endSlot.end, format));
         },
 
         _updateMoveHint: function(event, initialSlot, currentSlot) {

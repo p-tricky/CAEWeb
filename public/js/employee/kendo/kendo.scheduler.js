@@ -927,6 +927,10 @@ kendo_module({
                     that._addExceptionDate(event);
                 }
 
+                //Added code to allow for updating drags correctly.
+                event.end.setHours(event.end.getHours() + 1);
+                event.start.setHours(event.start.getHours() + 1);
+
                 if (!that.trigger(SAVE, { model: event })) {
                     that._updateSelection(event);
                     that.dataSource.sync();
