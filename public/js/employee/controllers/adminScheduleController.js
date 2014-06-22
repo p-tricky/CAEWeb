@@ -14,19 +14,20 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
           eventTemplate: eventTemplate,
 
           views: [
-            //{
-            //  type: "day",
-            //  group: {
-            //    resources: ["employee"],
-            //    orientation: "horizontal"
-            //  }
-            //},
+            {
+              type: "day",
+              group: {
+                resources: ["employee"],
+                orientation: "horizontal"
+              }
+            },
             {
               type: "week",
               group: {
                 resources: ["date","employee"],
                 orientation: "horizontal"
-              }
+              },
+              selected: true
             }
           ],
           timezone: "Etc/UTC",
