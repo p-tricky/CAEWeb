@@ -74,9 +74,6 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
                   }
               }
           },
-          //group: {
-          //    resources: [ "employee" ]
-          //},
           resources: [
               {
                   field: "availability",

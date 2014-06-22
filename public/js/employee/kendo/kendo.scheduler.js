@@ -380,6 +380,13 @@ kendo_module({
     }
 
     function dropDownResourceEditor(resource) {
+        //Added some logic here to check if the field is availability. If it is, change the default text from none to avilable
+        var textToUse;
+        if (resource.title === 'Availability') {
+            textToUse = "Available";
+        } else {
+            textToUse = "None";
+        }// End of the logic I added to check if the field is availability.
         return function(container) {
            $(kendo.format('<select data-{0}bind="value: {1}">', kendo.ns, resource.field))
              .appendTo(container)
@@ -388,7 +395,7 @@ kendo_module({
                  dataValueField: resource.dataValueField,
                  dataSource: resource.dataSource,
                  valuePrimitive: resource.valuePrimitive,
-                 optionLabel: "None",
+                 optionLabel: textToUse,
                  template: kendo.format('<span class="k-scheduler-mark" style="background-color:#= data.{0}?{0}:"none" #"></span>#={1}#', resource.dataColorField, resource.dataTextField)
              });
        };
@@ -1145,7 +1152,7 @@ kendo_module({
             var that = this,
                 model = typeof uid == "string" ? that.dataSource.getByUid(uid) : uid;
             //Some more date manipulation for getting to 1am
-            console.log(model);
+            console.log(model); //Still logging this model cause there was an error where it didn't exist, and was throwing errors.
             var startD = new Date(model.start);
             var endD = new Date(model.end);
             startD.setHours(startD.getHours() + 1);
@@ -1288,10 +1295,10 @@ kendo_module({
                     that._createTimezonePopup(model, this);
                 },
                 fields = [
-                    { field: "title", title: messages.editor.title /*, format: field.format, editor: field.editor, values: field.values*/ },
+                    //{ field: "title", title: messages.editor.title /*, format: field.format, editor: field.editor, values: field.values*/ },
                     { field: "start", title: messages.editor.start, editor: DATERANGEEDITOR },
                     { field: "end", title: messages.editor.end, editor: DATERANGEEDITOR },
-                    { field: "isAllDay", title: messages.editor.allDayEvent }
+                    //{ field: "isAllDay", title: messages.editor.allDayEvent }
                 ],
                 attr,
                 options = isPlainObject(editable) ? editable.window : {},
@@ -1320,7 +1327,7 @@ kendo_module({
                 }
 
                 if ("description" in model) {
-                    fields.push({ field: "description", title: messages.editor.description, editor: '<textarea name="description" class="k-textbox"/>' });
+                    //fields.push({ field: "description", title: messages.editor.description, editor: '<textarea name="description" class="k-textbox"/>' });
                 }
 
                 for (var resourceIndex = 0; resourceIndex < that.resources.length; resourceIndex++) {
