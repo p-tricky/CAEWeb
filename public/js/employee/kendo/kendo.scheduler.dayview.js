@@ -295,7 +295,8 @@ kendo_module({
         _updateMoveHint: function(event, initialSlot, currentSlot) {
             var isAllDay = event.isAllDay || event.end.getTime() - event.start.getTime() > MS_PER_DAY;
             var slots;
-            var groupOffset = currentSlot.groupIndex * this._columnCountInGroup();
+            // Commented out the rest of this line. It was doing bad math for the view.
+            var groupOffset = currentSlot.groupIndex;// * this._columnCountInGroup();
 
             if (isAllDay) {
                 currentSlot = this._toAllDaySlot(currentSlot);
@@ -359,8 +360,8 @@ kendo_module({
                 if (getMilliseconds(end) === 0 || getMilliseconds(end) < getMilliseconds(this.options.startTime)) {
                     endDateSlotIndex = this._dateSlotIndex(start);
                 }
-
-                slots = this._columns[endDateSlotIndex + groupOffset].slots;
+                // Redefining the slots is not needed, and breaks it.
+                //slots = this._columns[endDateSlotIndex + groupOffset].slots;
 
                 endSlotIndex = Math.min(slots.length - 1, endSlotIndex);
 
@@ -371,6 +372,7 @@ kendo_module({
 
                 for (var columnIndex = startSlot.columnIndex; columnIndex <= endSlot.columnIndex; columnIndex++) {
                     slots = this._columns[columnIndex].slots;
+
                     var firstIndex = 0;
                     var lastIndex = slots.length - 1;
 
@@ -1404,8 +1406,9 @@ kendo_module({
                 singleDay: this._dates.length == 1 || this._isGroupedByDate(),
                 resources: this.eventResources(event)
             }, event, {
-                start: event.startTime || event.start,
-                end: event.endTime || event.end
+                //Reversed event.start and event.startTime so that the times display properly.
+                start: event.start || event.startTime,
+                end: event.end || event.endTime
             })));
         },
 
