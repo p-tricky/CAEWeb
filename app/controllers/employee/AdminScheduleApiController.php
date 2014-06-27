@@ -12,14 +12,14 @@ class AdminScheduleApiController extends BaseController {
     //12:30am. This date manipulation is to make sure that the dates and times are converted and
     //stored as the actual scheduled dates, and then retrieved and converted to the altered dates.
 
-    foreach ($theArray as $sEvent) {
-      $tempDate = strtotime($sEvent->Start);
-      $tempDate = $tempDate - 3600;
-      $sEvent->Start = date('Y-m-d H:i:s',$tempDate);
-      $tempDate = strtotime($sEvent->End);
-      $tempDate = $tempDate - 3600;
-      $sEvent->End = date('Y-m-d H:i:s',$tempDate);
-    }
+    //foreach ($theArray as $sEvent) {
+    //  $tempDate = strtotime($sEvent->Start);
+    //  $tempDate = $tempDate - 3600;
+    //  $sEvent->Start = date('Y-m-d H:i:s',$tempDate);
+    //  $tempDate = strtotime($sEvent->End);
+    //  $tempDate = $tempDate - 3600;
+    //  $sEvent->End = date('Y-m-d H:i:s',$tempDate);
+    //}
     $jsonArray = $theArray->toJson();
     return $jsonArray;
   }
@@ -54,12 +54,12 @@ class AdminScheduleApiController extends BaseController {
 
     $newAdminSchedule->save();
 
-    $tempDate = strtotime($newAdminSchedule->Start);
-    $tempDate = $tempDate - 3600;
-    $newAdminSchedule->Start = date('Y-m-d H:i:s',$tempDate);
-    $tempDate = strtotime($newAdminSchedule->End);
-    $tempDate = $tempDate - 3600;
-    $newAdminSchedule->End = date('Y-m-d H:i:s',$tempDate);
+    //$tempDate = strtotime($newAdminSchedule->Start);
+    //$tempDate = $tempDate - 3600;
+    //$newAdminSchedule->Start = date('Y-m-d H:i:s',$tempDate);
+    //$tempDate = strtotime($newAdminSchedule->End);
+    //$tempDate = $tempDate - 3600;
+    //$newAdminSchedule->End = date('Y-m-d H:i:s',$tempDate);
 
     return $newAdminSchedule->toJson();
   }
@@ -96,12 +96,12 @@ class AdminScheduleApiController extends BaseController {
 
       $updateAdminSchedule->save();
 
-      $tempDate = strtotime($updateAdminSchedule->Start);
-      $tempDate = $tempDate - 3600;
-      $updateAdminSchedule->Start = date('Y-m-d H:i:s',$tempDate);
-      $tempDate = strtotime($updateAdminSchedule->End);
-      $tempDate = $tempDate - 3600;
-      $updateAdminSchedule->End = date('Y-m-d H:i:s',$tempDate);
+      //$tempDate = strtotime($updateAdminSchedule->Start);
+      //$tempDate = $tempDate - 3600;
+      //$updateAdminSchedule->Start = date('Y-m-d H:i:s',$tempDate);
+      //$tempDate = strtotime($updateAdminSchedule->End);
+      //$tempDate = $tempDate - 3600;
+      //$updateAdminSchedule->End = date('Y-m-d H:i:s',$tempDate);
 
       array_push($modelArray, $updateAdminSchedule);
       $returnModels = BaseCollection::make($modelArray);
