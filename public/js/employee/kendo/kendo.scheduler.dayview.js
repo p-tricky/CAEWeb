@@ -9,8 +9,6 @@
 * For GPL requirements, please review: http://www.gnu.org/copyleft/gpl.html
 */
 
-//There are some added lines of code starting on line 781 that are used to offset the displayed
-//times. This is so that the schedule can go to 12:30 without having to wrap to the next day.
 
 kendo_module({
     id: "scheduler.dayview",
@@ -37,8 +35,9 @@ kendo_module({
 
     var DAY_VIEW_EVENT_TEMPLATE = kendo.template('<div title="(#=kendo.format("{0:t} - {1:t}", start, end)#): #=title#">' +
                     '<dl>' +
-                        '<dt>#=kendo.format("{0:t} - {1:t}", start, end)#</dt>' +
-                        '<dd>${title}</dd>' +
+                        '<dt>#=kendo.format("{0:t}", start)#</dt>' +
+                        '<dt>${title}</dt>' +
+                        '<dt>#=kendo.format("{0:t}", end)#</dt>' +
                     '</dl>' +
                 '</div>'),
         DAY_VIEW_ALL_DAY_EVENT_TEMPLATE = kendo.template('<div title="(#=kendo.format("{0:t}", start)#): #=title#">' +
@@ -185,21 +184,22 @@ kendo_module({
        },
 
        _updateResizeHint: function(direction, startSlot, endSlot) {
+
             var vertical = direction == "south" || direction == "north";
             var container = this.content;
             var format;
 
-            var startD; //some variables for changing the date display
-            var endD;
-
             var hintSize = function(slots, startIndex, endIndex, size) {
                 var result = 0;
+                var numOfSlots = 0;
 
                 for (var slotIndex = startIndex; slotIndex < endIndex; slotIndex++) {
                     result += slots[slotIndex][size];
+                    numOfSlots++;
                 }
 
                 result += slots[endIndex][size];
+                numOfSlots++;
 
                 return result;
             };
@@ -281,22 +281,16 @@ kendo_module({
 
             this._resizeHint.find(".k-label-top,.k-label-bottom").text("");
 
-            //Some code added to adjust the time being displayed for the resize hint.
-            startD = new Date(startSlot.start);
-            endD = new Date(endSlot.end);
-            startD.setHours(startD.getHours() + 1);
-            endD.setHours(endD.getHours() + 1);
+            this._resizeHint.first().addClass("k-first").find(".k-label-top").text(kendo.toString(startSlot.start, format));
 
-            this._resizeHint.first().addClass("k-first").find(".k-label-top").text(kendo.toString(startD, format));//startSlot.start, format));
-
-            this._resizeHint.last().addClass("k-last").find(".k-label-bottom").text(kendo.toString(endD, format));//endSlot.end, format));
+            this._resizeHint.last().addClass("k-last").find(".k-label-bottom").text(kendo.toString(endSlot.end, format));
+            //this._resizeHint.last().addClass("k-last").find(".k-label-bottom").text(kendo.toString(endSlot.index));
         },
 
         _updateMoveHint: function(event, initialSlot, currentSlot) {
             var isAllDay = event.isAllDay || event.end.getTime() - event.start.getTime() > MS_PER_DAY;
             var slots;
-            // Commented out the rest of this line. It was doing bad math for the view.
-            var groupOffset = currentSlot.groupIndex;// * this._columnCountInGroup();
+            var groupOffset = currentSlot.groupIndex * this._columnCountInGroup();
 
             if (isAllDay) {
                 currentSlot = this._toAllDaySlot(currentSlot);
@@ -360,8 +354,8 @@ kendo_module({
                 if (getMilliseconds(end) === 0 || getMilliseconds(end) < getMilliseconds(this.options.startTime)) {
                     endDateSlotIndex = this._dateSlotIndex(start);
                 }
-                // Redefining the slots is not needed, and breaks it.
-                //slots = this._columns[endDateSlotIndex + groupOffset].slots;
+
+                slots = this._columns[endDateSlotIndex + groupOffset].slots;
 
                 endSlotIndex = Math.min(slots.length - 1, endSlotIndex);
 
@@ -372,7 +366,6 @@ kendo_module({
 
                 for (var columnIndex = startSlot.columnIndex; columnIndex <= endSlot.columnIndex; columnIndex++) {
                     slots = this._columns[columnIndex].slots;
-
                     var firstIndex = 0;
                     var lastIndex = slots.length - 1;
 
@@ -533,6 +526,7 @@ kendo_module({
             var cell;
             var visibleAllDayRowCount = 0;
             var isVertical = this._groupOrientation() === "vertical";
+            var slotTick = this.options.slotTick;
 
             var allDaySelector = ".k-scheduler-header-all-day tr";
 
@@ -557,33 +551,38 @@ kendo_module({
                 for (cellIndex = 0; cellIndex < tableCells.length; cellIndex++) {
                     td = tableCells[cellIndex];
 
-                    range = this._rangeByIndex(rowIndex - visibleAllDayRowCount, cellIndex, tableRows.length - 1 - allDayRowCount);
+                    for (slotindex = 0; slotindex < slotTick; slotindex++) {
 
-                    cell = {
-                        offsetTop: td.offsetTop,
-                        offsetLeft: td.offsetLeft,
-                        clientHeight: td.clientHeight,
-                        offsetHeight: td.offsetHeight,
-                        clientWidth: td.clientWidth,
-                        offsetWidth: td.offsetWidth,
-                        element: td,
-                        start: range.start,
-                        end: range.end
-                    };
+                        range = this._rangeByIndex(rowIndex - visibleAllDayRowCount, cellIndex, tableRows.length - 1 - allDayRowCount, slotindex);
 
-                    cell.index = columns[cellIndex].slots.length;
-                    cell.columnIndex = cellIndex;
+                        cell = {
+                            offsetTop: (td.offsetTop + (td.offsetHeight / slotTick)  * slotindex),
+                            offsetLeft: td.offsetLeft,
+                            clientHeight: (td.clientHeight / slotTick),
+                            offsetHeight: (td.offsetHeight / slotTick),
+                            clientWidth: td.clientWidth,
+                            offsetWidth: td.offsetWidth,
+                            element: td,
+                            start: range.start,
+                            end: range.end
+                        };
 
-                    if (isVertical) {
-                        cell.groupIndex = this._groupVerticalIndex(rowIndex - visibleAllDayRowCount);
-                    } else {
-                        cell.groupIndex = this._groupHorizontalIndex(cellIndex);
+                        cell.index = columns[cellIndex].slots.length;
+                        cell.columnIndex = cellIndex;
+
+                        if (isVertical) {
+                            cell.groupIndex = this._groupVerticalIndex(rowIndex - visibleAllDayRowCount);
+            
+                        } else {
+                            cell.groupIndex = this._groupHorizontalIndex(cellIndex);
+                        }
+
+                        columns[cellIndex].slots.push(cell);
+                        columns[cellIndex].offsetLeft = cell.offsetLeft;
+                        columns[cellIndex].clientWidth = cell.clientWidth;
                     }
-
-                    columns[cellIndex].slots.push(cell);
-                    columns[cellIndex].offsetLeft = cell.offsetLeft;
-                    columns[cellIndex].clientWidth = cell.clientWidth;
                 }
+
             }
 
             this._columns = columns;
@@ -607,30 +606,33 @@ kendo_module({
                     for (cellIndex = 0; cellIndex < tableCells.length; cellIndex++) {
                         td = tableCells[cellIndex];
 
-                        range = this._rangeByIndex(rowIndex, cellIndex, allDayRows.length);
+                        for (slotindex = 0; slotindex < slotTick; slotindex++) {
 
-                        cell = {
-                            offsetTop: allDayRows.length > 1 ? td.offsetTop : td.parentNode.parentNode.parentNode.offsetTop,
-                            offsetLeft: td.offsetLeft,
-                            clientHeight: td.clientHeight,
-                            offsetHeight: td.offsetHeight,
-                            offsetWidth: td.offsetWidth,
-                            clientWidth: td.clientWidth,
-                            element: td,
-                            isAllDay: true,
-                            start: range.start,
-                            end: range.end,
-                            index: rowIndex,
-                            columnIndex: cellIndex
-                        };
+                            range = this._rangeByIndex(rowIndex, cellIndex, allDayRows.length);
 
-                        if (isVertical) {
-                            cell.groupIndex = rowIndex;
-                        } else {
-                            cell.groupIndex = this._groupHorizontalIndex(cellIndex);
+                            cell = {
+                                offsetTop: allDayRows.length > 1 ? td.offsetTop : td.parentNode.parentNode.parentNode.offsetTop,
+                                offsetLeft: td.offsetLeft,
+                                clientHeight: td.clientHeight,
+                                offsetHeight: (td.offsetHeight / slotTick),
+                                offsetWidth: td.offsetWidth,
+                                clientWidth: td.clientWidth,
+                                element: td,
+                                isAllDay: true,
+                                start: range.start,
+                                end: range.end,
+                                index: rowIndex,
+                                columnIndex: cellIndex
+                            };
+
+                            if (isVertical) {
+                                cell.groupIndex = rowIndex;
+                            } else {
+                                cell.groupIndex = this._groupHorizontalIndex(cellIndex);
+                            }
+
+                            row.slots.push(cell);
                         }
-
-                        row.slots.push(cell);
                     }
                     rows.push(row);
                 }
@@ -646,8 +648,9 @@ kendo_module({
             title: "",
             startTime: kendo.date.today(),
             endTime: kendo.date.today(),
-            minorTickCount: 2,
+            minorTickCount: 4,
             majorTick: 60,
+            slotTick: 3,
             majorTimeHeaderTemplate: "#=kendo.toString(date, 't')#",
             minorTimeHeaderTemplate: "&nbsp;",
             eventTemplate: DAY_VIEW_EVENT_TEMPLATE,
@@ -791,18 +794,11 @@ kendo_module({
                 rows.push( { text: options.messages.allDay, allDay: true });
             }
 
-            //There are some added rows here to offset the time in the left side a bit so that we can trick
-            //the view into showing times up to 1:00am. Offically the times are  7:00am to 12:00am, but with this
-            //adjustment they are now a hour later. So they show up as 8:00am to 1:00am. This is need since the lab
-            //is open until 12:30am. This will require the server side to do some addition and subtraction in order
-            //for the dates to be stored and be accurate. Altered lines have been commented. 
             this._forTimeRange(options.startTime, options.endTime, function(date, majorTick, middleRow, lastSlotRow) {
                 var template = majorTick ? that.majorTimeHeaderTemplate : that.minorTimeHeaderTemplate;
-                var alteredTime = new Date(date); //Added line for offset time
-                var row = {}; //decleare row before assigning to it since var declarations are bubbled to top
-                alteredTime.setHours(alteredTime.getHours()+1); //set the time to one hour later
-                row = { //This line had the var keyword in front of it because it was not predefined in the original
-                    text: template({ date: alteredTime }),
+
+                var row = {
+                    text: template({ date: date }),
                     className: lastSlotRow ? "k-slot-cell" : ""
                 };
 
@@ -867,10 +863,11 @@ kendo_module({
             for (; idx < length; idx++) {
                 var majorTickDivider = idx % (msMajorInterval/msInterval),
                     isMajorTickRow = majorTickDivider === 0,
+                    isMiddleTickRow = majorTickDivider === 1,
                     isMiddleRow = majorTickDivider < minorTickCount - 1,
                     isLastSlotRow = majorTickDivider === minorTickCount - 1;
 
-                html += action(start, isMajorTickRow, isMiddleRow, isLastSlotRow);
+                html += action(start, isMajorTickRow, isMiddleRow, isLastSlotRow, isMiddleTickRow);
 
                 setTime(start, msInterval, false);
             }
@@ -924,12 +921,12 @@ kendo_module({
 
             html += '<tbody>';
 
-            var appendRow = function(date, majorTick) {
+            var appendRow = function(date, majorTick, a, b, middleRow) {
                 var content = "",
                     idx,
                     length;
 
-                content = '<tr' + (majorTick ? ' class="k-middle-row"' : "") + '>';
+                content = '<tr' + (middleRow ? ' class="k-middle-row"' : "") + '>';
 
                 for (var groupIdx = 0; groupIdx < groupsCount; groupIdx++) {
                     for (idx = 0, length = columnCount; idx < length; idx++) {
@@ -1051,22 +1048,22 @@ kendo_module({
             return this._slotByPosition(offset.left, offset.top);
         },
 
-        _slotIndexTime: function(index) {
-            index = this._adjustSlotIndex(index);
-            return getMilliseconds(this.options.startTime) + this._timeSlotInterval() * index;
+        _slotIndexTime: function(index, slotindex) {
+            index = this._adjustSlotIndex(index, slotindex);
+            return getMilliseconds(this.options.startTime) + (this._timeSlotInterval() * index * this.options.slotTick) + (this._timeSlotInterval() * slotindex);
         },
 
         _timeSlotInterval: function() {
             var options = this.options;
-            return (options.majorTick/options.minorTickCount) * MS_PER_MINUTE;
+            return (options.majorTick/options.minorTickCount/options.slotTick) * MS_PER_MINUTE;
         },
 
-        _rangeByIndex: function(rowIndex, cellIndex, maxTimeSlotIndex) {
+        _rangeByIndex: function(rowIndex, cellIndex, maxTimeSlotIndex, slotindex) {
             var slotDate = kendo.date.getDate(this._slotIndexDate(cellIndex));
 
             var slotEndDate = kendo.date.getDate(slotDate);
 
-            setTime(slotDate, this._slotIndexTime(rowIndex));
+            setTime(slotDate, this._slotIndexTime(rowIndex, slotindex));
 
             maxTimeSlotIndex = this._adjustSlotIndex(maxTimeSlotIndex);
             if (this._adjustSlotIndex(rowIndex) >= maxTimeSlotIndex) {
@@ -1075,7 +1072,7 @@ kendo_module({
                     slotEndDate = kendo.date.nextDay(slotEndDate);
                 }
             } else {
-                setTime(slotEndDate, this._slotIndexTime(rowIndex + 1));
+                setTime(slotEndDate, this._slotIndexTime(rowIndex, slotindex +1));
             }
 
             return {
@@ -1176,7 +1173,7 @@ kendo_module({
             var options = this.options;
             var eventStartTime = getMilliseconds(date);
             var startTime = getMilliseconds(options.startTime);
-            var timeSlotInterval = ((options.majorTick/options.minorTickCount) * MS_PER_MINUTE);
+            var timeSlotInterval = ((options.majorTick/options.minorTickCount/options.slotTick) * MS_PER_MINUTE);
 
             return (eventStartTime - startTime) / (timeSlotInterval);
         },
@@ -1277,7 +1274,7 @@ kendo_module({
         _arrangeColumns: function(element, dateSlotIndex, dateSlot) {
             var columns,
                 slotWidth = dateSlot.clientWidth,
-                eventRightOffset = slotWidth * 0.010,
+                eventRightOffset = slotWidth * 0.010, //Made this .010 instead of .10
                 columnEvents,
                 eventElements =  dateSlot.events,
                 slotEvents = SchedulerView.collidingEvents(eventElements, element.start, element.end);
@@ -1406,7 +1403,6 @@ kendo_module({
                 singleDay: this._dates.length == 1 || this._isGroupedByDate(),
                 resources: this.eventResources(event)
             }, event, {
-                //Reversed event.start and event.startTime so that the times display properly.
                 start: event.start || event.startTime,
                 end: event.end || event.endTime
             })));

@@ -42,7 +42,6 @@ kendo_module({
         }
 
         collect(0, values);
-
         return result;
     }
 
@@ -102,6 +101,7 @@ kendo_module({
                 } else {
                     th.push('<th colspan="' + colspan + '" class="' + (level[columnIndex].className || "")  + '">' + level[columnIndex].text + "</th>");
                 }
+                
             }
 
             dateTableRows.push(th.join(""));
@@ -642,6 +642,7 @@ kendo_module({
             for (var dataIndex = 0; dataIndex < data.length; dataIndex++) {
                 var obj = {
                     text: kendo.getter(resource.dataTextField)(data[dataIndex]),
+                    capacity: kendo.getter("capacity")(data[dataIndex]),
                     className: "k-slot-cell"
                 };
                 obj[name] = createLayoutConfiguration(name, resources.slice(1), inner);

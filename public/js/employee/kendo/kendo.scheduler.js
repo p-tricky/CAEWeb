@@ -245,7 +245,20 @@ kendo_module({
                 var endPicker = kendo.widgetInstance(endInput, kendo.ui);
 
                 if (startPicker && endPicker) {
-                    return startPicker.value() <= endPicker.value();
+                    var startCompareDate = new Date(startPicker.value());
+                    var endCompareDate = new Date(endPicker.value());
+                    var startCompareTime = new Date(startPicker.options.min);
+                    var endCompareTime = new Date(endPicker.options.max);
+
+                    var startTimeStamp = new Date(startCompareDate.getFullYear(), startCompareDate.getMonth(), startCompareDate.getDate(),
+                                                                    startCompareTime.getHours(), startCompareTime.getMinutes(), startCompareTime.getSeconds()).getTime();
+                    var endTimeStamp = new Date(endCompareDate.getFullYear(), endCompareDate.getMonth(), endCompareDate.getDate(),
+                                                                    endCompareTime.getHours(), endCompareTime.getMinutes(), endCompareTime.getSeconds()).getTime();
+
+                    return startPicker.value() <= endPicker.value() &&
+                      startCompareDate.toDateString() === endCompareDate.toDateString() &&
+                      startPicker.value().getTime() >= startTimeStamp &&
+                      endPicker.value().getTime() <= endTimeStamp;
                 }
             }
         }
@@ -300,12 +313,13 @@ kendo_module({
             title: { defaultValue: "", type: "string" },
             start: { type: "date", validation: { required: true } },
             startTimezone: { type: "string" },
-            end: { type: "date", validation: { required: true, dateCompare: { value: dateCompareValidator, message: "End date should be greater than or equal to the start date"}} },
+            end: { type: "date", validation: { required: true, dateCompare: { value: dateCompareValidator, message: "Start and end times must be selected from the time picker. End time should be greater than the start time. Start and end dates must be the same."}} },
             endTimezone: { type: "string" },
             recurrenceRule: { defaultValue: "", type: "string" },
             recurrenceException: { defaultValue: "", type: "string" },
             isAllDay: { type: "boolean", defaultValue: false },
-            description: { type: "string" }
+            description: { type: "string" },
+            host: { type: "string" }
         }
     });
 
@@ -380,13 +394,6 @@ kendo_module({
     }
 
     function dropDownResourceEditor(resource) {
-        //Added some logic here to check if the field is availability. If it is, change the default text from none to avilable
-        var textToUse;
-        if (resource.title === 'Availability') {
-            textToUse = "Available";
-        } else {
-            textToUse = "None";
-        }// End of the logic I added to check if the field is availability.
         return function(container) {
            $(kendo.format('<select data-{0}bind="value: {1}">', kendo.ns, resource.field))
              .appendTo(container)
@@ -395,7 +402,7 @@ kendo_module({
                  dataValueField: resource.dataValueField,
                  dataSource: resource.dataSource,
                  valuePrimitive: resource.valuePrimitive,
-                 optionLabel: textToUse,
+                 optionLabel: "None",
                  template: kendo.format('<span class="k-scheduler-mark" style="background-color:#= data.{0}?{0}:"none" #"></span>#={1}#', resource.dataColorField, resource.dataTextField)
              });
        };
@@ -649,6 +656,7 @@ kendo_module({
                     end: "End",
                     allDayEvent: "All day event",
                     description: "Description",
+                    host: "Host",
                     repeat: "Repeat",
                     timezone: " ",
                     startTimezone: "Start timezone",
@@ -750,19 +758,16 @@ kendo_module({
                 },
                 drag: function(e) {
                     var view = that.view();
-
                     var slot = view._slotByPosition(e.x.location, e.y.location);
-
                     if (!slot) {
                         return;
                     }
-
                     var newEndSlot = slot;
                     var distance = newEndSlot.start.getTime() - startSlot.start.getTime();
- 
+
                     var optionSTime = that.options.startTime;
                     var optionETime = that.options.endTime;
- 
+
                     var sTime = new Date(event.start.getFullYear(), event.start.getMonth(), event.start.getDate(), optionSTime.getHours(), optionSTime.getMinutes(), optionSTime.getSeconds());
                     var eTime = new Date(event.end.getFullYear(), event.end.getMonth(), event.end.getDate(), optionETime.getHours(), optionETime.getMinutes(), optionETime.getSeconds());
                     if (event.start.getTime() + distance >= sTime.getTime() &&
@@ -771,13 +776,20 @@ kendo_module({
                         view._updateMoveHint(event, startSlot, endSlot);
                     }
                     /*
+                    var view = that.view();
 
+                    var slot = view._slotByPosition(e.x.location, e.y.location);
+
+                    if (!slot) {
+                        return;
+                    }
                     endSlot = slot;
 
                     view._updateMoveHint(event, startSlot, endSlot);
                     */
                 },
                 dragend: function() {
+
                     that.view()._removeMoveHint();
 
                     var distance = endSlot.start.getTime() - startSlot.start.getTime();
@@ -938,21 +950,22 @@ kendo_module({
             var that = this;
 
             var updateEvent = function(event) {
-                if (event.recurrenceId) {
-                    that._removeExceptionDate(event);
-                }
+                //removed these decision/functions to get desired result with event updates.
+                //if (event.recurrenceId) {
+                //    that._removeExceptionDate(event);
+                //}
 
                 for (var field in eventInfo) {
                     event.set(field, eventInfo[field]);
                 }
 
-                if (event.recurrenceId) {
-                    that._addExceptionDate(event);
-                }
+                //if (event.recurrenceId) {
+                //   that._addExceptionDate(event);
+                //}
 
-                //Added code to allow for updating drags correctly.
-                event.end.setHours(event.end.getHours() + 1);
-                event.start.setHours(event.start.getHours() + 1);
+                if (event.recurrenceException) {
+                    that._updateExceptionForSeries(event);
+                }
 
                 if (!that.trigger(SAVE, { model: event })) {
                     that._updateSelection(event);
@@ -1057,7 +1070,6 @@ kendo_module({
                                     popup.close();
 
                                     var buttonIndex = $(e.currentTarget).index();
-
                                     options.buttons[buttonIndex].click();
                                })
                                .kendoWindow({
@@ -1082,10 +1094,8 @@ kendo_module({
 
         _confirmation: function(callback) {
             var editable = this.options.editable;
-
             if (editable === true || editable.confirmation) {
                 var messages = this.options.messages;
-
                 var text = typeof editable.confirmation === STRING ? editable.confirmation : DELETECONFIRM;
 
                 this.showDialog({
@@ -1129,20 +1139,9 @@ kendo_module({
                 model = that._modelForContainer(container),
                 editable = that.editable;
 
-            //Some more date manipulation for getting to 1am
-            //console.log(model);
-            if (model.dirty === false) {
-                var startD = new Date(model.start);
-                var endD = new Date(model.end);
-                startD.setHours(startD.getHours() - 1);
-                endD.setHours(endD.getHours() - 1);
-                model.start = startD;
-                model.end = endD;
-            }
-
-
             if (container && editable && editable.end() &&
                 !that.trigger(SAVE, { container: container, model: model } )) {
+
                 that.dataSource.sync();
             }
         },
@@ -1167,15 +1166,12 @@ kendo_module({
         editEvent: function(uid) {
             var that = this,
                 model = typeof uid == "string" ? that.dataSource.getByUid(uid) : uid;
-            //Some more date manipulation for getting to 1am
-            //console.log(model); //Still logging this model cause there was an error where it didn't exist, and was throwing errors.
 
             that.cancelEvent();
 
             if (!model || model.recurrenceRule || (model.id && model.recurrenceId)) {
                 that._editRecurringDialog(model, uid);
             } else {
-                model = that._alterModelTime(model, false);
                 that._editEvent(model);
             }
         },
@@ -1185,7 +1181,6 @@ kendo_module({
                 container;
 
             that._createPopupEditor(model);
-
             container = that._editContainer;
             container.on(CLICK + NS, "a.k-scheduler-cancel", function(e) {
                 e.preventDefault();
@@ -1306,9 +1301,9 @@ kendo_module({
                     that._createTimezonePopup(model, this);
                 },
                 fields = [
-                    //{ field: "title", title: messages.editor.title /*, format: field.format, editor: field.editor, values: field.values*/ },
+                    { field: "title", title: messages.editor.title /*, format: field.format, editor: field.editor, values: field.values*/ },
                     { field: "start", title: messages.editor.start, editor: DATERANGEEDITOR },
-                    { field: "end", title: messages.editor.end, editor: DATERANGEEDITOR },
+                    { field: "end", title: messages.editor.end, editor: DATERANGEEDITOR }
                     //{ field: "isAllDay", title: messages.editor.allDayEvent }
                 ],
                 attr,
@@ -1338,8 +1333,10 @@ kendo_module({
                 }
 
                 if ("description" in model) {
-                    //fields.push({ field: "description", title: messages.editor.description, editor: '<textarea name="description" class="k-textbox"/>' });
+                    fields.push({ field: "description", title: messages.editor.description, editor: '<textarea name="description" class="k-textbox"/>' });
                 }
+
+                fields.push({field: "host", title: messages.editor.host });
 
                 for (var resourceIndex = 0; resourceIndex < that.resources.length; resourceIndex++) {
                     var resource = that.resources[resourceIndex];
@@ -1449,12 +1446,9 @@ kendo_module({
             }
 
             var editOcurrence = function() {
-                console.log(that.dataSource);
                 if (model.id && model.recurrenceId) {
-                    model = that._alterModelTime(model, false);
                     that._editEvent(model); //edit existing exception
                 } else {
-
                     if (!model.recurrenceId) { //create exception eventInfo from origin
                         id = model.id;
                         idField = model.idField;
@@ -1483,10 +1477,6 @@ kendo_module({
 
                 that._removeExceptions(model);
                 model.set("recurrenceException", "");
-
-                //Call added method to do the date math on the model.
-                model = that._alterModelTime(model);
-
                 that._editEvent(model);
             };
 
@@ -1501,42 +1491,18 @@ kendo_module({
             });
         },
 
-        //Method I added to do the date conversion for a given model. This function is called from
-        //lines 1192 and 1508. For single event, and recurring events respectively.
-        _alterModelTime: function(model, shouldSubtract) {
-                var startD; //Added date fields to be used for offset time
-                var endD; //Added date fields to be used for offset time
-                startD = new Date(model.start); //Added date fields to be used for offset time
-                endD = new Date(model.end); //Added date fields to be used for offset time
-                if (shouldSubtract) {
-                    startD.setHours(startD.getHours() - 1);
-                    endD.setHours(endD.getHours() - 1);
-                } else {
-                    startD.setHours(startD.getHours() + 1);
-                    endD.setHours(endD.getHours() + 1);
-                }
-                model.start = startD;
-                model.end = endD;
-                return model;
-        },
-
         _addExceptionDate: function(model) {
             var origin = this.dataSource.get(model.recurrenceId),
                 zone = model.startTimezone || model.endTimezone || this.dataSource.reader.timezone,
                 exception = origin.recurrenceException || "",
-                start = model.start,
-                that = this;
-                model = that._alterModelTime(model, false);
+                start = model.start;
 
             if (!recurrence.isException(exception, start, zone)) {
                 start = kendo.timezone.convert(start, zone || start.getTimezoneOffset(), "Etc/UTC");
                 exception += kendo.toString(start, RECURRENCE_DATE_FORMAT) + ";";
 
                 origin.set("recurrenceException", exception);
-                origin.set("start", model.start);
-                origin.set("end", model.end);
             }
-            model = that._alterModelTime(model, true);
         },
 
         _removeExceptionDate: function(model) {
@@ -1555,6 +1521,24 @@ kendo_module({
                 }
             }
         },
+//Added method to allow the update of the exceptions properly.
+        _updateExceptionForSeries: function(model) {
+                var exceptionDates, exceptionDate, exception = "", length, idx = 0,
+                zone = model.startTimezone || model.endTimezone || this.dataSource.reader.timezone,
+                start = model.start;
+
+                start = kendo.timezone.convert(start, zone || start.getTimezoneOffset(), "Etc/UTC");
+                exception = model.recurrenceException;
+                exceptionDates = model.recurrenceException.split(';');
+                length = exceptionDates.length-1;
+
+                for (; idx < length; idx++) {
+                    var newStartString = exceptionDates[idx].split('T')[0] + "T" + ('0' + start.getHours()).slice(-2) + ('0' + start.getMinutes()).slice(-2) + ('0' + start.getSeconds()).slice(-2) + "Z";
+                    exception = exception.replace(exceptionDates[idx], newStartString);
+                }
+
+                model.set("recurrenceException", exception);
+            },
 
         _destroyEditable: function() {
             var that = this;
@@ -1620,6 +1604,7 @@ kendo_module({
             }
 
             var deleteOcurrence = function() {
+
                 if (!model.recurrenceId) {
                     id = model.id;
                     idField = model.idField;
@@ -1633,8 +1618,10 @@ kendo_module({
                     model.uid = kendo.guid();
                     model.recurrenceId = id;
                 }
-
-                that._addExceptionDate(model);
+                var origin = that.dataSource.get(model.recurrenceId);
+                if (origin) {
+                    that._addExceptionDate(model);
+                }
                 that._removeEvent(model);
             };
 
@@ -1666,7 +1653,7 @@ kendo_module({
             for (; idx < length; idx++) {
                 dataItem = data[idx];
 
-                if (dataItem.recurrenceId === id) {
+                if (Number(dataItem.recurrenceId) === Number(id)) {
                     dataSource.remove(dataItem);
                     length -= 1;
                     idx -= 1;
@@ -1707,7 +1694,6 @@ kendo_module({
                 }
 
                 that._viewEditHandler = function(e) {
-                    //console.log(e);
                     that.editEvent(e.uid);
                 };
 

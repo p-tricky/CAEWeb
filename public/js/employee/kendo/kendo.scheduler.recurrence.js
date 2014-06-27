@@ -1164,6 +1164,7 @@ kendo_module({
     };
 
     //TODO: REFACTOR Recurrence Widget
+    //The Three list items have had the name changed from end to end-never,count,or until. This fixed a error message issue.
     var INTERVAL = '<div class="k-edit-label"><label>{0}</label></div><div class="k-edit-field"><input class="k-recur-interval" />{1}</div>';
     var END_COUNT = '<input class="k-recur-count" />{0}';
     var END_UNTIL = '<input class="k-recur-until" />';
@@ -1211,7 +1212,7 @@ kendo_module({
 
         for (; idx < length; idx++) {
             shortName = shortNames[idx];
-            result += '<label><input class="k-recur-weekday-checkbox" type="checkbox" value="' + WEEK_DAYS_IDX[shortName.toUpperCase()] + '" /> ' + shortName + "&nbsp &nbsp &nbsp</label>";
+            result += '<label><input class="k-recur-weekday-checkbox" type="checkbox" value="' + WEEK_DAYS_IDX[shortName.toUpperCase()] + '" /> ' + shortName + "&nbsp&nbsp&nbsp&nbsp&nbsp</label>";
         }
 
         return result;
