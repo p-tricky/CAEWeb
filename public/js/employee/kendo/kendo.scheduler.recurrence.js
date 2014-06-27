@@ -1170,9 +1170,9 @@ kendo_module({
     var END_HTML = '<div class="k-edit-label"><label>{0}</label></div>' +
                    '<div class="k-edit-field">' +
                    '<ul class="k-reset">' +
-                       '<li><label><input class="k-recur-end-never" type="radio" name="end" value="never" />{1}</label></li>' +
-                       '<li><label><input class="k-recur-end-count" type="radio" name="end" value="count" />{2}</label>{3}</li>' +
-                       '<li><label><input class="k-recur-end-until" type="radio" name="end" value="until" />{4}</label>{5}</li>' +
+                       '<li><label><input class="k-recur-end-never" type="radio" name="recur-end" value="never" />{1}</label></li>' +
+                       '<li><label><input class="k-recur-end-count" type="radio" name="recur-end" value="count" />{2}</label>{3}</li>' +
+                       '<li><label><input class="k-recur-end-until" type="radio" name="recur-end" value="until" />{4}</label>{5}</li>' +
                    '</ul></div>';
 
     var ROW_HTML = '<div class="k-edit-label"><label>{0}</label></div>' +
@@ -1211,7 +1211,7 @@ kendo_module({
 
         for (; idx < length; idx++) {
             shortName = shortNames[idx];
-            result += '<label><input class="k-recur-weekday-checkbox" type="checkbox" value="' + WEEK_DAYS_IDX[shortName.toUpperCase()] + '" /> ' + shortName + "</label>";
+            result += '<label><input class="k-recur-weekday-checkbox" type="checkbox" value="' + WEEK_DAYS_IDX[shortName.toUpperCase()] + '" /> ' + shortName + "&nbsp &nbsp &nbsp</label>";
         }
 
         return result;

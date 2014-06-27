@@ -757,9 +757,25 @@ kendo_module({
                         return;
                     }
 
+                    var newEndSlot = slot;
+                    var distance = newEndSlot.start.getTime() - startSlot.start.getTime();
+ 
+                    var optionSTime = that.options.startTime;
+                    var optionETime = that.options.endTime;
+ 
+                    var sTime = new Date(event.start.getFullYear(), event.start.getMonth(), event.start.getDate(), optionSTime.getHours(), optionSTime.getMinutes(), optionSTime.getSeconds());
+                    var eTime = new Date(event.end.getFullYear(), event.end.getMonth(), event.end.getDate(), optionETime.getHours(), optionETime.getMinutes(), optionETime.getSeconds());
+                    if (event.start.getTime() + distance >= sTime.getTime() &&
+                        event.end.getTime() + distance <= eTime.getTime()) {
+                        endSlot = slot;
+                        view._updateMoveHint(event, startSlot, endSlot);
+                    }
+                    /*
+
                     endSlot = slot;
 
                     view._updateMoveHint(event, startSlot, endSlot);
+                    */
                 },
                 dragend: function() {
                     that.view()._removeMoveHint();
@@ -955,7 +971,7 @@ kendo_module({
             var updateSeries = function() {
                 var head = recurrenceHead(event);
 
-                if (dir == "south" || dir == "north") {
+                if (dir == "south" || dir == "north" || dir === null) {
                     if (eventInfo.start) {
                         var start = kendo.date.getDate(head.start);
                         kendo.date.setTime(start, getMilliseconds(eventInfo.start));
@@ -1114,7 +1130,7 @@ kendo_module({
                 editable = that.editable;
 
             //Some more date manipulation for getting to 1am
-            console.log(model);
+            //console.log(model);
             if (model.dirty === false) {
                 var startD = new Date(model.start);
                 var endD = new Date(model.end);
@@ -1152,19 +1168,14 @@ kendo_module({
             var that = this,
                 model = typeof uid == "string" ? that.dataSource.getByUid(uid) : uid;
             //Some more date manipulation for getting to 1am
-            console.log(model); //Still logging this model cause there was an error where it didn't exist, and was throwing errors.
-            var startD = new Date(model.start);
-            var endD = new Date(model.end);
-            startD.setHours(startD.getHours() + 1);
-            endD.setHours(endD.getHours() + 1);
-            model.start = startD;
-            model.end = endD;
+            //console.log(model); //Still logging this model cause there was an error where it didn't exist, and was throwing errors.
 
             that.cancelEvent();
 
             if (!model || model.recurrenceRule || (model.id && model.recurrenceId)) {
                 that._editRecurringDialog(model, uid);
             } else {
+                model = that._alterModelTime(model, false);
                 that._editEvent(model);
             }
         },
@@ -1438,9 +1449,12 @@ kendo_module({
             }
 
             var editOcurrence = function() {
+                console.log(that.dataSource);
                 if (model.id && model.recurrenceId) {
+                    model = that._alterModelTime(model, false);
                     that._editEvent(model); //edit existing exception
                 } else {
+
                     if (!model.recurrenceId) { //create exception eventInfo from origin
                         id = model.id;
                         idField = model.idField;
@@ -1469,6 +1483,10 @@ kendo_module({
 
                 that._removeExceptions(model);
                 model.set("recurrenceException", "");
+
+                //Call added method to do the date math on the model.
+                model = that._alterModelTime(model);
+
                 that._editEvent(model);
             };
 
@@ -1483,18 +1501,42 @@ kendo_module({
             });
         },
 
+        //Method I added to do the date conversion for a given model. This function is called from
+        //lines 1192 and 1508. For single event, and recurring events respectively.
+        _alterModelTime: function(model, shouldSubtract) {
+                var startD; //Added date fields to be used for offset time
+                var endD; //Added date fields to be used for offset time
+                startD = new Date(model.start); //Added date fields to be used for offset time
+                endD = new Date(model.end); //Added date fields to be used for offset time
+                if (shouldSubtract) {
+                    startD.setHours(startD.getHours() - 1);
+                    endD.setHours(endD.getHours() - 1);
+                } else {
+                    startD.setHours(startD.getHours() + 1);
+                    endD.setHours(endD.getHours() + 1);
+                }
+                model.start = startD;
+                model.end = endD;
+                return model;
+        },
+
         _addExceptionDate: function(model) {
             var origin = this.dataSource.get(model.recurrenceId),
                 zone = model.startTimezone || model.endTimezone || this.dataSource.reader.timezone,
                 exception = origin.recurrenceException || "",
-                start = model.start;
+                start = model.start,
+                that = this;
+                model = that._alterModelTime(model, false);
 
             if (!recurrence.isException(exception, start, zone)) {
                 start = kendo.timezone.convert(start, zone || start.getTimezoneOffset(), "Etc/UTC");
                 exception += kendo.toString(start, RECURRENCE_DATE_FORMAT) + ";";
 
                 origin.set("recurrenceException", exception);
+                origin.set("start", model.start);
+                origin.set("end", model.end);
             }
+            model = that._alterModelTime(model, true);
         },
 
         _removeExceptionDate: function(model) {
@@ -1665,6 +1707,7 @@ kendo_module({
                 }
 
                 that._viewEditHandler = function(e) {
+                    //console.log(e);
                     that.editEvent(e.uid);
                 };
 

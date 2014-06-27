@@ -129,7 +129,7 @@ kendo_module({
     }
 
     function isInTimeRange(value, min, max) {
-        return value > min && value < max;
+        return value >= min && value <= max;
     }
 
     function allDaySlotByPosition(rows, x, y) {
@@ -1277,7 +1277,7 @@ kendo_module({
         _arrangeColumns: function(element, dateSlotIndex, dateSlot) {
             var columns,
                 slotWidth = dateSlot.clientWidth,
-                eventRightOffset = slotWidth * 0.10,
+                eventRightOffset = slotWidth * 0.010,
                 columnEvents,
                 eventElements =  dateSlot.events,
                 slotEvents = SchedulerView.collidingEvents(eventElements, element.start, element.end);

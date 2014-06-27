@@ -96,7 +96,12 @@ kendo_module({
             var colspan = columnCount / level.length;
 
             for (columnIndex = 0; columnIndex < level.length; columnIndex ++) {
-                th.push('<th colspan="' + colspan + '" class="' + (level[columnIndex].className || "")  + '">' + level[columnIndex].text + "</th>");
+                //Added a check here to see if the column is the date, or the names. Add class to names so they can be vertical
+                if (typeof level[columnIndex].columns === 'undefined') {
+                    th.push('<th colspan="' + colspan + '" class="' + (level[columnIndex].className || "")  + '"><div class="usernameHeader">' + level[columnIndex].text.split(' ')[0] + "</div></th>");
+                } else {
+                    th.push('<th colspan="' + colspan + '" class="' + (level[columnIndex].className || "")  + '">' + level[columnIndex].text + "</th>");
+                }
             }
 
             dateTableRows.push(th.join(""));
