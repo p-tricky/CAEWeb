@@ -235,6 +235,7 @@ kendo_module({
     });
 
     function dateCompareValidator(input) {
+
         if (input.filter("[name=end]").length) {
             var container = input.closest(".k-scheduler-edit-form");
             var startInput = container.find("[name=start]:visible");
@@ -245,18 +246,27 @@ kendo_module({
                 var endPicker = kendo.widgetInstance(endInput, kendo.ui);
 
                 if (startPicker && endPicker) {
-                    var startCompareDate = new Date(startPicker.value());
-                    var endCompareDate = new Date(endPicker.value());
+                    var startPickerDate = new Date(startPicker.value());
+                    var endPickerDate = new Date(endPicker.value());
+
+                    var startCompareDate = new Date(startPickerDate);
+                    var endCompareDate = new Date(startPickerDate.getFullYear(), startPickerDate.getMonth(), startPickerDate.getDate() +1,
+                                                                    endPickerDate.getHours(), endPickerDate.getMinutes(), endPickerDate.getSeconds());
                     var startCompareTime = new Date(startPicker.options.min);
                     var endCompareTime = new Date(endPicker.options.max);
 
                     var startTimeStamp = new Date(startCompareDate.getFullYear(), startCompareDate.getMonth(), startCompareDate.getDate(),
                                                                     startCompareTime.getHours(), startCompareTime.getMinutes(), startCompareTime.getSeconds()).getTime();
-                    var endTimeStamp = new Date(endCompareDate.getFullYear(), endCompareDate.getMonth(), endCompareDate.getDate(),
+                    var endTimeStamp;
+                    if (endCompareTime.getHours() === 0) {
+                        endTimeStamp = new Date(endCompareDate.getFullYear(), endCompareDate.getMonth(), endCompareDate.getDate() + 1,
                                                                     endCompareTime.getHours(), endCompareTime.getMinutes(), endCompareTime.getSeconds()).getTime();
+                    } else {
+                        endTimeStamp = new Date(endCompareDate.getFullYear(), endCompareDate.getMonth(), endCompareDate.getDate(),
+                                                                    endCompareTime.getHours(), endCompareTime.getMinutes(), endCompareTime.getSeconds()).getTime();
+                    }
 
                     return startPicker.value() <= endPicker.value() &&
-                      startCompareDate.toDateString() === endCompareDate.toDateString() &&
                       startPicker.value().getTime() >= startTimeStamp &&
                       endPicker.value().getTime() <= endTimeStamp;
                 }
@@ -1145,13 +1155,24 @@ kendo_module({
                 container = that._editContainer,
                 model = that._modelForContainer(container),
                 editable = that.editable;
+            console.log(that);
+            console.log(model);
             //Some date manipulation code used to set the models datetime back an hour before the save.
-            var startT = new Date(model.start);
-            var endT = new Date(model.end);
-            startT.setHours(startT.getHours() -1);
-            endT.setHours(endT.getHours() -1);
-            model.start = startT;
-            model.end = endT;
+            var startT;
+            var endT;
+            if (that.shouldRemoveHour) {
+                startT = new Date(model.start);
+                endT = new Date(model.end);
+                startT.setHours(startT.getHours() -1);
+                endT.setHours(endT.getHours() -1);
+                model.start = startT;
+                model.end = endT;
+                that.shouldRemoveHour = false;
+            } else {
+                endT = new Date(model.end);
+                endT.setHours(endT.getHours() -1);
+                model.end = endT;
+            }
 
             if (container && editable && editable.end() &&
                 !that.trigger(SAVE, { container: container, model: model } )) {
@@ -1337,6 +1358,7 @@ kendo_module({
             endT.setHours(endT.getHours() +1);
             model.start = startT;
             model.end = endT;
+            that.shouldRemoveHour = true;
 
            if (template) {
                 if (typeof template === STRING) {
