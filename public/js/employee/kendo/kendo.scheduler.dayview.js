@@ -361,7 +361,7 @@ kendo_module({
                     endDateSlotIndex = this._dateSlotIndex(start);
                 }
 
-                slots = this._columns[endDateSlotIndex + groupOffset].slots;
+                //slots = this._columns[endDateSlotIndex + groupOffset].slots;
 
                 endSlotIndex = Math.min(slots.length - 1, endSlotIndex);
 
