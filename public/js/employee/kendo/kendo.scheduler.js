@@ -1150,12 +1150,10 @@ kendo_module({
                 container = that._editContainer,
                 model = that._modelForContainer(container),
                 editable = that.editable;
-            console.log(that);
-            console.log(model);
+
             //Some date manipulation code used to set the models datetime back an hour before the save.
             var startT;
             var endT;
-            //debugger;
 
             if (that.startDateTimeCompareValue.getTime() !== model.start.getTime()) {
                 startT = new Date(model.start);
