@@ -319,7 +319,7 @@ kendo_module({
             recurrenceException: { defaultValue: "", type: "string" },
             isAllDay: { type: "boolean", defaultValue: false },
             description: { type: "string" },
-            host: { type: "string" }
+            //host: { type: "string" }
         }
     });
 
@@ -394,6 +394,13 @@ kendo_module({
     }
 
     function dropDownResourceEditor(resource) {
+        //Added some logic here to check if the field is availability. If it is, change the default text from none to avilable
+        var textToUse;
+        if (resource.title === 'Availability') {
+            textToUse = "Available";
+        } else {
+            textToUse = "None";
+        }// End of the logic I added to check if the field is availability.
         return function(container) {
            $(kendo.format('<select data-{0}bind="value: {1}">', kendo.ns, resource.field))
              .appendTo(container)
@@ -402,7 +409,7 @@ kendo_module({
                  dataValueField: resource.dataValueField,
                  dataSource: resource.dataSource,
                  valuePrimitive: resource.valuePrimitive,
-                 optionLabel: "None",
+                 optionLabel: textToUse,
                  template: kendo.format('<span class="k-scheduler-mark" style="background-color:#= data.{0}?{0}:"none" #"></span>#={1}#', resource.dataColorField, resource.dataTextField)
              });
        };
@@ -656,7 +663,7 @@ kendo_module({
                     end: "End",
                     allDayEvent: "All day event",
                     description: "Description",
-                    host: "Host",
+                    //host: "Host",
                     repeat: "Repeat",
                     timezone: " ",
                     startTimezone: "Start timezone",
