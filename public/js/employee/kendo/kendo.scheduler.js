@@ -1138,6 +1138,13 @@ kendo_module({
                 container = that._editContainer,
                 model = that._modelForContainer(container),
                 editable = that.editable;
+            //Some date manipulation code used to set the models datetime back an hour before the save.
+            var startT = new Date(model.start);
+            var endT = new Date(model.end);
+            startT.setHours(startT.getHours() -1);
+            endT.setHours(endT.getHours() -1);
+            model.start = startT;
+            model.end = endT;
 
             if (container && editable && editable.end() &&
                 !that.trigger(SAVE, { container: container, model: model } )) {
@@ -1194,6 +1201,7 @@ kendo_module({
             });
 
             container.on(CLICK + NS, "a.k-scheduler-update", function(e) {
+
                 e.preventDefault();
                 e.stopPropagation();
 
@@ -1301,7 +1309,7 @@ kendo_module({
                     that._createTimezonePopup(model, this);
                 },
                 fields = [
-                    { field: "title", title: messages.editor.title /*, format: field.format, editor: field.editor, values: field.values*/ },
+                    //{ field: "title", title: messages.editor.title /*, format: field.format, editor: field.editor, values: field.values*/ },
                     { field: "start", title: messages.editor.start, editor: DATERANGEEDITOR },
                     { field: "end", title: messages.editor.end, editor: DATERANGEEDITOR }
                     //{ field: "isAllDay", title: messages.editor.allDayEvent }
@@ -1314,6 +1322,14 @@ kendo_module({
                 endTime = model.endTime,
                 editableFields = [],
                 timezone;
+
+            //Set the date that is displayed in the edit box as one hour later. It is reverted in the save event above.
+            var startT = new Date(model.start);
+            var endT = new Date(model.end);
+            startT.setHours(startT.getHours() +1);
+            endT.setHours(endT.getHours() +1);
+            model.start = startT;
+            model.end = endT;
 
            if (template) {
                 if (typeof template === STRING) {
@@ -1333,10 +1349,10 @@ kendo_module({
                 }
 
                 if ("description" in model) {
-                    fields.push({ field: "description", title: messages.editor.description, editor: '<textarea name="description" class="k-textbox"/>' });
+                    //fields.push({ field: "description", title: messages.editor.description, editor: '<textarea name="description" class="k-textbox"/>' });
                 }
 
-                fields.push({field: "host", title: messages.editor.host });
+                //fields.push({field: "host", title: messages.editor.host });
 
                 for (var resourceIndex = 0; resourceIndex < that.resources.length; resourceIndex++) {
                     var resource = that.resources[resourceIndex];
@@ -1405,6 +1421,7 @@ kendo_module({
                                 e.preventDefault();
                                 return;
                             }
+                            console.log(model);
 
                             model.startTime = startTime;
                             model.endTime = endTime;

@@ -55,7 +55,7 @@ kendo_module({
         ARIA_READONLY = "aria-readonly",
         DATE = Date,
         MIN = new DATE(1900, 0, 1,8,0,0),
-        MAX = new DATE(2099, 11, 31,22,0,0),
+        MAX = new DATE(2099, 11, 31,23,30,0),
         dateViewParams = { view: "date" },
         timeViewParams = { view: "time" },
         extend = $.extend;
@@ -112,7 +112,7 @@ kendo_module({
             dates: [],
             min: new DATE(MIN),
             max: new DATE(MAX),
-            interval: 5,
+            interval: 15,
             height: 200,
             footer: "",
             start: MONTH,
