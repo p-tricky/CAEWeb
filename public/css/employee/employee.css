@@ -252,3 +252,29 @@ input {
   width: 80px;
   height: 80px;
 }
+
+.employeeSelectBox {
+  float: left;
+  padding: 3px;
+  padding-right: 6px;
+  padding-left: 6px;
+  border-radius: 5px;
+  margin: 6px;
+  margin-right: 0px;
+  cursor: pointer;
+}
+
+.tab-content {
+  font-size: 12px;
+  background-image: url('textures/highlight.png');
+  background-image: none, -webkit-linear-gradient(top, #f6f6f6 0%, #eaeaea 100%);
+  background-image: none, -moz-linear-gradient(top, #f6f6f6 0%, #eaeaea 100%);
+  background-image: none, -o-linear-gradient(top, #f6f6f6 0%, #eaeaea 100%);
+  /* background-image: none, linear-gradient(to bottom, #f6f6f6 0%, #eaeaea 100%); */
+  background-position: 50% 50%;
+  /* background-color: #e3e3e3; */
+}
+
+.clear {
+  clear:both;
+}

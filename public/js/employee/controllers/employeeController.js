@@ -31,9 +31,10 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
 
     _showAdminSchedule : function() {
       if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
-        App.ScheduleTab.AdminScheduleController.showEditableAdminSchedule();
+        App.AdminScheduleTab.AdminScheduleController.getAdminScheduleInfo(App.AdminScheduleTab.AdminScheduleController.showAdminScheduleInfo);
+        //App.AdminScheduleTab.AdminScheduleController.showEditableAdminSchedule();
       } else {
-        App.ScheduleTab.AdminScheduleController.showViewonlyAdminSchedule();
+        App.AdminScheduleTab.AdminScheduleController.showViewonlyAdminSchedule();
       }
     }
     

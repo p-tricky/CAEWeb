@@ -19,8 +19,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       'click .adminschedule':'navigateToAdminSchedule',
       'click .attendentschedule':'navigateToAttendentSchedule',
       'click .programmerschedule':'navigateToProgrammerSchedule',
-      'click .timesheet':'navigateToTimesheet',
-      'click .management':'navigateToManagement'
+      'click .timesheet':'navigateToTimesheet'
     },
     
     navigateToMyHours : function() {

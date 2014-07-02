@@ -1,10 +1,28 @@
-EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionette, $, _) {
+EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone, Marionette, $, _) {
   
-  ScheduleTab.AdminScheduleController = {
+  AdminScheduleTab.AdminScheduleController = {
+    getAdminScheduleInfo : function(callback) {
+      AdminScheduleTab.scheduleView = new AdminScheduleTab.ScheduleView();
+      EmployeeApp.tabDiv.tabContent.show(AdminScheduleTab.scheduleView);
+
+      if (typeof(AdminScheduleTab.adminList === 'undefined')) {
+        AdminScheduleTab.adminList = new AdminScheduleTab.AdminCollection();
+        AdminScheduleTab.adminList.fetch({success:callback});
+      } else {
+        callback();
+      }
+    },
+
+    showAdminScheduleInfo : function() {
+      AdminScheduleTab.employeeSelectSection = new AdminScheduleTab.EmployeeSelectSectionCollectionView({collection:AdminScheduleTab.adminList});
+      AdminScheduleTab.scheduleView.employeeSelectSection.show(AdminScheduleTab.employeeSelectSection);
+      AdminScheduleTab.AdminScheduleController.showEditableAdminSchedule();
+    },
+
     showEditableAdminSchedule : function() {
       var TODAY = new Date();
       var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
-      $("#tabsContent").kendoScheduler({
+      $("#scheduleSection").kendoScheduler({
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
           endTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() , 23, 30, 0),
@@ -72,7 +90,11 @@ EmployeeApp.module('ScheduleTab', function (ScheduleTab, App, Backbone, Marionet
                           recurrenceException: { from: "RecurrenceException" },
                       }
                   }
-              }
+              },
+              filter: {
+                logic: "or",
+                filters: []
+            }
           },
           resources: [
               {
