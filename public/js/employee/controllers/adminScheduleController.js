@@ -30,7 +30,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
           endTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() , 23, 30, 0),
-          height: 970,
+          height: 1170,
           allDaySlot: false,
           minorTickCount: 4,
           eventTemplate: eventTemplate,
