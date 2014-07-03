@@ -1,5 +1,6 @@
 EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone, Marionette, $, _) {
   
+  AdminScheduleTab.employeeFilter = [];
   AdminScheduleTab.AdminScheduleController = {
     getAdminScheduleInfo : function(callback) {
       AdminScheduleTab.scheduleView = new AdminScheduleTab.ScheduleView();
@@ -14,6 +15,9 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
     },
 
     showAdminScheduleInfo : function() {
+      AdminScheduleTab.adminList.each(function(model) {
+        AdminScheduleTab.employeeFilter.push(model.get('id'));
+      });
       AdminScheduleTab.employeeSelectSection = new AdminScheduleTab.EmployeeSelectSectionCollectionView({collection:AdminScheduleTab.adminList});
       AdminScheduleTab.scheduleView.employeeSelectSection.show(AdminScheduleTab.employeeSelectSection);
       AdminScheduleTab.AdminScheduleController.showEditableAdminSchedule();
@@ -125,6 +129,10 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
                                   color: { type: "string", from: "schedule_color" }
                               }
                           }
+                      },
+                      filter: {
+                        logic: "or",
+                        filters: []
                       }
                   },
                   title: "Employee"

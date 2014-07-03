@@ -23,20 +23,26 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
     toggleEmployee: function() {
       if ($(this.el).css('background-color') === 'rgb(211, 211, 211)') {
         $(this.el).css('background-color', this.model.get('schedule_color'));
-        this.checked = this.model.get('id');
+        AdminScheduleTab.employeeFilter.push(this.model.get('id'));
       } else {
         $(this.el).css('background-color', 'lightgray');
-        this.checked = '';
+        var empIndex = AdminScheduleTab.employeeFilter.indexOf(this.model.get('id'));
+        AdminScheduleTab.employeeFilter.splice(empIndex,1);
       }
 
       var scheduler = $("#scheduleSection").data("kendoScheduler");
-      console.log(scheduler);
 
       scheduler.dataSource.filter({
-          operator: function(task) {
-              return $.inArray(task.employee, this.checked) >= 0;
-          }
+        operator: function(shift) {
+          return $.inArray(shift.employee, AdminScheduleTab.employeeFilter) >= 0;
+        }
       });
+      scheduler.resources[1].dataSource.filter({
+        operator: function(employee) {
+          return $.inArray(employee.value.toString(), AdminScheduleTab.employeeFilter) >= 0;
+        }
+      });
+      scheduler.view(scheduler.view().name);
     }
     
   });
