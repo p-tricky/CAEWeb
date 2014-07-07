@@ -27,7 +27,7 @@ EmployeeApp.EmployeeAppController = {
   attendantschedule : function() {
     EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
     EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
-      $('#attendentschedule').addClass('selectedTab');
+      $('#attendantschedule').addClass('selectedTab');
     });
     EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAttendantSchedule);
   },
