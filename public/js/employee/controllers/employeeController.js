@@ -32,9 +32,16 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     _showAdminSchedule : function() {
       if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
         App.AdminScheduleTab.AdminScheduleController.getAdminScheduleInfo(App.AdminScheduleTab.AdminScheduleController.showAdminScheduleInfo);
-        //App.AdminScheduleTab.AdminScheduleController.showEditableAdminSchedule();
       } else {
         App.AdminScheduleTab.AdminScheduleController.showViewonlyAdminSchedule();
+      }
+    },
+
+    _showAttendentSchedule : function() {
+      if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
+        App.AttendentScheduleTab.AttendentScheduleController.getAttendentScheduleInfo(App.AttendentScheduleTab.AttendentScheduleController.showAttendentScheduleInfo);
+      } else {
+        App.AttendentScheduleTab.AttendentScheduleController.showViewonlyAttendentSchedule();
       }
     }
     

@@ -29,7 +29,7 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#attendentschedule').addClass('selectedTab');
     });
-    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions();
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAttendentSchedule);
   },
 
   programmerschedule : function() {
