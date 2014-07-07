@@ -1,7 +1,7 @@
-EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone, Marionette, $, _) {
-  AdminScheduleTab.EmployeeSelectSectionCollectionView = Backbone.Marionette.CollectionView.extend({
+EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App, Backbone, Marionette, $, _) {
+  ProgrammerScheduleTab.EmployeeSelectSectionCollectionView = Backbone.Marionette.CollectionView.extend({
     
-    itemView: EmployeeApp.AdminScheduleTab.EmployeeSelectSectionItemView,
+    itemView: EmployeeApp.ProgrammerScheduleTab.EmployeeSelectSectionItemView,
 
     id:'innerEmployeeSelectSection'
     

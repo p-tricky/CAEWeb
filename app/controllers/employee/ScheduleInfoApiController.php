@@ -6,14 +6,14 @@ class ScheduleInfoApiController extends BaseController {
     return $admins->toJson();      
   }
 
-  public function getAttendentScheduleInfo() {
-    $admins = User::where('position_id', '=', '1')->get();
-    return $admins->toJson(); 
+  public function getAttendantScheduleInfo() {
+    $attendants = User::where('position_id', '=', '1')->get();
+    return $attendants->toJson(); 
   }
 
   public function getProgrammerScheduleInfo() {
-    $admins = User::where('position_id', '=', '3')->get();
-    return $admins->toJson(); 
+    $programmers = User::where('position_id', '=', '3')->get();
+    return $programmers->toJson(); 
   }
 
 }

@@ -1,32 +1,31 @@
-EmployeeApp.module('AttendentScheduleTab', function (AttendentScheduleTab, App, Backbone, Marionette, $, _) {
+EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, Backbone, Marionette, $, _) {
   
-  AttendentScheduleTab.employeeFilter = [];
-  AttendentScheduleTab.AttendentScheduleController = {
-    getAttendentScheduleInfo : function(callback) {
+  AttendantScheduleTab.employeeFilter = [];
+  AttendantScheduleTab.AttendantScheduleController = {
+    getAttendantScheduleInfo : function(callback) {
       //The following view is namespaced to adminScheduleTab even though it is used for attendets too.
-      AttendentScheduleTab.scheduleView = new App.AdminScheduleTab.ScheduleView();
-      EmployeeApp.tabDiv.tabContent.show(AttendentScheduleTab.scheduleView);
+      AttendantScheduleTab.scheduleView = new App.AdminScheduleTab.ScheduleView();
+      EmployeeApp.tabDiv.tabContent.show(AttendantScheduleTab.scheduleView);
 
-      if (typeof(AttendentScheduleTab.attendentList === 'undefined')) {
-        AttendentScheduleTab.attendentList = new AttendentScheduleTab.AttendentCollection();
-        AttendentScheduleTab.attendentList.fetch({success:callback});
+      if (typeof(AttendantScheduleTab.AttendantList === 'undefined')) {
+        AttendantScheduleTab.AttendantList = new AttendantScheduleTab.AttendantCollection();
+        AttendantScheduleTab.AttendantList.fetch({success:callback});
       } else {
         callback();
       }
     },
 
-    showAttendentScheduleInfo : function() {
-      AttendentScheduleTab.attendentList.each(function(model) {
-        AttendentScheduleTab.employeeFilter.push(model.get('id'));
+    showAttendantScheduleInfo : function() {
+      AttendantScheduleTab.AttendantList.each(function(model) {
+        AttendantScheduleTab.employeeFilter.push(model.get('id'));
       });
-      console.log(AttendentScheduleTab.employeeFilter);
-      //The following view is namespaced to adminScheduleView even though it is used for attendents too.
-      AttendentScheduleTab.employeeSelectSection = new App.AdminScheduleTab.EmployeeSelectSectionCollectionView({collection:AttendentScheduleTab.attendentList});
-      AttendentScheduleTab.scheduleView.employeeSelectSection.show(AttendentScheduleTab.employeeSelectSection);
-      AttendentScheduleTab.AttendentScheduleController.showEditableAttendentSchedule();
+    
+      AttendantScheduleTab.employeeSelectSection = new App.AttendantScheduleTab.EmployeeSelectSectionCollectionView({collection:AttendantScheduleTab.AttendantList});
+      AttendantScheduleTab.scheduleView.employeeSelectSection.show(AttendantScheduleTab.employeeSelectSection);
+      AttendantScheduleTab.AttendantScheduleController.showEditableAttendantSchedule();
     },
 
-    showEditableAttendentSchedule : function() {
+    showEditableAttendantSchedule : function() {
       var TODAY = new Date();
       var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
       $("#scheduleSection").kendoScheduler({
@@ -60,21 +59,21 @@ EmployeeApp.module('AttendentScheduleTab', function (AttendentScheduleTab, App, 
             batch: true,
               transport: {
                 read: {
-                  url: "../employee/api/attendentschedule",
+                  url: "../employee/api/attendantschedule",
                   dataType: "json"
                 },
                 update: {
-                  url:"../employee/api/attendentschedule/update",
+                  url:"../employee/api/attendantschedule/update",
                   type:'PUT',
                   dataType: "json"
                 },
                 create: {
-                  url:"../employee/api/attendentschedule/new",
+                  url:"../employee/api/attendantschedule/new",
                   type: 'POST',
                   dataType: "json"
                 },
                 destroy: {
-                  url:"../employee/api/attendentschedule/destroy",
+                  url:"../employee/api/attendantschedule/destroy",
                   type:'DELETE',
                   dataType: "json"
                 },
@@ -118,7 +117,7 @@ EmployeeApp.module('AttendentScheduleTab', function (AttendentScheduleTab, App, 
                       batch: true,
                       transport: {
                           read: {
-                            url: "../employee/api/attendentscheduleinfo",
+                            url: "../employee/api/attendantscheduleinfo",
                             dataType: "json"
                           }
                       },
@@ -143,7 +142,7 @@ EmployeeApp.module('AttendentScheduleTab', function (AttendentScheduleTab, App, 
           ]
       });
     },
-    showViewonlyAttendentSchedule : function() {
+    showViewonlyAttendantSchedule : function() {
         console.log('showing viewonly schedule');
     }
 

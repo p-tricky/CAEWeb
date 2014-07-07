@@ -1,5 +1,5 @@
-EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone, Marionette, $, _) {
-  AdminScheduleTab.EmployeeSelectSectionItemView = Backbone.Marionette.ItemView.extend({
+EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, Backbone, Marionette, $, _) {
+  AttendantScheduleTab.EmployeeSelectSectionItemView = Backbone.Marionette.ItemView.extend({
 
     initialize : function(options) {
       this.options = options || {};
@@ -23,23 +23,23 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
     toggleEmployee: function() {
       if ($(this.el).css('background-color') === 'rgb(211, 211, 211)') {
         $(this.el).css('background-color', this.model.get('schedule_color'));
-        AdminScheduleTab.employeeFilter.push(this.model.get('id'));
+        AttendantScheduleTab.employeeFilter.push(this.model.get('id'));
       } else {
         $(this.el).css('background-color', 'lightgray');
-        var empIndex = AdminScheduleTab.employeeFilter.indexOf(this.model.get('id'));
-        AdminScheduleTab.employeeFilter.splice(empIndex,1);
+        var empIndex = AttendantScheduleTab.employeeFilter.indexOf(this.model.get('id'));
+        AttendantScheduleTab.employeeFilter.splice(empIndex,1);
       }
 
       var scheduler = $("#scheduleSection").data("kendoScheduler");
 
       scheduler.dataSource.filter({
         operator: function(shift) {
-          return $.inArray(shift.employee, AdminScheduleTab.employeeFilter) >= 0;
+          return $.inArray(shift.employee, AttendantScheduleTab.employeeFilter) >= 0;
         }
       });
       scheduler.resources[1].dataSource.filter({
         operator: function(employee) {
-          return $.inArray(employee.value.toString(), AdminScheduleTab.employeeFilter) >= 0;
+          return $.inArray(employee.value.toString(), AttendantScheduleTab.employeeFilter) >= 0;
         }
       });
       scheduler.view(scheduler.view().name);

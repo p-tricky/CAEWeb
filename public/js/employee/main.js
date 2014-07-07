@@ -24,12 +24,12 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAdminSchedule);
   },
 
-  attendentschedule : function() {
+  attendantschedule : function() {
     EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
     EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#attendentschedule').addClass('selectedTab');
     });
-    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAttendentSchedule);
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAttendantSchedule);
   },
 
   programmerschedule : function() {
@@ -37,7 +37,7 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#programmerschedule').addClass('selectedTab');
     });
-    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions();
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showProgrammerSchedule);
   },
 
   timesheet : function() {
@@ -54,7 +54,7 @@ EmployeeApp.Router = new Marionette.AppRouter({
   appRoutes: {
     "myhours" : "myhours",
     "adminschedule" : "adminschedule",
-    "attendentschedule" : "attendentschedule",
+    "attendantschedule" : "attendantschedule",
     "programmerschedule" : "programmerschedule",
     "timesheet" : "timesheet",
   }
