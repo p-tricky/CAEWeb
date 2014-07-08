@@ -16,6 +16,7 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
     },
 
     showAttendantScheduleInfo : function() {
+      AttendantScheduleTab.employeeFilter = [];
       AttendantScheduleTab.AttendantList.each(function(model) {
         AttendantScheduleTab.employeeFilter.push(model.get('id'));
       });

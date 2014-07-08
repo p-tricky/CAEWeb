@@ -32,11 +32,6 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
 
       var scheduler = $("#scheduleSection").data("kendoScheduler");
 
-      scheduler.dataSource.filter({
-        operator: function(shift) {
-          return $.inArray(shift.employee, ProgrammerScheduleTab.employeeFilter) >= 0;
-        }
-      });
       scheduler.resources[1].dataSource.filter({
         operator: function(employee) {
           return $.inArray(employee.value.toString(), ProgrammerScheduleTab.employeeFilter) >= 0;

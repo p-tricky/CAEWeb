@@ -15,12 +15,14 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
     },
 
     showAdminScheduleInfo : function() {
+      AdminScheduleTab.employeeFilter = [];
       AdminScheduleTab.adminList.each(function(model) {
         AdminScheduleTab.employeeFilter.push(model.get('id'));
       });
       AdminScheduleTab.employeeSelectSection = new AdminScheduleTab.EmployeeSelectSectionCollectionView({collection:AdminScheduleTab.adminList});
       AdminScheduleTab.scheduleView.employeeSelectSection.show(AdminScheduleTab.employeeSelectSection);
       AdminScheduleTab.AdminScheduleController.showEditableAdminSchedule();
+
     },
 
     showEditableAdminSchedule : function() {
@@ -87,7 +89,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
                           title: { from: "Title", defaultValue: "" },
                           start: { type: "date", from: "Start" },
                           end: { type: "date", from: "End" },
-                          employee: { from: "Employee", defaultValue: 2 },
+                          employee: { from: "Employee", defaultValue: 2, validation: { required: true } },
                           availability: { from: "Availability", defaultValue: 0 },
                           recurrenceId: { from: "RecurrenceId" },
                           recurrenceRule: { from: "RecurrenceRule" },

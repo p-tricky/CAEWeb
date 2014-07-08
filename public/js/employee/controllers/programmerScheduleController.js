@@ -16,6 +16,7 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
     },
 
     showProgrammerScheduleInfo : function() {
+      ProgrammerScheduleTab.employeeFilter = [];
       ProgrammerScheduleTab.programmerList.each(function(model) {
         ProgrammerScheduleTab.employeeFilter.push(model.get('id'));
       });
