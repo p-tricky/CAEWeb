@@ -26,7 +26,7 @@ a {
 #header {
 	display:block;
 	margin: 0 auto;
-	width: 1260px;
+	min-width: 1260px;
 	height: 80px;
 
 	background: rgb(51,25,0); /* Old browsers */
@@ -87,7 +87,7 @@ a {
 }
 
 #content {
-	width: 1260px;
+	min-width: 1260px;
 	display: block;
 	margin: 0 auto;
 	min-height: 1010px;

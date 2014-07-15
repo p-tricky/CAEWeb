@@ -17,10 +17,9 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     events : {
       'click .myhours' : 'navigateToMyHours',
       'click .adminschedule':'navigateToAdminSchedule',
-      'click .attendentschedule':'navigateToAttendentSchedule',
+      'click .attendantschedule':'navigateToAttendentSchedule',
       'click .programmerschedule':'navigateToProgrammerSchedule',
-      'click .timesheet':'navigateToTimesheet',
-      'click .management':'navigateToManagement'
+      'click .timesheet':'navigateToTimesheet'
     },
     
     navigateToMyHours : function() {
@@ -32,7 +31,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     },
 
     navigateToAttendentSchedule : function() {
-      EmployeeApp.navigate('attendentschedule',true);
+      EmployeeApp.navigate('attendantschedule',true);
     },
 
     navigateToProgrammerSchedule : function() {
@@ -41,10 +40,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
 
     navigateToTimesheet : function() {
       EmployeeApp.navigate('timesheet',true);
-    },
-
-    navigateToManagement : function() {
-      EmployeeApp.navigate('management',true);
     }
+    
   });
 });

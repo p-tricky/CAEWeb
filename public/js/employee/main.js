@@ -7,60 +7,45 @@ EmployeeApp.navigate = function(route,  options){
 };
 
 EmployeeApp.EmployeeAppController = {
-  _showBaseView : function() {
-    EmployeeApp.tabDiv = new EmployeeApp.EmployeeTab.EmployeeTabView({'tabName':'employeeTab'});
-    EmployeeApp.tabArea.show(EmployeeApp.tabDiv);
-  },
-
-  _showViewableTabs : function(callback) {
-    if (typeof(EmployeeApp.tabRow) === 'undefined') {
-      EmployeeApp.tabsCollection = new EmployeeApp.EmployeeTab.ViewableTabCollection();
-      EmployeeApp.tabsCollection.fetch({callback: callback, success : function() {
-        EmployeeApp.tabRow = new EmployeeApp.EmployeeTab.TabsItemView({collection:EmployeeApp.tabsCollection});
-        EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
-        callback();
-      }});
-    } else {
-      EmployeeApp.tabDiv.tabsList.show(EmployeeApp.tabRow);
-      callback();
-    }
-  },
 
   myhours : function() {
-    this._showBaseView();
-    this._showViewableTabs(function() {
+    EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
+    EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#myhours').addClass('selectedTab');
     });
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions();
   },
 
   adminschedule : function() {
-    this._showBaseView();
-    this._showViewableTabs(function() {
+    EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
+    EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#adminschedule').addClass('selectedTab');
     });
-
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAdminSchedule);
   },
 
-  attendentschedule : function() {
-    this._showBaseView();
-    this._showViewableTabs(function() {
-      $('#attendentschedule').addClass('selectedTab');
+  attendantschedule : function() {
+    EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
+    EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
+      $('#attendantschedule').addClass('selectedTab');
     });
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAttendantSchedule);
   },
 
   programmerschedule : function() {
-    this._showBaseView();
-    this._showViewableTabs(function() {
+    EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
+    EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#programmerschedule').addClass('selectedTab');
     });
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showProgrammerSchedule);
   },
 
   timesheet : function() {
-    this._showBaseView();
-    this._showViewableTabs(function() {
+    EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
+    EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#timesheet').addClass('selectedTab');
     });
-
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions();
   }
 };
 
@@ -69,7 +54,7 @@ EmployeeApp.Router = new Marionette.AppRouter({
   appRoutes: {
     "myhours" : "myhours",
     "adminschedule" : "adminschedule",
-    "attendentschedule" : "attendentschedule",
+    "attendantschedule" : "attendantschedule",
     "programmerschedule" : "programmerschedule",
     "timesheet" : "timesheet",
   }
