@@ -2,7 +2,10 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
   UserListTab.UserListTabController = {
 
     getUserList : function() {
-      
+    	// Testing
+    	$('#loadingDiv').remove();
+    	var testingView = new UserListTab.TestingView();
+    	App.tabDiv.tabContent.show(testingView);
     }
     
   };

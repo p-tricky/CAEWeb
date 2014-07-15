@@ -8,7 +8,9 @@ UserAdminApp.navigate = function(route,  options){
 
 UserAdminApp.UserAdminAppController = {
   userlist : function() {
-
+    UserAdminApp.tabDiv = new UserAdminApp.UserListTab.UserListTabView({'tabName':'userlistTab'});
+    UserAdminApp.tabArea.show(UserAdminApp.tabDiv);
+    UserAdminApp.UserListTab.UserListTabController.getUserList();
   }
 };
 
