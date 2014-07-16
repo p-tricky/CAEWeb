@@ -4,6 +4,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
     initialize : function(options) {
       this.options = options || {};
       this.template = Handlebars.compile(tpl.get('schedule/_employeeSelectBox'));
+      this.model.bind('change', this.render, this);
     },
 
     id:'employeeSelectBox',

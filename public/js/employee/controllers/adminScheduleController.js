@@ -139,11 +139,58 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
                   },
                   title: "Employee"
               }
-          ]
+          ],
+          dataBound: AdminScheduleTab.AdminScheduleController.getEmployeeHours
       });
     },
     showViewonlyAdminSchedule : function() {
         console.log('showing viewonly schedule');
+    },
+
+    getEmployeeHours : function() {
+      var scheduler = $("#scheduleSection").data("kendoScheduler");
+      var currentData = scheduler._data;
+      var currentStart = scheduler._selectedView._startDate;
+      var currentEnd = scheduler._selectedView._endDate;
+      var totalHours = 0;
+      var hourObject = {};
+
+      AdminScheduleTab.adminList.each(function(model) {
+        model.set({'hours' : '00:00' });
+      });
+      
+      _.each(currentData, function(entry) {
+        if (entry.start.getTime() >= currentStart.getTime() && entry.end.getTime() <= (currentEnd.getTime() + 86400000)) {
+          if (hourObject.hasOwnProperty(entry.employee)) {
+            hourObject[entry.employee] = hourObject[entry.employee] + (entry.end - entry.start);
+          } else {
+            hourObject[entry.employee] = (entry.end - entry.start);
+          }
+          totalHours = totalHours + (entry.end - entry.start);
+        }
+      });
+
+      var temp, hours, minutes, timeString;
+
+      temp = Math.floor(totalHours / 1000);
+      hours = Math.floor(temp / 3600);
+      minutes = Math.floor((temp %= 3600) / 60);
+
+      timeString = (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
+
+      //console.log(timeString);
+
+      for (var prop in hourObject) {
+        temp = Math.floor(hourObject[prop] / 1000);
+        hours = Math.floor(temp / 3600);
+        minutes = Math.floor((temp %= 3600) / 60);
+
+        timeString = (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
+
+        //console.log(prop + "->" + timeString);
+
+        AdminScheduleTab.adminList.get(prop).set({'hours' : timeString});
+      }
     }
 
   };
