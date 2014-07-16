@@ -159,9 +159,9 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
       AttendantScheduleTab.AttendantList.each(function(model) {
         model.set({'hours' : '00:00' });
       });
-      
+
       _.each(currentData, function(entry) {
-        if (entry.start.getTime() >= currentStart.getTime() && entry.end.getTime() <= (currentEnd.getTime() + 86400000)) {
+        if ((entry.start.getTime() >= currentStart.getTime() && entry.end.getTime() <= (currentEnd.getTime() + 86400000)) && entry.availability != '1') {
           if (hourObject.hasOwnProperty(entry.employee)) {
             hourObject[entry.employee] = hourObject[entry.employee] + (entry.end - entry.start);
           } else {

@@ -4,7 +4,7 @@ class ScheduleInfoApiController extends BaseController {
   public function getAdminScheduleInfo() {
     $admins = User::where('position_id', '=', '2')->get();
     foreach ($admins as $admin) {
-      $admin->hours = 0;
+      $admin->hours = '00:00';
     }
     return $admins->toJson();      
   }
@@ -12,7 +12,7 @@ class ScheduleInfoApiController extends BaseController {
   public function getAttendantScheduleInfo() {
     $attendants = User::where('position_id', '=', '1')->get();
     foreach ($attendants as $attendent) {
-      $attendent->hours = 0;
+      $attendent->hours = '00:00';
     }
     return $attendants->toJson(); 
   }
@@ -20,7 +20,7 @@ class ScheduleInfoApiController extends BaseController {
   public function getProgrammerScheduleInfo() {
     $programmers = User::where('position_id', '=', '3')->get();
     foreach ($programmers as $programmer) {
-      $programmer->hours = 0;
+      $programmer->hours = '00:00';
     }
     return $programmers->toJson(); 
   }
