@@ -42,6 +42,7 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
       var endDate = new Date(dataDateObject);
       //Set the semsterEndDate to the above created date. Scheduler has been setup to pull this date.
       EmployeeApp.EmployeeTab.semesterEndDate = endDate || new Date();
+
       $("#scheduleSection").kendoScheduler({
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
@@ -122,7 +123,6 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
                   field: "availability",
                   dataSource: [
                       { text: "Unavailable", value: 1, color: "#AAAAAA"}
-                      //{ text: "Available", value: 2 }
                   ],
                   title: "Availability"
               },
@@ -190,16 +190,12 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
 
       timeString = (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
 
-      //console.log(timeString);
-
       for (var prop in hourObject) {
         temp = Math.floor(hourObject[prop] / 1000);
         hours = Math.floor(temp / 3600);
         minutes = Math.floor((temp %= 3600) / 60);
 
         timeString = (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
-
-        //console.log(prop + "->" + timeString);
 
         ProgrammerScheduleTab.programmerList.get(prop).set({'hours' : timeString});
       }
