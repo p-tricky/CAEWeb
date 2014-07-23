@@ -1,3 +1,4 @@
+//A small utility to get any templates. Templates can be passed initailly, or loaded on the fly.
 tpl = {
   templates : {},
   
