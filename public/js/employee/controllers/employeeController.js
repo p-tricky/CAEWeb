@@ -31,25 +31,25 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
 
     _showAdminSchedule : function() {
       if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
-        App.AdminScheduleTab.AdminScheduleController.getAdminScheduleInfo(App.AdminScheduleTab.AdminScheduleController.showAdminScheduleInfo);
+        App.AdminScheduleTab.AdminScheduleController.getAdminScheduleInfo(App.AdminScheduleTab.AdminScheduleController.showAdminScheduleInfo, true);
       } else {
-        App.AdminScheduleTab.AdminScheduleController.showViewonlyAdminSchedule();
+        App.AdminScheduleTab.AdminScheduleController.getAdminScheduleInfo(App.AdminScheduleTab.AdminScheduleController.showAdminScheduleInfo, false);
       }
     },
 
     _showAttendantSchedule : function() {
       if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
-        App.AttendantScheduleTab.AttendantScheduleController.getAttendantScheduleInfo(App.AttendantScheduleTab.AttendantScheduleController.showAttendantScheduleInfo);
+        App.AttendantScheduleTab.AttendantScheduleController.getAttendantScheduleInfo(App.AttendantScheduleTab.AttendantScheduleController.showAttendantScheduleInfo, true);
       } else {
-        App.AttendantScheduleTab.AttendantScheduleController.showViewonlyAttendantSchedule();
+        App.AttendantScheduleTab.AttendantScheduleController.getAttendantScheduleInfo(App.AttendantScheduleTab.AttendantScheduleController.showAttendantScheduleInfo, false);
       }
     },
 
     _showProgrammerSchedule : function() {
       if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
-        App.ProgrammerScheduleTab.ProgrammerScheduleController.getProgrammerScheduleInfo(App.ProgrammerScheduleTab.ProgrammerScheduleController.showProgrammerScheduleInfo);
+        App.ProgrammerScheduleTab.ProgrammerScheduleController.getProgrammerScheduleInfo(App.ProgrammerScheduleTab.ProgrammerScheduleController.showProgrammerScheduleInfo, true);
       } else {
-        App.ProgrammerScheduleTab.ProgrammerScheduleController.showViewonlyProgrammerSchedule();
+        App.ProgrammerScheduleTab.ProgrammerScheduleController.getProgrammerScheduleInfo(App.ProgrammerScheduleTab.ProgrammerScheduleController.showProgrammerScheduleInfo, false);
       }
     }
     

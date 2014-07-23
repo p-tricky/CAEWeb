@@ -2,8 +2,10 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
   
   AttendantScheduleTab.employeeFilter = [];
   AttendantScheduleTab.AttendantScheduleController = {
-    getAttendantScheduleInfo : function(callback) {
+    getAttendantScheduleInfo : function(callback, editable) {
       //The following view is namespaced to adminScheduleTab even though it is used for attendets too.
+      EmployeeApp.AdminScheduleTab.AdminScheduleController.scheduleIsEditable = editable;
+
       AttendantScheduleTab.scheduleView = new App.AdminScheduleTab.ScheduleView();
       EmployeeApp.tabDiv.tabContent.show(AttendantScheduleTab.scheduleView);
 
@@ -23,12 +25,23 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
     
       AttendantScheduleTab.employeeSelectSection = new App.AttendantScheduleTab.EmployeeSelectSectionCollectionView({collection:AttendantScheduleTab.AttendantList});
       AttendantScheduleTab.scheduleView.employeeSelectSection.show(AttendantScheduleTab.employeeSelectSection);
-      AttendantScheduleTab.AttendantScheduleController.showEditableAttendantSchedule();
+      $.ajax({
+        url:'/caeweb/employee/api/endofnextsemester',
+        success:AttendantScheduleTab.AttendantScheduleController.showAttendantSchedule
+      });
     },
 
-    showEditableAttendantSchedule : function() {
+    showAttendantSchedule : function(data) {
       var TODAY = new Date();
       var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
+      //Get the end date for the next semester
+      var dataDateObject = JSON.parse(data);
+      //Replace the - with / so that JS parses the date without doing timezone conversion
+      dataDateObject = dataDateObject.replace("-","/");
+      //Create new date
+      var endDate = new Date(dataDateObject);
+      //Set the semsterEndDate to the above created date. Scheduler has been setup to pull this date.
+      EmployeeApp.EmployeeTab.semesterEndDate = endDate || new Date();
       $("#scheduleSection").kendoScheduler({
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
@@ -37,6 +50,7 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
           allDaySlot: false,
           minorTickCount: 4,
           eventTemplate: eventTemplate,
+          editable: EmployeeApp.AdminScheduleTab.AdminScheduleController.scheduleIsEditable,
 
           views: [
             {

@@ -1564,10 +1564,12 @@ kendo_module({
             }).data("kendoNumericTextBox");
         },
 
+        //Changed the start date to be a end date that I specified.
         _until: function() {
             var that = this,
                 input = that.container.find(".k-recur-until"),
-                start = that.options.start,
+                //start = that.options.start,
+                start = EmployeeApp.EmployeeTab.semesterEndDate,
                 rule = that._value,
                 until = rule.until;
 

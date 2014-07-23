@@ -2,7 +2,8 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
   
   AdminScheduleTab.employeeFilter = [];
   AdminScheduleTab.AdminScheduleController = {
-    getAdminScheduleInfo : function(callback) {
+    getAdminScheduleInfo : function(callback, editable) {
+      AdminScheduleTab.AdminScheduleController.scheduleIsEditable = editable;
       AdminScheduleTab.scheduleView = new AdminScheduleTab.ScheduleView();
       EmployeeApp.tabDiv.tabContent.show(AdminScheduleTab.scheduleView);
 
@@ -21,13 +22,24 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
       });
       AdminScheduleTab.employeeSelectSection = new AdminScheduleTab.EmployeeSelectSectionCollectionView({collection:AdminScheduleTab.adminList});
       AdminScheduleTab.scheduleView.employeeSelectSection.show(AdminScheduleTab.employeeSelectSection);
-      AdminScheduleTab.AdminScheduleController.showEditableAdminSchedule();
-
+      $.ajax({
+        url:'/caeweb/employee/api/endofnextsemester',
+        success:AdminScheduleTab.AdminScheduleController._showAdminSchedule
+      });
     },
 
-    showEditableAdminSchedule : function() {
+    _showAdminSchedule : function(data) {
       var TODAY = new Date();
       var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
+      //Get the end date for the next semester
+      var dataDateObject = JSON.parse(data);
+      //Replace the - with / so that JS parses the date without doing timezone conversion
+      dataDateObject = dataDateObject.replace("-","/");
+      //Create new date
+      var endDate = new Date(dataDateObject);
+      //Set the semsterEndDate to the above created date. Scheduler has been setup to pull this date.
+      EmployeeApp.EmployeeTab.semesterEndDate = endDate || new Date();
+      console.log(AdminScheduleTab.AdminScheduleController.scheduleIsEditable);
       $("#scheduleSection").kendoScheduler({
           date: new Date(),
           startTime: new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate(), 7, 0, 0),
@@ -36,6 +48,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
           allDaySlot: false,
           minorTickCount: 4,
           eventTemplate: eventTemplate,
+          editable: AdminScheduleTab.AdminScheduleController.scheduleIsEditable,
 
           views: [
             {
@@ -142,9 +155,6 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
           ],
           dataBound: AdminScheduleTab.AdminScheduleController.getEmployeeHours
       });
-    },
-    showViewonlyAdminSchedule : function() {
-        console.log('showing viewonly schedule');
     },
 
     getEmployeeHours : function() {

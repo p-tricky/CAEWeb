@@ -25,4 +25,10 @@ class ScheduleInfoApiController extends BaseController {
     return $programmers->toJson(); 
   }
 
+  public function getEndOfNextSemester() {
+    $now = date('Y-m-d H:i:s',time());
+    $result = DB::table('semester_start')->where('start_date', '>', $now)->orderBy('start_date')->take('1')->get();
+    return json_encode($result[0]->end_date);
+  }
+
 }
