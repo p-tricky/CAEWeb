@@ -1,5 +1,7 @@
+//Define a module for the specfic tab that the app is on.
 AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone, Marionette, $, _) {
   
+  //Define a controller to hold all of the functions for this module.
   AVLogClassroomTab.ComputerClassroomController = {
 
     //Function to get the list of rooms, and then call the passed in callback function.

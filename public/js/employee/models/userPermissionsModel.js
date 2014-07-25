@@ -1,5 +1,8 @@
+//Define the module EmployeeTab for all functions that apply to all tabs. Tab specific ones will be namespaced to thier specific tab.
 EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionette, $, _) {
+  //Define a model to be used when fetching the current user permissions
   EmployeeTab.UserPermissionModel = Backbone.Model.extend({
+    //define defaults for new models
     defaults : {
       'username':'',
       'acc_room':'',
@@ -15,6 +18,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       'updated_at':''
     },
 
+    //url that will be used to persist data.
     urlRoot : 'api/userpermissions'
   });
 });

@@ -58,7 +58,7 @@ AVLogApp.on('initialize:after', function() {
   tpl.loadTemplates(['classroomTab','computerclassroomTab','breakoutroomTab','specialroomTab'], function() {
 
     //start the backbone history
-    var result = Backbone.history.start({pushState: true, root: "/caeweb/avlog/"});//, silent:true});
+    var result = Backbone.history.start({pushState: true, root: "/caeweb/avlog/"});
   });
 });
 
