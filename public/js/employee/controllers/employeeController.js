@@ -41,11 +41,19 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       }
     },
 
-    _showAttendentSchedule : function() {
+    _showAttendantSchedule : function() {
       if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
-        App.AttendentScheduleTab.AttendentScheduleController.getAttendentScheduleInfo(App.AttendentScheduleTab.AttendentScheduleController.showAttendentScheduleInfo);
+        App.AttendantScheduleTab.AttendantScheduleController.getAttendantScheduleInfo(App.AttendantScheduleTab.AttendantScheduleController.showAttendantScheduleInfo);
       } else {
-        App.AttendentScheduleTab.AttendentScheduleController.showViewonlyAttendentSchedule();
+        App.AttendantScheduleTab.AttendantScheduleController.showViewonlyAttendantSchedule();
+      }
+    },
+
+    _showProgrammerSchedule : function() {
+      if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
+        App.ProgrammerScheduleTab.ProgrammerScheduleController.getProgrammerScheduleInfo(App.ProgrammerScheduleTab.ProgrammerScheduleController.showProgrammerScheduleInfo);
+      } else {
+        App.ProgrammerScheduleTab.ProgrammerScheduleController.showViewonlyProgrammerSchedule();
       }
     }
     

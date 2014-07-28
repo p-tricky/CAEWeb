@@ -1698,7 +1698,11 @@ kendo_module({
 
                     index -= groupIndex*columnCount;
 
-                    var value = resourceValue(resource, resource.dataSource.at(groupIndex));
+                    //Had to change how this was being done to ensure that it was calculating which
+                    //employee based on the employee list that it currently in the view.
+                    var value = resourceValue(resource, resource.dataSource.view()[groupIndex]);
+                    //var value = resourceValue(resource, resource.dataSource.at(groupIndex));
+
 
                     if (resource.multiple) {
                         value = [value];

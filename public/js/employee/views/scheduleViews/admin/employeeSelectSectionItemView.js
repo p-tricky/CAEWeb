@@ -32,17 +32,14 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
 
       var scheduler = $("#scheduleSection").data("kendoScheduler");
 
-      scheduler.dataSource.filter({
-        operator: function(shift) {
-          return $.inArray(shift.employee, AdminScheduleTab.employeeFilter) >= 0;
-        }
-      });
       scheduler.resources[1].dataSource.filter({
         operator: function(employee) {
           return $.inArray(employee.value.toString(), AdminScheduleTab.employeeFilter) >= 0;
         }
       });
+
       scheduler.view(scheduler.view().name);
+
     }
     
   });
