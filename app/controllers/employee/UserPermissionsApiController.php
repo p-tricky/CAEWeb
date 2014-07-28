@@ -5,9 +5,8 @@ class UserPermissionsApiController extends BaseController {
     $uHelper = new UserHelper();
     $uModel = $uHelper->getUserModel();
     return $uModel->toJson();
-      
   }
-
+  
   public function store() {
     //stub for creates. Should not be needed.
   }

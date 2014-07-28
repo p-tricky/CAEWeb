@@ -29,6 +29,10 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       }
     },
 
+    _showMyHoursTab : function() {
+      EmployeeApp.MyHoursTab.MyHoursController.getShifts(EmployeeApp.MyHoursTab.MyHoursController.showPageContent);
+    },
+
     _showAdminSchedule : function() {
       if (EmployeeApp.currentUser.get('acc_crud_schedule') === '1') {
         App.AdminScheduleTab.AdminScheduleController.getAdminScheduleInfo(App.AdminScheduleTab.AdminScheduleController.showAdminScheduleInfo);

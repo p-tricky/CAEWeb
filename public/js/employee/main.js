@@ -1,5 +1,5 @@
 EmployeeApp.addRegions({
-  tabArea: '#tabsDiv'
+  tabArea: '#tabsDiv',
 });
 
 EmployeeApp.navigate = function(route,  options){
@@ -13,7 +13,12 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#myhours').addClass('selectedTab');
     });
-    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions();
+
+    EmployeeApp.myHoursContent = new EmployeeApp.MyHoursTab.MyHoursView();
+    
+    EmployeeApp.tabDiv.tabContent.show(EmployeeApp.myHoursContent);
+
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showMyHoursTab);
   },
 
   adminschedule : function() {
@@ -29,7 +34,7 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
       $('#attendentschedule').addClass('selectedTab');
     });
-    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showAttendentSchedule);
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions2(EmployeeApp.EmployeeTab.EmployeeController._showAttendentSchedule);
   },
 
   programmerschedule : function() {
