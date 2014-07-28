@@ -1253,7 +1253,7 @@ kendo_module({
         },
         options: {
             name: "RecurrenceEditor",
-            frequencies: ["never", "daily", "weekly", "monthly", "yearly"],
+            frequencies: ["weekly", "daily", "never"],//, "monthly", "yearly"],
             firstWeekDay: null,
             timezone: "",
             start: "",
@@ -1564,10 +1564,12 @@ kendo_module({
             }).data("kendoNumericTextBox");
         },
 
+        //Changed the start date to be a end date that I specified.
         _until: function() {
             var that = this,
                 input = that.container.find(".k-recur-until"),
-                start = that.options.start,
+                //start = that.options.start,
+                start = EmployeeApp.EmployeeTab.semesterEndDate,
                 rule = that._value,
                 until = rule.until;
 
@@ -1641,6 +1643,7 @@ kendo_module({
             }
         },
 
+        //Flipped some of the logic here around so that Until is the default choice.
         _toggleEndRule: function(endRule) {
             var that = this,
                 rule = that._value;
@@ -1653,15 +1656,16 @@ kendo_module({
 
                 rule.count = that.countNumericTextBox.value();
                 rule.until = null;
-            } else if (endRule === "until") {
-                that.radioButtonUntil.prop("checked", true);
+            //} else if (endRule === "until") {
+            } else if (endRule === "never") {
+                //that.radioButtonUntil.prop("checked", true);
 
-                that.untilDatePicker.enable(true);
-                that.countNumericTextBox.enable(false);
+                //that.untilDatePicker.enable(true);
+                //that.countNumericTextBox.enable(false);
 
-                rule.count = null;
-                rule.until = that.untilDatePicker.value();
-            } else {
+                //rule.count = null;
+                //rule.until = that.untilDatePicker.value();
+
                 that.radioButtonNever.prop("checked", true);
 
                 that.untilDatePicker.enable(false);
@@ -1669,6 +1673,23 @@ kendo_module({
 
                 rule.count = null;
                 rule.until = null;
+            } else {
+
+                that.radioButtonUntil.prop("checked", true);
+
+                that.untilDatePicker.enable(true);
+                that.countNumericTextBox.enable(false);
+
+                rule.count = null;
+                rule.until = that.untilDatePicker.value();
+
+                //that.radioButtonNever.prop("checked", true);
+
+                //that.untilDatePicker.enable(false);
+                //that.countNumericTextBox.enable(false);
+
+                //rule.count = null;
+                //rule.until = null;
             }
         },
 
