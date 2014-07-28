@@ -2,6 +2,10 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
   EmployeeTab.UserPermissionModel = Backbone.Model.extend({
     defaults : {
       'username':'',
+      'fullname':'',
+      'email':'',
+      'schedule_color':'',
+      'fullname':'',
       'acc_room':'',
       'acc_avlog':'',
       'acc_inv':'',
