@@ -61,4 +61,5 @@ RoomScheduleApp.on('initialize:after', function() {
   });
 });
 
+//Start the Marionette app. This will cause the initalize defined above to run, and the router to start listening to the URLs.
 RoomScheduleApp.start();
