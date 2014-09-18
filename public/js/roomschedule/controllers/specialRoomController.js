@@ -89,19 +89,32 @@ RoomScheduleApp.module('RoomScheduleSpecialRoomTab', function (RoomScheduleSpeci
                   title: "Type"
               },
               {
-                  //This is the rooms list for each schedule. This could be setup with a datasource so that it could
-                  //be pulled from a database, but for now, it is hard coded in. The employee schedule has resources
-                  //being pulled from a database. Refer to how it is done in the employee tab if you want to change
-                  //how this list of classes is set.
+                  //This is the rooms list for each schedule. The room list is coming from the database.
+                  //The transport pulls the data from the specialroomlist url. There is a controller
+                  //in laravel that fetches the room list based on what type is being requested.
+                  //ie. breakout, classroom ...
                   field: "roomId",
                   name: "room",
-                  dataSource: [
-                      { text: "C-135", value: 1, capacity:"0" },
-                      { text: "E-103", value: 2, capacity:"0" },
-                      { text: "C-208", value: 3, capacity:"24"  },
-                      { text: "C-258", value: 4, capacity:"0"  },
-                      { text: "G-209", value: 5, capacity:"0"  }
-                  ],
+                  dataSource: {
+                    batch: true,
+                      transport: {
+                        read: {
+                          url: "../specialroomlist",
+                          dataType: "json"
+                        }
+                      },
+                      //This section describes what the model for the data will look like.
+                      schema: {
+                          model: {
+                              id: "value",
+                              fields: {
+                                  value: { from: "id", type: "number" },
+                                  text: { from: "name", type: "string" },
+                                  capacity: { from: "capacity", type: "string" }
+                              }
+                          }
+                      }
+                  },
                   title: "Room"
               }
           ]

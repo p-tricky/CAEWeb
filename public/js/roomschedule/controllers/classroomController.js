@@ -89,30 +89,32 @@ RoomScheduleApp.module('RoomScheduleClassroomTab', function (RoomScheduleClassro
                   title: "Type"
               },
               {
-                  //This is the rooms list for each schedule. This could be setup with a datasource so that it could
-                  //be pulled from a database, but for now, it is hard coded in. The employee schedule has resources
-                  //being pulled from a database. Refer to how it is done in the employee tab if you want to change
-                  //how this list of classes is set.
+                  //This is the rooms list for each schedule. The room list is coming from the database.
+                  //The transport pulls the data from the classroomlist url. There is a controller
+                  //in laravel that fetches the room list based on what type is being requested.
+                  //ie. breakout, classroom ...
                   field: "roomId",
                   name: "room",
-                  dataSource: [
-                      { text: "C-122", value: 1, capacity:"36" },
-                      { text: "C-123", value: 2, capacity:"42" },
-                      { text: "C-124", value: 3, capacity:"34"  },
-                      { text: "C-136", value: 4, capacity:"36"  },
-                      { text: "C-141", value: 5, capacity:"30"  },
-                      { text: "D-201", value: 6, capacity:"50"  },
-                      { text: "D-202", value: 7, capacity:"38"  },
-                      { text: "D-204", value: 8, capacity:"36"  },
-                      { text: "D-205", value: 9, capacity:"36"  },
-                      { text: "D-206", value: 10, capacity:"28"  },
-                      { text: "D-208", value: 11, capacity:"50"  },
-                      { text: "D-210", value: 12, capacity:"32"  },
-                      { text: "D-212", value: 13, capacity:"32"  },
-                      { text: "D-109", value: 14, capacity:"150"  },
-                      { text: "D-115", value: 15, capacity:"80"  },
-                      { text: "E-124", value: 16, capacity:"24"  }
-                  ],
+                  dataSource: {
+                    batch: true,
+                      transport: {
+                        read: {
+                          url: "../classroomlist",
+                          dataType: "json"
+                        }
+                      },
+                      //This section describes what the model for the data will look like.
+                      schema: {
+                          model: {
+                              id: "value",
+                              fields: {
+                                  value: { from: "id", type: "number" },
+                                  text: { from: "name", type: "string" },
+                                  capacity: { from: "capacity", type: "string" }
+                              }
+                          }
+                      }
+                  },
                   title: "Room"
               }
           ]
