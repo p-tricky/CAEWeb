@@ -1253,7 +1253,8 @@ kendo_module({
         },
         options: {
             name: "RecurrenceEditor",
-            frequencies: ["never", "daily", "weekly", "monthly", "yearly"],
+            //Limited the recurrence to only never, daily, and weekly.
+            frequencies: ["never", "daily", "weekly"],//, "monthly", "yearly"],
             firstWeekDay: null,
             timezone: "",
             start: "",
