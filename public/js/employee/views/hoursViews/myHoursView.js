@@ -8,7 +8,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
     regions: {
         clockInOutSection: '#clockInOutSection',
-        filterSection: '#filterSection',
+        shiftFilterSection: '#shiftFilterSection',
         shiftListSection: '#shiftListSection'
     },
 

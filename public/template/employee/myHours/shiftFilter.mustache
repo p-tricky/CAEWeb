@@ -1,6 +1,13 @@
 <form name='shiftFilter'>
-  Start Date: <input type='text' name='startDate'> <br/>
-  End Date: <input type='text' name='endDate'> <br/>
-  <button type='reset' value='Default'>Default</button>
-  <input type='submit' value='Apply'>
+  <fieldset>
+    <legend>Shift List Filter</legend>
+  <table>
+    <tr><td>Start Date: </td><td><input type='text' name='startDate' id='datepicker1' value= {{ start }}></td>
+    <tr><td>End Date: </td><td><input type='text' name='endDate' id='datepicker2' value= {{ end }}></td>
+    <tr>
+      <td><button type='reset' value='Default'>Reset to Current Pay Period</button></td>
+      <td><button type='button' id='applyFilter'>Apply Filter</button></td>
+    </tr>
+  </table>
+  </fieldset>
 </form>

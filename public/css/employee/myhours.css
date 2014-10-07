@@ -7,3 +7,39 @@
     float:right;
     width:70%;
 }
+
+#myHoursContent {
+    margin: 20px;
+}
+
+/*---------------
+/ Clock In/Out styling
+---------------*/
+#clockInOutSection {
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#shiftDiffDisplay {
+    font-size:12pt;
+}
+
+/*---------------
+/ Flter styling
+---------------*/
+
+#applyFilter {
+    float: right;
+}
+
+
+/*---------------
+/ Shift list styling
+---------------*/
+
+
+.shifts {
+    width: 75%;
+    font-size: 12pt;
+}
