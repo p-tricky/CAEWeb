@@ -17,16 +17,22 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     },
 
     // To fix
-    showInventoryItemAddModal : function(theModel) {
+    showUserAddModal : function(theModel) {
       $('#addNew').prop('disabled',true);
       $('#fade').addClass('fade');
       $('#modalBox').addClass('modalBox');
       $('#addNew').prop('disabled',false);
-      InventoryTab.InventoryController.getVendors(function(){
-        var modalView = new InventoryTab.ItemAddModalView({model:new InventoryTab.ItemModel(),collection:InventoryTab.vendorCollection});
-        App.tabDiv.modalArea.show(modalView);
-        $('#delete').hide();
-      });
+      // InventoryTab.InventoryController.getVendors(function(){
+        // var modalView = new InventoryTab.ItemAddModalView({model:new InventoryTab.ItemModel(),collection:InventoryTab.vendorCollection});
+        // App.tabDiv.modalArea.show(modalView);
+        // $('#delete').hide();
+      // });
+
+      // Test
+      // var modalView = new UserListTab.UserAddModalView({model:new InventoryTab.ItemModel());
+      var modalView = new UserListTab.UserAddModalView();
+      App.tabDiv.modalArea.show(modalView);
+      $('#delete').hide();
     }
     
   };

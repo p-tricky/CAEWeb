@@ -1,12 +1,13 @@
 UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marionette, $, _) {
   UserListTab.UserModel = Backbone.Model.extend({
     defaults : {
+      'id' : null,
       'username':'',
       'fullname':'',
       'position_id':'',
       'email':'',
       'schedule_color':'',
-      'fullname':'',
+      'phone':'',
       'acc_room':'',
       'acc_avlog':'',
       'acc_inv':'',
@@ -20,7 +21,28 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       'updated_at':''
     },
 
-    urlRoot : 'api/users'
+    urlRoot : 'api/users',
+
+    // Test addItem
+    addItem : function(addModelProperties) {
+      this.set(addModelProperties);
+      var returnValue = false;
+      if (this.isValid()) {
+        // Is .create mapping to the store() method in the controller?
+        // returnValue = InventoryApp.InventoryTab.currentInventory.create(this, {
+        returnValue = UserAdminApp.UserListTab.userlist.create(this, {
+          success: function() {
+            return true;
+          },
+          error : function() {
+            alert('Error Adding New Item');
+            return false;
+          },
+          wait : true
+        });
+      }
+      return returnValue;
+    }
   });
 
   UserListTab.UserCollection = Backbone.Collection.extend({
