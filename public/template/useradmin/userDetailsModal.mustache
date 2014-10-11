@@ -1,0 +1,103 @@
+<div class='div-table'>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Unified Account:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='username' name='username' type='text' value='{{username}}' maxlength='15' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Position:</label></div>
+    <div class="div-table-col-data" id='position'>
+      <!-- Hardcoded values in the meantime -->
+      <select id="position-id" class="select-position-id">
+        <option value="1">Attendant</option>
+        <option value="2">Administrator</option>
+        <option value="3">Programmer</option>
+        <option value="4">Director</option>
+        <option value="5">Building Coordinator</option>
+      </select>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Schedule Color:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='schedule_color' name='schedule_color' type='color' value='{{schedule_color}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Telephone:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='phone' name='phone' type='text' value='{{phone}}' maxlength='20' />
+    </div>
+  </div>
+  Access Levels
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Room Scheduling:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_room' name='acc_room' type='checkbox' value='{{acc_room}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Audio/Visual:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_avlog' name='acc_avlog' type='checkbox' value='{{acc_avlog}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Inventory:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_inv' name='acc_inv' type='checkbox' value='{{acc_inv}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Employee:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_emp' name='acc_emp' type='checkbox' value='{{acc_emp}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>User Admin:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_useradm' name='acc_useradm' type='checkbox' value='{{acc_useradm}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>CRUD Timesheet:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_crud_timesheet' name='acc_crud_timesheet' type='checkbox' value='{{acc_crud_timesheet}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>View Timesheet:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_view_timesheet' name='acc_view_timesheet' type='checkbox' value='{{acc_view_timesheet}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Generate Timesheet:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_gen_timesheet' name='acc_gen_timesheet' type='checkbox' value='{{acc_gen_timesheet}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>CRUD Schedule:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_crud_schedule' name='acc_crud_schedule' type='checkbox' value='{{acc_crud_schedule}}'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label">
+      <button id="save" class='save div-table-button'>
+        Save
+      </button>
+      <button id="delete" class='delete div-table-button'>
+        Delete
+      </button>
+    </div>
+    <div class="div-table-col-label">
+      <button id="cancel" class='cancel div-table-button'>
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

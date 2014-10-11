@@ -19,6 +19,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     addNew: function() {
       // To change
       // InventoryTab.InventoryController.showInventoryItemAddModal(this.model);
+      UserListTab.UserListTabController.showUserAddModal(this.model);
     }
     
   });
