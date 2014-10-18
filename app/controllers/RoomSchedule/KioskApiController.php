@@ -9,50 +9,94 @@ class KioskApiController extends BaseController {
     $EPOCH = new DateTime('1970-01-01 00:00:00');
 
     $room = Input::get('room');
-    $startdate = Input::get('startdate', $EPOCH->format('Y-m-d'));
-    $starttime = Input::get('starttime', $EPOCH->format('H:i:s'));
-    $enddate = Input::get('enddate', $NOW->format('Y-m-d'));
-    $endtime = Input::get('endtime', $NOW->format('H:i:s'));
+    $startdate = Input::get('startdate', $EPOCH->format('Y-m-d H:i:s'));
+    //$starttime = Input::get('starttime', $EPOCH->format('H:i:s'));
+    $enddate = Input::get('enddate', $NOW->format('Y-m-d H:i:s'));
+    //$endtime = Input::get('endtime', $NOW->format('H:i:s'));
+    $roomNumber = Input::get('room', 'all');
+
     $startTimestamp = strtotime($startdate);
     $endTimestamp = strtotime($enddate);
 
-    $events = Classroom::all();
+    if ($roomNumber === 'all') {
+      $events = Classroom::all();
+    } else {
+      $events = $this->getEventsForRoom($roomNumber);
+    }
     $returnEvents = array();
 
     foreach ($events as $event) {
       if ($event->RecurrenceRule !== "") {
         $instance = $this->parseEvent($event);
         $eventsArray = $this->expandEvents($instance, $startTimestamp, $endTimestamp);
-        //return json_encode($eventsArray);
-        //array_push($returnEvents, $instance);
+
         foreach ($eventsArray as $singleEvent) {
           array_push($returnEvents, $singleEvent);
+        }
+      } else {
+        if ($startTimestamp <= strtotime($event->Start) && $endTimestamp >= strtotime($event->End)) {
+          $nonRecurEvent = $this->formatEvent($event);
+          array_push($returnEvents, $nonRecurEvent);
         }
       }
     }
     return json_encode($returnEvents);
   }
 
+  private function getEventsForRoom($roomNumber) {
+    $roomInfo = CeasRooms::where('name', '=', $roomNumber)->first();
+    if ($roomInfo !== null) {
+      switch($roomInfo->type) {
+        case 1:
+        $events = Classroom::where('RoomId', '=', $roomInfo->id)->get();
+        break;
+
+        case 2:
+        $events = ComputerClassroom::where('RoomId', '=', $roomInfo->id)->get();
+        break;
+
+        case 3:
+        $events = BreakoutRoom::where('RoomId', '=', $roomInfo->id)->get();
+        break;
+
+        case 4:
+        $events = SpecialRoom::where('RoomId', '=', $roomInfo->id)->get();
+        break;
+
+        default:
+        $events = array();
+        break;
+      }
+      return $events;
+    } else {
+      return array();
+    }
+  }
+
+  private function formatEvent($event) {
+    $eventType = $this->getEventType($event->Attendee);
+    return array('start' => $event->Start,
+                  'end' => $event->End,
+                  'title' => $event->Title,
+                  'roomId' => $event->RoomId,
+                  'type' => $eventType,
+                  'host' => $event->Host);
+  }
+
   private function expandEvents($event, $filterStart, $filterEnd) {
     $returnEvents = array();
     if ($event['freq'] === 'daily') {
       //Repeats Daily
-      return expandDailyEvents($event, $filterStart, $filterEnd);
+      return $this->expandDailyEvents($event, $filterStart, $filterEnd);
     } elseif ($event['freq'] === 'weekly') {
       //Repeats Weekly
       return $this->expandWeeklyEvents($event, $filterStart, $filterEnd);
     } else {
-      //Every week forever
+      //Should never get here. If so event won't be in result.
     }
   }
 
   private function expandDailyEvents($event, $filterStart, $filterEnd) {
-
-  }
-
-  private function expandWeeklyEvents($event, $filterStart, $filterEnd) {
-    $dayArray = array('MO' => '1', 'TU' => '2', 'WE' => '3', 'TH' => '4', 'FR' => '5', 'SA' => '6', 'SU' => '7');
-    //$dayArray = array('1' => 'MO', '2' => 'TU', '3' => 'WE', '4' => 'TH', '5' => 'FR', '6' => 'SA', '7' => 'SU');
     $current = 1;
     $eventsArray = array();
     //Determine the end date for processing
@@ -71,10 +115,89 @@ class KioskApiController extends BaseController {
     } else {
       $start = $filterStart;
     }
+    $eventOriginalStart = $start;
 
-    $durationMS = strtotime($event['end']) - strtotime($event['start']);
+    //$durationMS = strtotime($event['end']) - strtotime($event['start']);
 
     while ($start < $end) {
+      //add event to array
+
+      $eventStartEndDate = date('Y-m-d', $start);
+      $eventStartTime = date('H:i:s', strtotime($event['start']));
+      $eventEndTime = date('H:i:s', strtotime($event['end']));
+      $eventStartDateTime = date('c',strtotime($eventStartEndDate . ' ' . $eventStartTime));
+      $eventEndDateTime = date('c',strtotime($eventStartEndDate . ' ' . $eventEndTime));
+
+      if ($filterStart <= $start) {
+        $eventType = $this->getEventType($event['attendee']);
+
+        $eventToAdd = array('start' => $eventStartDateTime,
+                            'end' => $eventEndDateTime,
+                            'title' => $event['title'],
+                            'roomId' => $event['roomId'],
+                            'type' => $eventType,
+                            'host' => $event['host']);
+        array_push($eventsArray, $eventToAdd);
+      }
+
+      $current = $current + 1;
+
+      if (isset($event['count'])) {
+        if ($event['count'] < $current) {
+          break;
+        }
+      }
+
+      //get next event
+      $start = $start + 86400;
+      if (isset($event['interval'])) {
+        $start = $start + (86400 * ($event['interval'] - 1));
+      }
+    } //End While loop
+    return $eventsArray;
+  }
+
+  private function expandWeeklyEvents($event, $filterStart, $filterEnd) {
+    $dayArray = array('MO' => '1', 'TU' => '2', 'WE' => '3', 'TH' => '4', 'FR' => '5', 'SA' => '6', 'SU' => '7');
+    //$dayArray = array('1' => 'MO', '2' => 'TU', '3' => 'WE', '4' => 'TH', '5' => 'FR', '6' => 'SA', '7' => 'SU');
+    $current = 1;
+    $eventsArray = array();
+    //Determine the end date for processing
+    if (isset($event['until'])) {
+      if (strtotime($event['until']) > $filterEnd) {
+        $end = $filterEnd;
+      } else {
+        $end = strtotime($event['until']);
+      }
+    } else {
+      $end = $filterEnd;
+    }
+
+    //Setup some event specific variables for future use
+    $eventStart = strtotime($event['start']);
+    if (isset($event['count'])) {
+      $eventCountIsSet = true;
+    } else {
+      $eventCountIsSet = false;
+    }
+    if (isset($event['interval'])) {
+      $eventInterval = $event['interval'];
+    } else {
+      $eventInterval = 1;
+    }
+
+    //TODO: Consider when an event has a interval > 1 and the start filter is not on a week when the event should be displayed. Could have an offset issue.
+    if ($filterStart < $eventStart || $eventCountIsSet || $eventInterval > 1) {
+      $start = $eventStart;
+    } else {
+      $start = $filterStart;
+    }
+
+    //$durationMS = strtotime($event['end']) - strtotime($event['start']);
+    //$startDay = date('N', $start);
+    $startDay = '1';
+
+    while ($start <= $end) {
       //add event to array
       foreach ($event['weekDays'] as $eventDay) {
         if (date('N', $start) === $dayArray[$eventDay]) {
@@ -85,19 +208,17 @@ class KioskApiController extends BaseController {
           $eventStartDateTime = date('c',strtotime($eventStartEndDate . ' ' . $eventStartTime));
           $eventEndDateTime = date('c',strtotime($eventStartEndDate . ' ' . $eventEndTime));
 
-          if ($event['attendee'] === '1') {
-            $eventType = "Class";
-          } else {
-            $eventType = "Event";
-          }
+          $eventType = $this->getEventType($event['attendee']);
 
-          $eventToAdd = array('start' => $eventStartDateTime,
-                              'end' => $eventEndDateTime,
-                              'title' => $event['title'],
-                              'roomId' => $event['roomId'],
-                              'type' => $eventType,
-                              'host' => $event['host']);
-          array_push($eventsArray, $eventToAdd);
+          if ($start >= $filterStart) {
+            $eventToAdd = array('start' => $eventStartDateTime,
+                                'end' => $eventEndDateTime,
+                                'title' => $event['title'],
+                                'roomId' => $event['roomId'],
+                                'type' => $eventType,
+                                'host' => $event['host']);
+            array_push($eventsArray, $eventToAdd);
+          }
           $current = $current + 1;
         }
       }
@@ -110,6 +231,9 @@ class KioskApiController extends BaseController {
 
       //get next event
       $start = $start + 86400;
+      if (date('N', $start) === $startDay && isset($event['interval'])) {
+        $start = $start + (86400 * 7 * ($event['interval'] - 1));
+      }
     }
     return $eventsArray;
 
@@ -144,48 +268,12 @@ class KioskApiController extends BaseController {
           $instance['interval'] = $values[0];
           break;
 
-        case 'BYSECOND':
-          # code...
-          break;
-
-        case 'BYMINUTE':
-          # code...
-          break;
-
-        case 'BYHOUR':
-          # code...
-          break;
-
-        case 'BYMONTHDAY':
-          # code...
-          break;
-
-        case 'BYYEARDAY':
-          # code...
-          break;
-
-        case 'BYMONTH':
-          # code...
-          break;
-
         case 'BYDAY':
           $days = array();
           foreach ($values as $day) {
             array_push($days, $day);
           }
           $instance['weekDays'] = $days;
-          break;
-
-        case 'BYSETPOS':
-          # code...
-          break;
-
-        case 'BYWEEKNO':
-          # code...
-          break;
-
-        case 'WKST':
-          # code...
           break;
 
         default:
@@ -200,5 +288,13 @@ class KioskApiController extends BaseController {
     $instance['attendee'] = $event->Attendee;
     $instance['host'] = $event->Host;
     return $instance;
+  }
+
+  private function getEventType($type) {
+    if ($type === '1') {
+      return "Class";
+    } else {
+      return "Event";
+    }
   }
 }
