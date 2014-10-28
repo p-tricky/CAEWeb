@@ -11,13 +11,13 @@ class ShiftApiController extends BaseController {
         $today = date('w');
         $thisweek = date('W');
 
-        if($thisweek%2==0) { //even week = first week of pay period
+        if($thisweek%2 == 0) { //even week = first week of pay period
             $payPeriodStart = date('Y-m-d', strtotime('-' . ($today - 1) . ' days'));
-            $payPeriodEnd = date('Y-m-d', strtotime('+' . (14-$today) . ' days'));
+            $payPeriodEnd = date('Y-m-d', strtotime('+' . (14 - $today) . ' days'));
         }
         else {
             $payPeriodStart = date('Y-m-d', strtotime('-' . ($today + 6) . ' days'));
-            $payPeriodEnd = date('Y-m-d', strtotime('+' . (7-$today) . ' days'));
+            $payPeriodEnd = date('Y-m-d', strtotime('+' . (7 - $today) . ' days'));
         }
 
         //set query values to either defaulting pay period range or input filter range
@@ -58,11 +58,11 @@ class ShiftApiController extends BaseController {
 
         if($thisweek%2==0) { //even week = first week of pay period
             $payPeriodStart = date('m/d/Y', strtotime('-' . ($today - 1) . ' days'));
-            $payPeriodEnd = date('m/d/Y', strtotime('+' . (14-$today) . ' days'));
+            $payPeriodEnd = date('m/d/Y', strtotime('+' . (14 - $today) . ' days'));
         }
         else {
             $payPeriodStart = date('m/d/Y', strtotime('-' . ($today + 6) . ' days'));
-            $payPeriodEnd = date('m/d/Y', strtotime('+' . (7-$today) . ' days'));
+            $payPeriodEnd = date('m/d/Y', strtotime('+' . (7 - $today) . ' days'));
         }
 
         $payPeriodData = array(
@@ -86,8 +86,16 @@ class ShiftApiController extends BaseController {
 
         $startTime = new DateTime($lastShift->clockIn);
         $endTime = new DateTime($lastShift->clockOut);
-        $shiftDays = $endTime->diff($startTime)->d * 24;
-        $lastShift->timeRec = $endTime->diff($startTime)->h + $shiftDays . ':' . $endTime->diff($startTime)->i;
+        $shiftDaysToHours = $endTime->diff($startTime)->d * 24;
+
+        $timeRecHours = $endTime->diff($startTime)->h + $shiftDaysToHours;
+        if ($timeRecHours < 10)
+            $timeRecHours = "0" . $timeRecHours;
+        $timeRecMinutes = $endTime->diff($startTime)->i;
+        if ($timeRecMinutes < 10)
+            $timeRecMinutes = "0" . $timeRecMinutes;
+
+        $lastShift->timeRec = $timeRecHours . ':' . $timeRecMinutes;
 
         return $lastShift->toJSON();
     }

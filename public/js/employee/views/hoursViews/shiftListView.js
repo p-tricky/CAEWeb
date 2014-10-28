@@ -7,7 +7,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         this.options = options || {};
         this.template = Handlebars.compile(tpl.get(this.options.contentName));
         this.collection.bind('add', MyHoursTab.MyHoursController._showClockInOut, this);
-        this.collection.bind('change', this.render, this);
+        this.collection.bind('change', MyHoursTab.MyHoursController._getTotalHours(this.render), this);
         this.model.bind('change', this.render, this);
     },
 

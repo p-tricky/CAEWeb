@@ -14,9 +14,12 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     applyFilter : function() {
         var start = $('#datepicker1').val();
         var end = $('#datepicker2').val();
-        EmployeeApp.MyHoursTab.shiftList.reset();
         EmployeeApp.MyHoursTab.MyHoursController.getShiftsInRange(start, end);
+        
+        console.log("Returned filtered shift list: ");
         console.log(EmployeeApp.MyHoursTab.shiftList);
+
+        EmployeeApp.MyHoursTab.shiftList.reset();
     }
 
   });
