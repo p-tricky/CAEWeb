@@ -15,6 +15,8 @@ class KioskApiController extends BaseController {
     //$endtime = Input::get('endtime', $NOW->format('H:i:s'));
     $roomNumber = Input::get('room', 'all');
 
+    $jsonpCallback = Input::get('callback', '');
+
     $startTimestamp = strtotime($startdate);
     $endTimestamp = strtotime($enddate);
 
@@ -40,7 +42,13 @@ class KioskApiController extends BaseController {
         }
       }
     }
-    return json_encode($returnEvents);
+
+    //Check to see if the result should be jsonp
+    if ($jsonpCallback !== '') {
+      return Response::json($returnEvents)->setCallback($jsonpCallback);
+    } else {
+      return json_encode($returnEvents);
+    }
   }
 
   private function getEventsForRoom($roomNumber) {
@@ -159,7 +167,7 @@ class KioskApiController extends BaseController {
 
   private function expandWeeklyEvents($event, $filterStart, $filterEnd) {
     $dayArray = array('MO' => '1', 'TU' => '2', 'WE' => '3', 'TH' => '4', 'FR' => '5', 'SA' => '6', 'SU' => '7');
-    //$dayArray = array('1' => 'MO', '2' => 'TU', '3' => 'WE', '4' => 'TH', '5' => 'FR', '6' => 'SA', '7' => 'SU');
+    
     $current = 1;
     $eventsArray = array();
     //Determine the end date for processing
