@@ -47,7 +47,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     },
 
     _showMyHoursTab : function() {
-      EmployeeApp.MyHoursTab.MyHoursController.getShifts(EmployeeApp.MyHoursTab.MyHoursController.showPageContent);
+      EmployeeApp.MyHoursTab.MyHoursController.getIndexShifts(EmployeeApp.MyHoursTab.MyHoursController.showPageContent);
     },
 
     //function to determine which version of the admin schedule to show based on user permission, and then show it.

@@ -8,7 +8,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         url: 'api/usershift',
 
         clockOut: function() {
-            this.save(this.attributes,{success : MyHoursTab.MyHoursController._showClockInOut});
+            this.save(this.attributes,{success : MyHoursTab.MyHoursController._clockOutSuccess});
         },
 
     });
@@ -20,10 +20,6 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
         comparator: function(shift) {
             return (Number(shift.get('id')));
-        },
-
-        applyFilter : function() {
-
         }
         
     });
