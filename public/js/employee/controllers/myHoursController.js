@@ -144,7 +144,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     _updateTimes: function() {
         MyHoursTab.tabInfoModel.serverTimeInMS = MyHoursTab.tabInfoModel.serverTimeInMS + 60000;
         MyHoursTab.MyHoursController._setTimeDiff();
-        console.log("One minute since page load. Updating times.");
+        //console.log("One minute since page load. Updating times.");
 
     },
 
