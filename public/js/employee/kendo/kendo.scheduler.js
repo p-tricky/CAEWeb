@@ -402,7 +402,7 @@ kendo_module({
         //Added some logic here to check if the field is availability. If it is, change the default text from none to avilable
         var textToUse;
         if (resource.title === 'Availability') {
-            textToUse = "Available";
+            textToUse = "Scheduled";
         } else {
             textToUse = "None";
         }// End of the logic I added to check if the field is availability.
