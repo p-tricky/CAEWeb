@@ -197,7 +197,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             EmployeeApp.MyHoursTab.MyHoursController._showClockInOut();
         }
 
-        setInterval(function(){EmployeeApp.MyHoursTab.MyHoursController._updateTimes();}, 60000);
+        EmployeeApp.EmployeeTab.minuteTimer = setInterval(function(){EmployeeApp.MyHoursTab.MyHoursController._updateTimes();}, 60000);
     },
     //clocks out the currently clocked in shift
     clockOut : function(callback) {
