@@ -89,14 +89,16 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     },
     //sets current time difference from last shift clock in time for a currently clocked in user
     _setTimeDiff : function() {
-        var clockInTime = new Date(EmployeeApp.MyHoursTab.shiftList.last().get('clockIn'));
-        var currentServerTime = MyHoursTab.tabInfoModel.serverTimeInMS;
-        var msDiff = currentServerTime - clockInTime.getTime();
-        
-        MyHoursTab.tabInfoModel.shiftDiff = msDiff;
-        MyHoursTab.tabInfoModel.shiftDiffString = MyHoursTab.MyHoursController._getTimeString(EmployeeApp.MyHoursTab.tabInfoModel.shiftDiff);
-        console.log(MyHoursTab.tabInfoModel.shiftDiffString);
-        $('#shiftDiffDisplay').html(MyHoursTab.tabInfoModel.shiftDiffString);
+        if (EmployeeApp.MyHoursTab.shiftList.models.length !== 0){
+            var clockInTime = new Date(EmployeeApp.MyHoursTab.shiftList.last().get('clockIn'));
+            var currentServerTime = MyHoursTab.tabInfoModel.serverTimeInMS;
+            var msDiff = currentServerTime - clockInTime.getTime();
+            
+            MyHoursTab.tabInfoModel.shiftDiff = msDiff;
+            MyHoursTab.tabInfoModel.shiftDiffString = MyHoursTab.MyHoursController._getTimeString(EmployeeApp.MyHoursTab.tabInfoModel.shiftDiff);
+            console.log(MyHoursTab.tabInfoModel.shiftDiffString);
+            $('#shiftDiffDisplay').html(MyHoursTab.tabInfoModel.shiftDiffString);
+        }
     },
     //determines total hours in specified filter range
     _getTotalHours : function(callback) {
