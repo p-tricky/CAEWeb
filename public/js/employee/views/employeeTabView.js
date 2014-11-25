@@ -30,22 +30,47 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     
     //List of functions associated with the events. All of them do an navigate to somewhere else.
     navigateToMyHours : function() {
+      //Clear the interval that is setup from the myhours tab to keep track of the
+      //current time on the client side. If it isn't canceled, it will continue to throw
+      //errors when navigating to a different page.
+      clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
+      //Do the navigate
       EmployeeApp.navigate('myhours',true);
     },
 
     navigateToAdminSchedule : function() {
+      //Clear the interval that is setup from the myhours tab to keep track of the
+      //current time on the client side. If it isn't canceled, it will continue to throw
+      //errors when navigating to a different page.
+      clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
+      //Do the navigate
       EmployeeApp.navigate('adminschedule',true);
     },
 
     navigateToAttendentSchedule : function() {
+      //Clear the interval that is setup from the myhours tab to keep track of the
+      //current time on the client side. If it isn't canceled, it will continue to throw
+      //errors when navigating to a different page.
+      clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
+      //Do the navigate
       EmployeeApp.navigate('attendantschedule',true);
     },
 
     navigateToProgrammerSchedule : function() {
+      //Clear the interval that is setup from the myhours tab to keep track of the
+      //current time on the client side. If it isn't canceled, it will continue to throw
+      //errors when navigating to a different page.
+      clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
+      //Do the navigate
       EmployeeApp.navigate('programmerschedule',true);
     },
 
     navigateToTimesheet : function() {
+      //Clear the interval that is setup from the myhours tab to keep track of the
+      //current time on the client side. If it isn't canceled, it will continue to throw
+      //errors when navigating to a different page.
+      clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
+      //Do the navigate
       EmployeeApp.navigate('timesheet',true);
     }
     
