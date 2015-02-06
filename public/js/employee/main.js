@@ -67,6 +67,9 @@ EmployeeApp.EmployeeAppController = {
     EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showProgrammerSchedule);
   },
 
+  //****  in progress  ***** 
+
+
   //function to be called when the timesheet route is in the url
   timesheet : function() {
     //Call the function that will create the main layout, and display it.
@@ -77,7 +80,7 @@ EmployeeApp.EmployeeAppController = {
       $('#timesheet').addClass('selectedTab');
     });
     //Get the users permissions and then kick off the tab logic with the passed in callback.
-    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions();
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showTimesheet);
   }
 };
 

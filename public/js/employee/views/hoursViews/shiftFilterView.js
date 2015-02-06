@@ -4,6 +4,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     initialize : function(options) {
       this.options = options || {};
       this.template = Handlebars.compile(tpl.get(this.options.contentName));
+      console.log('testing...')
+      console.log(this.options.contentName);
     },
 
     events:

@@ -78,7 +78,15 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       } else {
         App.ProgrammerScheduleTab.ProgrammerScheduleController.getProgrammerScheduleInfo(App.ProgrammerScheduleTab.ProgrammerScheduleController.showProgrammerScheduleInfo, false);
       }
-    }
+    },
     
-  };
+    //****  in progress  ***** 
+
+    //Function to determine which version of the timesheet to show based on user permission, and then show it.  
+    _showTimesheet : function() {
+      //if user has view capability on the timsheet, pass true as the second parameter to getTimesheetInfo, else pass false.
+      App.TimesheetTab.TimesheetController.getTimesheetInfo();
+      
+    }    
+  }
 });

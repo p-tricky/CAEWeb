@@ -1,0 +1,93 @@
+#left {
+    float:left;
+    width:25%;
+    background: #d4b77d;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+#rightTimesheet {
+    float:right;
+    width:70%;
+    height: 900px;
+    background: #d4b77d;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+#tabsContent {
+    background: #ebd29b;
+    padding: 10px;
+    padding-bottom: 20px;
+}
+/*---------------
+/ Flter styling
+---------------*/
+
+#applyFilter {
+    float:right;
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+#generate {
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+button[type=reset]
+{
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+form[name=shiftFilter]
+{
+    font-size:12pt;
+}
+input[type=text]
+{
+    border-radius: 5px;
+    color: #331900;
+    background-color: #d4b77d;
+    font-size: 14px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    text-align: right;
+}
+
+fieldset {
+    background:#ebd29b;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:5px;
+}
+
+legend {
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-color:#bc9b6a;
+    padding: 0px 10px;
+    border: 1px solid black;
+    font-family: Arial;
+}
+th,td {
+    padding: 5px 0px;
+}

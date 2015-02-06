@@ -1,0 +1,22 @@
+<link rel="stylesheet" type="text/css" media="screen" href="../css/employee/timesheet.css">
+
+
+<div id="left">
+	<form name='shiftFilter'>
+  <fieldset>
+    <legend>Shift List Filter</legend>
+  <table>
+    <tr><td>Start Date: </td><td><input type='text' name='startDate' id='datepicker1' value= {{ start }}></td>
+    <tr><td>End Date: </td><td><input type='text' name='endDate' id='datepicker2' value= {{ end }}></td>
+    <tr>
+      <td><button type='reset' id='resetBtn' value='Default'>Reset to Current Pay Period</button></td>
+      <td><button type='button' id='applyFilter'>Apply Filter</button></td>
+    </tr>
+  </table>
+  </fieldset>
+</form>
+</div>
+
+<div>
+	<iframe id="rightTimesheet" type='application/pdf' width="100%" height="100%" ></iframe>
+</div>
