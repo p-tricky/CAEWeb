@@ -18,6 +18,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
         var end = $('#datepicker2').val();
 
         TimesheetTab.TimesheetController.getShiftsInRange(start, end);
+        TimesheetTab.TimesheetController.getShiftsInRange(start, end);
     },
   });
 });

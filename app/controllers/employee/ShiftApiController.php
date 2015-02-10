@@ -25,7 +25,8 @@ class ShiftApiController extends BaseController {
         $end = Input::get('end', $payPeriodEnd);
 
         $start = date('Y-m-d', strtotime($start));
-        $end = date('Y-m-d', strtotime($end));
+        $end = date('Y-m-d', strtotime($end));        
+        $end = date('Y-m-d', strtotime($end . ' + 1 day'));
 
         //get shifts in specified range
         $shifts = Shift::where('eid', '=', $userid)->where('clockOut', '<=', $end)->where('clockIn', '>=', $start)->get();

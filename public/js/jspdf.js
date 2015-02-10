@@ -1826,6 +1826,24 @@ PubSub implementation
             this.text(x,y,txt);
         };
 
+        API.centerTimeIn = function(y, txt, options) {
+            var fontSize = this.internal.getFontSize();
+            var areawidth = 45;
+            var txtWidth = this.getStringUnitWidth(txt)*fontSize/this.internal.scaleFactor;
+
+            var x = ( (areawidth - txtWidth) / 2) + 75;
+            this.text(x, y, txt);
+        };
+
+        API.centerTimeOut = function(y, txt, options) {
+            var fontSize = this.internal.getFontSize();
+            var areawidth = 45;
+            var txtWidth = this.getStringUnitWidth(txt)*fontSize/this.internal.scaleFactor;
+
+            var x = ( (areawidth - txtWidth) / 2) + 122;
+            this.text(x, y, txt);
+        };
+
         API.centerText = function(y, txt, options) {
         options = options ||{};
         /* Use the options align property to specify desired text alignment

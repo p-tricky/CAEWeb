@@ -161,6 +161,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         MyHoursTab.shiftList = new EmployeeApp.MyHoursTab.ShiftCollection();
         //get all shifts for current user
         MyHoursTab.shiftList.fetch({success : callback, data: {}});
+        console.log(MyHoursTab.shiftList);
       } else {
         callback();
       }
@@ -169,6 +170,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     getShiftsInRange : function(rangeStart, rangeEnd) {
         //console.log('Applying filter...');
         MyHoursTab.shiftList.fetch({success: MyHoursTab.MyHoursController._getTotalHours, data: {start: rangeStart , end: rangeEnd}});
+        console.log(MyHoursTab.shiftList);
         MyHoursTab.shiftList.totalhours = 0;
         MyHoursTab.shiftList.each(function(shift){
             MyHoursTab.shiftList.totalhours += shift.get('timeRec');

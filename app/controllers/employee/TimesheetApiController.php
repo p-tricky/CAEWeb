@@ -1,14 +1,9 @@
 <?php 
 
-use Illuminate\Database\Eloquent\Collection as BaseCollection;
-
 class TimesheetApiController extends BaseController
 {
 	//copied from ShiftApiController.php
-	//needs a loop to get all employees
 	public function getAllShifts(){
-
-		$userid = Auth::user()->id;
 
 		//get pay period
 		$today = date('w');
@@ -29,28 +24,10 @@ class TimesheetApiController extends BaseController
 
         $start = date('Y-m-d', strtotime($start));
         $end = date('Y-m-d', strtotime($end));
+        $end = date('Y-m-d', strtotime($end . ' + 1 day'));
 
         //get shifts in specified range
-        $shifts = Shift::where('clockOut', '<=', $end)->where('clockIn', '>=', $start)->orderBy('eid')->get();
-        foreach($shifts as $shift) {
-            $startTime = new DateTime($shift->clockIn);
-            $endTime = new DateTime($shift->clockOut);
-
-            $nullTime = new DateTime("0000-00-00 00:00:00");
-            if ($endTime == $nullTime)
-                $shift->timeRec = 'N/A';
-            else 
-            {
-                $shiftDaysToHours = $startTime->diff($endTime)->d * 24;
-                $timeRecHours = $startTime->diff($endTime)->h + $shiftDaysToHours;
-                if ($timeRecHours < 10)
-                    $timeRecHours = "0" . $timeRecHours;
-                $timeRecMinutes = $startTime->diff($endTime)->i;
-                if ($timeRecMinutes < 10)
-                    $timeRecMinutes = "0" . $timeRecMinutes;
-                $shift->timeRec = $timeRecHours . ':' . $timeRecMinutes; 
-            }
-        }
+        $shifts = Shift::where('clockOut', '<=', $end)->where('clockIn', '>=', $start)->orderBy('eid')->orderBy('clockIn')->get();
         return $shifts->toJSON();
 	}
 
