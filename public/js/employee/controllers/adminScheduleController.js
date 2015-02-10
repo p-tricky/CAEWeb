@@ -195,7 +195,10 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
               }
           ],
           //once the scheduler is databound, call the getEmployeeHours function to get and display each employees hours.
-          dataBound: AdminScheduleTab.AdminScheduleController.getEmployeeHours
+          dataBound: function() {
+            AdminScheduleTab.AdminScheduleController.getEmployeeHours();
+            AdminScheduleTab.AdminScheduleController.emboldenLinesBetweenDays();
+          }
       });
     },
 
@@ -265,7 +268,42 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
         //is not in the hoursObject, their time will be 0 since it was initalized to that before the calculation was done.
         AdminScheduleTab.adminList.get(prop).set({'hours' : timeString});
       }
-    }
+    },
+  
+    emboldenLinesBetweenDays: function() {
 
+      var numAdmins = AdminScheduleTab.adminList.size();
+
+      var dateHeaders = $( 'th[colspan=' + numAdmins + ']' );
+
+      // if the schedule doesn't contain date headers, then we are looking at
+      // the kendo schedule's day view, not the week view.  We only need the
+      // bold lines for the week view.
+      if (dateHeaders.length === 0) return;
+
+      var usernameHeaders = $( ".usernameHeader" );
+      var cells = $( ".k-middle-row, .k-not-middle-row" );
+
+
+      dateHeaders.each(function(index) {
+        var self = $(this);
+        if (index !==0) self.addClass( "bold-left-border" );
+      }); 
+
+      usernameHeaders.each(function(index) {
+        var self = $(this);
+        if (index % numAdmins  === 0 && index !== 0) {
+          self.parent().addClass( "bold-left-border" );
+        }
+      });
+
+      cells.children().each(function(index) {
+        var self = $(this);
+        if (index % numAdmins === 0 && index % (numAdmins*7) !== 0 ) {
+          self.addClass( "bold-left-border" );
+        }
+      });
+
+    }
   };
 });

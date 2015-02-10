@@ -939,7 +939,7 @@ kendo_module({
                     idx,
                     length;
 
-                content = '<tr' + (middleRow ? ' class="k-middle-row"' : "") + '>';
+                content = '<tr' + (middleRow ? ' class="k-middle-row"' : ' class="k-not-middle-row"') + '>';
 
                 for (var groupIdx = 0; groupIdx < groupsCount; groupIdx++) {
                     for (idx = 0, length = columnCount; idx < length; idx++) {

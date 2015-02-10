@@ -57,7 +57,8 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
       //Define a today date
       var TODAY = new Date();
       //redefine the template to be used for the shifts
-      var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
+      var eventTemplate = '';
+       // '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
       //Get the end date for the next semester
       var dataDateObject = JSON.parse(data);
       //Replace the - with / so that JS parses the date without doing timezone conversion
@@ -196,7 +197,11 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
               }
           ],
           //once the scheduler is databound, call the getEmployeeHours function to get and display each employees hours.
-          dataBound: ProgrammerScheduleTab.ProgrammerScheduleController.getEmployeeHours
+          // then call emboldenLinesBetweenDays to embolden the lines in the calendar that indicate the start of a new day
+          dataBound: function() {
+            ProgrammerScheduleTab.ProgrammerScheduleController.getEmployeeHours();
+            ProgrammerScheduleTab.ProgrammerScheduleController.emboldenLinesBetweenDays();
+          }
       });
     },
 
@@ -266,7 +271,39 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
         //is not in the hoursObject, their time will be 0 since it was initialzed to that before the calculatin was done.
         ProgrammerScheduleTab.programmerList.get(prop).set({'hours' : timeString});
       }
-    }
+    },
+    emboldenLinesBetweenDays: function() {
 
+      var numProgrammers = ProgrammerScheduleTab.programmerList.size();
+
+      var dateHeaders = $( 'th[colspan=' + numProgrammers + ']' );
+
+      // if the schedule doesn't contain date headers, then we are looking at
+      // the kendo schedule's day view, not the week view.  We only need the
+      // bold lines for the week view.
+      if (dateHeaders.length === 0) return;
+
+      var usernameHeaders = $( ".usernameHeader" );
+      var cells = $( ".k-middle-row, .k-not-middle-row" );
+
+      dateHeaders.each(function(index) {
+          $(this).addClass( "bold-left-border" );
+      }); 
+
+      usernameHeaders.each(function(index) {
+        var self = $(this);
+        if (index % numProgrammers === 0 && index !== 0) {
+          self.parent().addClass( "bold-left-border" );
+        }
+      });
+
+      cells.children().each(function(index) {
+        var self = $(this);
+        if (index % numProgrammers === 0 && index % (numProgrammers*7) !== 0) {
+          self.addClass( "bold-left-border" );
+        }
+      });
+
+    }
   };
 });

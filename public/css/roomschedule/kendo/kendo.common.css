@@ -4057,6 +4057,9 @@ div.k-slider {
 .k-scheduler-agenda .k-scheduler-table td:first-child {
   border-left-width: 1px;
 }
+.bold-left-border {
+  border-left-color: black !important;
+}
 .k-scheduler-agenda .k-scheduler-table td.k-first {
   border-left-width: 0;
 }
