@@ -196,7 +196,10 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
               }
           ],
           //once the scheduler is databound, call the getEmployeeHours function to get and display each employees hours.
-          dataBound: AttendantScheduleTab.AttendantScheduleController.getEmployeeHours
+          dataBound: function() {
+            AttendantScheduleTab.AttendantScheduleController.getEmployeeHours();
+            AttendantScheduleTab.AttendantScheduleController.emboldenLinesBetweenDays();
+          }
       });
     },
 
@@ -267,6 +270,42 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
         //is not in the hoursObject, their time will be 0 since it was initialzed to that before the calculatin was done.
         AttendantScheduleTab.attendantList.get(prop).set({'hours' : timeString});
       }
+    },
+
+    emboldenLinesBetweenDays: function() {
+
+      var numattendants = AttendantScheduleTab.attendantList.size();
+
+      var dateHeaders = $( 'th[colspan=' + numattendants + ']' );
+
+      // if the schedule doesn't contain date headers, then we are looking at
+      // the kendo schedule's day view, not the week view.  We only need the
+      // bold lines for the week view.
+      if (dateHeaders.length === 0) return;
+
+      var usernameHeaders = $( ".usernameHeader" );
+      var cells = $( ".k-middle-row, .k-not-middle-row" );
+
+
+      dateHeaders.each(function(index) {
+        var self = $(this);
+        if (index !==0) self.addClass( "bold-left-border" );
+      }); 
+
+      usernameHeaders.each(function(index) {
+        var self = $(this);
+        if (index % numattendants  === 0 && index !== 0) {
+          self.parent().addClass( "bold-left-border" );
+        }
+      });
+
+      cells.children().each(function(index) {
+        var self = $(this);
+        if (index % numattendants === 0 && index % (numattendants*7) !== 0 ) {
+          self.addClass( "bold-left-border" );
+        }
+      });
+
     }
 
   };
