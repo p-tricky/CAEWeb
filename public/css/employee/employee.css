@@ -138,7 +138,7 @@ input {
     background-color: #ffffff;
     width: 630px;
     /*height: 310px;*/
-    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+    z-index: 95; /* makes the div the top layer, so it’ll lay on top of the other content */
 }
 
 .fade {
@@ -278,3 +278,10 @@ input {
 .clear {
   clear:both;
 }
+
+#confirmModal {
+  display: none;
+}
+
+
+

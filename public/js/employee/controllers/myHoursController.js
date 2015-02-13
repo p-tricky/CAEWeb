@@ -67,7 +67,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     },
     //obtains current server time via ajax request
     _getServerTime: function() {
-        console.log("Retrieving initial server time information.");
+        //console.log("Retrieving initial server time information.");
         $.ajax({
             url: 'api/servertime',
             success: EmployeeApp.MyHoursTab.MyHoursController._setInitialServerTime
@@ -77,8 +77,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //also sets current time difference from last shift if user is clocked-in
     _setInitialServerTime : function(data) {
         var servertime = JSON.parse(data);
-        console.log(servertime.date);
-        console.log("Server time retrieved and set.");
+        //console.log(servertime.date);
+        //console.log("Server time retrieved and set.");
         EmployeeApp.MyHoursTab.tabInfoModel.serverTimeInMS = new Date(servertime.date).getTime();
         if (MyHoursTab.shiftList.models.length !== 0){
             if (EmployeeApp.MyHoursTab.shiftList.last().get('clockOut') === '0000-00-00 00:00:00') {
@@ -96,13 +96,13 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             
             MyHoursTab.tabInfoModel.shiftDiff = msDiff;
             MyHoursTab.tabInfoModel.shiftDiffString = MyHoursTab.MyHoursController._getTimeString(EmployeeApp.MyHoursTab.tabInfoModel.shiftDiff);
-            console.log(MyHoursTab.tabInfoModel.shiftDiffString);
+            //console.log(MyHoursTab.tabInfoModel.shiftDiffString);
             $('#shiftDiffDisplay').html(MyHoursTab.tabInfoModel.shiftDiffString);
         }
     },
     //determines total hours in specified filter range
     _getTotalHours : function(callback) {
-        console.log("Calculating total hours...");
+        //console.log("Calculating total hours...");
         //console.log("Old total hours are %d", MyHoursTab.tabInfoModel.get('totalhours'));
         
         MyHoursTab.tabInfoModel.set({'totalhours': 0});
@@ -121,10 +121,10 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         //console.log("Returned: %s", MyHoursTab.MyHoursController._getTimeString(totalMS));
         EmployeeApp.MyHoursTab.tabInfoModel.set({'totalhours': MyHoursTab.MyHoursController._getTimeString(totalMS)});
 
-        console.log("Returned updated total hours:" + MyHoursTab.tabInfoModel.get('totalhours'));
+        //console.log("Returned updated total hours:" + MyHoursTab.tabInfoModel.get('totalhours'));
 
         if (callback) {
-            callback();
+            callback;
         }
     },
     //returns a string with time in hours & minutes (converted from miliseconds)
@@ -151,6 +151,31 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     /**
     * Public functions called outside of the controller
     */
+
+    //used to show a modal box to modify the selecte shift
+    showShiftModal : function(theModel) {
+        $('#fade').addClass('fade');
+        $('#modalBox').addClass('modalBox');
+        var theModalView = new MyHoursTab.MyShiftModalView({model: theModel});
+        App.tabDiv.modalArea.show(theModalView);
+    },
+
+    deleteShift : function(id) {
+        $.ajax({
+            url: 'api/deleteshift',
+            data: {id: id},
+            wait: true
+        });
+    },
+
+    updateShift : function(id, clockin, clockout) {
+        $.ajax({
+            url: 'api/updateshift',
+            data: {id: id, clockin: clockin, clockout: clockout},
+            wait: true
+        });
+    },
+
     getIndexShifts : function(callback) {
         if (typeof MyHoursTab.tabInfoModel === 'undefined') {
             MyHoursTab.tabInfoModel = new Backbone.Model();
@@ -161,16 +186,17 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         MyHoursTab.shiftList = new EmployeeApp.MyHoursTab.ShiftCollection();
         //get all shifts for current user
         MyHoursTab.shiftList.fetch({success : callback, data: {}});
-        console.log(MyHoursTab.shiftList);
+        //console.log(MyHoursTab.shiftList);
       } else {
         callback();
       }
     },
+
     //retrieves shifts in specified range, updating total hours
     getShiftsInRange : function(rangeStart, rangeEnd) {
         //console.log('Applying filter...');
         MyHoursTab.shiftList.fetch({success: MyHoursTab.MyHoursController._getTotalHours, data: {start: rangeStart , end: rangeEnd}});
-        console.log(MyHoursTab.shiftList);
+        //console.log(MyHoursTab.shiftList);
         MyHoursTab.shiftList.totalhours = 0;
         MyHoursTab.shiftList.each(function(shift){
             MyHoursTab.shiftList.totalhours += shift.get('timeRec');
@@ -178,7 +204,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     },
     //main function called in employee controller; calls numerous other functions to populate and display page content
     showPageContent : function(callback) {
-        console.log('Retrieved shift data.');
+        //console.log('Retrieved shift data.');
 
         EmployeeApp.MyHoursTab.MyHoursController._getServerTime();
 

@@ -28,8 +28,10 @@ class ShiftApiController extends BaseController {
         $end = date('Y-m-d', strtotime($end));        
         $end = date('Y-m-d', strtotime($end . ' + 1 day'));
 
+        $shiftNumber = 1;
+
         //get shifts in specified range
-        $shifts = Shift::where('eid', '=', $userid)->where('clockOut', '<=', $end)->where('clockIn', '>=', $start)->get();
+        $shifts = Shift::where('eid', '=', $userid)->where('clockOut', '<=', $end)->where('clockIn', '>=', $start)->orderBy('clockIn')->get();
         foreach($shifts as $shift) {
             $startTime = new DateTime($shift->clockIn);
             $endTime = new DateTime($shift->clockOut);
@@ -47,6 +49,8 @@ class ShiftApiController extends BaseController {
                 if ($timeRecMinutes < 10)
                     $timeRecMinutes = "0" . $timeRecMinutes;
                 $shift->timeRec = $timeRecHours . ':' . $timeRecMinutes; 
+                $shift->shiftNum = $shiftNumber;
+                $shiftNumber+=1;
             }
         }
         return $shifts->toJSON();
@@ -116,7 +120,26 @@ class ShiftApiController extends BaseController {
         $newShift->timeRec = 'N/A';
         $newShift->clockOut = '0000-00-00 00:00:00';
 
+        $newShift->shiftNum = Shift::where('eid', '=', $uModel->id)->count();
+
         return $newShift->toJSON();
+    }
+
+    public function deleteShift() {
+        $shiftId = Input::get('id');
+        echo $shiftId;
+        Shift::where('id', '=', $shiftId)->delete();
+    }
+
+    public function updateShift() {
+        $shiftId = Input::get('id');
+        $clockin = Input::get('clockin');
+        $clockout = Input::get('clockout');
+
+        $thisShift = Shift::find($shiftId);
+        $thisShift->clockIn = $clockin;
+        $thisShift->clockout = $clockout;
+        $thisShift->save();
     }
 
 }

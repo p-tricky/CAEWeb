@@ -14,6 +14,5 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     id:'shiftListTable',
 
     itemViewContainer: "tbody"
-    
   });
 });

@@ -10,7 +10,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     },
 
     attributes : function(){
-      var classValue = this.model.get('id');
+      var classValue = this.model.get('shiftNum');
       var classProperty = '';
       if ((Number(classValue)%2) === 0) {
         classProperty = 'even';
@@ -27,6 +27,19 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
       $(this.el).html(this.template(this.model.toJSON()));
       return this.el;
     },
+
+    events : {
+        'dblclick' : 'showDetails'
+    },
+
+    //Function to show the item details in a modal box when the user double clicks a row
+    showDetails : function(e) {
+      //If the user is not double clicking on the buttons in the view
+      if (e.target.nodeName !== "BUTTON") {
+        //call the showInventoryItemModal and pass it the views model
+        MyHoursTab.MyHoursController.showShiftModal(this.model);
+      }
+    }    
 
   });
 });
