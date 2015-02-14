@@ -58,7 +58,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('#fade').removeClass('fade');
         $('#modalBox').removeClass('modalBox');
         App.tabDiv.modalArea.close();
-      }
+      //}
       } else {
         console.log('Not saved!');
       }

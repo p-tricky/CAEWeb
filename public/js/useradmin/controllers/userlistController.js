@@ -30,7 +30,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
       // Test
       // var modalView = new UserListTab.UserAddModalView({model:new InventoryTab.ItemModel());
-      var modalView = new UserListTab.UserAddModalView();
+      var modalView = new UserListTab.UserAddModalView({model: new UserListTab.UserModel()});
+        //collection:UserListTab.userCollection});
+      //model:new InventoryTab.ItemModel(),collection:InventoryTab.vendorCollection
       App.tabDiv.modalArea.show(modalView);
       $('#delete').hide();
     }

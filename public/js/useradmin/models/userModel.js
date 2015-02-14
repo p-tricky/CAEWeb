@@ -28,9 +28,8 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       this.set(addModelProperties);
       var returnValue = false;
       if (this.isValid()) {
-        // Is .create mapping to the store() method in the controller?
-        // returnValue = InventoryApp.InventoryTab.currentInventory.create(this, {
-        returnValue = UserAdminApp.UserListTab.userlist.create(this, {
+        // .create maps to the store() method in the controller
+        returnValue = UserAdminApp.UserListTab.userList.create(this, {
           success: function() {
             return true;
           },

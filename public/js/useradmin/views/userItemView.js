@@ -43,10 +43,12 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
     showDetails : function(e) {
 
-      // To change
-      // if (e.target.nodeName !== "BUTTON") {
-      //   InventoryTab.InventoryController.showInventoryItemModal(this.model);
-      // }
+      //If the user is not double clicking on the buttons in the view
+      if (e.target.nodeName !== "BUTTON") {
+        //call the showInventoryItemModal and pass it the views model
+        UserAdminTab.InventoryController.showInventoryItemModal(this.model);
+        UserListTab.UserListTabController.show
+      }
     }
 
   });
