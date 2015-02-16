@@ -18,22 +18,29 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     onShow : function() {
     	var clockInDate = new Date(this.model.get('clockIn'));
     	var clockOutDate = new Date(this.model.get('clockOut'));
-    	$('#modalclockin').attr('value', this.model.get('clockIn'));    	
-    	$('#modalclockout').attr('value', this.model.get('clockOut'));
 
-    	$('#modalclockin').datetimepicker({
+      console.log(clockInDate.getSeconds());
+
+    	$('#datetimeholder1').datetimepicker({
+            altField: '#modalclockin',
+            altFieldTimeOnly: false,
             dateFormat: 'yy-mm-dd',
-            timeForamt: 'HH:mm',
+            timeForamt: 'HH:mm:getShiftsInRange',
             hour: clockInDate.getHours(),
             minute: clockInDate.getMinutes(),
-            timeSuffix: ':00',
+            //timeSuffix: ':00',
+            showSecond: true,
+            second: clockInDate.getSeconds(),
         });
-        $('#modalclockout').datetimepicker({
-        	dateFormat: 'yy-mm-dd',
-            timeForamt: 'HH:mm',
+        $('#datetimeholder2').datetimepicker({
+            altField: '#modalclockout',
+            altFieldTimeOnly: false,
+        	  dateFormat: 'yy-mm-dd',
+            timeForamt: 'HH:mm:ss',
             hour: clockOutDate.getHours(),
             minute: clockOutDate.getMinutes(),
-            timeSuffix: ':00',
+            showSecond: true,
+            second: clockOutDate.getSeconds(),
         });
 
     	MyHoursTab.MyShiftModalView.thisModel = this.model;
