@@ -114,13 +114,14 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
                     'Ok': function() {
                       $(this).dialog('close');
                     }
-                  },            
+                  },  
+                });          
                 console.log(e);
                 console.log(o);
                 //closes the dialog
                 $(this).dialog("close");
-              }             
-            });
+              }
+            }); 
           },
           //closes the dialog box
           Cancel: function() {
