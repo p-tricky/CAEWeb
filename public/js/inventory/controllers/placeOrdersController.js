@@ -19,8 +19,18 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
         //All quantities valid. Call the create temp orders function.
         PlaceOrdersTab.PlaceOrdersController._createRealOrders(PlaceOrdersTab.PlaceOrdersController._createTempOrders());
       } else { //All quantities are not valid
-        //alert the user that the quantities are not valid. TODO replace with a jQuery UI dialog or the modal box.
-        alert("Some of the quantities you entered are not valid");
+        //alert the user that the quantities are not valid. 
+        //uses a confirm modal with only one button
+        $('#confirmModalBox').html('Some of the quantities you entered are not valid');
+        $('#confirmModalBox').dialog({
+          modal:true,
+          title: 'Invalid quantities',
+          buttons: {
+            'Ok': function() {
+              $(this).dialog('close');
+            }
+          },
+        });
         //Disable the placeOrder button so it can't be clicked until the quantities are fixed.
         $('#placeOrder').prop('disabled',false);
       }
@@ -148,7 +158,16 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
               //Attempt to save the save the item by calling the save item method of the item model
               //It passes the on_order_quantity parameter. If it fails, it will do the alert.
               if (!currentItem.saveItem({'on_order_quantity':newOnOrderQty})) {
-                alert("There was an error creating the order");
+                $('#confirmModalBox').html('There was an error creating the order');
+                $('#confirmModalBox').dialog({
+                  modal:true,
+                  title: 'Create Order Error',
+                  buttons: {
+                    'Ok': function() {
+                        $(this).dialog('close');
+                    }
+                  },
+                });
               }
               //Sort the collection of current orders based on the comparator function of the collection definition
               App.ViewOrdersTab.currentOrders.sort();

@@ -47,7 +47,16 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
         },
         //On error send an alert to the user, and return false.
         error : function() {
-          alert('Error in adding transaction to the log');
+          $('#confirmModalBox').html('Error in adding transaction to the log');
+          $('#confirmModalBox').dialog({
+            modal:true,
+            title: 'Log Error',
+            buttons: {
+              'Ok': function() {
+                $(this).dialog('close');
+              }
+            },
+          });
           return false;
         },
         //tell the app to wait for a response from the server before continuing.

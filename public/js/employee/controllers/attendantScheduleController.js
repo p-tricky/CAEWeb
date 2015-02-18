@@ -245,31 +245,34 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
         }
       });
 
-      //Define vars for doing time calculation. TODO: Put this in a function of it's own.
-      var temp, hours, minutes, timeString;
-
-      //Do some millisecond math to get the hours and minutes of the total hours.
-      temp = Math.floor(totalHours / 1000);
-      hours = Math.floor(temp / 3600);
-      minutes = Math.floor((temp %= 3600) / 60);
-
+      var timestring;
       //convert the hours and minutes to a timestring correctly formatted.
-      timeString = (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
+      timeString = AttendantScheduleTab.AttendantScheduleController._getTimeString(totalHours);
 
       //For each property in the hoursObject, which essentially means for each employee in the hoursObject
       for (var prop in hourObject) {
 
         //Do the same time string creation that is done for the totalhours, but instead for each employee
-        temp = Math.floor(hourObject[prop] / 1000);
-        hours = Math.floor(temp / 3600);
-        minutes = Math.floor((temp %= 3600) / 60);
-
-        timeString = (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
+        timeString = AttendantScheduleTab.AttendantScheduleController._getTimeString(hoursObject[prop]);
 
         //Set the hours property for each employee in the hoursObject to the time string. If an employee
         //is not in the hoursObject, their time will be 0 since it was initialzed to that before the calculatin was done.
         AttendantScheduleTab.attendantList.get(prop).set({'hours' : timeString});
       }
+    },
+
+    //returns a string with time in hours & minutes (converted from miliseconds)
+    _getTimeString : function(timeInMS) {
+        var temp,hours,minutes;
+        //retrieve time in seconds
+        totalSec = Math.floor(timeInMS / 1000);
+        //convert minutes (less hours via modulus math)
+        minutes = Math.floor((totalSec % 3600) / 60);
+        //convert hours (minutes truncated by division math)
+        
+        hours = Math.floor(totalSec / 3600);
+        //console.log('created time string, returned' + (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2))
+        return (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
     },
 
     emboldenLinesBetweenDays: function() {

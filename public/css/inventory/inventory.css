@@ -90,7 +90,7 @@ input {
     background-color: #ffffff;
     width: 630px;
     /*height: 310px;*/
-    z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
+    z-index: 95; /* makes the div the top layer, so it’ll lay on top of the other content */
 }
 
 .fade {
@@ -180,4 +180,7 @@ input {
 .accept-div {
   width:166px;
   height:34px;
+}
+#confirmModalBox {
+  display: none;
 }

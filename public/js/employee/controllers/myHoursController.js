@@ -159,7 +159,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         var theModalView = new MyHoursTab.MyShiftModalView({model: theModel});
         App.tabDiv.modalArea.show(theModalView);
     },
-
+    //called by myShiftModalView in order to delete a shift
     deleteShift : function(id) {
         $.ajax({
             url: 'api/deleteshift',
@@ -167,7 +167,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             wait: true
         });
     },
-
+    //called by myShiftModalView in order to update a shift's clockin and clockout
     updateShift : function(id, clockin, clockout) {
         $.ajax({
             url: 'api/updateshift',
@@ -175,7 +175,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             wait: true
         });
     },
-
+    //makes to tabInfoModel and the shiftList
     getIndexShifts : function(callback) {
         if (typeof MyHoursTab.tabInfoModel === 'undefined') {
             MyHoursTab.tabInfoModel = new Backbone.Model();

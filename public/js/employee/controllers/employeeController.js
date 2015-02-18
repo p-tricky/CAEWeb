@@ -45,7 +45,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
         callback();
       }
     },
-
+    //function to determine the hours of an mployee and then show it.
     _showMyHoursTab : function() {
       EmployeeApp.MyHoursTab.MyHoursController.getIndexShifts(EmployeeApp.MyHoursTab.MyHoursController.showPageContent);
     },
@@ -79,8 +79,6 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
         App.ProgrammerScheduleTab.ProgrammerScheduleController.getProgrammerScheduleInfo(App.ProgrammerScheduleTab.ProgrammerScheduleController.showProgrammerScheduleInfo, false);
       }
     },
-    
-    //****  in progress  ***** 
 
     //Function to determine which version of the timesheet to show based on user permission, and then show it.  
     _showTimesheet : function() {

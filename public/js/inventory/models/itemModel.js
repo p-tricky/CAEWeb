@@ -26,9 +26,17 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       this.logTracker = 0;
       this.logTrackerBool = true;
       //If the model is invalid, alert the user that the model could not be saved.
-      //TODO:Improve this error message. Use jQueryUI, or the modal box.
       this.on("invalid", function(model, error) {
-        alert("Unable to save " + model.get("name") + "\n" + error);
+        $('#confirmModalBox').html("Unable to save " + model.get("name") + "\n" + error);
+        $('#confirmModalBox').dialog({
+          modal:true,
+          title: 'Error when saving',
+          buttons: {
+            'Ok': function() {
+              $(this).dialog('close');
+            }
+          },
+        });
       });
     },
 
@@ -113,8 +121,16 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
           //error function to be called if there is an error
           error : function() {
             //alert the user of the error
-            //TODO: Come up with a better way to notify the user.
-            alert('Error Adding New Item');
+            $('#confirmModalBox').html('Error Adding New Item');
+            $('#confirmModalBox').dialog({
+              modal:true,
+              title: 'Item Error',
+              buttons: {
+                'Ok': function() {
+                  $(this).dialog('close');
+                }
+              },
+            });
             //Pass false back
             return false;
           },
