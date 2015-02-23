@@ -4,7 +4,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     tagName : "div",
 
     initialize : function() {
-      this.template = Handlebars.compile(tpl.get('userDetailsModal'));
+      this.template = Handlebars.compile(tpl.get('userAddModal'));
     },
 
     itemView: UserListTab.UserDetailsModalView,
@@ -12,11 +12,11 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     itemViewContainer: "select",
 
     events : {
-      'click .save' : 'saveItem',
+      'click .save' : 'addUser',
       'click .cancel' : 'cancelAction'
     },
 
-    saveItem : function() {
+    addUser : function() {
 
       var fields = {
         username:$('#username').val(),
@@ -34,8 +34,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         acc_crud_schedule: $('#acc_crud_schedule').is(':checked') ? 1 : 0,
       };
 
-      console.log(this.model);
-      var result = this.model.addItem(fields);
+      var result = this.model.addUser(fields);
       if (result) {
         $('#fade').removeClass('fade');
         $('#modalBox').removeClass('modalBox');

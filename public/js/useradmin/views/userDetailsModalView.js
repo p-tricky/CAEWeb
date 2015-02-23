@@ -12,20 +12,53 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     itemViewContainer: "select",
 
     events : {
-      'click .save' : 'saveItem',
-      'click .delete' : 'deleteItem',
+      'click .save' : 'saveUser',
+      'click .delete' : 'deleteUser',
       'click .cancel' : 'cancelAction'
     },
 
-    // Not completed or modified
+    // render's the userDetalsModalView from the userDetailsModal template
+    //
+    // this view is rendered when the user dbl clicks a user in the user
+    // admin list view
+    //
+    // most of the view is provided by the template
+    //
+    // we need to check all the permissions that apply to the current user, so
+    // that we don't have to recheck the permissions check boxes everytime we edit a user's
+    // details
     onShow : function() {
-      $('option[id=' + this.model.get('vendor_id') + "]").attr('selected','selected');
-      //$('.select-vendor-list').prop('disabled',true);
+      if (this.model.get('acc_room') == 1) {
+        $('input[id=acc_room]').attr('checked','checked');
+      }
+      if (this.model.get('acc_avlog') == 1) {
+        $('input[id=acc_avlog]').attr('checked','checked');
+      }
+      if (this.model.get('acc_inv') == 1) {
+        $('input[id=acc_inv]').attr('checked','checked');
+      }
+      if (this.model.get('acc_emp') == 1) {
+        $('input[id=acc_emp]').attr('checked','checked');
+      }
+      if (this.model.get('acc_useradm') == 1) {
+        $('input[id=acc_useradm]').attr('checked','checked');
+      }
+      if (this.model.get('acc_crud_timesheet') == 1) {
+        $('input[id=acc_crud_timesheet]').attr('checked','checked');
+      }
+      if (this.model.get('acc_view_timesheet') == 1) {
+        $('input[id=acc_view_timesheet]').attr('checked','checked');
+      }
+      if (this.model.get('acc_gen_timesheet') == 1) {
+        $('input[id=acc_gen_timesheet]').attr('checked','checked');
+      }
+      if (this.model.get('acc_crud_schedule') == 1) {
+        $('input[id=acc_crud_schedule]').attr('checked','checked');
+      }
     },
 
     // In modification process
-    saveItem : function() {
-      // Many of the fields are fine but the username should be first checked with ldap
+    saveUser : function() {
       // to verify that it exits and information such as name and email should be fetched
       // from there
 
@@ -36,36 +69,30 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
       // If conditions are met this will be executed
       var fields = {
-        username: uniAccID,
-        fullname: fullName,
+        username:$('#username').val(),
         position_id: parseInt($('#position-id').val(), 10),
-        email: emailAddress,
-        schedule_color: $('#schedule_color').val(), // Assuming its the correct format
+        schedule_color: $('#schedule_color').val(),
         phone: $('#phone').val(),
-        acc_room: parseInt($('#acc_room').val(), 10),
-        acc_avlog: parseInt($('#acc_avlog').val(), 10),
-        acc_inv: parseInt($('#acc_inv').val(), 10),
-        acc_emp: parseInt($('#acc_emp').val(), 10),
-        acc_useradm: parseInt($('#acc_useradm').val(), 10),
-        acc_crud_timesheet: parseInt($('#acc_crud_timesheet').val(), 10),
-        acc_view_timesheet: parseInt($('#acc_view_timesheet').val(), 10),
-        acc_gen_timesheet: parseInt($('#acc_gen_timesheet').val(), 10),
-        acc_crud_schedule: parseInt($('#acc_crud_schedule').val(), 10)
+        acc_room: $('#acc_room').is(':checked') ? 1 : 0,
+        acc_avlog: $('#acc_avlog').is(':checked') ? 1 : 0,
+        acc_inv: $('#acc_inv').is(':checked') ? 1 : 0,
+        acc_emp: $('#acc_emp').is(':checked') ? 1 : 0,
+        acc_useradm: $('#acc_useradm').is(':checked') ? 1 : 0,
+        acc_crud_timesheet: $('#acc_crud_timesheet').is(':checked') ? 1 : 0,
+        acc_view_timesheet: $('#acc_view_timesheet').is(':checked') ? 1 : 0,
+        acc_gen_timesheet: $('#acc_gen_timesheet').is(':checked') ? 1 : 0,
+        acc_crud_schedule: $('#acc_crud_schedule').is(':checked') ? 1 : 0,
       };
 
-      var result = this.model.saveItem(fields);
-      if (result) {
+      var response =  this.model.saveUser(fields);
+      if (response) {
         $('#fade').removeClass('fade');
         $('#modalBox').removeClass('modalBox');
         App.tabDiv.modalArea.close();
-      //}
-      } else {
-        console.log('Not saved!');
-      }
+      } 
     },
 
-    // Not Completed yet
-    deleteItem : function() {
+    deleteUser : function() {
       if (confirm('Are you sure you want to delete this Item?')) {
         this.model.destroy({
           wait : true,
@@ -75,8 +102,6 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
             App.tabDiv.modalArea.close();
           },
           error : function(m,e,o) {
-            console.log(e);
-            console.log(o);
           }
         });
       }

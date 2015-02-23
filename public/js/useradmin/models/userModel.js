@@ -23,10 +23,16 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
     urlRoot : 'api/users',
 
-    // Test addItem
-    addItem : function(addModelProperties) {
+    //Function to save the item to the server side. The function takes an object of properties to update
+    //as the parameter for the function
+    saveUser : function(updateModelProperties) {
+      var result = this.save(updateModelProperties);
+      return result;
+    },
+    
+
+    addUser : function(addModelProperties) {
       this.set(addModelProperties);
-      var returnValue = false;
       if (this.isValid()) {
         // .create maps to the store() method in the controller
         returnValue = UserAdminApp.UserListTab.userList.create(this, {
@@ -34,7 +40,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
             return true;
           },
           error : function() {
-            alert('Error Adding New Item');
+            alert('Error Adding New User\nPlease, Verify Unified Account');
             return false;
           },
           wait : true
@@ -43,6 +49,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       return returnValue;
     }
   });
+
 
   UserListTab.UserCollection = Backbone.Collection.extend({
     model : UserListTab.UserModel,

@@ -3,7 +3,6 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
     getUserList : function(callback) {
       if (typeof UserListTab.userList === "undefined") {
-        console.log('Getting Users Data');
         UserListTab.userList = new UserAdminApp.UserListTab.UserCollection();
         UserListTab.userList.fetch({success : callback});
       } else {
@@ -16,23 +15,25 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       App.tabDiv.tabContent.show(tabContentDiv);
     },
 
-    // To fix
+    showUserModal : function(theModel) {
+      $('#fade').addClass('fade');
+      $('#modalBox').addClass('modalBox');
+      // do NOT send a collection to the modal view!
+      var modalView = new UserListTab.UserDetailsModalView({
+        model: theModel, 
+      });
+      App.tabDiv.modalArea.show(modalView);
+    },
+
     showUserAddModal : function(theModel) {
       $('#addNew').prop('disabled',true);
       $('#fade').addClass('fade');
       $('#modalBox').addClass('modalBox');
       $('#addNew').prop('disabled',false);
-      // InventoryTab.InventoryController.getVendors(function(){
-        // var modalView = new InventoryTab.ItemAddModalView({model:new InventoryTab.ItemModel(),collection:InventoryTab.vendorCollection});
-        // App.tabDiv.modalArea.show(modalView);
-        // $('#delete').hide();
-      // });
 
-      // Test
-      // var modalView = new UserListTab.UserAddModalView({model:new InventoryTab.ItemModel());
-      var modalView = new UserListTab.UserAddModalView({model: new UserListTab.UserModel()});
-        //collection:UserListTab.userCollection});
-      //model:new InventoryTab.ItemModel(),collection:InventoryTab.vendorCollection
+      var modalView = new UserListTab.UserAddModalView({
+        model: new UserListTab.UserModel(),
+      });
       App.tabDiv.modalArea.show(modalView);
       $('#delete').hide();
     }
