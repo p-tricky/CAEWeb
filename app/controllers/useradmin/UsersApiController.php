@@ -14,7 +14,7 @@ class UsersApiController extends BaseController {
       $addUser->fullname = UserHelper::sGetWmuName($addUser->username);
       $addUser->email = UserHelper::sGetWmuEmail($addUser->username);
       $addUser->position_id = $addModel['position_id'];
-      $addUser->phone = $addModel['phone'];
+      $addUser->phone = UsersApiController::getAllNumbers( $addModel['phone'] );
       $addUser->schedule_color = $addModel['schedule_color'];
       $addUser->acc_room = $addModel['acc_room'];
       $addUser->acc_avlog = $addModel['acc_avlog'];
@@ -69,7 +69,8 @@ class UsersApiController extends BaseController {
   }
 
   #
-  # uses recursive regex to select only numbers from phone number
+  # remove javascript formatting from phone numbers
+  # only selects numbers
   #
   private static function getAllNumbers($phoneNumber) {
     $nums = preg_replace('/\D+/', '', $phoneNumber);
