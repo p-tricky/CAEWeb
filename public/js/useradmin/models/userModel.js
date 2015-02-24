@@ -23,16 +23,39 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
     urlRoot : 'api/users',
 
-    //Function to save the item to the server side. The function takes an object of properties to update
+
+    initialize: function() {
+      //If the model is invalid, alert the user that the model could not be saved.
+      this.on("invalid", function(model, error) {
+        $('#confirmModalBox').html(error);
+        $('#confirmModalBox').dialog({
+          modal:true,
+          title: 'Error when saving',
+          buttons: {
+            'Ok': function() {
+              $(this).dialog('close');
+            }
+          },
+        });
+      });
+    },
+
+    //Function to save the user to the server side. The function takes an object of properties to update
     //as the parameter for the function
     saveUser : function(updateModelProperties) {
-      var result = this.save(updateModelProperties);
-      return result;
+      this.set(updateModelProperties);
+      if ( this.isValid() ) {
+        result = this.save();
+        return result;
+      }
+      // if the updateModelProperties weren't valid, reset model to former state
+      this.set(this.previousAttributes());
     },
     
 
     addUser : function(addModelProperties) {
       this.set(addModelProperties);
+      returnValue = false;
       if (this.isValid()) {
         // .create maps to the store() method in the controller
         returnValue = UserAdminApp.UserListTab.userList.create(this, {
@@ -40,14 +63,29 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
             return true;
           },
           error : function() {
-            alert('Error Adding New User\nPlease, Verify Unified Account');
+            var errorAlert = $('#confirmModalBox');
+            errorAlert.html("Please verify unified account.");
+            errorAlert.dialog({
+              modal: true,
+              title: 'Error when saving',
+              buttons: {
+                'Ok': function() {
+                  $(this).dialog('close');
+                }
+              },
+            });
             return false;
           },
           wait : true
         });
       }
       return returnValue;
-    }
+    },
+
+    validate: function(attrs) {
+      if (!/\D*\d{3}\D*\d{3}\D*\d{4}\D*/.test(attrs.phone)) 
+        return "Invalid phone number";
+    },
   });
 
 
@@ -56,7 +94,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     url : 'api/users',
 
     comparator: function(item) {
-     return (Number(item.get('id')));
+      return (Number(item.get('id')));
     }
 
   });

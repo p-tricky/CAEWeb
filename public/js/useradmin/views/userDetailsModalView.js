@@ -59,15 +59,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
     // In modification process
     saveUser : function() {
-      // to verify that it exits and information such as name and email should be fetched
-      // from there
 
-      // Use Helper class to verify and get this info
-      var uniAccID;
-      var fullName;
-      var emailAddress;
-
-      // If conditions are met this will be executed
       var fields = {
         username:$('#username').val(),
         position_id: parseInt($('#position-id').val(), 10),
@@ -93,18 +85,42 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     },
 
     deleteUser : function() {
-      if (confirm('Are you sure you want to delete this Item?')) {
-        this.model.destroy({
-          wait : true,
-          success : function() {
-            $('#fade').removeClass('fade');
-            $('#modalBox').removeClass('modalBox');
-            App.tabDiv.modalArea.close();
+      var self = this;
+      var confirmDialogue = $('#confirmModalBox');
+      confirmDialogue.html("Are you sure you want to delete this user?");
+      confirmDialogue.dialog({
+        modal: true,
+        title: 'Delete User',
+        buttons: {
+          'No': function() {
+            $(this).dialog('close');
           },
-          error : function(m,e,o) {
-          }
-        });
-      }
+          'Yes': function() {
+            $(this).dialog('close');
+            self.model.destroy({
+              wait : true,
+              success : function() {
+                $('#fade').removeClass('fade');
+                $('#modalBox').removeClass('modalBox');
+                App.tabDiv.modalArea.close();
+              },
+              error : function(m,e,o) {
+                var errorAlert = $('#confirmModalBox');
+                errorAlert.html("Sorry, the deletion failed.");
+                errorAlert.dialog({
+                  modal: true,
+                  title: 'Delete Error',
+                  buttons: {
+                    'Ok': function() {
+                      $(this).dialog('close');
+                    }
+                  }
+                });
+              }
+            });
+          },
+        }
+      });
     },
 
     cancelAction : function() {

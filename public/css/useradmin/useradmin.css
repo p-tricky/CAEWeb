@@ -141,6 +141,10 @@ input {
     z-index: 100; /* makes the div the top layer, so it’ll lay on top of the other content */
 }
 
+.confirmModalBox {
+  display: none;
+}
+
 .fade {
     /*display: none;  /* ensures it’s invisible until it’s called */
     position: absolute;  /* makes the div go into a position that’s absolute to the browser viewing area */
