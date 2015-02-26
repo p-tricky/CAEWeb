@@ -22,13 +22,20 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
 
     //Define events for the view
     events: {
-      'click #addNew' : 'addNew'
+      'click #addNew' : 'addNew',
+      'click #addVendor' : 'addVendor'
     },
 
     //When the add New button is clicked, this function will run
     addNew: function() {
       //Call the showInventoryItemAddModal function in the inventory controller
       InventoryTab.InventoryController.showInventoryItemAddModal(this.model);
+    },
+
+    //When the add New Vendor button is clicked, this function will run
+    addVendor: function() {
+      //call the showInventoryVendorAddModal function in the inventory controller
+      InventoryTab.InventoryController.showInventoryVendorAddModal(this.model);
     }
     
   });

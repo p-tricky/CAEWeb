@@ -62,6 +62,27 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       });
     },
 
+    //Function to show the inventory modal for a new vendor that will be added to the vendor collection
+    showInventoryVendorAddModal : function() {
+      //Disable the add new button
+      $('#addVendor').prop('disabled',true);
+      //Show the fade overaly
+      $('#fade').addClass('fade');
+      //show the modal box div
+      $('#modalBox').addClass('modalBox');
+      //now that the modal and overlay are up, reenable the add new button.
+      //It still can't be clicked since the overlay is in the way.
+      //By disabling and re-enablig after the overlay is in place, we can minimize the user double clickin the add button.
+      $('#addVendor').prop('disabled',false);
+      //Fetch the vendors and pass in the anonymous function as a callback
+      InventoryTab.InventoryController.getVendors(function(){
+        //Instanciate a new vendor add modal view and pass it a new vendor model, and the vendor collection
+        var modalView = new InventoryTab.VendorAddModalView({model:new InventoryTab.VendorModel()});
+        //show the add view in the modal box
+        App.tabDiv.modalArea.show(modalView);
+      });
+    },
+
     //Function to show the inventory modal for a new item that will be added to the item collection
     showInventoryItemAddModal : function(theModel) {
       //Disable the add new button

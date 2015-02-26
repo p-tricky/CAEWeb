@@ -8,4 +8,18 @@ class VendorApiController extends BaseController {
       return '{"error":{"text":' . $e->getMessage() . '}}';
     }
   }
+
+  public function store() {
+  	try{
+  		$newVendor = new Vendor;
+  		$newVendor->name = Input::get('name');
+  		$newVendor->url = Input::get('url');
+
+  		$newVendor->save();
+
+  		return $newVendor->toJson();
+  	} catch(Exception $e) {
+      return json_encode('{"error":{"text":' . $e->getMessage() . '}}');   	
+  	}
+  }
 }

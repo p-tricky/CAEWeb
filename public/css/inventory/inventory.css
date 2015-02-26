@@ -50,7 +50,7 @@
   border-color:#bc9b6a;
 }
 
-.addNew, .placeOrder {
+.addNew, .addVendor, .placeOrder {
   border-radius: 6px;
   color: #331900;
   background-color: #BFA163;
