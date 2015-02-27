@@ -4,3 +4,6 @@ composer.phar
 composer.lock
 .DS_Store
 tags
+.tern_project
+*.vim
+pl_test.*
