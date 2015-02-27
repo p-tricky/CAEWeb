@@ -14,14 +14,16 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
 
     //Function to create orders when the place order button is clicked.
     createOrders : function() {
+      console.log('stuff');
       //Valiate the quantities to see if they are all valid.
       if (PlaceOrdersTab.PlaceOrdersController._validateQuantities()) {
         //All quantities valid. Call the create temp orders function.
         PlaceOrdersTab.PlaceOrdersController._createRealOrders(PlaceOrdersTab.PlaceOrdersController._createTempOrders());
       } else { //All quantities are not valid
+        console.log('invalid quantities');
         //alert the user that the quantities are not valid. 
         //uses a confirm modal with only one button
-        $('#confirmModalBox').html('Some of the quantities you entered are not valid');
+        $('#confirmModalBox').html('Some of the quantities you entered are invalid');
         $('#confirmModalBox').dialog({
           modal:true,
           title: 'Invalid quantities',
@@ -42,6 +44,8 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
       var rows = $('.amount');
       //define a return value of true
       var returnVal = true;
+      //max amount entered. If 0, then will throw an error
+      var maxValue = 0;
       //for each row do the following.
       _.each(rows, function(row) {
         //Get the value from the textbox
@@ -58,9 +62,15 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
             if (!(/^\d+$/.test(testNumber))) {
               returnVal = false;
             }
-          }
+            else if (testNumber > maxValue)
+              maxValue = testNumber;
+            }
         }
       });
+      //if all values are 0, then returnVal is false
+      if (maxValue == 0)
+        returnVal = false;
+
       //return the returnval. It will be true still if it passes all tests. False if it is not valid.
       return returnVal;
     },
