@@ -57,8 +57,7 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
       //Define a today date
       var TODAY = new Date();
       //redefine the template to be used for the shifts
-      var eventTemplate = '';
-       // '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
+      var eventTemplate = '# var startT = new Date(start); startT.setHours(startT.getHours()+1); var endT = new Date(end); endT.setHours(endT.getHours()+1); # <div class="employee-template">#: kendo.toString(startT, "hh:mm") # <br /> #: data.resources[0].text # <br /> #: kendo.toString(endT, "hh:mm") #</div>';
       //Get the end date for the next semester
       var dataDateObject = JSON.parse(data);
       //Replace the - with / so that JS parses the date without doing timezone conversion

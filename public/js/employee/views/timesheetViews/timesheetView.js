@@ -19,6 +19,6 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
 
         TimesheetTab.TimesheetController.getShiftsInRange(start, end);
         TimesheetTab.TimesheetController.getShiftsInRange(start, end);
-    },
+    }
   });
 });

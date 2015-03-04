@@ -9,7 +9,7 @@ class ViewableTabsApiController extends BaseController {
       if($uModel->acc_emp === '1') {
         array_push($tabs, (object)array('id'=>'1','tab'=>'myhours','name'=>'My Hours'));
         array_push($tabs, (object)array('id'=>'2','tab'=>'adminschedule','name'=>'Admin Schedule'));
-        array_push($tabs, (object)array('id'=>'3','tab'=>'attendantschedule','name'=>'Attedant Schedule'));
+        array_push($tabs, (object)array('id'=>'3','tab'=>'attendantschedule','name'=>'Attendant Schedule'));
         array_push($tabs, (object)array('id'=>'4','tab'=>'programmerschedule','name'=>'Programmer Schedule'));
       }
       if ($uModel->acc_view_timesheet === '1') {

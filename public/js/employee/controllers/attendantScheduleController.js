@@ -245,15 +245,14 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
         }
       });
 
-      var timestring;
       //convert the hours and minutes to a timestring correctly formatted.
-      timeString = AttendantScheduleTab.AttendantScheduleController._getTimeString(totalHours);
+      var timeString = AttendantScheduleTab.AttendantScheduleController._getTimeString(totalHours);
 
       //For each property in the hoursObject, which essentially means for each employee in the hoursObject
       for (var prop in hourObject) {
 
         //Do the same time string creation that is done for the totalhours, but instead for each employee
-        timeString = AttendantScheduleTab.AttendantScheduleController._getTimeString(hoursObject[prop]);
+        timeString = AttendantScheduleTab.AttendantScheduleController._getTimeString(hourObject[prop]);
 
         //Set the hours property for each employee in the hoursObject to the time string. If an employee
         //is not in the hoursObject, their time will be 0 since it was initialzed to that before the calculatin was done.
