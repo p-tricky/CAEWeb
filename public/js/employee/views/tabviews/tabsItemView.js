@@ -13,7 +13,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
     //Define the template to use for the view.
     initialize : function(options) {
       this.options = options || {};
-      this.template = Handlebars.compile(tpl.get('_tabRow'));
+      this.template = Handlebars.compile(tpl.get('_tabrow'));
     }
 
   });
