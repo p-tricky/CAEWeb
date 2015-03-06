@@ -77,9 +77,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //also sets current time difference from last shift if user is clocked-in
     _setInitialServerTime : function(data) {
         var servertime = JSON.parse(data);
-        //console.log(servertime.date);
         //console.log("Server time retrieved and set.");
-        EmployeeApp.MyHoursTab.tabInfoModel.serverTimeInMS = new Date(servertime.date).getTime();
+        EmployeeApp.MyHoursTab.tabInfoModel.serverTimeInMS = new Date(servertime.date.substr(0, 4), servertime.date.substr(5, 2) - 1, servertime.date.substr(8, 2), servertime.date.substr(11, 2), servertime.date.substr(14, 2), servertime.date.substr(17, 2)).getTime();
         if (MyHoursTab.shiftList.models.length !== 0){
             if (EmployeeApp.MyHoursTab.shiftList.last().get('clockOut') === '0000-00-00 00:00:00') {
                 console.log("User currently clocked in. Setting time difference.");
@@ -90,8 +89,11 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //sets current time difference from last shift clock in time for a currently clocked in user
     _setTimeDiff : function() {
         if (EmployeeApp.MyHoursTab.shiftList.models.length !== 0){
-            var clockInTime = new Date(EmployeeApp.MyHoursTab.shiftList.last().get('clockIn'));
+            var clockInString = EmployeeApp.MyHoursTab.shiftList.last().get('clockIn');
+            var clockInTime = new Date(clockInString.substr(0, 4), clockInString.substr(5, 2) - 1, clockInString.substr(8, 2), clockInString.substr(11, 2), clockInString.substr(14, 2), clockInString.substr(17, 2));
+            //console.log(clockInTime);
             var currentServerTime = MyHoursTab.tabInfoModel.serverTimeInMS;
+            //console.log(currentServerTime);
             var msDiff = currentServerTime - clockInTime.getTime();
             
             MyHoursTab.tabInfoModel.shiftDiff = msDiff;
@@ -110,8 +112,10 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
         MyHoursTab.shiftList.each(function(shift){
             if (shift.get('clockOut') !== '0000-00-00 00:00:00'){
-                var clockin = new Date(shift.get('clockIn'));
-                var clockout = new Date(shift.get('clockOut'));
+                var clockInString = shift.get('clockIn');
+                var clockOutString = shift.get('clockOut');
+                var clockin = new Date(clockInString.substr(0, 4), clockInString.substr(5, 2) - 1, clockInString.substr(8, 2), clockInString.substr(11, 2), clockInString.substr(14, 2), clockInString.substr(17, 2));
+                var clockout = new Date(clockOutString.substr(0, 4), clockOutString.substr(5, 2) - 1, clockOutString.substr(8, 2), clockOutString.substr(11, 2), clockOutString.substr(14, 2), clockOutString.substr(17, 2));
 
                 var msdiff = clockout.getTime() - clockin.getTime();
                 //console.log("difference of %d found",msdiff);

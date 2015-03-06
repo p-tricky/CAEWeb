@@ -26,26 +26,13 @@
 / Flter styling
 ---------------*/
 
-#applyFilter {
-    float:right;
-    border-radius: 6px;
-    color: #331900;
-    background-color: #BFA163;
-    font-size: 12px;
-    font-weight: bold;
-    border-color:#bc9b6a;
-    padding: 5px;
+
+.btns {
+    display: flex;
+    justify-content:center;
+    margin: 10px auto;
 }
-#generate {
-    border-radius: 6px;
-    color: #331900;
-    background-color: #BFA163;
-    font-size: 12px;
-    font-weight: bold;
-    border-color:#bc9b6a;
-    padding: 5px;
-}
-button[type=reset]
+button
 {
     border-radius: 6px;
     color: #331900;
@@ -54,6 +41,9 @@ button[type=reset]
     font-weight: bold;
     border-color:#bc9b6a;
     padding: 5px;
+}
+#prevPayPeriod, #nextPayPeriod, #currPayPeriod {
+    margin: 0px auto;
 }
 form[name=shiftFilter]
 {
@@ -61,6 +51,7 @@ form[name=shiftFilter]
 }
 input[type=text]
 {
+    float:right;
     border-radius: 5px;
     color: #331900;
     background-color: #d4b77d;
@@ -69,14 +60,12 @@ input[type=text]
     border-color:#bc9b6a;
     text-align: right;
 }
-
 fieldset {
     background:#ebd29b;
     border: 1px solid black;
     border-radius: 10px;
     padding:5px;
 }
-
 legend {
     border-radius: 6px;
     color: #331900;
@@ -91,3 +80,4 @@ legend {
 th,td {
     padding: 5px 0px;
 }
+

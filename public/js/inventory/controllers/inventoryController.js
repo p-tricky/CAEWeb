@@ -104,6 +104,33 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
         //Hide the delte button since we don't want a user to be able to delete a item they are trying to add.
         $('#delete').hide();
       });
+    },
+
+    //sets a timeout then call the sendemail url which runs the email script
+    _sendEmail : function() {
+      //defines the emailTracker bool if it hasn't been defined
+      if (InventoryTab.InventoryController.emailTimeout === undefined)
+      {
+        InventoryTab.InventoryController.emailTimeout = false;
+      }
+
+      //If the email tracker bool is true, set to false
+      if (InventoryTab.InventoryController.emailTimeout) {
+        clearTimeout(InventoryTab.InventoryController.emailTrackerTimerId);
+      }
+
+      //Set a timer for the email and return the id so it can be cleared later if needed
+      InventoryTab.InventoryController.emailTimeout = true;
+      InventoryTab.InventoryController.emailTrackerTimerId = setTimeout(function() {
+        //sets the tracker to true
+        InventoryTab.InventoryController.emailTracker = false;
+        console.log('it happened');
+        //an ajax request to send the email.
+        $.ajax({
+          url: 'api/sendemail'
+        });
+        //5 second timeout
+      }, 5000);
     }
 
   };

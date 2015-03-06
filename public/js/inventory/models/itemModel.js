@@ -58,6 +58,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
         } else { //else clear the current timeout for the log to happen.
           clearTimeout(that.logTrackerTimerId);
         }
+
         //Increment the logTracker by the adjustment
         that.logTracker += adjustment;
         //if the logTracker amount is not equal to 0 we want to set a timeout to do the log entry.
