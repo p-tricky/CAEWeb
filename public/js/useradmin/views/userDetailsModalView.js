@@ -28,6 +28,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     // that we don't have to recheck the permissions check boxes everytime we edit a user's
     // details
     onShow : function() {
+      ///////////////////// sets all of the permissions ////////////////////
       if (this.model.get('acc_room') == 1) {
         $('input[id=acc_room]').attr('checked','checked');
       }
@@ -55,6 +56,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       if (this.model.get('acc_crud_schedule') == 1) {
         $('input[id=acc_crud_schedule]').attr('checked','checked');
       }
+   
+      ///////////////////// sets the position dropdown to correct value ////////////////////
+      $('option[value='+this.model.get('position_id')+']').attr('selected', true);
     },
 
     // In modification process
