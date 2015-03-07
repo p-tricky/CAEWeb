@@ -988,10 +988,32 @@ kendo_module({
                 this._allDayHeaderHeight = allDayHeader.first()[0].clientHeight;
             }
 
+            //
+            // This method has been tweaked by cae programmers
+            //
+            // When you click on a date header in the week view of the employee
+            // schedules tabs, this method is called.  
+            //
+            // Before it called _slotIndexDate(cell.index()) to get the date
+            // for the day view.  
+            //
+            // This didn't work.  When I clicked on the "Thu 3/05" it would
+            // open the dayview for "Mon 3/02". 
+            //
+            // A lot of other methods rely on the _slotIndexDate method, so
+            // I took it out.  
+            //
+            // 99% sure that these changes will never affect anything down 
+            // the road, but I just thought I would make a note of it.
+            //
+            // The changes are in the last commit from 3/06.
+            // 
             that.datesHeader.on("click" + NS, ".k-nav-day", function(e) {
                 var cell = $(e.currentTarget).closest("th");
-
-                that.trigger("navigate", { view: "day", date: that._slotIndexDate(cell.index()) });
+                cellStartDate = that._dates[cell.index()];
+                startTime = getMilliseconds(new Date(+that.options.startTime));
+                setTime(cellStartDate, startTime);
+                that.trigger("navigate", { view: "day", date: cellStartDate });
             });
         },
 
