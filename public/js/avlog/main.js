@@ -38,6 +38,12 @@ AVLogApp.AVLogAppController = {
     AVLogApp.tabDiv = new AVLogApp.AVLogTab.AVLogTabView({'tabName':'specialroomTab'});
     AVLogApp.tabArea.show(AVLogApp.tabDiv);
     AVLogApp.AVLogClassroomTab.SpecialRoomController.getRoomList(AVLogApp.AVLogClassroomTab.SpecialRoomController.showRoomTable);
+  },
+
+  recentevents : function() {
+    AVLogApp.tabDiv = new AVLogApp.AVLogTab.AVLogTabView({'tabName':'recentEventsTab'});
+    AVLogApp.tabArea.show(AVLogApp.tabDiv);
+    AVLogApp.AVLogClassroomTab.RecentEventsController.getEventsList(AVLogApp.AVLogClassroomTab.RecentEventsController.showEventsTable);
   }
 };
 
@@ -49,13 +55,14 @@ AVLogApp.Router = new Marionette.AppRouter({
     "computerclassroom" : "computerclassroom",
     "breakoutroom" : "breakoutroom",
     "specialroom" : "specialroom",
+    "recentevents" : "recentevents",
   }
 });
 
 //Setup the things that need to start when the App is started. This includes getting inital templates, and starting the history.
 AVLogApp.on('initialize:after', function() {
   //load any initial templates that may be needed.
-  tpl.loadTemplates(['classroomTab','computerclassroomTab','breakoutroomTab','specialroomTab'], function() {
+  tpl.loadTemplates(['classroomTab','computerclassroomTab','breakoutroomTab','specialroomTab', 'recentEventsTab'], function() {
 
     //start the backbone history
     var result = Backbone.history.start({pushState: true, root: "/caeweb/avlog/"});

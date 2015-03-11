@@ -42,8 +42,13 @@ button
     border-color:#bc9b6a;
     padding: 5px;
 }
-#prevPayPeriod, #nextPayPeriod, #currPayPeriod {
-    margin: 0px auto;
+#prevPayPeriod {
+    width: 30px;
+    margin: 0px 0px 0px auto;
+}
+#nextPayPeriod {
+    width: 30px;
+    margin: 0px auto 0px 0px;
 }
 form[name=shiftFilter]
 {
@@ -52,6 +57,7 @@ form[name=shiftFilter]
 input[type=text]
 {
     float:right;
+    width:170px;
     border-radius: 5px;
     color: #331900;
     background-color: #d4b77d;

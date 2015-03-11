@@ -30,7 +30,8 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
       'click .classroom' : 'navigateToClassroom',
       'click .computerclassroom':'navigateToComputerClassroom',
       'click .breakoutroom':'navigateToBreakoutRoom',
-      'click .specialroom':'navigateToSpecialRoom'
+      'click .specialroom':'navigateToSpecialRoom',
+      'click .recentevents' : 'navigateToRecentEvents'
     },
     
     //Functions to be run from the events setup right above.
@@ -48,6 +49,10 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
 
     navigateToSpecialRoom : function() {
       AVLogApp.navigate('specialroom',true);
+    },
+
+    navigateToRecentEvents : function() {
+      AVLogApp.navigate('recentevents', true);
     }
   });
 });

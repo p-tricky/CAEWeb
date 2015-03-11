@@ -62,6 +62,10 @@ tr.selectedRoom {
   font-weight: bold;
 }
 
+.roomNum {
+  font-weight: bold;
+}
+
 .messageDate {
   float:right;
   font-weight: bold;
