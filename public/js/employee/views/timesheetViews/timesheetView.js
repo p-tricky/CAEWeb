@@ -31,7 +31,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       var start = $('#datepicker1').val();
       var end = $('#datepicker2').val();
       //has to run twice inorder to correctly get the new shiftlist
-      TimesheetTab.TimesheetController.getShiftsInRange(start, end);
+      //TimesheetTab.TimesheetController.getShiftsInRange(start, end);
       TimesheetTab.TimesheetController.getShiftsInRange(start, end);
     },
 
@@ -69,7 +69,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       $('#datepicker1').val(date1Str);
       $('#datepicker2').val(date2Str);  
       //runs the timesheet twice because it wont get the shift list if ran once
-      TimesheetTab.TimesheetController.getShiftsInRange(date1Str, date2Str);
+      //TimesheetTab.TimesheetController.getShiftsInRange(date1Str, date2Str);
       TimesheetTab.TimesheetController.getShiftsInRange(date1Str, date2Str);
     },
 
@@ -79,7 +79,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
 
       var start = $('#datepicker1').val();
       var end = $('#datepicker2').val();
-      TimesheetTab.TimesheetController.getShiftsInRange(start, end);
+      //TimesheetTab.TimesheetController.getShiftsInRange(start, end);
       TimesheetTab.TimesheetController.getShiftsInRange(start, end);
     },
 
@@ -117,7 +117,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       $('#datepicker1').val(date1Str);
       $('#datepicker2').val(date2Str);
       //runs the timesheet twice because it wont get the shift list if ran once  
-      TimesheetTab.TimesheetController.getShiftsInRange(date1Str, date2Str);
+      //TimesheetTab.TimesheetController.getShiftsInRange(date1Str, date2Str);
       TimesheetTab.TimesheetController.getShiftsInRange(date1Str, date2Str);
     }
   });

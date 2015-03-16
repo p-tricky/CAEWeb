@@ -239,7 +239,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //creates a new shift and clocks the current user in
     clockIn : function(callback) {
         MyHoursTab.shiftDiff = 0;
-        EmployeeApp.MyHoursTab.shiftList.create({},{wait:true});
+        EmployeeApp.MyHoursTab.shiftList.create({ shiftNum: MyHoursTab.shiftList.length+1 },{wait:true});
     }
 
   };

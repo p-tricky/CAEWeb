@@ -120,8 +120,6 @@ class ShiftApiController extends BaseController {
         $newShift->timeRec = 'N/A';
         $newShift->clockOut = '0000-00-00 00:00:00';
 
-        $newShift->shiftNum = Shift::where('eid', '=', $uModel->id)->count();
-
         return $newShift->toJSON();
     }
 
