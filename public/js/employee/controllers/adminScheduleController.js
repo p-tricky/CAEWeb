@@ -276,7 +276,11 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
   
     emboldenLinesBetweenDays: function() {
 
-      var numAdmins = AdminScheduleTab.adminList.size();
+      var numAdmins = AdminScheduleTab.employeeFilter.length;
+
+      // if there is only one Admin, there will only be one column,
+      // so bold lines aren't necessary
+      if (numAdmins <= 1) return;
 
       var dateHeaders = $( 'th[colspan=' + numAdmins + ']' );
 

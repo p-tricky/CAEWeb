@@ -276,7 +276,11 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
 
     emboldenLinesBetweenDays: function() {
 
-      var numattendants = AttendantScheduleTab.attendantList.size();
+      var numattendants = AttendantScheduleTab.employeeFilter.length;
+
+      // if there is only one attendant, there will only be one column,
+      // so bold lines aren't necessary
+      if (numattendants <= 1) return;
 
       var dateHeaders = $( 'th[colspan=' + numattendants + ']' );
 

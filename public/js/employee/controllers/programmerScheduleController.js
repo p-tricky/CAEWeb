@@ -277,7 +277,11 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
 
     emboldenLinesBetweenDays: function() {
 
-      var numProgrammers = ProgrammerScheduleTab.programmerList.size();
+      var numProgrammers = ProgrammerScheduleTab.employeeFilter.length;
+
+      // if there is only one programmer, there will only be one column,
+      // so bold lines aren't necessary
+      if (numProgrammers <= 1) return;
 
       var dateHeaders = $( 'th[colspan=' + numProgrammers + ']' );
 
