@@ -20,8 +20,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //will run on loading
     onShow : function() {
       //makes date objects of the clockin and clockout time
-    	var clockInDate = new Date(this.model.get('clockIn'));
-    	var clockOutDate = new Date(this.model.get('clockOut'));
+      var clockInDate = new Date(this.model.get('clockIn').substr(0, 4), this.model.get('clockIn').substr(5, 2) - 1, this.model.get('clockIn').substr(8, 2), this.model.get('clockIn').substr(11, 2), this.model.get('clockIn').substr(14, 2), this.model.get('clockIn').substr(17, 2));
+      var clockOutDate = new Date(this.model.get('clockOut').substr(0, 4), this.model.get('clockOut').substr(5, 2) - 1, this.model.get('clockOut').substr(8, 2), this.model.get('clockOut').substr(11, 2), this.model.get('clockOut').substr(14, 2), this.model.get('clockOut').substr(17, 2));
 
       //loads the sliders and times into the divs with all necessary options 
     	$('#datetimeholder1').datetimepicker({
@@ -37,6 +37,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             minute: clockInDate.getMinutes(),
             showSecond: true,
             second: clockInDate.getSeconds(),
+            defaultDate: clockInDate, 
         });
       $('#datetimeholder2').datetimepicker({
             //sets the text field for the time
@@ -51,6 +52,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             minute: clockOutDate.getMinutes(),
             showSecond: true,
             second: clockOutDate.getSeconds(),
+            defaultDate: clockOutDate,
         });
 
       //needed for other functions in the view
@@ -73,8 +75,20 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         MyHoursTab.MyHoursController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
       }
     	else 
-        //alerts the user to invalid times. 
-        alert("Clock In time must be before the Clock Out Time.");
+      {
+        //alerts the user to invalid times.
+        $('#confirmModal').html('Clock In time must be before the Clock Out Time.');
+        $('#confirmModal').dialog({
+          modal:true,
+          title: 'Invalid Clock In/Clock Out',
+          buttons: {
+            'Ok': function() {
+              $(this).dialog('close');
+            }
+          },
+        });
+      }
+
 
     },
 

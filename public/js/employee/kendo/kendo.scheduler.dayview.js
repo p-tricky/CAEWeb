@@ -685,7 +685,8 @@ kendo_module({
         _editable: function() {
             if (this.options.editable) {
                 if (kendo.support.mobileOS) {
-                    this._touchEditable();
+                    //This was removed so that mobile users can look at the schedule without worrying about changing the schedule. 
+                    //this._touchEditable();
                 } else {
                     this._mouseEditable();
                 }

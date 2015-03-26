@@ -291,5 +291,19 @@ input {
   display: none;
 }
 
-
+#print {
+  float: right;
+  padding: 3px;
+  padding-right: 6px;
+  padding-left: 6px;
+  border-radius: 5px;
+  margin: 6px;
+  margin-right: 15px;
+  cursor: pointer;
+  color: #331900;
+  background-color: #BFA163;
+  font-size: 12px;
+  font-weight: bold;
+  border-color:#bc9b6a;
+}
 

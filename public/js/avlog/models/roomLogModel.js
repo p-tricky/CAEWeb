@@ -24,6 +24,9 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
         //response must be received before execution continues. If successful returnValue is assigned true.
         returnValue = AVLogClassroomTab.roomLogCollection.create(this, {
           success: function() {
+            $.ajax({
+              url: '/api/sendemail',
+            });
             return true; //This value will be assigned to returnValue
           },
           error : function() {

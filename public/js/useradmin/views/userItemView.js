@@ -11,7 +11,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     },
 
     attributes : function(){
-      var classValue = UserListTab.userList.indexOf(this.model);
+      var classValue = this.model.get('userNum');
       var classProperty = '';
       if ((Number(classValue)%2) === 0) {
         classProperty = 'even';

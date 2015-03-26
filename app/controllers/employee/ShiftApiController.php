@@ -49,9 +49,10 @@ class ShiftApiController extends BaseController {
                 if ($timeRecMinutes < 10)
                     $timeRecMinutes = "0" . $timeRecMinutes;
                 $shift->timeRec = $timeRecHours . ':' . $timeRecMinutes; 
-                $shift->shiftNum = $shiftNumber;
-                $shiftNumber+=1;
             }
+
+            $shift->shiftNum = $shiftNumber;
+            $shiftNumber+=1;
         }
         return $shifts->toJSON();
     }

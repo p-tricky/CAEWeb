@@ -2,12 +2,8 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
   UserListTab.UserListTabController = {
 
     getUserList : function(callback) {
-      if (typeof UserListTab.userList === "undefined") {
         UserListTab.userList = new UserAdminApp.UserListTab.UserCollection();
         UserListTab.userList.fetch({success : callback});
-      } else {
-        callback();
-      }
     },
 
     showUserTable : function() {

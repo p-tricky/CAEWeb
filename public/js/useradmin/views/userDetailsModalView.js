@@ -122,6 +122,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
                 });
               }
             });
+            console.log('delete');
+            UserAdminApp.UserListTab.UserListTabController.getUserList(UserAdminApp.UserListTab.UserListTabController.showUserTable);
+            console.log(UserListTab.userList);
           },
         }
       });

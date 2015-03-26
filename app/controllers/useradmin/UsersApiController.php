@@ -3,6 +3,11 @@ class UsersApiController extends BaseController {
 	//Fetch all the users information from the users table
   public function index() {
     $users = User::all();
+    $userNumber = 0;
+    foreach ($users as $user) {
+      $user->userNum = $userNumber;
+      $userNumber+=1;
+    }
     return $users->toJson();
   }
 
