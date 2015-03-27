@@ -99,6 +99,7 @@ kendo_module({
         },
         getMilliseconds = kendo.date.getMilliseconds,
         RECURRENCEEDITOR = function(container, options) {
+          if (!options.model.created_at) options.messages = { creatingNewShift: true }; //cae addition: see kendo.scheduler.recurrence.js:_setEndRule() for details
             $('<div ' + kendo.attr("bind") + '="value:' + options.field +'" />')
                 .attr({
                     name: options.field

@@ -1309,7 +1309,6 @@ kendo_module({
         destroy: function() {
             this.ddlFrequency.destroy();
             this.container.find("input[type=radio],input[type=checkbox]").off(CLICK);
-
             kendo.destroy(this.container);
 
             Widget.fn.destroy.call(this);
@@ -1583,6 +1582,20 @@ kendo_module({
             }).data("kendoDatePicker");
         },
 
+        // bug fix
+        // When we changed the default end rule ("git show 8c589f195e" for
+        // details on change), we didn't realize that the recurrence widget wont save
+        // unless we click on one of the elements of the widget.  As a result, if a 
+        // user creates a shift and immediately saves it the recurrence
+        // poperties of the shift are never updated.  This is because clicking a
+        // button or checkbox in the recurrence widget
+        // triggers a change event, which eventually informs kendo to update the shift 
+        // model. This fixes the bug by triggering a change automatically when
+        // creating a new shift.
+        // 
+        // TODO: pop up for nonrecurring shifts still contains recurrence widget
+        // with default values -- minor bug but should be fixed at some point
+        // bug is unrelated to this edit but quite possibly related to 8c589f195e
         _setEndRule: function() {
             var that = this,
                 rule = that._value,
@@ -1602,6 +1615,7 @@ kendo_module({
                 that._toggleEndRule("until");
             } else {
                 that._toggleEndRule();
+                if (that.options.messages.creatingNewShift) that.trigger("change");//cae addition
             }
         },
 
