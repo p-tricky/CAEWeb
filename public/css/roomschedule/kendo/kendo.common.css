@@ -239,6 +239,10 @@ html body .k-button-bare.k-upload-button:hover {
   .k-state-disabled .k-input {
     opacity: 1 !important;
   }
+
+  #header-wrapper, #tabsRow, #employeeSelectSection, #clear, #print, .k-scheduler-footer, .k-header {
+    display: none;
+  }
 }
 .k-state-error {
   border-style: ridge;
