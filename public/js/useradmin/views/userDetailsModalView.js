@@ -14,7 +14,8 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     events : {
       'click .save' : 'saveUser',
       'click .delete' : 'deleteUser',
-      'click .cancel' : 'cancelAction'
+      'click .cancel' : 'cancelAction',
+      'change .select-position-id' : 'updatePermissionsCheckboxes',
     },
 
     // render's the userDetalsModalView from the userDetailsModal template
@@ -30,35 +31,35 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     onShow : function() {
       ///////////////////// sets all of the permissions ////////////////////
       if (this.model.get('acc_room') == 1) {
-        $('input[id=acc_room]').attr('checked','checked');
+        $('input[id=acc_room]').prop('checked',true);
       }
       if (this.model.get('acc_avlog') == 1) {
-        $('input[id=acc_avlog]').attr('checked','checked');
+        $('input[id=acc_avlog]').prop('checked',true);
       }
       if (this.model.get('acc_inv') == 1) {
-        $('input[id=acc_inv]').attr('checked','checked');
+        $('input[id=acc_inv]').prop('checked',true);
       }
       if (this.model.get('acc_emp') == 1) {
-        $('input[id=acc_emp]').attr('checked','checked');
+        $('input[id=acc_emp]').prop('checked',true);
       }
       if (this.model.get('acc_useradm') == 1) {
-        $('input[id=acc_useradm]').attr('checked','checked');
+        $('input[id=acc_useradm]').prop('checked',true);
       }
       if (this.model.get('acc_crud_timesheet') == 1) {
-        $('input[id=acc_crud_timesheet]').attr('checked','checked');
+        $('input[id=acc_crud_timesheet]').prop('checked',true);
       }
       if (this.model.get('acc_view_timesheet') == 1) {
-        $('input[id=acc_view_timesheet]').attr('checked','checked');
+        $('input[id=acc_view_timesheet]').prop('checked',true);
       }
       if (this.model.get('acc_gen_timesheet') == 1) {
-        $('input[id=acc_gen_timesheet]').attr('checked','checked');
+        $('input[id=acc_gen_timesheet]').prop('checked',true);
       }
       if (this.model.get('acc_crud_schedule') == 1) {
-        $('input[id=acc_crud_schedule]').attr('checked','checked');
+        $('input[id=acc_crud_schedule]').prop('checked',true);
       }
    
       ///////////////////// sets the position dropdown to correct value ////////////////////
-      $('option[value='+this.model.get('position_id')+']').attr('selected', true);
+      $('option[value='+this.model.get('position_id')+']').prop('selected', true);
     },
 
     // In modification process
@@ -134,6 +135,70 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       $('#fade').removeClass('fade');
       $('#modalBox').removeClass('modalBox');
       App.tabDiv.modalArea.close();
+    },
+
+    // there is definitely a more elegant way of doing this
+    // TODO: talk to jason about what actual permissions are supposed to be
+    updatePermissionsCheckboxes : function() {
+      var position_id = parseInt($('#position-id').val(), 10);
+      if ( position_id === 1 ) {
+        $('input[id=acc_room]').prop('checked',true);
+        $('input[id=acc_avlog]').prop('checked',true);
+        $('input[id=acc_inv]').prop('checked',true);
+        $('input[id=acc_emp]').prop('checked',true);
+        $('input[id=acc_useradm]').prop('checked', false);
+        $('input[id=acc_crud_timesheet]').prop('checked',false);
+        $('input[id=acc_view_timesheet]').prop('checked',false);
+        $('input[id=acc_gen_timesheet]').prop('checked',false);
+        $('input[id=acc_crud_schedule]').prop('checked',false);
+      }
+      else if ( position_id === 2 ) {
+        room = $('input[id=acc_room]');
+        console.log("room: " + room);
+        $('input[id=acc_room]').prop('checked',true);
+        $('input[id=acc_avlog]').prop('checked',true);
+        $('input[id=acc_inv]').prop('checked',true);
+        $('input[id=acc_emp]').prop('checked',true);
+        $('input[id=acc_useradm]').prop('checked',true);
+        $('input[id=acc_crud_timesheet]').prop('checked',true);
+        $('input[id=acc_view_timesheet]').prop('checked',true);
+        $('input[id=acc_gen_timesheet]').prop('checked',true);
+        $('input[id=acc_crud_schedule]').prop('checked',true);
+      }
+      else if ( position_id === 3 ) {
+        $('input[id=acc_room]').prop('checked',true);
+        $('input[id=acc_avlog]').prop('checked',true);
+        $('input[id=acc_inv]').prop('checked',true);
+        $('input[id=acc_emp]').prop('checked',true);
+        $('input[id=acc_useradm]').prop('checked',true);
+        $('input[id=acc_crud_timesheet]').prop('checked',true);
+        $('input[id=acc_view_timesheet]').prop('checked',true);
+        $('input[id=acc_gen_timesheet]').prop('checked',true);
+        $('input[id=acc_crud_schedule]').prop('checked',true);
+      }
+      else if ( position_id === 4 ) {
+        $('input[id=acc_room]').prop('checked',true);
+        $('input[id=acc_avlog]').prop('checked',true);
+        $('input[id=acc_inv]').prop('checked',true);
+        $('input[id=acc_emp]').prop('checked','checked');
+        $('input[id=acc_useradm]').prop('checked',true);
+        $('input[id=acc_crud_timesheet]').prop('checked',true);
+        $('input[id=acc_view_timesheet]').prop('checked',true);
+        $('input[id=acc_gen_timesheet]').prop('checked',true);
+        $('input[id=acc_crud_schedule]').prop('checked',true);
+      }
+      else if ( position_id === 5 ) {
+        $('input[id=acc_room]').prop('checked',true);
+        $('input[id=acc_avlog]').prop('checked',true);
+        $('input[id=acc_inv]').prop('checked',true);
+        $('input[id=acc_emp]').prop('checked',true);
+        $('input[id=acc_useradm]').prop('checked',true);
+        $('input[id=acc_crud_timesheet]').prop('checked',true);
+        $('input[id=acc_view_timesheet]').prop('checked',true);
+        $('input[id=acc_gen_timesheet]').prop('checked',true);
+        $('input[id=acc_crud_schedule]').prop('checked',true);
+      }
     }
+
   });
 });
