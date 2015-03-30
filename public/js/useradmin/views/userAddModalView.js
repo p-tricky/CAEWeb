@@ -36,11 +36,6 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       };
 
       var result = this.model.addUser(fields);
-      if (result) {
-        $('#fade').removeClass('fade');
-        $('#modalBox').removeClass('modalBox');
-        App.tabDiv.modalArea.close();
-      }
     },
 
     cancelAction : function() {

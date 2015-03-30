@@ -55,14 +55,17 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
     addUser : function(addModelProperties) {
       this.set(addModelProperties);
-      returnValue = false;
       if (this.isValid()) {
         // .create maps to the store() method in the controller
         returnValue = UserAdminApp.UserListTab.userList.create(this, {
           success: function() {
-            return true;
+            // close userAddModalView
+            $('#fade').removeClass('fade');
+            $('#modalBox').removeClass('modalBox');
+            App.tabDiv.modalArea.close();
           },
           error : function() {
+            // leave UserAddModalView open and open error dialog
             var errorAlert = $('#confirmModalBox');
             errorAlert.html("Please verify unified account.");
             errorAlert.dialog({
@@ -74,12 +77,10 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
                 }
               },
             });
-            return false;
           },
           wait : true
         });
       }
-      return returnValue;
     },
 
     validate: function(attrs) {
