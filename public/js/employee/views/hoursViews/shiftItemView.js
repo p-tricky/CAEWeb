@@ -34,8 +34,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
     //Function to show the item details in a modal box when the user double clicks a row
     showDetails : function(e) {
-      //If the user is not double clicking on the buttons in the view
-      if (e.target.nodeName !== "BUTTON") {
+      //If the user has permission to modify shifts
+      if (EmployeeApp.currentUser.get('acc_crud_timesheet') === '1') {
         //call the showInventoryItemModal and pass it the views model
         MyHoursTab.MyHoursController.showShiftModal(this.model);
       }

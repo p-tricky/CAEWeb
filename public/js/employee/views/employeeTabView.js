@@ -25,7 +25,8 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       'click .adminschedule':'navigateToAdminSchedule',
       'click .attendantschedule':'navigateToAttendentSchedule',
       'click .programmerschedule':'navigateToProgrammerSchedule',
-      'click .timesheet':'navigateToTimesheet'
+      'click .timesheet':'navigateToTimesheet',
+      'click .shiftmanager':'navigateToShiftManager',
     },
     
     //List of functions associated with the events. All of them do an navigate to somewhere else.
@@ -72,6 +73,15 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
       //Do the navigate
       EmployeeApp.navigate('timesheet',true);
+    },
+
+    navigateToShiftManager : function() {
+      //Clear the interval that is setup from the myhours tab to keep track of the
+      //current time on the client side. If it isn't canceled, it will continue to throw
+      //errors when navigating to a different page.
+      clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
+      //Do the navigate
+      EmployeeApp.navigate('shiftmanager',true);
     }
     
   });

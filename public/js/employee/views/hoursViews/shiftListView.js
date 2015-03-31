@@ -11,6 +11,20 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         this.model.bind('change', this.render, this);
     },
 
+    onShow : function() {
+        /*
+        MyHoursTab.MyHoursController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
+        console.log(MyHoursTab.shiftList);
+        //check to see if there were no shifts returned in search range
+        if (MyHoursTab.shiftList.models.length === 0){
+            MyHoursTab.MyHoursController._renderClockIn();
+        }
+        else {
+            //console.log('Rendering clockin/out button...');
+            EmployeeApp.MyHoursTab.MyHoursController._showClockInOut();
+        }*/
+    },
+
     id:'shiftListTable',
 
     itemViewContainer: "tbody"

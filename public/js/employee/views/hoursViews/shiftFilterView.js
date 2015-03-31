@@ -14,6 +14,14 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     },
 
     applyFilter : function() {
+        var date1 = new Date($('#datepicker1').val());
+        var date2 = new Date($('#datepicker2').val());
+        if (date1 > date2)
+        {
+          temp = $('#datepicker1').val();
+          $('#datepicker1').val($('#datepicker2').val());
+          $('#datepicker2').val(temp);
+        }
         var start = $('#datepicker1').val();
         var end = $('#datepicker2').val();
         EmployeeApp.MyHoursTab.MyHoursController.getShiftsInRange(start, end);

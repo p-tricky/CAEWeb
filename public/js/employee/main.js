@@ -78,7 +78,24 @@ EmployeeApp.EmployeeAppController = {
     });
     //Get the users permissions and then kick off the tab logic with the passed in callback.
     EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showTimesheet);
-  }
+  },
+
+  //function to be called when the myhours route is in the url
+  shiftmanager : function() {
+    //Call the function that will create the main layout, and display it.
+    EmployeeApp.EmployeeTab.EmployeeController._showBaseView();
+    //Call the function that will get the list of viewable tabs based on user permission, and display them.
+    EmployeeApp.EmployeeTab.EmployeeController._showViewableTabs(function() {
+      //Once the tabs are displayed run this callback function to set the selected tab
+      $('#shiftmanager').addClass('selectedTab');
+    });
+
+    EmployeeApp.shiftManagerContent = new EmployeeApp.ShiftManagerTab.ShiftManagerView();
+    
+    EmployeeApp.tabDiv.tabContent.show(EmployeeApp.shiftManagerContent);
+
+    EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(EmployeeApp.EmployeeTab.EmployeeController._showShiftManager);
+  },
 };
 
 //Define the router that will listen to the URL, and call the correct associated function
@@ -90,6 +107,7 @@ EmployeeApp.Router = new Marionette.AppRouter({
     "attendantschedule" : "attendantschedule",
     "programmerschedule" : "programmerschedule",
     "timesheet" : "timesheet",
+    "shiftmanager" : "shiftmanager",
   }
 });
 

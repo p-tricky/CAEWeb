@@ -7,7 +7,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
     }, 
 
     //Define url for persistance of the data
-    ur : 'api/timesheet',
+    url : 'api/timesheet',
   });
 
   //Define a collection that will use the above defined collection

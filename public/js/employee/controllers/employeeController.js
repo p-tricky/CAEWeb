@@ -80,11 +80,18 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       }
     },
 
-    //Function to determine which version of the timesheet to show based on user permission, and then show it.  
+    //Show the timesheet
     _showTimesheet : function() {
       //if user has view capability on the timsheet, pass true as the second parameter to getTimesheetInfo, else pass false.
       App.TimesheetTab.TimesheetController.getTimesheetInfo();
       
-    }    
+    },
+
+    //Show the timesheet
+    _showShiftManager : function() {
+      //if user has view capability on the timsheet, pass true as the second parameter to getTimesheetInfo, else pass false.
+      EmployeeApp.ShiftManagerTab.ShiftManagerController.getAllShifts(EmployeeApp.ShiftManagerTab.ShiftManagerController.showPageContent);
+      
+    }
   }
 });

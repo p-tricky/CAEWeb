@@ -10,12 +10,15 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         //console.log(EmployeeApp.MyHoursTab.shiftList.last().get('clockOut'));
         EmployeeApp.MyHoursTab.MyHoursController._getServerTime();
         //if employee is still clocked in...
+        console.log(EmployeeApp.MyHoursTab.shiftList.last().attributes.clockOut);
         if (EmployeeApp.MyHoursTab.shiftList.last().get('clockOut') === '0000-00-00 00:00:00') {
             //render clock out content
+            //console.log('error');
             MyHoursTab.MyHoursController._renderClockOut();
         }
         //if employee is not currently clocked in
         else {
+            
             //render clock in content
             MyHoursTab.MyHoursController._renderClockIn();
         }
@@ -185,15 +188,11 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             MyHoursTab.tabInfoModel = new Backbone.Model();
         }
       //get shift data
-      if (typeof MyHoursTab.shiftList === "undefined") {
-        console.log('Getting shift data...');
-        MyHoursTab.shiftList = new EmployeeApp.MyHoursTab.ShiftCollection();
-        //get all shifts for current user
-        MyHoursTab.shiftList.fetch({success : callback, data: {}});
-        //console.log(MyHoursTab.shiftList);
-      } else {
-        callback();
-      }
+      console.log('Getting shift data...');
+      MyHoursTab.shiftList = new EmployeeApp.MyHoursTab.ShiftCollection();
+      //get all shifts for current user
+      MyHoursTab.shiftList.fetch({success : callback, data: {}});
+        
     },
 
     //retrieves shifts in specified range, updating total hours

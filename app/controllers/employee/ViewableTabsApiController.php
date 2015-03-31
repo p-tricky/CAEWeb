@@ -15,6 +15,9 @@ class ViewableTabsApiController extends BaseController {
       if ($uModel->acc_view_timesheet === '1') {
         array_push($tabs, (object)array('id'=>'5','tab'=>'timesheet','name'=>'Timesheet'));
       }
+      if ($uModel->acc_crud_timesheet === '1') {
+        array_push($tabs, (object)array('id'=>'6','tab'=>'shiftmanager','name'=>'Shift Manager'));
+      }
     }
     return json_encode($tabs);
       

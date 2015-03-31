@@ -1,0 +1,141 @@
+#left {
+    float:left;
+    width:22%;
+    background: #d4b77d;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+
+#right {
+    float:right;
+    width:73%;
+    background: #d4b77d;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+#tabsContent {
+    background: #ebd29b;
+    padding-bottom: 20px;
+}
+
+#allHoursContent {
+    margin: 20px;
+}
+
+/*---------------
+/ Clock In/Out styling
+---------------*/
+#shiftDiffDisplay {
+    font-size:16pt;
+}
+
+button[id=clockout] {
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 3px 10px;
+}
+
+/*---------------
+/ Flter styling
+---------------*/
+
+#applyFilter {
+    float:right;
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+form[name=shiftFilter]
+{
+    font-size:12pt;
+}
+input[type=text]
+{
+    border-radius: 5px;
+    color: #331900;
+    background-color: #d4b77d;
+    font-size: 14px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    text-align: right;
+}
+
+fieldset {
+    background:#ebd29b;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding:5px;
+}
+
+legend {
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 14px;
+    letter-spacing: 1px;
+    border-color:#bc9b6a;
+    padding: 0px 10px;
+    border: 1px solid black;
+    font-family: Arial;
+}
+
+.btnVisible {
+
+}
+
+/*---------------
+/ Shift list styling
+---------------*/
+
+
+.shifts {
+    width: 100%;
+    font-size: 16pt;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+th,td {
+    padding: 5px 0px;
+}
+
+th {
+    text-align: right;
+}
+
+.shifts  td {
+    text-align: right;
+}
+
+/*------------------
+/ Shift Manager Styling
+------------------*/
+
+.btns {
+    display: flex;
+    justify-content:center;
+    margin: 10px auto;
+}
+#prevPayPeriod, #currPayPeriod, #nextPayPeriod {
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+#prevPayPeriod, #nextPayPeriod {
+    width: 30px;
+}
