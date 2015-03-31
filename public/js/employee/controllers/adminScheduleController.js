@@ -256,7 +256,8 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
 
         //Set the hours property for each employee in the hoursObject to the time string. If an employee
         //is not in the hoursObject, their time will be 0 since it was initalized to that before the calculation was done.
-        AdminScheduleTab.adminList.get(prop).set({'hours' : timeString});
+        if (AdminScheduleTab.adminList.get(prop))
+          AdminScheduleTab.adminList.get(prop).set({'hours' : timeString});
       }
     },
 

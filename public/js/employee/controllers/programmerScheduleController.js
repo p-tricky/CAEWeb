@@ -256,7 +256,8 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
 
         //Set the hours property for each employee in the hoursObject to the time string. If an employee
         //is not in the hoursObject, their time will be 0 since it was initialzed to that before the calculatin was done.
-        ProgrammerScheduleTab.programmerList.get(prop).set({'hours' : timeString});
+        if (ProgrammerScheduleTab.programmerList.get(prop))
+          ProgrammerScheduleTab.programmerList.get(prop).set({'hours' : timeString});
       }
     },
 
