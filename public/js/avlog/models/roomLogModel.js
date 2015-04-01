@@ -25,7 +25,7 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
         returnValue = AVLogClassroomTab.roomLogCollection.create(this, {
           success: function() {
             $.ajax({
-              url: '/api/sendemail',
+              url: 'api/sendemail',
             });
             return true; //This value will be assigned to returnValue
           },

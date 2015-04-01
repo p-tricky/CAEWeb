@@ -21,7 +21,9 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         	//get all shifts for current user
         	ShiftManagerTab.shiftList.fetch({success : callback, data: {}});
       	} else {
-        	callback();
+        	ShiftManagerTab.shiftList.fetch();
+          ShiftManagerTab.shiftList.reset();
+          callback();
       	}
   	},
 
