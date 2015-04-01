@@ -60,8 +60,6 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_crud_schedule]').prop('checked',false);
       }
       else if ( position_id === 2 ) {
-        room = $('input[id=acc_room]');
-        console.log("room: " + room);
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);

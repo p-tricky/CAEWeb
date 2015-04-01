@@ -19,10 +19,8 @@ class UsersApiController extends BaseController {
       $addUser->fullname = UserHelper::sGetWmuName($addUser->username);
       $addUser->email = UserHelper::sGetWmuEmail($addUser->username);
       $addUser->position_id = $addModel['position_id'];
-      Log::info("CHECKING");
       if (array_key_exists('phone', $addModel))
         $addUser->phone = UsersApiController::getAllNumbers( $addModel['phone'] );
-      Log::info("ADDING");
       $addUser->schedule_color = $addModel['schedule_color'];
       $addUser->acc_room = $addModel['acc_room'];
       $addUser->acc_avlog = $addModel['acc_avlog'];
@@ -41,7 +39,6 @@ class UsersApiController extends BaseController {
   public function update($id) {
       //get the json from the request.
       $updateModel = Input::json()->all();
-      Log::info("update model: ", Input::json()->all());
       //update the user model based on the json data sent.
       $updateUser = User::find($id);
       $updateUser->position_id = $updateModel['position_id'];
@@ -82,9 +79,7 @@ class UsersApiController extends BaseController {
   # only selects numbers
   #
   private static function getAllNumbers($phoneNumber) {
-    Log::info("phone number before replacement: " . $phoneNumber);
     $nums = preg_replace('/\D+/', '', $phoneNumber);
-    Log::info("phone number after replacement: " . $nums);
     return $nums;
   }
 }
