@@ -14,7 +14,9 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
       //pass the template to handlebars before it assigns the template to the view
       this.template = Handlebars.compile(tpl.get('placeOrders/_placeOrderRow'));
     },
-
+    events: {
+      'keyup #amount' : 'removeNonNumsFromInput',
+    },
     //Define attributes for the view. This is mainly used to give the row a class
     //of either even or odd for row coloring purposes. This might be able to be done
     //with css rather than doing it with js. This also assigns an id field to the row
@@ -36,7 +38,11 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
         id : this.model.get('id'),
         class : classProperty + ' itemRow'
       };
+    },
+    removeNonNumsFromInput : function() {
+      var input = $('#amount');
+      var inputWithoutNonNumChars = input.val().replace(/[^0-9]/g, '');
+      input.val(inputWithoutNonNumChars);
     }
-
   });
 });
