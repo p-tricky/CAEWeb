@@ -84,7 +84,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     },
 
     validate: function(attrs) {
-      if (!/\D*\d{3}\D*\d{3}\D*\d{4}\D*/.test(attrs.phone)) 
+      if (attrs.phone && !/\D*\d{3}\D*\d{3}\D*\d{4}\D*/.test(attrs.phone)) 
         return "Invalid phone number";
     },
   });

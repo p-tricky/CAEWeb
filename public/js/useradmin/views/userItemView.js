@@ -36,11 +36,13 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
 
     // Function to format
     formatPhone: function(phoneNumber){
-      phoneNumber = phoneNumber.replace(/.*(\d{3}).*(\d{3}).*(\d{4})/, "$1$2$3");
-      phoneNumber = "(" + phoneNumber.substring(0,3) + ") "
+      if (phoneNumber) {
+        phoneNumber = phoneNumber.replace(/.*(\d{3}).*(\d{3}).*(\d{4})/, "$1$2$3");
+        phoneNumber = "(" + phoneNumber.substring(0,3) + ") "
                           + phoneNumber.substring(3,6) + "-"
                           + phoneNumber.substring(6,10);
-      return phoneNumber;
+        return phoneNumber;
+      }
     },
 
     showDetails : function(e) {
