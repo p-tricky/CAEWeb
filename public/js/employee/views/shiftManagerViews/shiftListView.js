@@ -12,6 +12,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     onShow : function() {
         ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
+        ShiftManagerTab.shiftList.reset();
     },
 
     id:'shiftListTable',
