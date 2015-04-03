@@ -6,14 +6,13 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     showPageContent : function(callback) {
         EmployeeApp.ShiftManagerTab.ShiftManagerController._showShiftList();
 
-        //console.log('Rendering list filter...');
+        //calls the MyHours function getPayPeriod in order to set the Start Date and End Date in the shift filter
         EmployeeApp.MyHoursTab.MyHoursController._getPayPeriod(EmployeeApp.ShiftManagerTab.ShiftManagerController._showShiftFilter);
     },
 
+    //If the shift list hasn't been created, it makes a new shiftList and gets the base models. This happens when the page
+    //is loaded for the first time. Otherwise, it just gets the shifts for the base range. 
   	getAllShifts : function(callback) {
-  		if (typeof ShiftManagerTab.tabInfoModel === 'undefined') {
-            ShiftManagerTab.tabInfoModel = new Backbone.Model();
-        }
   	  	//get shift data
       	if (typeof ShiftManagerTab.shiftList === "undefined") {
         	//console.log('Getting shift data...');
@@ -21,20 +20,26 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         	//get all shifts for current user
         	ShiftManagerTab.shiftList.fetch({success : callback, data: {}});
       	} else {
+          //fetchs and resets the shift list. this will refresh it whih will get the shifts in the current pay period
         	ShiftManagerTab.shiftList.fetch();
           ShiftManagerTab.shiftList.reset();
+          //calls the function that was passed in as a callback
           callback();
       	}
   	},
 
-  	//retrieves shifts in specified range, updating total hours
+  	//retrieves shifts in specified range
     getShiftsInRange : function(rangeStart, rangeEnd) {
         ShiftManagerTab.shiftList.fetch({data: {start: rangeStart , end: rangeEnd}});
+        //reset the shiftList to ensure everything is up to date
+        ShiftManagerTab.shiftList.reset();
     },
 
-  	//used to show a modal box to modify the selecte shift
+  	//used to show a modal box to modify the selected shift
     showShiftModal : function(theModel) {
+        //dims the background material
         $('#fade').addClass('fade');
+        //shows the modal that allows users to edit shifts
         $('#modalBox').addClass('modalBox');
         var theModalView = new ShiftManagerTab.MyShiftModalView({model: theModel});
         App.tabDiv.modalArea.show(theModalView);
@@ -60,7 +65,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
   	//creates and displays shfit list view populated with shiftList collection
     _showShiftList : function() {
-        var listContent = new ShiftManagerTab.ShiftListView({collection: ShiftManagerTab.shiftList, 'contentName': 'shiftManager/shiftListTable', model: ShiftManagerTab.tabInfoModel});
+        var listContent = new ShiftManagerTab.ShiftListView({collection: ShiftManagerTab.shiftList, 'contentName': 'shiftManager/shiftListTable'});
         EmployeeApp.shiftManagerContent.shiftListSection.show(listContent);
     },
 
@@ -88,6 +93,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         return (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
     },
 
+    //calls the clockout function for the specified model. This will update the collection with the clockout time. 
     clockOut : function(id) {
       var shift = ShiftManagerTab.shiftList.get(id);
       shift.clockOut();

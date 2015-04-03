@@ -14,13 +14,11 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
 
     //Function to create orders when the place order button is clicked.
     createOrders : function() {
-      console.log('stuff');
       //Valiate the quantities to see if they are all valid.
       if (PlaceOrdersTab.PlaceOrdersController._validateQuantities()) {
         //All quantities valid. Call the create temp orders function.
         PlaceOrdersTab.PlaceOrdersController._createRealOrders(PlaceOrdersTab.PlaceOrdersController._createTempOrders());
       } else { //All quantities are not valid
-        console.log('invalid quantities');
         //alert the user that the quantities are not valid. 
         //uses a confirm modal with only one button
         $('#confirmModalBox').html('Some of the quantities you entered are invalid');

@@ -8,7 +8,6 @@ InventoryApp.module('ViewOrdersTab', function (ViewOrdersTab, App, Backbone, Mar
     getOrders : function(callback) {
       //If the order collection does not already exist
       if (typeof ViewOrdersTab.currentOrders === "undefined") {
-        console.log('Getting Order Data');
         //Instanciate the new collection to hold the orders
         ViewOrdersTab.currentOrders = new InventoryApp.ViewOrdersTab.OrderCollection();
         //Fetch the orders from the server side. On success call the callback function that was passed in.

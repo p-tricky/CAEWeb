@@ -8,7 +8,6 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     getInventory : function(callback) {
       //If the inventory collection does not already exist
       if (typeof InventoryTab.currentInventory === "undefined") {
-        console.log('Getting Inventory Data');
         //Instanciate a new inventory collection
         InventoryTab.currentInventory = new InventoryApp.InventoryTab.ItemCollection();
         //fetch the data for the collection and call the callback on success.
@@ -32,7 +31,6 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     getVendors : function(callback) {
       //If the vendor collection does not already exist
       if (typeof InventoryTab.vendorCollection === "undefined") {
-        console.log('Getting Vendor List');
         //Instanciate a new vendor collection
         InventoryTab.vendorCollection = new InventoryTab.VendorCollection();
         //fetch the data for the collection and call the callback on success
@@ -124,7 +122,6 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       InventoryTab.InventoryController.emailTrackerTimerId = setTimeout(function() {
         //sets the tracker to true
         InventoryTab.InventoryController.emailTracker = false;
-        console.log('it happened');
         //an ajax request to send the email.
         $.ajax({
           url: 'api/sendemail'

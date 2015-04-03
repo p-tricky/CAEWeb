@@ -22,6 +22,7 @@ class TimesheetApiController extends BaseController
         $start = Input::get('start', $payPeriodStart);
         $end = Input::get('end', $payPeriodEnd);
 
+        //sets the start and end date differently since Firefox wouldn't recognize some strings
         $start = date('Y-m-d', strtotime($start));
         $end = date('Y-m-d', strtotime($end));
         $end = date('Y-m-d', strtotime($end . ' + 1 day'));
@@ -31,8 +32,11 @@ class TimesheetApiController extends BaseController
         return $shifts->toJSON();
 	}
 
+    //returns the user name based on an id
 	public function getUserName() {
+        //gets the id from the input
 		$userId = Input::get('id');
+        //selects the user and gets just the "fullname" then returns it
 		$user = User::where('id', '=', $userId)->pluck('fullname');
 		return $user;
 	}

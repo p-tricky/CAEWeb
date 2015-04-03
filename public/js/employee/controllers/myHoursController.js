@@ -7,13 +7,10 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     */
     //renders clockinout view w/ content determined on whether or not employee is currently clocked in
     _showClockInOut : function() {
-        //console.log(EmployeeApp.MyHoursTab.shiftList.last().get('clockOut'));
         EmployeeApp.MyHoursTab.MyHoursController._getServerTime();
         //if employee is still clocked in...
-        console.log(EmployeeApp.MyHoursTab.shiftList.last().attributes.clockOut);
         if (EmployeeApp.MyHoursTab.shiftList.last().get('clockOut') === '0000-00-00 00:00:00') {
             //render clock out content
-            //console.log('error');
             MyHoursTab.MyHoursController._renderClockOut();
         }
         //if employee is not currently clocked in
@@ -28,13 +25,11 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     },
     //render clock in content
     _renderClockIn : function() {
-        //console.log('Rendering clock in content...');
         var divContent = new MyHoursTab.ClockInOutView({'contentName' : 'myHours/clockIn'});
         EmployeeApp.myHoursContent.clockInOutSection.show(divContent);
     },
     //render clock out content
     _renderClockOut: function() {
-        //console.log('Rendering clock out content...');
         var divContent = new MyHoursTab.ClockInOutView({'contentName' : 'myHours/clockOut'});
         EmployeeApp.myHoursContent.clockInOutSection.show(divContent);
     },
@@ -70,7 +65,6 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     },
     //obtains current server time via ajax request
     _getServerTime: function() {
-        //console.log("Retrieving initial server time information.");
         $.ajax({
             url: 'api/servertime',
             success: EmployeeApp.MyHoursTab.MyHoursController._setInitialServerTime
@@ -80,11 +74,9 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //also sets current time difference from last shift if user is clocked-in
     _setInitialServerTime : function(data) {
         var servertime = JSON.parse(data);
-        //console.log("Server time retrieved and set.");
         EmployeeApp.MyHoursTab.tabInfoModel.serverTimeInMS = new Date(servertime.date.substr(0, 4), servertime.date.substr(5, 2) - 1, servertime.date.substr(8, 2), servertime.date.substr(11, 2), servertime.date.substr(14, 2), servertime.date.substr(17, 2)).getTime();
         if (MyHoursTab.shiftList.models.length !== 0){
             if (EmployeeApp.MyHoursTab.shiftList.last().get('clockOut') === '0000-00-00 00:00:00') {
-                console.log("User currently clocked in. Setting time difference.");
                 EmployeeApp.MyHoursTab.MyHoursController._setTimeDiff();
             }
         }
@@ -94,21 +86,16 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         if (EmployeeApp.MyHoursTab.shiftList.models.length !== 0){
             var clockInString = EmployeeApp.MyHoursTab.shiftList.last().get('clockIn');
             var clockInTime = new Date(clockInString.substr(0, 4), clockInString.substr(5, 2) - 1, clockInString.substr(8, 2), clockInString.substr(11, 2), clockInString.substr(14, 2), clockInString.substr(17, 2));
-            //console.log(clockInTime);
             var currentServerTime = MyHoursTab.tabInfoModel.serverTimeInMS;
-            //console.log(currentServerTime);
             var msDiff = currentServerTime - clockInTime.getTime();
             
             MyHoursTab.tabInfoModel.shiftDiff = msDiff;
             MyHoursTab.tabInfoModel.shiftDiffString = MyHoursTab.MyHoursController._getTimeString(EmployeeApp.MyHoursTab.tabInfoModel.shiftDiff);
-            //console.log(MyHoursTab.tabInfoModel.shiftDiffString);
             $('#shiftDiffDisplay').html(MyHoursTab.tabInfoModel.shiftDiffString);
         }
     },
     //determines total hours in specified filter range
     _getTotalHours : function(callback) {
-        //console.log("Calculating total hours...");
-        //console.log("Old total hours are %d", MyHoursTab.tabInfoModel.get('totalhours'));
         
         MyHoursTab.tabInfoModel.set({'totalhours': 0});
         var totalMS = 0;
@@ -121,14 +108,10 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
                 var clockout = new Date(clockOutString.substr(0, 4), clockOutString.substr(5, 2) - 1, clockOutString.substr(8, 2), clockOutString.substr(11, 2), clockOutString.substr(14, 2), clockOutString.substr(17, 2));
 
                 var msdiff = clockout.getTime() - clockin.getTime();
-                //console.log("difference of %d found",msdiff);
                 totalMS += msdiff;
             }
         });
-        //console.log("Returned: %s", MyHoursTab.MyHoursController._getTimeString(totalMS));
         EmployeeApp.MyHoursTab.tabInfoModel.set({'totalhours': MyHoursTab.MyHoursController._getTimeString(totalMS)});
-
-        //console.log("Returned updated total hours:" + MyHoursTab.tabInfoModel.get('totalhours'));
 
         if (callback) {
             callback;
@@ -144,14 +127,12 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         //convert hours (minutes truncated by division math)
         
         hours = Math.floor(totalSec / 3600);
-        //console.log('created time string, returned' + (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2))
         return (hours < 10 ? '0' : '') + hours + ':' + ("0" + minutes).slice(-2);
     },
     //updates server time and time since last clockin
     _updateTimes: function() {
         MyHoursTab.tabInfoModel.serverTimeInMS = MyHoursTab.tabInfoModel.serverTimeInMS + 60000;
         MyHoursTab.MyHoursController._setTimeDiff();
-        //console.log("One minute since page load. Updating times.");
 
     },
 
@@ -188,7 +169,6 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             MyHoursTab.tabInfoModel = new Backbone.Model();
         }
       //get shift data
-      console.log('Getting shift data...');
       MyHoursTab.shiftList = new EmployeeApp.MyHoursTab.ShiftCollection();
       //get all shifts for current user
       MyHoursTab.shiftList.fetch({success : callback, data: {}});
@@ -197,26 +177,18 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
     //retrieves shifts in specified range, updating total hours
     getShiftsInRange : function(rangeStart, rangeEnd) {
-        //console.log('Applying filter...');
         MyHoursTab.shiftList.fetch({success: MyHoursTab.MyHoursController._getTotalHours, data: {start: rangeStart , end: rangeEnd}});
-        //console.log(MyHoursTab.shiftList);
         MyHoursTab.shiftList.totalhours = 0;
         MyHoursTab.shiftList.each(function(shift){
             MyHoursTab.shiftList.totalhours += shift.get('timeRec');
         });
+
+        EmployeeApp.MyHoursTab.shiftList.reset();
     },
     //main function called in employee controller; calls numerous other functions to populate and display page content
     showPageContent : function(callback) {
-        //console.log('Retrieved shift data.');
-
         EmployeeApp.MyHoursTab.MyHoursController._getServerTime();
-
-        //console.log("Current Shift List:");
-        //console.log(MyHoursTab.shiftList);
-        //console.log('Rendering shift list...');
         EmployeeApp.MyHoursTab.MyHoursController._showShiftList();
-
-        //console.log('Rendering list filter...');
         EmployeeApp.MyHoursTab.MyHoursController._getPayPeriod(EmployeeApp.MyHoursTab.MyHoursController._showShiftFilter);
 
         //check to see if there were no shifts returned in search range
@@ -224,7 +196,6 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             MyHoursTab.MyHoursController._renderClockIn();
         }
         else {
-            //console.log('Rendering clockin/out button...');
             EmployeeApp.MyHoursTab.MyHoursController._showClockInOut();
         }
 

@@ -20,6 +20,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //will run on loading
     onShow : function() {
       //makes date objects of the clockin and clockout time
+      //Firefox needs the dates to be defined like this. It wouldn't recognize the dateTimeString of clockin/clockout
       var clockInDate = new Date(this.model.get('clockIn').substr(0, 4), this.model.get('clockIn').substr(5, 2) - 1, this.model.get('clockIn').substr(8, 2), this.model.get('clockIn').substr(11, 2), this.model.get('clockIn').substr(14, 2), this.model.get('clockIn').substr(17, 2));
       var clockOutDate = new Date(this.model.get('clockOut').substr(0, 4), this.model.get('clockOut').substr(5, 2) - 1, this.model.get('clockOut').substr(8, 2), this.model.get('clockOut').substr(11, 2), this.model.get('clockOut').substr(14, 2), this.model.get('clockOut').substr(17, 2));
 
@@ -35,6 +36,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             //sets the inital time for the field
             hour: clockInDate.getHours(),
             minute: clockInDate.getMinutes(),
+            //seconds are not shown by default. This will enable it
             showSecond: true,
             second: clockInDate.getSeconds(),
             defaultDate: clockInDate, 
@@ -50,12 +52,14 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             //sets the inital time for the field
             hour: clockOutDate.getHours(),
             minute: clockOutDate.getMinutes(),
+            //seconds are not shown by default. This will enable it
             showSecond: true,
             second: clockOutDate.getSeconds(),
             defaultDate: clockOutDate,
         });
 
       //needed for other functions in the view
+      //enables easy access to "this" without conflicts
     	MyHoursTab.MyShiftModalView.thisModel = this.model;
     },
 

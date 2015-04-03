@@ -1,5 +1,6 @@
 <?php
 class AllShiftsApiController extends BaseController {
+    //will get shifts for all users
 	public function getShifts(){
         //get pay period
         $today = date('w');
@@ -18,14 +19,17 @@ class AllShiftsApiController extends BaseController {
         $start = Input::get('start', $payPeriodStart);
         $end = Input::get('end', $payPeriodEnd);
 
+        //sets the start and end date differently since Firefox wouldn't recognize some strings
         $start = date('Y-m-d', strtotime($start));
         $end = date('Y-m-d', strtotime($end));        
         $end = date('Y-m-d', strtotime($end . ' + 1 day'));
 
+        //used to set the shift number for easy css coloring and formatting
         $shiftNumber = 1;
 
         //get shifts in specified range
         $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->orderBy('eid')->get();
+        //foreach shift, sets the timeRecorded and the shiftNumber 
         foreach($shifts as $shift) {
             $startTime = new DateTime($shift->clockIn);
             $endTime = new DateTime($shift->clockOut);
@@ -45,8 +49,11 @@ class AllShiftsApiController extends BaseController {
                 $shift->timeRec = $timeRecHours . ':' . $timeRecMinutes; 
             }
 
+            //sets the name of the user
             $shift->name = User::where('id', '=', $shift->eid)->pluck('fullname');
+            //sets the shift number
             $shift->shiftNum = $shiftNumber;
+            //increments the shift number
             $shiftNumber+=1;
         }
         return $shifts->toJSON();

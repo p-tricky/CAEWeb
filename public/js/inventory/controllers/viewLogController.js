@@ -11,7 +11,6 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
       //entire app. However, in case it somehow does not exist, this will do a check and refetch it if
       //it is neccsary or missing. Near 100% of the time it will fail the if, and simply call the callback.
       if (typeof ViewLogTab.logCollection === "undefined") { //if collection does not exist, create and fetch it.
-        console.log('Getting Log Data');
         //create a log collection
         ViewLogTab.currentLog = new InventoryApp.ViewLogTab.LogCollection();
         //fetch the log collection, and call the callback on success

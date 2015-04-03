@@ -9,8 +9,9 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       this.template = Handlebars.compile(tpl.get(this.options.contentName));
     },
 
+    //defines the functions to call when a button is clicked
     events: {
-    	'click #applyFilter': 'applyFilter',
+    	'click #applyFilter'  : 'applyFilter',
       'click #prevPayPeriod': 'prevPayPeriod',
       'click #currPayPeriod': 'currPayPeriod',
       'click #nextPayPeriod': 'nextPayPeriod',
@@ -18,9 +19,11 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
     
     //When the user clicks the apply filter button
     applyFilter : function() {
+      //sets two date objects to see if the dates are correct
       var date1 = new Date($('#datepicker1').val());
       var date2 = new Date($('#datepicker2').val());
 
+      //if the start date is after the end date, it swaps the two dates
       if (date1 > date2)
       {
         temp = $('#datepicker1').val();
@@ -28,10 +31,11 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
         $('#datepicker2').val(temp);
       }
 
+      //sets the start and end to send off to the controller
       var start = $('#datepicker1').val();
       var end = $('#datepicker2').val();
+      //gets the shifts for the new range
       TimesheetTab.TimesheetController.getShiftsInRange(start, end);
-      TimesheetTab.TimesheetController.shiftList.reset();
     },
 
     //will run when the user clicks the previous arrow
@@ -44,6 +48,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       date2.setDate(date2.getDate()-14);
 
       //if the month is a double digit
+      //since months are 0-11, month 9 after the toTimeString would be 10 (October)
       if (date1.getMonth() >= 9)
         var start = date1.toLocaleDateString();
       //if the month is a single digit
@@ -51,6 +56,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
         var start = '0'+date1.toLocaleDateString();
 
       //if the month is a double digit
+      //since months are 0-11, month 9 after the toTimeString would be 10 (October)
       if (date2.getMonth() >= 9)
         var end = date2.toLocaleDateString();
       //if the month is a single digit
@@ -67,18 +73,19 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       //sets the text imput to the new dates
       $('#datepicker1').val(start);
       $('#datepicker2').val(end);
+      //gets the shifts for the new range
       TimesheetTab.TimesheetController.getShiftsInRange(start, end);
-      TimesheetTab.TimesheetController.shiftList.reset();
     },
 
     currPayPeriod : function() {
+      //sets the datePickers to the default start and end dates
       $('#datepicker1').val(this.model.get('start'));
       $('#datepicker2').val(this.model.get('end'));
 
       var start = $('#datepicker1').val();
       var end = $('#datepicker2').val();
+      //gets the shifts for the new range
       TimesheetTab.TimesheetController.getShiftsInRange(start, end);
-      TimesheetTab.TimesheetController.shiftList.reset();
     },
 
     //will run when the clicks the next arrow
@@ -91,6 +98,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       date2.setDate(date2.getDate()+14);
 
       //if the month is a double digit
+      //since months are 0-11, month 9 after the toTimeString would be 10 (October)
       if (date1.getMonth() >= 9)
         var start = date1.toLocaleDateString();
       //if the month is a double digit
@@ -98,6 +106,7 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
         var start = '0'+date1.toLocaleDateString();
 
       //if the month is a double digit
+      //since months are 0-11, month 9 after the toTimeString would be 10 (October)
       if (date2.getMonth() >= 9)
         var end = date2.toLocaleDateString();
       //if the month is a double digit
@@ -114,8 +123,8 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
       //sets the text imput to the new dates
       $('#datepicker1').val(start);
       $('#datepicker2').val(end); 
+      //gets the shifts for the current pay range
       TimesheetTab.TimesheetController.getShiftsInRange(start, end);
-      TimesheetTab.TimesheetController.shiftList.reset();
     }
   });
 });

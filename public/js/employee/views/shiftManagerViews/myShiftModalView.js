@@ -17,9 +17,10 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     	'click .cancel' : 'cancelAction'
     },
 
-    //will run on loading
+    //will run on loading the modal
     onShow : function() {
       //makes date objects of the clockin and clockout time
+      //need to pass the parameters like this because Firefox wouldn't recognize the time string.
       var clockInDate = new Date(this.model.get('clockIn').substr(0, 4), this.model.get('clockIn').substr(5, 2) - 1, this.model.get('clockIn').substr(8, 2), this.model.get('clockIn').substr(11, 2), this.model.get('clockIn').substr(14, 2), this.model.get('clockIn').substr(17, 2));
       var clockOutDate = new Date(this.model.get('clockOut').substr(0, 4), this.model.get('clockOut').substr(5, 2) - 1, this.model.get('clockOut').substr(8, 2), this.model.get('clockOut').substr(11, 2), this.model.get('clockOut').substr(14, 2), this.model.get('clockOut').substr(17, 2));
 
@@ -35,6 +36,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //sets the inital time for the field
             hour: clockInDate.getHours(),
             minute: clockInDate.getMinutes(),
+            //seconds aren't shown by default. This enables it
             showSecond: true,
             second: clockInDate.getSeconds(),
             defaultDate: clockInDate, 
@@ -50,12 +52,14 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //sets the inital time for the field
             hour: clockOutDate.getHours(),
             minute: clockOutDate.getMinutes(),
+            //seconds aren't shown by default. This enables it
             showSecond: true,
             second: clockOutDate.getSeconds(),
             defaultDate: clockOutDate,
         });
 
       //needed for other functions in the view
+      //easy access to "this" without having to worry about conflits
     	ShiftManagerTab.MyShiftModalView.thisModel = this.model;
     },
 
@@ -126,6 +130,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     },
 
     //Function that is called when the cancel button is clicked
+    //closes the modal
     cancelAction : function() {
       //Remove the fade overlay and modal box
       $('#fade').removeClass('fade');
