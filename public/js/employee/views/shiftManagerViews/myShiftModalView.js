@@ -14,49 +14,15 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     events : {
     	'click .save' : 'saveShift',
     	'click .delete' : 'deleteShift',
-    	'click .cancel' : 'cancelAction'
+    	'click .cancel' : 'cancelAction',
+      'keyup #modalclockin' : 'adjustClockInSliders',
+      'keyup #modalclockout': 'adjustClockOutSliders',
     },
 
     //will run on loading the modal
     onShow : function() {
-      //makes date objects of the clockin and clockout time
-      //need to pass the parameters like this because Firefox wouldn't recognize the time string.
-      var clockInDate = new Date(this.model.get('clockIn').substr(0, 4), this.model.get('clockIn').substr(5, 2) - 1, this.model.get('clockIn').substr(8, 2), this.model.get('clockIn').substr(11, 2), this.model.get('clockIn').substr(14, 2), this.model.get('clockIn').substr(17, 2));
-      var clockOutDate = new Date(this.model.get('clockOut').substr(0, 4), this.model.get('clockOut').substr(5, 2) - 1, this.model.get('clockOut').substr(8, 2), this.model.get('clockOut').substr(11, 2), this.model.get('clockOut').substr(14, 2), this.model.get('clockOut').substr(17, 2));
-
-      //loads the sliders and times into the divs with all necessary options 
-    	$('#datetimeholder1').datetimepicker({
-            //sets the text field for the time
-            altField: '#modalclockin',
-            altFieldTimeOnly: false,
-            //date formatting
-            dateFormat: 'yy-mm-dd',
-            //time formatting
-            timeForamt: 'HH:mm:ss',
-            //sets the inital time for the field
-            hour: clockInDate.getHours(),
-            minute: clockInDate.getMinutes(),
-            //seconds aren't shown by default. This enables it
-            showSecond: true,
-            second: clockInDate.getSeconds(),
-            defaultDate: clockInDate, 
-        });
-      $('#datetimeholder2').datetimepicker({
-            //sets the text field for the time
-            altField: '#modalclockout',
-            altFieldTimeOnly: false,
-            //date formatting
-        	  dateFormat: 'yy-mm-dd',
-            //time formatting
-            timeForamt: 'HH:mm:ss',
-            //sets the inital time for the field
-            hour: clockOutDate.getHours(),
-            minute: clockOutDate.getMinutes(),
-            //seconds aren't shown by default. This enables it
-            showSecond: true,
-            second: clockOutDate.getSeconds(),
-            defaultDate: clockOutDate,
-        });
+      ShiftManagerTab.MyShiftModalView.prototype.populateDatePickerWidget(this.model.get('clockIn'), $('#datetimeholder1'), '#modalclockin');
+      ShiftManagerTab.MyShiftModalView.prototype.populateDatePickerWidget(this.model.get('clockOut'), $('#datetimeholder2'), '#modalclockout');
 
       //needed for other functions in the view
       //easy access to "this" without having to worry about conflits
@@ -126,7 +92,58 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       modalBox.removeClass('modalBox');
       //Close the modal view
       App.tabDiv.modalArea.close();
-    }
+    },
+
+    populateDatePickerWidget : function(dateString, container, altField) {
+      //makes date objects of the clockin and clockout time
+      //Firefox needs the dates to be defined like this. It wouldn't recognize the dateTimeString of clockin/clockout
+      var date = new Date(dateString.substr(0, 4), dateString.substr(5, 2) - 1, dateString.substr(8, 2), dateString.substr(11, 2), dateString.substr(14, 2), dateString.substr(17, 2));
+      // if a datetimepicker exists, we need to destroy it before creating the new datetimepicker 
+      // (datetimepickers probs have update methods, but I'm too lazy to look right now)
+      if (container.children()) container.datetimepicker("destroy");  
+      // loads the sliders and times into the divs with all necessary options 
+      container.datetimepicker({
+            //sets the text field for the time
+            altField: altField,
+            altFieldTimeOnly: false,
+            //date formatting
+            dateFormat: 'yy-mm-dd',
+            //time formatting
+            timeForamt: 'HH:mm:ss',
+            //sets the inital time for the field
+            hour: date.getHours(),
+            minute: date.getMinutes(),
+            //seconds are not shown by default. This will enable it
+            showSecond: true,
+            second: date.getSeconds(),
+            defaultDate: date, 
+      });
+    },
+
+    adjustClockInSliders : function(e) {
+      if (47 < e.which && e.which < 58) { // ignore non integer key presses
+        var start = e.target.selectionStart, end = e.target.selectionEnd; // get the cursor's position in the text input element
+        var cInDate = $('#modalclockin').val();
+        // check that user put in valid date before creating new date widget
+        var cInIsCompleteDateString = /^\d{4}[\/-]\d{2}[\/-]\d{2}\ \d{2}:\d{2}:\d{2}/.test(cInDate); 
+        if (cInIsCompleteDateString) {
+          ShiftManagerTab.MyShiftModalView.prototype.populateDatePickerWidget(cInDate, $('#datetimeholder1'), '#modalclockin');
+        }
+        e.target.setSelectionRange(start, end);  // restore cursor position
+      }
+    },
+
+    adjustClockOutSliders : function(e) {
+      if (47 < e.which && e.which < 58) {
+        var start = e.target.selectionStart, end = e.target.selectionEnd;
+        var cOutDate = $('#modalclockout').val();
+        var cOutIsCompleteDateString = /^\d{4}[\/-]\d{2}[\/-]\d{2}\ \d{2}:\d{2}:\d{2}/.test(cOutDate);
+        if (cOutIsCompleteDateString) {
+          ShiftManagerTab.MyShiftModalView.prototype.populateDatePickerWidget(cOutDate, $('#datetimeholder2'), '#modalclockout');
+        }
+        e.target.setSelectionRange(start, end);
+      }
+    },
 
   });
 });
