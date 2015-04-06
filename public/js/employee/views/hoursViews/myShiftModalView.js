@@ -14,7 +14,9 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     events : {
     	'click .save' : 'saveShift',
     	'click .delete' : 'deleteShift',
-    	'click .cancel' : 'cancelAction'
+    	'click .cancel' : 'cancelAction',
+      'keyup #modalclockin' : 'adjustClockInSliders',
+      'keyup #modalclockout': 'adjustClockOutSliders',
     },
 
     //will run on loading
@@ -66,34 +68,20 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //saves the shift to the data base with the new clockin and clockout times.
     saveShift : function() {
       //makes sure that the clockin is before the clockout
-      if ($('#modalclockin').val() <= $('#modalclockout').val())
-      {
-        //calls the ajax to modify the shift
-        MyHoursTab.MyHoursController.updateShift(MyHoursTab.MyShiftModalView.thisModel.get('id'), $('#modalclockin').val(), $('#modalclockout').val());
-        //closes the modal box and fade
-        $('#fade').removeClass('fade');
-        $('#modalBox').removeClass('modalBox');
-        //Close the modal view
-        App.tabDiv.modalArea.close();
-        //get updated shift list and diplays it
-        MyHoursTab.MyHoursController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
-      }
-    	else 
-      {
-        //alerts the user to invalid times.
-        $('#confirmModal').html('Clock In time must be before the Clock Out Time.');
-        $('#confirmModal').dialog({
-          modal:true,
-          title: 'Invalid Clock In/Clock Out',
-          buttons: {
-            'Ok': function() {
-              $(this).dialog('close');
-            }
-          },
-        });
-      }
-
-
+      var clockIn = $('#modalclockin').val();
+      var clockOut = $('#modalclockout').val();
+      var modalBox = $('#modalBox');
+      if (!clockOut) clockOut = "0000-00-00 00:00:00";
+      //calls the ajax to modify the shift
+      MyHoursTab.MyHoursController.updateShift(MyHoursTab.MyShiftModalView.thisModel.get('id'), clockIn, clockOut);
+      //restores default width closes the modal box and fade 
+      modalBox.css("width","");
+      $('#fade').removeClass('fade');
+      modalBox.removeClass('modalBox');
+      //Close the modal view
+      App.tabDiv.modalArea.close();
+      //get updated shift list and diplays it
+      MyHoursTab.MyHoursController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
     },
 
     //Deletes the current shift
@@ -111,9 +99,11 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     			"Delete Shift": function() {
             //calls the ajax to delete the shift
     				MyHoursTab.MyHoursController.deleteShift(MyHoursTab.MyShiftModalView.thisModel.get('id'));
-            //closes the fade and modal box
+            //restores default width and closes the fade and modal box
+            var modalBox = $('#modalBox');
+            modalBox.css("width","");
     				$('#fade').removeClass('fade');
-      			$('#modalBox').removeClass('modalBox');
+      			modalBox.removeClass('modalBox');
       			//Close the modal view
       			App.tabDiv.modalArea.close();
             //closes the dialog
@@ -131,12 +121,21 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
     //Function that is called when the cancel button is clicked
     cancelAction : function() {
-      //Remove the fade overlay and modal box
+      //Remove the fade overlay and modal box and restore default width
+      var modalBox = $('#modalBox');
+      modalBox.css("width","");
       $('#fade').removeClass('fade');
-      $('#modalBox').removeClass('modalBox');
+      modalBox.removeClass('modalBox');
       //Close the modal view
       App.tabDiv.modalArea.close();
-    }
+    },
+
+    adjustClockInSliders : function() {
+      /*
+    	$('#datetimeholder1').datetimepicker({
+        )}
+        */
+    },
 
   });
 });

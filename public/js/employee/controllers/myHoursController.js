@@ -146,7 +146,16 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         $('#modalBox').addClass('modalBox');
         var theModalView = new MyHoursTab.MyShiftModalView({model: theModel});
         App.tabDiv.modalArea.show(theModalView);
+        if (theModel.get('clockOut') === "0000-00-00 00:00:00") {
+          $('#myHoursShiftModalClockOutLabel').remove();
+          $('#modalclockout').parent().remove();
+          $('#datetimeholder2').remove();
+          $('.div-table-col-leftBtns').width('auto');
+          $('.div-table-col-rightBtns').width('auto');
+          $('#modalBox').width(335);
+        }
     },
+    
     //called by myShiftModalView in order to delete a shift
     deleteShift : function(id) {
         $.ajax({
