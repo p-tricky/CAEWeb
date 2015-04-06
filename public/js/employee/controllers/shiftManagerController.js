@@ -43,6 +43,14 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         $('#modalBox').addClass('modalBox');
         var theModalView = new ShiftManagerTab.MyShiftModalView({model: theModel});
         App.tabDiv.modalArea.show(theModalView);
+        if (theModel.get('clockOut') === "0000-00-00 00:00:00") {
+          $('#shiftManagerShiftModalClockOutLabel').remove();
+          $('#modalclockout').parent().remove();
+          $('#datetimeholder2').remove();
+          $('.div-table-col-leftBtns').width('auto');
+          $('.div-table-col-rightBtns').width('auto');
+          $('#modalBox').width(335);
+        }
     },
 
   	//called by myShiftModalView in order to update a shift's clockin and clockout

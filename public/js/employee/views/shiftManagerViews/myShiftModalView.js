@@ -65,35 +65,20 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //saves the shift to the data base with the new clockin and clockout times.
     saveShift : function() {
-      //makes sure that the clockin is before the clockout
-      if ($('#modalclockin').val() <= $('#modalclockout').val())
-      {
-        //calls the ajax to modify the shift
-        ShiftManagerTab.ShiftManagerController.updateShift(ShiftManagerTab.MyShiftModalView.thisModel.get('id'), $('#modalclockin').val(), $('#modalclockout').val());
-        //closes the modal box and fade
-        $('#fade').removeClass('fade');
-        $('#modalBox').removeClass('modalBox');
-        //Close the modal view
-        App.tabDiv.modalArea.close();
-        //get updated shift list and diplays it
-        ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
-      }
-    	else 
-      {
-        //alerts the user to invalid times.
-        $('#confirmModal').html('Clock In time must be before the Clock Out Time.');
-        $('#confirmModal').dialog({
-          modal:true,
-          title: 'Invalid Clock In/Clock Out',
-          buttons: {
-            'Ok': function() {
-              $(this).dialog('close');
-            }
-          },
-        });
-      }
-
-
+      var clockIn = $('#modalclockin').val();
+      var clockOut = $('#modalclockout').val();
+      var modalBox = $('#modalBox');
+      if (!clockOut) clockOut = "0000-00-00 00:00:00";
+      //calls the ajax to modify the shift
+      ShiftManagerTab.ShiftManagerController.updateShift(ShiftManagerTab.MyShiftModalView.thisModel.get('id'), $('#modalclockin').val(), $('#modalclockout').val());
+      //closes the modal box and fade
+      modalBox.css("width","");
+      $('#fade').removeClass('fade');
+      modalBox.removeClass('modalBox');
+      //Close the modal view
+      App.tabDiv.modalArea.close();
+      //get updated shift list and diplays it
+      ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
     },
 
     //Deletes the current shift
@@ -112,8 +97,10 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //calls the ajax to delete the shift
     				ShiftManagerTab.ShiftManagerController.deleteShift(ShiftManagerTab.MyShiftModalView.thisModel.get('id'));
             //closes the fade and modal box
+            var modalBox = $('#modalBox');
+            modalBox.css("width","");
     				$('#fade').removeClass('fade');
-      			$('#modalBox').removeClass('modalBox');
+      			modalBox.removeClass('modalBox');
       			//Close the modal view
       			App.tabDiv.modalArea.close();
             //closes the dialog
@@ -133,8 +120,10 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     //closes the modal
     cancelAction : function() {
       //Remove the fade overlay and modal box
+      var modalBox = $('#modalBox');
+      modalBox.css("width","");
       $('#fade').removeClass('fade');
-      $('#modalBox').removeClass('modalBox');
+      modalBox.removeClass('modalBox');
       //Close the modal view
       App.tabDiv.modalArea.close();
     }
