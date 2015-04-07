@@ -10,7 +10,6 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     initialize : function(options) {
         this.options = options || {};
-        console.log(this.options.contentName);
         this.template = Handlebars.compile(tpl.get(this.options.contentName));
     },
 

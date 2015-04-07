@@ -27,8 +27,8 @@ class AllShiftsApiController extends BaseController {
         //used to set the shift number for easy css coloring and formatting
         $shiftNumber = 1;
 
-        //get shifts in specified range
-        $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->orderBy('eid')->get();
+        //get shifts in specified range and order them first by user, then by clockin time. 
+        $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->orderBy('eid')->orderBy('clockIn')->get();
         //foreach shift, sets the timeRecorded and the shiftNumber 
         foreach($shifts as $shift) {
             $startTime = new DateTime($shift->clockIn);

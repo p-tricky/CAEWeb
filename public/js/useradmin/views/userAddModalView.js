@@ -33,6 +33,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         acc_view_timesheet: $('#acc_view_timesheet').is(':checked') ? 1 : 0,
         acc_gen_timesheet: $('#acc_gen_timesheet').is(':checked') ? 1 : 0,
         acc_crud_schedule: $('#acc_crud_schedule').is(':checked') ? 1 : 0,
+        userNum: UserAdminApp.UserListTab.userList.length,
       };
 
       var result = this.model.addUser(fields);
