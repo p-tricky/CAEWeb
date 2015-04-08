@@ -146,7 +146,9 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         $('#modalBox').addClass('modalBox');
         var theModalView = new MyHoursTab.MyShiftModalView({model: theModel});
         App.tabDiv.modalArea.show(theModalView);
+        //if the shift that is being edited is still clocked in
         if (theModel.get('clockOut') === "0000-00-00 00:00:00") {
+          //removes all of the clockout options that wont be used
           $('#myHoursShiftModalClockOutLabel').remove();
           $('#modalclockout').parent().remove();
           $('#datetimeholder2').remove();

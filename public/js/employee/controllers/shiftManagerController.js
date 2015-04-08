@@ -43,7 +43,9 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         $('#modalBox').addClass('modalBox');
         var theModalView = new ShiftManagerTab.MyShiftModalView({model: theModel});
         App.tabDiv.modalArea.show(theModalView);
+        //if the shift that is being edited is still clocked in
         if (theModel.get('clockOut') === "0000-00-00 00:00:00") {
+          //removes all of the clockout options that wont be used
           $('#shiftManagerShiftModalClockOutLabel').remove();
           $('#modalclockout').parent().remove();
           $('#datetimeholder2').remove();
