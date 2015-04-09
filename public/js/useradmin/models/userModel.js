@@ -1,3 +1,4 @@
+//this is the model that each user will live in
 UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marionette, $, _) {
   UserListTab.UserModel = Backbone.Model.extend({
     defaults : {
@@ -21,9 +22,10 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       'updated_at':''
     },
 
+    //url to get all the users
     urlRoot : 'api/users',
 
-
+    //on initializing the model
     initialize: function() {
       //If the model is invalid, alert the user that the model could not be saved.
       this.on("invalid", function(model, error) {
@@ -52,8 +54,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       this.set(this.previousAttributes());
     },
     
-
+    //when adding a new user model
     addUser : function(addModelProperties) {
+      //sets the new model's properties to the properties that were passed
       this.set(addModelProperties);
       if (this.isValid()) {
         // .create maps to the store() method in the controller
@@ -89,14 +92,13 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     },
   });
 
-
+  //defines the collection of users that hold the userModels
   UserListTab.UserCollection = Backbone.Collection.extend({
+    //which models will be in the collection
     model : UserListTab.UserModel,
-    url : 'api/users',
 
-    comparator: function(item) {
-      return (Number(item.get('id')));
-    }
+    //url to get the userCollection from
+    url : 'api/users',
 
   });
 });

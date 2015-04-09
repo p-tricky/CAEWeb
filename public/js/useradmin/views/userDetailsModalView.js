@@ -1,16 +1,22 @@
+//this is the view that is used for editing a current user
 UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marionette, $, _) {
   UserListTab.UserDetailsModalView = Backbone.Marionette.CompositeView.extend({
 
+    //defines a tag that the view uses
     tagName : "div",
 
+    //loads the template
     initialize : function() {
       this.template = Handlebars.compile(tpl.get('userDetailsModal'));
     },
 
+    //this is the item that is being edited
     itemView: UserListTab.UserDetailsModalView,
 
+    //define the container for the userItem
     itemViewContainer: "select",
 
+    //defines listeners for the events 
     events : {
       'click .save' : 'saveUser',
       'click .delete' : 'deleteUser',
@@ -62,9 +68,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       $('option[value='+this.model.get('position_id')+']').prop('selected', true);
     },
 
-    // In modification process
+    // when the save user button is clicked, it will try to save the user
     saveUser : function() {
-
+      //saves the selected options for the user
       var fields = {
         username:$('#username').val(),
         position_id: parseInt($('#position-id').val(), 10),
@@ -81,7 +87,10 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         acc_crud_schedule: $('#acc_crud_schedule').is(':checked') ? 1 : 0,
       };
 
+      //tries to save the properties for the user
+      //returns whether or not it was successful
       var response =  this.model.saveUser(fields);
+      //if successful, closes the modal box
       if (response) {
         $('#fade').removeClass('fade');
         $('#modalBox').removeClass('modalBox');
@@ -89,26 +98,38 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       } 
     },
 
+    //when attempting to delete the user
     deleteUser : function() {
+      //defines this for easy reference
       var self = this;
+      //makes the confirm modal
       var confirmDialogue = $('#confirmModalBox');
+      //sets the text for the confirm modal
       confirmDialogue.html("Are you sure you want to delete this user?");
+      //this loads the modal and the options
       confirmDialogue.dialog({
         modal: true,
         title: 'Delete User',
+        //'no' button
         buttons: {
           'No': function() {
+            //doesn't delete the user
             $(this).dialog('close');
           },
+          //deletes the user
           'Yes': function() {
+            //closes the confirmModal
             $(this).dialog('close');
+            //destroys the selected model
             self.model.destroy({
               wait : true,
+              //if successful closes the modal
               success : function() {
                 $('#fade').removeClass('fade');
                 $('#modalBox').removeClass('modalBox');
                 App.tabDiv.modalArea.close();
               },
+              //if there is an error, it allerts the user to the error
               error : function(m,e,o) {
                 var errorAlert = $('#confirmModalBox');
                 errorAlert.html("Sorry, the deletion failed.");
@@ -123,14 +144,14 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
                 });
               }
             });
-            console.log('delete');
+            //gets a new user list and displays it
             UserAdminApp.UserListTab.UserListTabController.getUserList(UserAdminApp.UserListTab.UserListTabController.showUserTable);
-            console.log(UserListTab.userList);
           },
         }
       });
     },
 
+    //just closes the modal without saving
     cancelAction : function() {
       $('#fade').removeClass('fade');
       $('#modalBox').removeClass('modalBox');
@@ -141,7 +162,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     // TODO: talk to jason about what actual permissions are supposed to be
     updatePermissionsCheckboxes : function() {
       var position_id = parseInt($('#position-id').val(), 10);
+      //if attendent is selected
       if ( position_id === 1 ) {
+        //doesn't have timesheet or edit schedule permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -152,9 +175,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',false);
         $('input[id=acc_crud_schedule]').prop('checked',false);
       }
+      //if admin is selected
       else if ( position_id === 2 ) {
-        room = $('input[id=acc_room]');
-        console.log("room: " + room);
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -165,7 +188,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',true);
         $('input[id=acc_crud_schedule]').prop('checked',true);
       }
+      //if programmer is selected
       else if ( position_id === 3 ) {
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -176,7 +201,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',true);
         $('input[id=acc_crud_schedule]').prop('checked',true);
       }
+      //if director is selected
       else if ( position_id === 4 ) {
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -187,7 +214,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',true);
         $('input[id=acc_crud_schedule]').prop('checked',true);
       }
+      //if building coordinator is selected
       else if ( position_id === 5 ) {
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);

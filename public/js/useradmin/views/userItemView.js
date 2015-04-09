@@ -1,8 +1,11 @@
+//this is the view that holds the information for a single user
 UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marionette, $, _) {
   UserListTab.UserItemView = Backbone.Marionette.ItemView.extend({
 
+    //tag name for the view
     tagName: 'tr',
 
+    //sets the options, loads the template, and then sets the model
     initialize : function(options) {
       this.options = options || {};
       this.template = Handlebars.compile(tpl.get('_usersRow'));
@@ -10,6 +13,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       this.model.bind('change', this.render, this);
     },
 
+    //this will set the class and id of the view for css
     attributes : function(){
       var classValue = this.model.get('userNum');
       var classProperty = '';
@@ -24,17 +28,19 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       };
     },
 
+    //when a user double clicks the item
     events : {
       'dblclick' : 'showDetails'
     },
 
+    //renders the view
     render: function(){
       this.model.attributes.phone = this.formatPhone(this.model.attributes.phone);
       $(this.el).html(this.template(this.model.toJSON()));
       return this.el;
     },
 
-    // Function to format
+    // Function to format the phone number
     formatPhone: function(phoneNumber){
       if (phoneNumber) {
         phoneNumber = phoneNumber.replace(/.*(\d{3}).*(\d{3}).*(\d{4})/, "$1$2$3");
@@ -45,6 +51,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       }
     },
 
+    //loads the edit user modal
     showDetails : function(e) {
 
       //If the user is not double clicking on the buttons in the view

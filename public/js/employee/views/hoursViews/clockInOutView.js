@@ -14,10 +14,12 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         'click #clockin': 'clockIn'
     },
 
+    //calls the clockout function in the controller
     clockOut : function() {
         EmployeeApp.MyHoursTab.MyHoursController.clockOut();
     },
 
+    //calls the clockin function in the controller
     clockIn : function() {
         EmployeeApp.MyHoursTab.MyHoursController.clockIn();
     }

@@ -120,6 +120,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       });
     },
 
+    //automatically adjusts the time of the clockin sliders for any change in the text field and vice versa 
     adjustClockInSliders : function(e) {
       if (47 < e.which && e.which < 58) { // ignore non integer key presses
         var start = e.target.selectionStart, end = e.target.selectionEnd; // get the cursor's position in the text input element
@@ -133,10 +134,12 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       }
     },
 
+    //automatically adjusts the time of the clockout sliders for any change in the text field and vice versa
     adjustClockOutSliders : function(e) {
-      if (47 < e.which && e.which < 58) {
-        var start = e.target.selectionStart, end = e.target.selectionEnd;
+      if (47 < e.which && e.which < 58) { // ignore non integer key presses
+        var start = e.target.selectionStart, end = e.target.selectionEnd; // get the cursor's position in the text input element
         var cOutDate = $('#modalclockout').val();
+        // check that user put in valid date before creating new date widget
         var cOutIsCompleteDateString = /^\d{4}[\/-]\d{2}[\/-]\d{2}\ \d{2}:\d{2}:\d{2}/.test(cOutDate);
         if (cOutIsCompleteDateString) {
           ShiftManagerTab.MyShiftModalView.prototype.populateDatePickerWidget(cOutDate, $('#datetimeholder2'), '#modalclockout');

@@ -18,7 +18,10 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //Backbone collection for all the shift models. 
     MyHoursTab.ShiftCollection = Backbone.Collection.extend({
         
+        //the models that populate the collection
         model : MyHoursTab.ShiftModel,
+
+        //url that is used to get the collection
         url: 'api/usershifts',
 
         //can be used to sort the models

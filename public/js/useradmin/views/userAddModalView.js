@@ -1,24 +1,30 @@
+//This is the view that will be used when adding a new user
 UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marionette, $, _) {
   UserListTab.UserAddModalView = Backbone.Marionette.CompositeView.extend({
 
+    //define the tag name that will be used for the view
     tagName : "div",
 
+    //sets the template for the view
     initialize : function() {
       this.template = Handlebars.compile(tpl.get('userAddModal'));
     },
 
+    //defines the listeners for the events
     events : {
       'click .save' : 'addUser',
       'click .cancel' : 'cancelAction',
       'change .select-position-id' : 'updatePermissionsCheckboxes',
     },
 
+    //when loading the view, it will call the updatePermissionsCheckboxes method
     onShow : function() {
       this.updatePermissionsCheckboxes();
     },
 
+    //when attepting to save the new user
     addUser : function() {
-
+      //sets the properties for the new user
       var fields = {
         username:$('#username').val(),
         position_id: parseInt($('#position-id').val(), 10),
@@ -36,9 +42,11 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         userNum: UserAdminApp.UserListTab.userList.length,
       };
 
+      //saves the user and returns whether it was successful
       var result = this.model.addUser(fields);
     },
 
+    //closes the modal and removes the faded background
     cancelAction : function() {
       $('#fade').removeClass('fade');
       $('#modalBox').removeClass('modalBox');
@@ -49,7 +57,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     // TODO: talk to jason about what actual permissions are supposed to be
     updatePermissionsCheckboxes : function() {
       var position_id = parseInt($('#position-id').val(), 10);
+      //if attendent is selected
       if ( position_id === 1 ) {
+        //doesn't have timesheet or edit schedule permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -60,7 +70,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',false);
         $('input[id=acc_crud_schedule]').prop('checked',false);
       }
+      //if admin is selected
       else if ( position_id === 2 ) {
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -71,7 +83,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',true);
         $('input[id=acc_crud_schedule]').prop('checked',true);
       }
+      //if programmer is selected
       else if ( position_id === 3 ) {
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -82,7 +96,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',true);
         $('input[id=acc_crud_schedule]').prop('checked',true);
       }
+      //if director is selected
       else if ( position_id === 4 ) {
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -93,7 +109,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_gen_timesheet]').prop('checked',true);
         $('input[id=acc_crud_schedule]').prop('checked',true);
       }
+      //if building coordinator is selected
       else if ( position_id === 5 ) {
+        //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);

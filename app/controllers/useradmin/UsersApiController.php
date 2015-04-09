@@ -2,7 +2,8 @@
 class UsersApiController extends BaseController {
 	//Fetch all the users information from the users table
   public function index() {
-    $users = User::all();
+    //orders the users by position then by name, getting all users
+    $users = User::orderBy('position_id')->orderBy('fullname')->get();
     $userNumber = 0;
     foreach ($users as $user) {
       $user->userNum = $userNumber;
@@ -11,31 +12,36 @@ class UsersApiController extends BaseController {
     return $users->toJson();
   }
 
+  //called when adding a new user
   public function store() {
-      $addModel = Input::json()->all();
+    //gets all the inputs
+    $addModel = Input::json()->all();
 
-      $addUser = new User;
-      $addUser->username = $addModel['username'];
-      $addUser->fullname = UserHelper::sGetWmuName($addUser->username);
-      $addUser->email = UserHelper::sGetWmuEmail($addUser->username);
-      $addUser->position_id = $addModel['position_id'];
-      if (array_key_exists('phone', $addModel))
-        $addUser->phone = UsersApiController::getAllNumbers( $addModel['phone'] );
-      $addUser->schedule_color = $addModel['schedule_color'];
-      $addUser->acc_room = $addModel['acc_room'];
-      $addUser->acc_avlog = $addModel['acc_avlog'];
-      $addUser->acc_inv = $addModel['acc_inv'];
-      $addUser->acc_emp = $addModel['acc_emp'];
-      $addUser->acc_useradm = $addModel['acc_useradm'];
-      $addUser->acc_crud_timesheet = $addModel['acc_crud_timesheet'];
-      $addUser->acc_view_timesheet = $addModel['acc_view_timesheet'];
-      $addUser->acc_gen_timesheet = $addModel['acc_gen_timesheet'];
-      $addUser->acc_crud_schedule = $addModel['acc_crud_schedule'];
+    //creates a new user and sets all the properties
+    $addUser = new User;
+    $addUser->username = $addModel['username'];
+    $addUser->fullname = UserHelper::sGetWmuName($addUser->username);
+    $addUser->email = UserHelper::sGetWmuEmail($addUser->username);
+    $addUser->position_id = $addModel['position_id'];
+    if (array_key_exists('phone', $addModel))
+      $addUser->phone = UsersApiController::getAllNumbers( $addModel['phone'] );
+    $addUser->schedule_color = $addModel['schedule_color'];
+    $addUser->acc_room = $addModel['acc_room'];
+    $addUser->acc_avlog = $addModel['acc_avlog'];
+    $addUser->acc_inv = $addModel['acc_inv'];
+    $addUser->acc_emp = $addModel['acc_emp'];
+    $addUser->acc_useradm = $addModel['acc_useradm'];
+    $addUser->acc_crud_timesheet = $addModel['acc_crud_timesheet'];
+    $addUser->acc_view_timesheet = $addModel['acc_view_timesheet'];
+    $addUser->acc_gen_timesheet = $addModel['acc_gen_timesheet'];
+    $addUser->acc_crud_schedule = $addModel['acc_crud_schedule'];
 
-      $addUser->save();
-      return $addUser->toJson();
+    //saves the user and returns it
+    $addUser->save();
+    return $addUser->toJson();
   }
 
+  //called when editting a user
   public function update($id) {
       //get the json from the request.
       $updateModel = Input::json()->all();
@@ -63,6 +69,7 @@ class UsersApiController extends BaseController {
       return $updateUser->toJson();
   }
 
+  //called when deleting a user
   public function destroy($id) {
     try {
       $deleteUser = User::find($id);

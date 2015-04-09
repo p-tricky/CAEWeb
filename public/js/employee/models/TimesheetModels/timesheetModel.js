@@ -13,7 +13,10 @@ EmployeeApp.module('TimesheetTab', function (TimesheetTab, App, Backbone, Marion
   //Define a collection that will use the above defined collection
   TimesheetTab.TimesheetCollection = Backbone.Collection.extend({
 
+    //defines the models that populate the collection
     model : TimesheetTab.TimesheetModel,
+
+    //url that is used to get the collection
     url : 'api/allshifts'
 
   });

@@ -104,7 +104,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       });
     },
 
-    //sets a timeout then call the sendemail url which runs the email script
+    //sets a timeout then calls the sendemail url which runs the email script
     _sendEmail : function() {
       //defines the emailTracker bool if it hasn't been defined
       if (InventoryTab.InventoryController.emailTimeout === undefined)
