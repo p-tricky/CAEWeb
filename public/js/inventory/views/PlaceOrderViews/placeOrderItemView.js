@@ -39,10 +39,13 @@ InventoryApp.module('PlaceOrdersTab', function (PlaceOrdersTab, App, Backbone, M
         class : classProperty + ' itemRow'
       };
     },
-    removeNonNumsFromInput : function() {
-      var input = $('#amount');
+    removeNonNumsFromInput : function(e) {
+      var input = $(e.target); //get jquery object from the amount input
+      var start = e.target.selectionStart;
+      var end = e.target.selectionEnd;
       var inputWithoutNonNumChars = input.val().replace(/[^0-9]/g, '');
       input.val(inputWithoutNonNumChars);
+      e.target.setSelectionRange(start, end);
     }
   });
 });
