@@ -56,11 +56,13 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     },
 
   	//called by myShiftModalView in order to update a shift's clockin and clockout
-    updateShift : function(id, clockin, clockout) {
+    updateShift : function(id, clockin, clockout, callback) {
         $.ajax({
             url: 'api/updateshift',
             data: {id: id, clockin: clockin, clockout: clockout},
             wait: true
+        }).done(function(conflicts) {
+          if (callback) callback(conflicts);
         });
     },
 

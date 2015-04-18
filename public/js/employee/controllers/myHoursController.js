@@ -133,7 +133,6 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     _updateTimes: function() {
         MyHoursTab.tabInfoModel.serverTimeInMS = MyHoursTab.tabInfoModel.serverTimeInMS + 60000;
         MyHoursTab.MyHoursController._setTimeDiff();
-
     },
 
     /**
@@ -167,11 +166,13 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         });
     },
     //called by myShiftModalView in order to update a shift's clockin and clockout
-    updateShift : function(id, clockin, clockout) {
+    updateShift : function(id, clockin, clockout, callback) {
         $.ajax({
             url: 'api/updateshift',
             data: {id: id, clockin: clockin, clockout: clockout},
-            wait: true
+            wait: true,
+        }).done(function(conflicts) {
+          if (callback) callback(conflicts);
         });
     },
     //makes to tabInfoModel and the shiftList

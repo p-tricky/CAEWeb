@@ -155,6 +155,46 @@ class ShiftApiController extends BaseController {
 
         //sets the new values and saves
         $thisShift = Shift::find($shiftId);
+        
+        // Before saving we should make sure no one is over clocking (i.e.,
+        // the updated shift times don't overlap with existing shift times);
+        // To do this we query for conflicting shifts and reject if query
+        // returns shifts. The query is pretty ugly, but it's really not 
+        // very complex. 4 steps total:
+        //  1) Get shifts for only the user who is updating his/her shifts.
+        //     This seems obvious, but I forgot this the first time, and spent
+        //     10 minutes wondering why I couldn't save shifts for any other
+        //     users during the periods when I was clocked in lol.
+        //  2) Filter out the id of the shift that we are updating. Obviously
+        //     the updated shift might conflict with itself, but that's not a 
+        //     problem
+        //  3) Find any shifts with clockin or clockout times that fall within the
+        //     updated shift times. If updated shift time is 2-3pm, this finds any
+        //     shift whose clockin or clockout is between 2pm and 3pm.
+        //  4) Find any shifts that extend the updated shift times. If updated
+        //     shift time is 2-3pm and another shift is 1:30-3:30pm this finds
+        //     it.
+        $conflictingShiftClockInTimes = Shift::where('eid', $thisShift->eid) //1
+          ->whereNotIn('id', array($thisShift->id)) //2
+          ->where(function($query) 
+          {
+            $query->whereBetween('clockIn', [Input::get('clockin'), Input::get('clockout')])   //3
+                  ->orWhereBetween('clockOut', [Input::get('clockin'), Input::get('clockout')]) 
+                  ->orWhere(function($query)
+                  {
+                    $query->where('clockOut', '>', Input::get('clockout')) //4
+                          ->where('clockIn', '<', Input::get('clockin'));
+                  });
+          })
+          ->select('clockIn')
+          ->get();
+
+        // if there are conflicting shifts return them as a string
+        if (!$conflictingShiftClockInTimes->isEmpty()) {
+          $conflicts = "";
+          foreach($conflictingShiftClockInTimes as $time) $conflicts .= $time->clockIn . "<br>";
+          return $conflicts;
+        }
         $thisShift->clockIn = $clockin;
         $thisShift->clockout = $clockout;
         $thisShift->save();
