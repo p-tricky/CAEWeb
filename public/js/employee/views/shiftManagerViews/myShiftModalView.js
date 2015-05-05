@@ -35,50 +35,49 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       var clockOut = $('#modalclockout').val();
       var modalBox = $('#modalBox');
       if (!clockOut) clockOut = "0000-00-00 00:00:00";
-      if (clockIn <= clockOut || clockOut === "0000-00-00 00:00:00") {
-        //calls the ajax to modify the shift
-        ShiftManagerTab.ShiftManagerController.updateShift(ShiftManagerTab.MyShiftModalView.thisModel.get('id'), clockIn, clockOut, 
-            function(conflicts) {
-              if (conflicts){
-                //alerts the user to conflicting times
-                $('#confirmModal').html('You have overlapping shifts starting at:<div align="center">' + 
-                    conflicts + '</div>Please edit the conflicting shifts before saving this one.');
-                $('#confirmModal').dialog({                                                 
-                  modal:true,                                                               
-                  title: 'Invalid Clock In/Clock Out',                                      
-                  buttons: {                                                                
-                    'Ok': function() {                                                      
-                      $(this).dialog('close');                                              
-                    }                                                                       
-                  },
-                });
-              }
-              else {
-                //restores default width closes the modal box and fade 
-                modalBox.css("width","");
-                $('#fade').removeClass('fade');
-                modalBox.removeClass('modalBox');
-                //Close the modal view
-                App.tabDiv.modalArea.close();
-                //get updated shift list and diplays it
-                ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
-              }
+      ShiftManagerTab.ShiftManagerController.updateShift(ShiftManagerTab.MyShiftModalView.thisModel.get('id'), clockIn, clockOut,
+          function(response) {
+            errorResponse = JSON.parse(response);
+            if (errorResponse.error === 'none') {
+              //restores default width closes the modal box and fade 
+              modalBox.css("width","");
+              $('#fade').removeClass('fade');
+              modalBox.removeClass('modalBox');
+              //Close the modal view
+              App.tabDiv.modalArea.close();
+              //get updated shift list and diplays it
+              ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
             }
-        );
-      }
-      else {
-        //alerts the user to invalid times.                                         
-        $('#confirmModal').html('Clock In time must be before the Clock Out Time.');
-        $('#confirmModal').dialog({                                                 
-          modal:true,                                                               
-          title: 'Invalid Clock In/Clock Out',                                      
-          buttons: {                                                                
-            'Ok': function() {                                                      
-              $(this).dialog('close');                                              
-            }                                                                       
-          },
-        });
-      }
+            else if (errorResponse.error === 'conflict') {
+              conflicts = errorResponse.info;
+              //alerts the user to conflicting times
+              $('#confirmModal').html('You have overlapping shifts starting at:<div align="center">' + 
+                  conflicts + '</div>Please edit the conflicting shifts before saving this one.');
+              $('#confirmModal').dialog({                                                 
+                modal:true,                                                               
+                title: 'Invalid Clock In/Clock Out',                                      
+                buttons: {                                                                
+                  'Ok': function() {                                                      
+                    $(this).dialog('close');                                              
+                  }                                                                       
+                },
+              });
+            } else {
+              msg = errorResponse.info;
+              //alerts the user to conflicting times
+              $('#confirmModal').html(msg);
+              $('#confirmModal').dialog({                                                 
+                modal:true,                                                               
+                title: 'Invalid Clock In/Clock Out',                                      
+                buttons: {                                                                
+                  'Ok': function() {                                                      
+                    $(this).dialog('close');                                              
+                  }                                                                       
+                },
+              });
+            }
+          }
+      );
     },
 
     //Deletes the current shift

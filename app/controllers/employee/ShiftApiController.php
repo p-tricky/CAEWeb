@@ -94,6 +94,9 @@ class ShiftApiController extends BaseController {
         //gets the last shift for the user. This is the one that is clocked in
         $lastShift = Shift::find(Input::get('id'));
         $now = new DateTime();
+        $cin = new DateTime($lastShift->clockIn);
+        $maxcout = date_add($cin, date_interval_create_from_date_string('1 day'));
+        if ($maxcout < $now) $now = $maxcout;
         //sets the clockout time and saves it
         $lastShift->clockOut = $now->format('Y-m-d H:i:s');
         $lastShift->save();
@@ -146,6 +149,23 @@ class ShiftApiController extends BaseController {
         Shift::where('id', '=', $shiftId)->delete();
     }
 
+    //There is a 24 hour time limit on shifts.  If someone has been
+    //clocked in for more than 24 hours, we assume that that person
+    //forgot to clock out
+    public function endForgottenShifts() {
+      $today = new DateTime();
+      $yesterday = date_sub($today, date_interval_create_from_date_string('1 day'));
+      $forgottenShifts = Shift::where('clockOut', '=', '0000-00-00 00:00:00')
+        ->where('clockIn', '<', $yesterday)
+        ->get();
+      foreach($forgottenShifts as $shift) {
+        $cin = new DateTime($shift->clockIn);
+        $cout = date_add($cin, date_interval_create_from_date_string('1 day'));
+        $shift->clockOut = $cout->format('Y-m-d H:i:s');
+        $shift->save();
+      }
+    }
+
     //will update the clockin and clockout times for a shift by id 
     public function updateShift() {
         //gets the input values
@@ -153,7 +173,33 @@ class ShiftApiController extends BaseController {
         $clockin = Input::get('clockin');
         $clockout = Input::get('clockout');
 
-        //sets the new values and saves
+        // if clockout = 0000-00...
+        // then the shift has not been clocked out yet.
+        // saving shifts before clocking out is fine, but
+        // it breaks things when checking error checking.
+        // We reset clockout to 0000-0... before saving.
+        if ($clockout == '0000-00-00 00:00:00')
+          $clockout = (new DateTime())->format('Y-m-d H:i:s');
+
+        // need date time for comparisons
+        $clockinAsDateTime = new DateTime($clockin);
+        $clockoutAsDateTime = new DateTime($clockout);
+        $curDateTime = new DateTime();
+
+        // can't clock negative hours
+        if ($clockoutAsDateTime < $clockinAsDateTime)
+          return json_encode(['error' => 'negative hours', 'info' => 'Clock in time must be before the current time and before the clock out time.']);
+
+        // wait til you have worked shift to clock it
+        if ($clockoutAsDateTime > $curDateTime && $clockinAsDateTime > $curDateTime)
+          return json_encode(['error' => 'future shift', 'info' => 'Please log only shifts that you have worked, not ones that you expect to work.']);
+
+        // can't clock more than 24 hours
+        $min_clockin = date_sub($clockoutAsDateTime, date_interval_create_from_date_string('1 day'));
+        if ($clockinAsDateTime < $min_clockin)
+          return json_encode(['error' => 'too long', 'info' => 'The max shift time is 24 hours']);
+
+        //if we have met all previous requirements, get shift from db
         $thisShift = Shift::find($shiftId);
         
         // Before saving we should make sure no one is over clocking (i.e.,
@@ -176,14 +222,14 @@ class ShiftApiController extends BaseController {
         //     it.
         $conflictingShiftClockInTimes = Shift::where('eid', $thisShift->eid) //1
           ->whereNotIn('id', array($thisShift->id)) //2
-          ->where(function($query) 
+          ->where(function($query) use($clockin, $clockout)
           {
-            $query->whereBetween('clockIn', [Input::get('clockin'), Input::get('clockout')])   //3
-                  ->orWhereBetween('clockOut', [Input::get('clockin'), Input::get('clockout')]) 
-                  ->orWhere(function($query)
+            $query->whereBetween('clockIn', [$clockin, $clockout])   //3
+                  ->orWhereBetween('clockOut', [$clockin, $clockout])
+                  ->orWhere(function($query) use ($clockin, $clockout)
                   {
-                    $query->where('clockOut', '>', Input::get('clockout')) //4
-                          ->where('clockIn', '<', Input::get('clockin'));
+                    $query->where('clockOut', '>', $clockout) //4
+                          ->where('clockIn', '<', $clockin);
                   });
           })
           ->select('clockIn')
@@ -193,11 +239,12 @@ class ShiftApiController extends BaseController {
         if (!$conflictingShiftClockInTimes->isEmpty()) {
           $conflicts = "";
           foreach($conflictingShiftClockInTimes as $time) $conflicts .= $time->clockIn . "<br>";
-          return $conflicts;
+          return json_encode(['error' => 'conflict', 'info' => $conflicts]);
         }
         $thisShift->clockIn = $clockin;
-        $thisShift->clockout = $clockout;
+        $thisShift->clockout = Input::get('clockout');
         $thisShift->save();
+        return json_encode(['error' => 'none']);
     }
 
 }

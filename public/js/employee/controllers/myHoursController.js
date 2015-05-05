@@ -171,8 +171,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             url: 'api/updateshift',
             data: {id: id, clockin: clockin, clockout: clockout},
             wait: true,
-        }).done(function(conflicts) {
-          if (callback) callback(conflicts);
+        }).done(function(response) {
+          if (response && callback) callback(response);
         });
     },
     //makes to tabInfoModel and the shiftList

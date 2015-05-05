@@ -61,8 +61,8 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             url: 'api/updateshift',
             data: {id: id, clockin: clockin, clockout: clockout},
             wait: true
-        }).done(function(conflicts) {
-          if (callback) callback(conflicts);
+        }).done(function(response) {
+          if (response && callback) callback(response);
         });
     },
 
