@@ -36,6 +36,8 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       var end = $('#datepicker2').val();
       //gets the shifts for the new range
       EmployeeApp.ShiftManagerTab.ShiftManagerController.getShiftsInRange(start, end);
+      ShiftManagerTab.ShiftManagerController.clearSort();
+      $('#searchText').val("");
     },
 
     //will run when the user clicks the previous arrow
@@ -75,7 +77,9 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       $('#datepicker1').val(start);
       $('#datepicker2').val(end);
       //gets the shifts for the new range
-      EmployeeApp.ShiftManagerTab.ShiftManagerController.getShiftsInRange(start, end);
+      EmployeeApp.ShiftManagerTab.ShiftManagerController.getShiftsInRange(start, end);      
+      ShiftManagerTab.ShiftManagerController.clearSort();
+      $('#searchText').val("");
     },
 
     //gets the shifts for the current pay period
@@ -87,7 +91,9 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       var start = $('#datepicker1').val();
       var end = $('#datepicker2').val();
       //gets the shifts for the current pay range
-      EmployeeApp.ShiftManagerTab.ShiftManagerController.getShiftsInRange(start, end);
+      EmployeeApp.ShiftManagerTab.ShiftManagerController.getShiftsInRange(start, end);      
+      ShiftManagerTab.ShiftManagerController.clearSort();
+      $('#searchText').val("");
     },
 
     //will run when the clicks the next arrow
@@ -127,6 +133,8 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       $('#datepicker2').val(end); 
       //gets the shifts for the current pay range
       EmployeeApp.ShiftManagerTab.ShiftManagerController.getShiftsInRange(start, end);
+      ShiftManagerTab.ShiftManagerController.clearSort();
+      $('#searchText').val("");
     }
 
   });

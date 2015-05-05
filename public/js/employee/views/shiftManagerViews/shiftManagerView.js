@@ -11,7 +11,8 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     //defines the regions on the page
     regions: {
         shiftFilterSection: '#shiftFilterSection',
-        shiftListSection: '#shiftListSection'
+        shiftListSection: '#shiftListSection',
+        shiftSearchSection: '#shiftSearchSection',
     },
 
     //gives the view an id tag for css

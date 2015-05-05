@@ -85,8 +85,14 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     _showShiftFilter : function(payPeriodData) {
         //model used to store some pay period data and associate it with the filter view
         var theModel = new Backbone.Model(JSON.parse(payPeriodData));
+        //creates the ShiftFilter view and saves it as a variable
         var filterContent = new ShiftManagerTab.ShiftFilterView({model: theModel,'contentName': 'shiftManager/shiftFilter'});
+        //shows the shiftFilterView in the shiftFilterSection that is defined in the shiftManagerContent
         EmployeeApp.shiftManagerContent.shiftFilterSection.show(filterContent);
+        //creates the ShiftSearch view and saves it as a variable
+        var searchContent = new ShiftManagerTab.ShiftSearchView({'contentName': 'shiftManager/shiftSearch'});
+        //shows the shiftSearchView in the shiftFilterSection that is defined in the shiftManagerContent
+        EmployeeApp.shiftManagerContent.shiftSearchSection.show(searchContent);
         $('#datepicker1').datepicker();
         $('#datepicker2').datepicker();
     },
@@ -111,5 +117,28 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       shift.clockOut();
     },
 
+    //will remove all arrows in the column headers of the shift list
+    clearSort : function() {
+        $('#name').html('Name');
+        $('#timeIn').html('Time In');
+        $('#timeOut').html('Time Out');
+        $('#timeRec').html('Hours');
+        $('#clockoutCol').html('Clock Out');
+    },    
+
+    //will convert and sanitize a string
+    escapeHtml : function(string) {
+      entityMap = {
+          "&": "&amp",
+          "<": "&lt",
+          ">": "&gt",
+          '"': '&quot',
+          "'": '&#39',
+          "/": '&#x2F'
+        };
+      return String(string).replace(/[&<>"'\/]/g, function (s) {
+          return entityMap[s];
+      });
+    }
   };
 });

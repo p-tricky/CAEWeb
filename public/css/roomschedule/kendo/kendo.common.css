@@ -240,7 +240,7 @@ html body .k-button-bare.k-upload-button:hover {
     opacity: 1 !important;
   }
 
-  #header-wrapper, #tabsRow, #employeeSelectSection, #clear, #print, .k-scheduler-footer, .k-header {
+  #header-wrapper, #footer-wrapper, #tabsRow, #employeeSelectSection, #clear, #print, .k-scheduler-footer, .k-header {
     display: none;
   }
 }

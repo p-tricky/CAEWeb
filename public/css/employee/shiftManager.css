@@ -90,10 +90,6 @@ legend {
     font-family: Arial;
 }
 
-.btnVisible {
-
-}
-
 /*---------------
 / Shift list styling
 ---------------*/
@@ -138,4 +134,27 @@ th {
 }
 #prevPayPeriod, #nextPayPeriod {
     width: 30px;
+}
+
+/*-------------------
+/ Shift Search Styling
+-------------------*/
+
+#search {
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+    margin: 5px;
+}
+#shiftSearch {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#searchText {
+    margin: 5px;
+    text-align: left;
 }

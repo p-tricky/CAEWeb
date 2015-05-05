@@ -198,6 +198,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
           dataBound: function() {
             AdminScheduleTab.AdminScheduleController.getEmployeeHours();
             AdminScheduleTab.AdminScheduleController.emboldenLinesBetweenDays();
+            AdminScheduleTab.AdminScheduleController.addTimeClasses();
           }
       });
     },
@@ -313,6 +314,47 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
         }
       });
 
+    },
+
+    //This method adds a new class to all of the cells in the kendo grid.
+    //These classes were meant to be used to be used to not show a certain row of cells when printing.
+    //Due to Kendo not allowing editing of properties on each of the shifts, I couldn't adjust the placement
+    //of the shifts to properly line up. 
+    //See scheduleView.js for more  
+    addTimeClasses : function() {
+      var numOfAdmins = AdminScheduleTab.employeeFilter.length;
+
+      var dateHeaders = $( 'th[colspan=' + numOfAdmins + ']' );
+
+      if (dateHeaders.length === 0)
+        var numOfCells = numOfAdmins * 4;
+      else
+        var numOfCells = numOfAdmins * 7 * 4;
+
+      var count = 0, time = 8;
+      var cells = $( ".k-middle-row, .k-not-middle-row" );
+
+      var timeOnSide = $( 'th[rowspan=1]' );
+
+      timeOnSide.each(function() {
+        count++;
+        var self = $(this);
+        self.addClass( "time" + time + "");
+        if (count % 4 === 0)
+          time++;
+      });
+
+      count = 0, time = 8;
+      
+      cells.children().each(function() {
+        count++;
+        var self = $(this);
+        self.addClass( "time" + time + "" );
+        if (count % numOfCells === 0)
+          time++;
+      });
+
+      
     }
   };
 });

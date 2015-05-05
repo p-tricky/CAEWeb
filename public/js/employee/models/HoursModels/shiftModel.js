@@ -23,11 +23,6 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
         //url that is used to get the collection
         url: 'api/usershifts',
-
-        //can be used to sort the models
-        comparator: function(shift) {
-            return (Number(shift.get('id')));
-        }
         
     });
 
