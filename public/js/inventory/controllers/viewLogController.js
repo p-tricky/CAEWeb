@@ -63,6 +63,14 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
       });
       //Return the returnvalue that will be either true or false depending on success or error.
       return returnValue;
-    }
+    },
+
+    //will remove all arrows in the column headers of the shift list
+    clearSort : function() {
+        $('#user').html('User');
+        $('#actionType').html('Action');
+        $('#itemName').html('Item Name');
+        $('#date').html('Date');
+    },  
   };
 });

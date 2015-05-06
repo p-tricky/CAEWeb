@@ -23,7 +23,7 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
     //with an id that is the same as the id of the model.
     attributes : function(){
       //Get the model id in the client side collection
-      var classValue = ViewLogTab.logCollection.indexOf(this.model);
+      var classValue = this.model.get('logNum');
       //define the class property
       var classProperty = '';
       //If the row is even set classProperty to even else odd

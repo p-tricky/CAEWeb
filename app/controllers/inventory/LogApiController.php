@@ -2,9 +2,44 @@
 class LogApiController extends BaseController {
   public function index() {
     try {
-      $log = Trans_Log::all();
+      $sort = Input::get('sort', 'dateAsc');
+      switch ($sort) {
+        case 'dateAsc': 
+          $logs = Trans_Log::orderBy('updated_at')->get();
+          break;
+        case 'dateDes':
+          $logs = Trans_Log::orderBy('updated_at', 'DESC')->get();
+          break;
+        case 'itemAsc':
+          $logs = Trans_Log::orderBy('itemname')->get();
+          break;
+        case 'itemDes':
+          $logs = Trans_Log::orderBy('itemname', 'DESC')->get();
+          break;
+        case 'userAsc':
+          $logs = Trans_Log::orderBy('username')->get();
+          break;
+        case 'userDes':
+          $logs = Trans_Log::orderBy('username', 'DESC')->get();
+          break;
+        case 'actionAsc':
+          $logs = Trans_Log::orderBy('action')->get();
+          break;
+        case 'actionDes': 
+          $logs = Trans_Log::orderBy('action', 'DESC')->get();
+          break;
+      }
 
-      return $log->toJson();
+      $logNumber = 0;
+      //adds shiftNum to each shift
+      foreach ($logs as $log) {
+        //sets the shift number
+        $log->logNum = $logNumber;
+        //increments the shift number
+        $logNumber+=1;
+      }
+
+      return $logs->toJson();
     } catch(Exception $e) {
       return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
     }
