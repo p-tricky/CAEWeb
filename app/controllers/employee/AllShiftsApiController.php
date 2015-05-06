@@ -101,7 +101,7 @@ class AllShiftsApiController extends BaseController {
         {
             //for each shift, it the shift contains the string, then it adds the shiftNum to it 
             foreach ($shifts as $key => $shift) {
-                if (strpos($shift->toJSON(), $search) > 0)  
+                if (stripos($shift->name, $search) !== false || stripos($shift->clockIn, $search) !== false || stripos($shift->clockOut, $search) !== false || stripos($shift->timeRec, $search!== false ))  
                 {
                     //sets the shift number
                     $shift->shiftNum = $shiftNumber;
@@ -111,9 +111,10 @@ class AllShiftsApiController extends BaseController {
                 //if the shift doesn't contain the string, then it removes it from the object
                 else
                 {
-                    unset($shifts, $key);
-                }  
+                    unset($shifts[$key]);
+                }
             }
+
         }
         //if search is empty
         else 
@@ -127,12 +128,8 @@ class AllShiftsApiController extends BaseController {
             }
         }
 
-        //if there are objects left in $shifts, then return that, else return nothing 
-        if (isset($shifts))
-            return $shifts->toJSON();
-        else 
-            return;              
-
+        //returns shifts, even if empty
+        return $shifts->toJSON();
         
     }
 

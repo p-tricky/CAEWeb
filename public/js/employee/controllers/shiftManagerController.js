@@ -113,8 +113,19 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //calls the clockout function for the specified model. This will update the collection with the clockout time. 
     clockOut : function(id) {
-      var shift = ShiftManagerTab.shiftList.get(id);
-      shift.clockOut();
+        var shift = ShiftManagerTab.shiftList.get(id);
+        shift.clockOut();
+        if ($('#searchText').val() !== '')
+        {
+          //sets input variable and gets the new shiftList
+          var input = ShiftManagerTab.ShiftManagerController.escapeHtml($('#searchText').val());
+          ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort, search: input}});
+        }
+        else
+          //if the earch bar is empty, it gets a list without a search string
+          ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort}});
+        //have to reset the shiftList to redisplay in the list
+        ShiftManagerTab.shiftList.reset();
     },
 
     //will remove all arrows in the column headers of the shift list

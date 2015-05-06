@@ -4,35 +4,48 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
   	initialize : function(options) {
     	this.options = options || {};
-      this.template = Handlebars.compile(tpl.get(this.options.contentName));
+        this.template = Handlebars.compile(tpl.get(this.options.contentName));
     },
 
     //when a user clicks the search button
     events : 
     {
     	'click #search' : 'search',
+        'keypress #searchText' : 'runSearch'
     },
 
     //will pull a new shiftList that only includes shifts with the proper dearch value
     search : function() {
-      //if search value is not empty
+        //if search value is not empty
     	if ($('#searchText').val() !== '')
     	{
-        //sends the string to escapeHTML inorder to sanitize the special characters in the string 
+            //sends the string to escapeHTML inorder to sanitize the special characters in the string 
     		var input = ShiftManagerTab.ShiftManagerController.escapeHtml($('#searchText').val());
-        //gets a new shiftList that is sorted and only contains shifts with the searched for term
-    	  ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort, search: input}});
-        //have to reset the shiftList to redisplay in the list
-        ShiftManagerTab.shiftList.reset();
+            //gets a new shiftList that is sorted and only contains shifts with the searched for term
+    	    ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort, search: input}});
+            //have to reset the shiftList to redisplay in the list
+            ShiftManagerTab.shiftList.reset();
     	}
-      //if the text area is empty,
+        //if the text area is empty,
     	else 
     	{
-        //gets a new shiftList that doesn't have any search term
+            //gets a new shiftList that doesn't have any search term
     		ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort}});
-        //have to reset the shiftList to redisplay in the list
-        ShiftManagerTab.shiftList.reset();
+            //have to reset the shiftList to redisplay in the list
+            ShiftManagerTab.shiftList.reset();
     	}
+    },
+
+    //if the user presses the enter key, then it runs runSearch. Usually the enter key would reload the page
+    runSearch : function(e) {
+        //if the enter key is pressed
+        if (e.which === 13)
+        {
+            //prevents the page reload
+            e.preventDefault();
+            //runs the search function instead
+            this.search();
+        }
     }
 
   });

@@ -62,8 +62,6 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
       ShiftManagerTab.ShiftManagerController.clockOut(this.model.get('id'));
       //changes the template in order to remove the clockout button
       this.template = Handlebars.compile(tpl.get('shiftManager/shiftListItemW_oBtn'));
-      //updates the shift list. 
-      ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());  
     }
 
   });
