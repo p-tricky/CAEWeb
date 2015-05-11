@@ -35,28 +35,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     //when 'Time In' is clicked, it will get a new shiftList that is pre-sorted
     sortByTimeIn : function() {
         //if sorted by time in ascending, then it switches to descending
-        if (ShiftManagerTab.sort == 'timeInAsc')
-        {
-            //removes the arrows from the header regardless of which one has it
-            ShiftManagerTab.ShiftManagerController.clearSort();
-            //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'timeInDes';
-            //if the search bar isn't empty
-            if ($('#searchText').val() !== '')
-            {
-                //sets input variable and gets the new shiftList
-                var input = ShiftManagerTab.ShiftManagerController.escapeHtml($('#searchText').val());
-                ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort, search: input}});
-            }
-            //if the earch bar is empty, it gets a list without a search string
-            else
-                ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort}});
-            //have to reset the shiftList to redisplay in the list
-            ShiftManagerTab.shiftList.reset();
-            //add an arrow to the header to show how its sorted
-            $('#timeIn').html('&#9650 Time In');
-        }
-        else
+        if (ShiftManagerTab.sort == 'timeInDes')
         {
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
@@ -75,6 +54,27 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //have to reset the shiftList to redisplay in the list
             ShiftManagerTab.shiftList.reset();
             //add an arrow to the header to show how its sorted
+            $('#timeIn').html('&#9650 Time In');
+        }
+        else
+        {
+            //removes the arrows from the header regardless of which one has it
+            ShiftManagerTab.ShiftManagerController.clearSort();
+            //set the global sort variable to the new sort method
+            ShiftManagerTab.sort = 'timeInDes';
+            //if the search bar isn't empty
+            if ($('#searchText').val() !== '')
+            {
+                //sets input variable and gets the new shiftList
+                var input = ShiftManagerTab.ShiftManagerController.escapeHtml($('#searchText').val());
+                ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort, search: input}});
+            }
+            //if the earch bar is empty, it gets a list without a search string
+            else
+                ShiftManagerTab.shiftList.fetch({data: { start: $('#datepicker1').val(), end: $('#datepicker2').val(), sort: ShiftManagerTab.sort}});
+            //have to reset the shiftList to redisplay in the list
+            ShiftManagerTab.shiftList.reset();
+            //add an arrow to the header to show how its sorted
             $('#timeIn').html('&#9660 Time In');
         } 
     },
@@ -82,12 +82,12 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     //when 'Time Out' is clicked, it will get a new shiftList that is pre-sorted
     sortByTimeOut : function() {
         //if sorted by time out ascending, then it switches to descending
-        if (ShiftManagerTab.sort == 'timeOutAsc')
+        if (ShiftManagerTab.sort == 'timeOutDes')
         {
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'timeOutDes';
+            ShiftManagerTab.sort = 'timeOutAsc';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {
@@ -108,7 +108,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'timeOutAsc';
+            ShiftManagerTab.sort = 'timeOutDes';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {
@@ -129,12 +129,12 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     //when 'Hours' is clicked, it will get a new shiftList that is pre-sorted
     sortByTimeRec : function() {
         //if sorted by time recorded ascending, then it switches to descending
-        if (ShiftManagerTab.sort == 'timeRecAsc')
+        if (ShiftManagerTab.sort == 'timeRecDes')
         {
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'timeRecDes';
+            ShiftManagerTab.sort = 'timeRecAsc';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {
@@ -155,7 +155,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'timeRecAsc';
+            ShiftManagerTab.sort = 'timeRecDes';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {
@@ -176,12 +176,12 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     //when 'Clock Out' is clicked, it will get a new shiftList that is pre-sorted
     sortByClockOutCol : function() {
         //if sorted by clocked out ascending, then it switches to descending
-        if (ShiftManagerTab.sort == 'clockOutAsc')
+        if (ShiftManagerTab.sort == 'clockedInDes')
         {
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'clockOutDes';
+            ShiftManagerTab.sort = 'clockedInAsc';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {
@@ -202,7 +202,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'clockOutAsc';
+            ShiftManagerTab.sort = 'clockedInDes';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {

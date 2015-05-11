@@ -56,33 +56,36 @@ class AllShiftsApiController extends BaseController {
             case "timeRecAsc":
                 $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->get();
                 $shifts = $this->setProperties($shifts);
-                $this->shifts = $shifts;
-                $this->timeRecSortAsc(0, count($shifts)-1);
-                $shifts = $this->shifts;
+                $shifts = $shifts->sortBy(function($shift){
+                    return $shift->timeRec;
+                });
+                $shifts->values();
                 break;
             //sorts by time recorded with the longest at the bottom
             case "timeRecDes":
                 $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->get();
                 $shifts = $this->setProperties($shifts);
-                $this->shifts = $shifts;
-                $this->timeRecSortDec(0, count($shifts)-1);
-                $shifts = $this->shifts;
+                $shifts = $shifts->sortBy(function($shift){
+                    return $shift->timeRec;
+                });
+                $shifts = $shifts->reverse();
+                $shifts->values();
                 break;
             //gets all the shifts that are clocked out first then appends the shifts that are still clocked in
             case "clockedInAsc":
-                $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
-                $shifts1 = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '!=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
+                $shifts1 = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
+                $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '!=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
                 foreach ($shifts1 as $shift) {
-                    $shifts[] = $shift;
+                    $shifts->push($shift);
                 }
                 $shifts = $this->setProperties($shifts);
                 break;
             //gets all the shifts that are clocked in first then appends the shifts that are clocked out
             case "clockedInDes":
-                $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '!=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
-                $shifts1 = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
+                $shifts1 = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '!=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
+                $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->where('clockOut', '=', '0000-00-00 00:00:00')->orderBy('eid')->orderBy('clockIn')->get();
                 foreach ($shifts1 as $shift) {
-                    $shifts[] = $shift;
+                    $shifts->push($shift);
                 }
                 $shifts = $this->setProperties($shifts);
                 break;
@@ -100,7 +103,7 @@ class AllShiftsApiController extends BaseController {
         if ($search != '') 
         {
             //for each shift, it the shift contains the string, then it adds the shiftNum to it 
-            foreach ($shifts as $key => $shift) {
+            foreach ($shifts as $shift) {
                 if (stripos($shift->name, $search) !== false || stripos($shift->clockIn, $search) !== false || stripos($shift->clockOut, $search) !== false || stripos($shift->timeRec, $search!== false ))  
                 {
                     //sets the shift number
@@ -111,7 +114,8 @@ class AllShiftsApiController extends BaseController {
                 //if the shift doesn't contain the string, then it removes it from the object
                 else
                 {
-                    unset($shifts[$key]);
+                    $shifts->forget($shiftNumber-1);
+                    $shifts->values();
                 }
             }
 
@@ -158,119 +162,5 @@ class AllShiftsApiController extends BaseController {
             $shift->name = User::where('id', '=', $shift->eid)->pluck('fullname');
         }
         return $shifts;
-    }
-
-    /*      These are the private functions that will be used to sort the shifts. They all use a recursive quicksort algorithm   */
-
-    //will sort the shifts by name in an ascending order
-    private function nameSortAsc($low, $hi) {
-        $i = $low;
-        $j = $hi;
-        $pivot = $this->shifts[($hi+$low)/2];
-        while ($i <= $j)
-        {
-            while(strcmp($this->shifts[$i]->name, $pivot->name) < 0)
-                $i++;
-            while(strcmp($this->shifts[$i]->name, $pivot->name) > 0)
-                $j--;
-            if ($i <= $j)
-            {
-                $tmp = $this->shifts[$i];
-                $this->shifts[$i] = $this->shifts[$j];
-                $this->shifts[$j] = $tmp;
-                $i++;
-                $j--;
-            }
-        }
-
-        if ($low < $j)
-            $this->nameSortAsc($low, $j);
-        if ($i < $hi)
-            $this->nameSortAsc($i, $hi);
-        return;
-    }
-
-    //will sort the shifts by name in an descending order
-    private function nameSortDec($low, $hi) {
-        $i = $low;
-        $j = $hi;
-        $pivot = $this->shifts[($hi+$low)/2];
-        while ($i <= $j)
-        {
-            while(strcmp($this->shifts[$i]->name, $pivot->name) > 0)
-                $i++;
-            while(strcmp($this->shifts[$i]->name, $pivot->name) < 0)
-                $j--;
-            if ($i <= $j)
-            {
-                $tmp = $this->shifts[$i];
-                $this->shifts[$i] = $this->shifts[$j];
-                $this->shifts[$j] = $tmp;
-                $i++;
-                $j--;
-            }
-        }
-
-        if ($low < $j)
-            $this->nameSortDec($low, $j);
-        if ($i < $hi)
-            $this->nameSortDec($i, $hi);
-        return;
-    }
-
-    //will sort the shifts by time recorded in an ascending order
-    private function timeRecSortAsc($low, $hi) {
-        $i = $low;
-        $j = $hi;
-        $pivot = $this->shifts[($hi+$low)/2];
-        while ($i <= $j)
-        {
-            while($this->shifts[$i]->timeRec < $pivot->timeRec)
-                $i++;
-            while($this->shifts[$j]->timeRec > $pivot->timeRec)
-                $j--;
-            if ($i <= $j)
-            {
-                $tmp = $this->shifts[$i];
-                $this->shifts[$i] = $this->shifts[$j];
-                $this->shifts[$j] = $tmp;
-                $i++;
-                $j--;
-            }
-        }
-
-        if ($low < $j)
-            $this->timeRecSortAsc($low, $j);
-        if ($i < $hi)
-            $this->timeRecSortAsc($i, $hi);
-        return;
-    }
-
-    //will sort the shifts by time recorded in an descending order
-    private function timeRecSortDec($low, $hi) {
-        $i = $low;
-        $j = $hi;
-        $pivot = $this->shifts[($hi+$low)/2];
-        while ($i <= $j)
-        {
-            while($this->shifts[$i]->timeRec > $pivot->timeRec)
-                $i++;
-            while($this->shifts[$j]->timeRec < $pivot->timeRec)
-                $j--;
-            if ($i <= $j)
-            {
-                $tmp = $this->shifts[$i];
-                $this->shifts[$i] = $this->shifts[$j];
-                $this->shifts[$j] = $tmp;
-                $i++;
-                $j--;
-            }
-        }
-
-        if ($low < $j)
-            $this->timeRecSortDec($low, $j);
-        if ($i < $hi)
-            $this->timeRecSortDec($i, $hi);
-        return;
     }
 }
