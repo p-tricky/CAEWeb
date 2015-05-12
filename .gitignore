@@ -7,3 +7,4 @@ tags
 .tern_project
 *.vim
 pl_test.*
+*.sql
