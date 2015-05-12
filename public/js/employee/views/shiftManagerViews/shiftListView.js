@@ -34,6 +34,18 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //when 'Time In' is clicked, it will get a new shiftList that is pre-sorted
     sortByTimeIn : function() {
+        //sets two date objects to see if the dates are correct
+        var date1 = new Date($('#datepicker1').val());
+        var date2 = new Date($('#datepicker2').val());
+
+        //if the first date is after the second date, it swaps the dates
+        if (date1 > date2)
+        {
+            temp = $('#datepicker1').val();
+            $('#datepicker1').val($('#datepicker2').val());
+            $('#datepicker2').val(temp);
+        }
+
         //if sorted by time in ascending, then it switches to descending
         if (ShiftManagerTab.sort == 'timeInDes')
         {
@@ -81,6 +93,18 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //when 'Time Out' is clicked, it will get a new shiftList that is pre-sorted
     sortByTimeOut : function() {
+        //sets two date objects to see if the dates are correct
+        var date1 = new Date($('#datepicker1').val());
+        var date2 = new Date($('#datepicker2').val());
+
+        //if the first date is after the second date, it swaps the dates
+        if (date1 > date2)
+        {
+            temp = $('#datepicker1').val();
+            $('#datepicker1').val($('#datepicker2').val());
+            $('#datepicker2').val(temp);
+        }
+
         //if sorted by time out ascending, then it switches to descending
         if (ShiftManagerTab.sort == 'timeOutDes')
         {
@@ -128,6 +152,18 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //when 'Hours' is clicked, it will get a new shiftList that is pre-sorted
     sortByTimeRec : function() {
+        //sets two date objects to see if the dates are correct
+        var date1 = new Date($('#datepicker1').val());
+        var date2 = new Date($('#datepicker2').val());
+
+        //if the first date is after the second date, it swaps the dates
+        if (date1 > date2)
+        {
+            temp = $('#datepicker1').val();
+            $('#datepicker1').val($('#datepicker2').val());
+            $('#datepicker2').val(temp);
+        }
+
         //if sorted by time recorded ascending, then it switches to descending
         if (ShiftManagerTab.sort == 'timeRecDes')
         {
@@ -175,6 +211,18 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //when 'Clock Out' is clicked, it will get a new shiftList that is pre-sorted
     sortByClockOutCol : function() {
+        //sets two date objects to see if the dates are correct
+        var date1 = new Date($('#datepicker1').val());
+        var date2 = new Date($('#datepicker2').val());
+
+        //if the first date is after the second date, it swaps the dates
+        if (date1 > date2)
+        {
+            temp = $('#datepicker1').val();
+            $('#datepicker1').val($('#datepicker2').val());
+            $('#datepicker2').val(temp);
+        }
+        
         //if sorted by clocked out ascending, then it switches to descending
         if (ShiftManagerTab.sort == 'clockedInDes')
         {

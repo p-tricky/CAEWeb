@@ -16,6 +16,18 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //will pull a new shiftList that only includes shifts with the proper dearch value
     search : function() {
+        //sets two date objects to see if the dates are correct
+        var date1 = new Date($('#datepicker1').val());
+        var date2 = new Date($('#datepicker2').val());
+
+        //if the first date is after the second date, it swaps the dates
+        if (date1 > date2)
+        {
+            temp = $('#datepicker1').val();
+            $('#datepicker1').val($('#datepicker2').val());
+            $('#datepicker2').val(temp);
+        }
+        
         //if search value is not empty
     	if ($('#searchText').val() !== '')
     	{
