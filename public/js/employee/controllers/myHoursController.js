@@ -142,7 +142,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     //used to show a modal box to modify the selecte shift
     showShiftModal : function(theModel) {
         $('#fade').addClass('fade');
-        $('#modalBox').addClass('modalBox');
+        var modalBox = $('#modalBox');
+        modalBox.addClass('modalBox');
         var theModalView = new MyHoursTab.MyShiftModalView({model: theModel});
         App.tabDiv.modalArea.show(theModalView);
         //if the shift that is being edited is still clocked in
@@ -153,38 +154,42 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
           $('#datetimeholder2').remove();
           $('.div-table-col-leftBtns').width('auto');
           $('.div-table-col-rightBtns').width('auto');
-          $('#modalBox').width(335);
+          modalBox.width(335);
         }
+        modalBox.css({
+          "position": "absolute",
+          "left": (((modalBox.parent().width() - modalBox.outerWidth()) / 2) + modalBox.parent().scrollLeft() + "px"),
+        });
     },
-    
-    //called by myShiftModalView in order to delete a shift
+
+      //called by myShiftModalView in order to delete a shift
     deleteShift : function(id) {
-        $.ajax({
-            url: 'api/deleteshift',
-            data: {id: id},
-            wait: true
-        });
+      $.ajax({
+        url: 'api/deleteshift',
+        data: {id: id},
+        wait: true
+      });
     },
-    //called by myShiftModalView in order to update a shift's clockin and clockout
+      //called by myShiftModalView in order to update a shift's clockin and clockout
     updateShift : function(id, clockin, clockout, callback) {
-        $.ajax({
-            url: 'api/updateshift',
-            data: {id: id, clockin: clockin, clockout: clockout},
-            wait: true,
-        }).done(function(response) {
-          if (response && callback) callback(response);
-        });
+      $.ajax({
+        url: 'api/updateshift',
+        data: {id: id, clockin: clockin, clockout: clockout},
+        wait: true,
+      }).done(function(response) {
+        if (response && callback) callback(response);
+      });
     },
-    //makes to tabInfoModel and the shiftList
+      //makes to tabInfoModel and the shiftList
     getIndexShifts : function(callback) {
-        if (typeof MyHoursTab.tabInfoModel === 'undefined') {
-            MyHoursTab.tabInfoModel = new Backbone.Model();
-        }
+      if (typeof MyHoursTab.tabInfoModel === 'undefined') {
+        MyHoursTab.tabInfoModel = new Backbone.Model();
+      }
       //get shift data
       MyHoursTab.shiftList = new EmployeeApp.MyHoursTab.ShiftCollection();
       //get all shifts for current user
       MyHoursTab.shiftList.fetch({success : callback, data: {}});
-        
+
     },
 
     //retrieves shifts in specified range, updating total hours

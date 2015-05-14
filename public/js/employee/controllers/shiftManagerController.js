@@ -46,12 +46,18 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         //if the shift that is being edited is still clocked in
         if (theModel.get('clockOut') === "0000-00-00 00:00:00") {
           //removes all of the clockout options that wont be used
+          var modalBox = $('#modalBox');
           $('#shiftManagerShiftModalClockOutLabel').remove();
           $('#modalclockout').parent().remove();
           $('#datetimeholder2').remove();
           $('.div-table-col-leftBtns').width('auto');
           $('.div-table-col-rightBtns').width('auto');
-          $('#modalBox').width(335);
+          modalBox.width(335);
+          //center
+          modalBox.css({
+            "position": "absolute",
+            "left": (((modalBox.parent().width() - modalBox.outerWidth()) / 2) + modalBox.parent().scrollLeft() + "px"),
+          });
         }
     },
 

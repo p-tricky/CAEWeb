@@ -41,7 +41,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             errorResponse = JSON.parse(response);
             if (errorResponse.error === 'none') {
               //restores default width closes the modal box and fade 
-              modalBox.css("width","");
+              modalBox.removeAttr("style");
               $('#fade').removeClass('fade');
               modalBox.removeClass('modalBox');
               //Close the modal view
@@ -98,7 +98,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
             MyHoursTab.MyHoursController.deleteShift(MyHoursTab.MyShiftModalView.thisModel.get('id'));
             //restores default width and closes the fade and modal box
             var modalBox = $('#modalBox');
-            modalBox.css("width","");
+            modalBox.removeAttr("style");
             $('#fade').removeClass('fade');
             modalBox.removeClass('modalBox');
             //Close the modal view
@@ -120,7 +120,7 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
     cancelAction : function() {
       //Remove the fade overlay and modal box and restore default width
       var modalBox = $('#modalBox');
-      modalBox.css("width","");
+      modalBox.removeAttr("style");
       $('#fade').removeClass('fade');
       modalBox.removeClass('modalBox');
       //Close the modal view

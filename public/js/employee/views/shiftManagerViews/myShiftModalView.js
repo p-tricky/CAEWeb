@@ -40,7 +40,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             errorResponse = JSON.parse(response);
             if (errorResponse.error === 'none') {
               //restores default width closes the modal box and fade 
-              modalBox.css("width","");
+              modalBox.removeAttr("style");
               $('#fade').removeClass('fade');
               modalBox.removeClass('modalBox');
               //Close the modal view
@@ -97,7 +97,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     				ShiftManagerTab.ShiftManagerController.deleteShift(ShiftManagerTab.MyShiftModalView.thisModel.get('id'));
             //closes the fade and modal box
             var modalBox = $('#modalBox');
-            modalBox.css("width","");
+            modalBox.removeAttr("style");
     				$('#fade').removeClass('fade');
       			modalBox.removeClass('modalBox');
       			//Close the modal view
@@ -120,7 +120,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     cancelAction : function() {
       //Remove the fade overlay and modal box
       var modalBox = $('#modalBox');
-      modalBox.css("width","");
+      modalBox.removeAttr("style");
       $('#fade').removeClass('fade');
       modalBox.removeClass('modalBox');
       //Close the modal view
