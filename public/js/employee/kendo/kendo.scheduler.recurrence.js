@@ -1564,11 +1564,14 @@ kendo_module({
         },
 
         //Changed the start date to be a end date that I specified.
+        // 05/12/15-changed the start date back to original.  Not sure
+        // why it was changed in the first place.  Hope this doesn't 
+        // break anything
         _until: function() {
             var that = this,
                 input = that.container.find(".k-recur-until"),
-                //start = that.options.start,
-                start = EmployeeApp.EmployeeTab.semesterEndDate,
+                start = that.options.start,
+                //start = EmployeeApp.EmployeeTab.semesterEndDate,
                 rule = that._value,
                 until = rule.until;
 
