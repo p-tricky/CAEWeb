@@ -23,6 +23,12 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
     //Define the item view container for this composite view
     itemViewContainer: "tbody",
 
+    //when the page loads, it adds an arrow to the date column header
+    onShow : function() {      
+      $('#date').html('&#9660 Date');
+    },
+
+    //defines event listeners and the functions to call
     events : {
       "click #itemName" : "sortByItem",
       "click #actionType" : "sortByAction",
@@ -30,78 +36,115 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
       "click #date" : "sortByDate",
     },
 
+    //when "Item Name" is clicked, it wil change how the list is sorted
     sortByItem : function() {
+      //if the global sort variable is set to item ascending
       if (ViewLogTab.sort == 'itemAsc')
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'itemDes';
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#itemName').html('&#9650 Item Name');
       }
       else
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'itemAsc';
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#itemName').html('&#9660 Item Name');
       }
     },
 
+    //when "Action" is clicked, it wil change how the list is sorted
     sortByAction : function() {
       if (ViewLogTab.sort == 'actionAsc')
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'actionDes';
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#actionType').html('&#9650 Action');
       }
       else
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'actionAsc';
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#actionType').html('&#9660 Action');
       }
     },
 
+    //when "User" is clicked, it wil change how the list is sorted
     sortByUser : function() {
       if (ViewLogTab.sort == 'userAsc')
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'userDes';
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#user').html('&#9650 User');
       }
       else
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'userAsc';
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#user').html('&#9660 User');
       }
     },
 
+    //when "Date" is clicked, it wil change how the list is sorted
     sortByDate : function() {
       if (ViewLogTab.sort == 'dateAsc')
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'dateDes';
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#date').html('&#9650 Date');
       }
       else
       {
+        //clears the current arrows from the column names
         ViewLogTab.ViewLogController.clearSort();
+        //set the global sort variable to the new sort
         ViewLogTab.sort = 'dateAsc';
         ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+        //fetchs a new sorted collection
         ViewLogTab.logCollection.reset();
+        //adds an arrow to the column header
         $('#date').html('&#9660 Date');
       }
     }

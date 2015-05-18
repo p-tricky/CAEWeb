@@ -145,9 +145,10 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
           ">": "&gt",
           '"': '&quot',
           "'": '&#39',
-          "/": '&#x2F'
+          "/": '&#x2F',
+          "~": '&#732'
         };
-      return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return String(string).replace(/[&<>"'\~/]/g, function (s) {
           return entityMap[s];
       });
     }

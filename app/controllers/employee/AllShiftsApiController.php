@@ -32,6 +32,30 @@ class AllShiftsApiController extends BaseController {
 
         //will pull shifts in a certain manner depending on how its sorted
         switch ($sortBy) {
+            //sorts by the user name in ascending order
+            case 'nameAsc':
+                $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->get();
+                $shifts = $this->setProperties($shifts);
+                $shifts = $shifts->sortBy(function($shift){
+                    return $shift->name;
+                });
+                //when sortBy() is called, it adds element numbers to all the objects which backbone collection wont recognize. 
+                //This is why you have to call values(), to remove the element numbers from the objects.
+                $shifts->values();
+                break;
+            //sorts by the user name in ascending order
+            case 'nameDes':
+                $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->get();
+                $shifts = $this->setProperties($shifts);
+                $shifts = $shifts->sortBy(function($shift){
+                    return $shift->name;
+                });
+                //this will reverse the order to get the collection in descending order
+                $shifts = $shifts->reverse();
+                //when sortBy() is called, it adds element numbers to all the objects which backbone collection wont recognize. 
+                //This is why you have to call values(), to remove the element numbers from the objects.
+                $shifts->values();
+                break;
             //sorts by clock in with the most recent on top
             case "timeInAsc":
                 $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->orderBy('clockIn')->get();
@@ -59,6 +83,8 @@ class AllShiftsApiController extends BaseController {
                 $shifts = $shifts->sortBy(function($shift){
                     return $shift->timeRec;
                 });
+                //when sortBy() is called, it adds element numbers to all the objects which backbone collection wont recognize. 
+                //This is why you have to call values(), to remove the element numbers from the objects.
                 $shifts->values();
                 break;
             //sorts by time recorded with the longest at the bottom
@@ -68,7 +94,10 @@ class AllShiftsApiController extends BaseController {
                 $shifts = $shifts->sortBy(function($shift){
                     return $shift->timeRec;
                 });
+                //this will reverse the order to get the collection in descending order
                 $shifts = $shifts->reverse();
+                //when sortBy() is called, it adds element numbers to all the objects which backbone collection wont recognize. 
+                //This is why you have to call values(), to remove the element numbers from the objects.
                 $shifts->values();
                 break;
             //gets all the shifts that are clocked out first then appends the shifts that are still clocked in
