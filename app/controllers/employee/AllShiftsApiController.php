@@ -37,7 +37,7 @@ class AllShiftsApiController extends BaseController {
                 $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->get();
                 $shifts = $this->setProperties($shifts);
                 $shifts = $shifts->sortBy(function($shift){
-                    return $shift->name;
+                    return $shift->name . $shift->clockIn;
                 });
                 //when sortBy() is called, it adds element numbers to all the objects which backbone collection wont recognize. 
                 //This is why you have to call values(), to remove the element numbers from the objects.
@@ -48,7 +48,7 @@ class AllShiftsApiController extends BaseController {
                 $shifts = Shift::where('clockIn', '<=', $end)->where('clockIn', '>=', $start)->get();
                 $shifts = $this->setProperties($shifts);
                 $shifts = $shifts->sortBy(function($shift){
-                    return $shift->name;
+                    return $shift->name . $shift->clockIn;
                 });
                 //this will reverse the order to get the collection in descending order
                 $shifts = $shifts->reverse();

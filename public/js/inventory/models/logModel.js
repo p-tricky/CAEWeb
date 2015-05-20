@@ -19,12 +19,7 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
     //Define which model to use for the collection
     model : ViewLogTab.LogModel,
     //url to use for persistance to server side
-    url : 'api/log',
-
-    //Define a comparator function to be used when the collection is sorted.
-    comparator: function(log) {
-     return -(Number(log.get('id')));
-    }
+    url : 'api/log'
 
   }); //End of Collection
 

@@ -284,7 +284,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         }
         
         //if sorted by clocked out descending, then it switches to descending
-        if (ShiftManagerTab.sort == 'clockedInDes')
+        if (ShiftManagerTab.sort == 'clockedInAsc')
         {
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();

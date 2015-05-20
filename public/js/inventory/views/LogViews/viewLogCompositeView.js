@@ -14,7 +14,7 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
       //pass the template to handlebars before it assigns the template to the view
       this.template = Handlebars.compile(tpl.get(this.options.contentName));
 
-      ViewLogTab.sort = 'dateAsc';
+      ViewLogTab.sort = 'dateDes';
     },
 
     //Define a id for this view
@@ -26,6 +26,8 @@ InventoryApp.module('ViewLogTab', function (ViewLogTab, App, Backbone, Marionett
     //when the page loads, it adds an arrow to the date column header
     onShow : function() {      
       $('#date').html('&#9660 Date');
+      ViewLogTab.logCollection.fetch({data: {sort: ViewLogTab.sort}});
+      ViewLogTab.logCollection.reset();
     },
 
     //defines event listeners and the functions to call
