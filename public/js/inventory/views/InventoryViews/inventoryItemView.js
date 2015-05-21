@@ -60,7 +60,11 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
         //With the button disabled, we can call the adjustQty method on the model to do the actual
         //decrement and persist the data to the server
         this.model.adjustQty(-1);
-        InventoryTab.InventoryController._sendEmail();
+        if(parseInt(this.model.get('quantity')) + parseInt(this.model.get('on_order_quantity')) < parseInt(this.model.get('email_threshold')))
+        {
+          InventoryTab.InventoryController._sendEmail();
+        }
+        
       }
     },
 
@@ -74,7 +78,10 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       //increment and persist the data to the server.
       this.model.adjustQty(1);
       //calls the sendEmail method, which sets a timeout
-      InventoryTab.InventoryController._sendEmail();
+      if(parseInt(this.model.get('quantity')) + parseInt(this.model.get('on_order_quantity')) < parseInt(this.model.get('email_threshold')))
+      {
+        InventoryTab.InventoryController._sendEmail();
+      }
     },
 
     //Function to show the item details in a modal box when the user double clicks a row

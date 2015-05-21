@@ -61,6 +61,11 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
           //Remove the fade overlay and modal box
           $('#fade').removeClass('fade');
           $('#modalBox').removeClass('modalBox');
+          //if the quantity is below the email threshold, it will send an email
+          if(parseInt(this.model.get('quantity')) + parseInt(this.model.get('on_order_quantity')) < parseInt(this.model.get('email_threshold')))
+          {
+            InventoryTab.InventoryController._sendEmail();
+          }
           //close the modal view
           App.tabDiv.modalArea.close();
         }
