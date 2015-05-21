@@ -41,11 +41,12 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
         EmployeeApp.currentUser = new EmployeeApp.EmployeeTab.UserPermissionModel();
         //fetch the user model from the server, and on success call the callback
         EmployeeApp.currentUser.fetch({success : callback});
-      } else { //already have the the current user. Just call the callback.
-        callback();
+      } else { //already have the the current user. Just call the callback.    
+        callback(); // 05/20/15--Pretty sure this line will never run.
       }
     },
-    //function to determine the hours of an mployee and then show it.
+
+    //function to determine the hours of an employee and then show it.
     _showMyHoursTab : function() {
       EmployeeApp.MyHoursTab.MyHoursController.getIndexShifts(EmployeeApp.MyHoursTab.MyHoursController.showPageContent);
     },

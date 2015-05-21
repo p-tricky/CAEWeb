@@ -18,6 +18,8 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       'acc_view_timesheet':'',
       'acc_gen_timesheet':'',
       'acc_crud_schedule':'',
+      'acc_super_user': '',
+      'acc_notifications': '',
       'created_at':'',
       'updated_at':''
     },

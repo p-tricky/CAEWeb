@@ -1,7 +1,7 @@
 //Define the module EmployeeTab for all functions that apply to all tabs. Tab specific ones will be namespaced to thier specific tab.
-EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionette, $, _) {
+UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marionette, $, _) {
   //Define a model to be used when fetching the current user permissions
-  EmployeeTab.UserPermissionModel = Backbone.Model.extend({
+  UserListTab.UserPermissionModel = Backbone.Model.extend({
     //define defaults for new models
     defaults : {
       'username':'',
