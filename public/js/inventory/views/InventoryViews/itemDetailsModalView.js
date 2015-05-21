@@ -107,7 +107,9 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
                 $('#fade').removeClass('fade');
                 $('#modalBox').removeClass('modalBox');
                 App.tabDiv.modalArea.close();
-                $(this).dialog("close");
+                $('#confirmModalBox').dialog("close");
+                InventoryTab.currentInventory.fetch();
+                InventoryTab.currentInventory.reset();
               }, 
               //if there is error when deleting the item, it alerts the user and logs it.
               error : function(m,e,o) {
@@ -117,7 +119,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
                   title: 'Item Error',
                   buttons: {
                     'Ok': function() {
-                      $(this).dialog('close');
+                      $('#confirmModalBox').dialog('close');
                     }
                   },  
                 });          
