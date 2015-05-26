@@ -11,22 +11,22 @@ class LogApiController extends BaseController {
           $logs = Trans_Log::orderBy('updated_at', 'DESC')->get();
           break;
         case 'itemAsc':
-          $logs = Trans_Log::orderBy('itemname')->get();
+          $logs = Trans_Log::orderBy('itemname')->orderBy('updated_at')->get();
           break;
         case 'itemDes':
-          $logs = Trans_Log::orderBy('itemname', 'DESC')->get();
+          $logs = Trans_Log::orderBy('itemname', 'DESC')->orderBy('updated_at')->get();
           break;
         case 'userAsc':
-          $logs = Trans_Log::orderBy('username')->get();
+          $logs = Trans_Log::orderBy('username')->orderBy('updated_at')->get();
           break;
         case 'userDes':
-          $logs = Trans_Log::orderBy('username', 'DESC')->get();
+          $logs = Trans_Log::orderBy('username', 'DESC')->orderBy('updated_at')->get();
           break;
         case 'actionAsc':
-          $logs = Trans_Log::orderBy('action')->get();
+          $logs = Trans_Log::orderBy('action')->orderBy('updated_at')->get();
           break;
         case 'actionDes': 
-          $logs = Trans_Log::orderBy('action', 'DESC')->get();
+          $logs = Trans_Log::orderBy('action', 'DESC')->orderBy('updated_at')->get();
           break;
       }
 
