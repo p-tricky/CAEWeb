@@ -2,7 +2,9 @@
 class LogApiController extends BaseController {
   public function index() {
     try {
+      //how the collection will be sorted, defaulting to date ascending
       $sort = Input::get('sort', 'dateAsc');
+      //based on the sort method, it will pull the collection with a different orderBy
       switch ($sort) {
         case 'dateAsc': 
           $logs = Trans_Log::orderBy('updated_at')->get();
@@ -31,11 +33,11 @@ class LogApiController extends BaseController {
       }
 
       $logNumber = 0;
-      //adds shiftNum to each shift
+      //adds logNum to each shift
       foreach ($logs as $log) {
-        //sets the shift number
+        //sets the log number
         $log->logNum = $logNumber;
-        //increments the shift number
+        //increments the log number
         $logNumber+=1;
       }
 
