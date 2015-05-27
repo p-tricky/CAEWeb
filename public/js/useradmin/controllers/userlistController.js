@@ -19,18 +19,31 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     //the modal will not show
     showUserModal : function(theModel) {
       UserListTab.UserListTabController._getUserPermissions(function() {
-        debugger;
-        if (UserAdminApp.currentUser.get('acc_super_user') === '1' ||
-            theModel.get('acc_super_user') !== '1') {
+        if (theModel.get('acc_super_user') == '0' || 
+            UserAdminApp.currentUser.get('acc_super_user') == '1') {
           //dims the background
           $('#fade').addClass('fade');
           //shows the modal
           $('#modalBox').addClass('modalBox');
           // do NOT send a collection to the modal view!
+          if (UserAdminApp.currentUser.get('acc_super_user') === '1') theModel.attributes.superUser = true;
           var modalView = new UserListTab.UserDetailsModalView({
             model: theModel, 
           });
           App.tabDiv.modalArea.show(modalView);
+        } else {
+          // this error is thrown when a regular user tries to edit a super user
+          var errorAlert = $('#confirmModalBox');
+          errorAlert.html("Sorry. You don't have permission to edit that user.");
+          errorAlert.dialog({
+            modal: true,
+            title: 'Invalid Permissions',
+            buttons: {
+              'Ok': function() {
+                $(this).dialog('close');
+              }
+            },
+          });
         }
       });
     },

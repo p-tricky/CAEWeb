@@ -61,6 +61,8 @@ class UsersApiController extends BaseController {
       $updateUser->acc_view_timesheet = $updateModel['acc_view_timesheet'];
       $updateUser->acc_gen_timesheet = $updateModel['acc_gen_timesheet'];
       $updateUser->acc_crud_schedule = $updateModel['acc_crud_schedule'];
+      $updateUser->acc_notifications = $updateModel['acc_notifications'];
+      $updateUser->acc_super_user = $updateModel['acc_super_user'];
 
       //save the updated user to the database
       $updateUser->save();

@@ -81,6 +81,20 @@
     </div>
   </div>
   <div class="div-table-row">
+    <div class="div-table-col-label"><label>Notifications:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_notifications' name='acc_notifications' type='checkbox' value='{{acc_notifications}}'/>
+    </div>
+  </div>
+  {{#if superUser}}
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Super User:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_super_user' name='acc_super_user' type='checkbox' value='{{acc_super_user}}'/>
+    </div>
+  </div>
+  {{/if}}
+  <div class="div-table-row">
     <div class="div-table-col-label">
       <button id="save" class='save div-table-button'>
         Save

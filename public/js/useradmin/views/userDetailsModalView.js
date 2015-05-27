@@ -63,6 +63,14 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       if (this.model.get('acc_crud_schedule') == 1) {
         $('input[id=acc_crud_schedule]').prop('checked',true);
       }
+
+      if (this.model.get('acc_notifications') == 1) {
+        $('input[id=acc_notifications]').prop('checked',true);
+      }
+
+      if (this.model.get('acc_super_user') == 1) {
+        $('input[id=acc_super_user]').prop('checked',true);
+      }
    
       ///////////////////// sets the position dropdown to correct value ////////////////////
       $('option[value='+this.model.get('position_id')+']').prop('selected', true);
@@ -85,6 +93,8 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         acc_view_timesheet: $('#acc_view_timesheet').is(':checked') ? 1 : 0,
         acc_gen_timesheet: $('#acc_gen_timesheet').is(':checked') ? 1 : 0,
         acc_crud_schedule: $('#acc_crud_schedule').is(':checked') ? 1 : 0,
+        acc_notifications: $('#acc_notifications').is(':checked') ? 1 : 0,
+        acc_super_user: $('#acc_super_user').is(':checked') ? 1 : 0,
       };
 
       //tries to save the properties for the user
@@ -207,7 +217,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
-        $('input[id=acc_emp]').prop('checked','checked');
+        $('input[id=acc_emp]').prop('checked',true);
         $('input[id=acc_useradm]').prop('checked',true);
         $('input[id=acc_crud_timesheet]').prop('checked',true);
         $('input[id=acc_view_timesheet]').prop('checked',true);
