@@ -62,7 +62,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
           $('#fade').removeClass('fade');
           $('#modalBox').removeClass('modalBox');
           //if the quantity is below the email threshold, it will send an email
-          if(parseInt(this.model.get('quantity')) + parseInt(this.model.get('on_order_quantity')) < parseInt(this.model.get('email_threshold')))
+          if(parseInt(this.model.get('quantity')) + parseInt(this.model.get('on_order_quantity')) < parseInt(this.model.get('email_threshold')) && adjustmentQuantity < 0)
           {
             InventoryTab.InventoryController._sendEmail();
           }

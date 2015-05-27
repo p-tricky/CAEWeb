@@ -26,7 +26,8 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       'click .currentinventory' : 'navigateToCurrentInventory',
       'click .vieworders':'navigateToViewOrders',
       'click .placeorder':'navigateToPlaceOrders',
-      'click .viewlog':'navigateToViewLog'
+      'click .viewlog':'navigateToViewLog',
+      'click .vendor':'navigateToVendor'
     },
     
     //All of the functions associated with the events.
@@ -45,6 +46,10 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
 
     navigateToViewLog : function() {
       InventoryApp.navigate('viewlog',true);
+    },
+
+    navigateToVendor : function() {
+      InventoryApp.navigate('vendor', true);
     }
   });
 });

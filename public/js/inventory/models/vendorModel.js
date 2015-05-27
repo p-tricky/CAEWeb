@@ -12,6 +12,13 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     //url used to persist data to the server
     urlRoot : 'api/vendor',
 
+    saveVendor : function(vendorProps) {
+      if (this.save(vendorProps) !== false) {
+        return true;
+      }
+      return false;
+    },
+
     //Function to add a new vendor to the collection and persist the data to the server side
     //The function takes in a object of model properties to be saved.
     addVendor : function(addModelProperties) {
@@ -84,7 +91,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     //Define the model to use for the collection
     model : InventoryTab.VendorModel,
     //url used to persist data to the server
-    url : 'api/vendors'
+    url : 'api/vendor'
 
   });
 });

@@ -47,6 +47,12 @@ InventoryApp.InventoryAppController = {
       //function below. However just in case it fails, or is not in memory, this will ensure that it is before
       //it gets displayed.
       InventoryApp.ViewLogTab.ViewLogController.getLog(InventoryApp.ViewLogTab.ViewLogController.showLog);
+    },
+
+    vendor : function() {
+      InventoryApp.tabDiv = new InventoryApp.InventoryTab.InventoryView({'tabName':'vendorTab'});
+      InventoryApp.tabArea.show(InventoryApp.tabDiv);
+      InventoryApp.VendorTab.VendorController.getVendors(InventoryApp.VendorTab.VendorController.showVendors);
     }
 };
 
@@ -57,14 +63,15 @@ InventoryApp.Router = new Marionette.AppRouter({
     "currentinventory" : "currentinventory",
     "vieworders" : "vieworders",
     "placeorder" : "placeorder",
-    "viewlog" : "viewlog"
-  }
+    "viewlog" : "viewlog",
+    "vendor" : "vendor"
+  } 
 });
 
 //Setup the things that need to start when the App is started. This includes getting inital templates, and starting the history.
 InventoryApp.on('initialize:after', function() {
   //load any inital templates that may be needed.
-  tpl.loadTemplates(['currentInventoryTab','placeOrderTab','viewLogTab','viewOrdersTab'], function() {
+  tpl.loadTemplates(['currentInventoryTab','placeOrderTab','viewLogTab','viewOrdersTab','vendorTab'], function() {
     //Create a new Log collection for the logging of the app.
     InventoryApp.ViewLogTab.logCollection = new InventoryApp.ViewLogTab.LogCollection();
     //Fetch the log, and on success of the fetch, call the history.start to start the backbone history
