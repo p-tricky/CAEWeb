@@ -1,8 +1,7 @@
-//Define module for the inventory tab to live in.
+//Define module for the vendor tab to live in.
 InventoryApp.module('VendorTab', function (VendorTab, App, Backbone, Marionette, $, _) {
   //Define a composite view to be used to show the modal box that allows the user to add a new
-  //Vendor to the inventory. A composite view is used because the vendor dropdown needs to be a Vendor
-  //view nested inside the modal box.
+  //Vendor to the inventory. 
   VendorTab.VendorAddModalView = Backbone.Marionette.CompositeView.extend({
 
     //Define the tab for this view. div is default, we don't need to explicitly define it, but we are.

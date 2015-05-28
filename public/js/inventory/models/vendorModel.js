@@ -12,10 +12,13 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     //url used to persist data to the server
     urlRoot : 'api/vendor',
 
+    //Function to save an updated vendor
     saveVendor : function(vendorProps) {
+      //if the save was successful, it will return true. 
       if (this.save(vendorProps) !== false) {
         return true;
       }
+      //otherwise it returns false
       return false;
     },
 

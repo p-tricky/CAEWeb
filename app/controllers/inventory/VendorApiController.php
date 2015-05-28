@@ -1,8 +1,10 @@
 <?php
 class VendorApiController extends BaseController {
+  //will return the full list of vendors
   public function index() {
     try {
       $vendorList = Vendor::all();
+      //venNum will be used for css coloring 
       $vendorNumber = 0;
       foreach ($vendorList as $vendor) {
         $vendor->venNum = $vendorNumber;
@@ -14,6 +16,7 @@ class VendorApiController extends BaseController {
     }
   }
 
+  //this is called when a new vendor is added
   public function store() {
   	try{
   		$newVendor = new Vendor;
@@ -28,6 +31,7 @@ class VendorApiController extends BaseController {
   	}
   }
 
+  //this is called when updating a vendor
   public function update($id) {
     try{
       $updateModel = Input::json()->all();

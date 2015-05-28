@@ -1,6 +1,6 @@
-//Define a module for all of the view log functions to live in.
+//Define a module for all of the vendor functions to live in.
 InventoryApp.module('VendorTab', function (VendorTab, App, Backbone, Marionette, $, _) {
-  //Define a composite view to display the log entries in a table
+  //Define a composite view to display the vendors in a table
   VendorTab.VendorListView = Backbone.Marionette.CompositeView.extend({
     
     //Define the item view that this view will use to display the table rows
@@ -21,12 +21,14 @@ InventoryApp.module('VendorTab', function (VendorTab, App, Backbone, Marionette,
     //Define the item view container for this composite view
     itemViewContainer: "tbody",
 
+    //define event listeners
     events : {
       "click #addVendor": "addVendor"
     },
 
+    //function that is called when the Add Vendor button is clicked. 
     addVendor : function() {
-      //call the showInventoryVendorAddModal function in the inventory controller
+      //call the showVendorAddModal function in the inventory controller
       VendorTab.VendorController.showVendorAddModal(this.model);
     }
   });

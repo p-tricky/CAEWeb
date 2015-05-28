@@ -1,9 +1,10 @@
-//Define module for the inventory tab to live in.
+//Define module for the vendor tab to live in.
 InventoryApp.module('VendorTab', function (VendorTab, App, Backbone, Marionette, $, _) {
   
-  //Define controller for the inventory tab functions to live in.
+  //Define controller for the vendor tab functions to live in.
   VendorTab.VendorController = {
 
+    //this will define the vendor cellection if it hasn't been created yet
   	getVendors : function(callback) {
   		//If the vendor collection does not already exist
       	if (typeof InventoryApp.InventoryTab.vendorCollection === "undefined") {
@@ -19,14 +20,15 @@ InventoryApp.module('VendorTab', function (VendorTab, App, Backbone, Marionette,
       }
   	},
 
+    //this will create the view for the vendor list and then show it. 
   	showVendors : function() {
-  		//Instanciate a new inventory composite view and pass it the inventory collection as well as the template to use
+  		//Instanciate a new vendor list view and pass it the vendor collection as well as the template to use
       	var tabContentDiv = new VendorTab.VendorListView({collection: InventoryApp.InventoryTab.vendorCollection,'contentName':'vendors/vendorTable'});
       	//show the view in the tab content
       	App.tabDiv.tabContent.show(tabContentDiv);
   	},
 
-    //Function to show the inventory modal for a new vendor that will be added to the vendor collection
+    //Function to show the vendor modal for a new vendor that will be added to the vendor collection
     showVendorAddModal : function() {
       //Disable the add new button
       $('#addVendor').prop('disabled',true);
@@ -47,9 +49,9 @@ InventoryApp.module('VendorTab', function (VendorTab, App, Backbone, Marionette,
       });
     },
 
-    //Function to show the inventory modal for a new vendor that will be added to the vendor collection
+    //Function to show the Vendor details modal for an existing vendor that will be added to the vendor collection
     showVendorDetailsModal : function(theModel) {
-      //Show the fade overaly
+      //Show the fade overlay
       $('#fade').addClass('fade');
       //show the modal box div
       $('#modalBox').addClass('modalBox');
