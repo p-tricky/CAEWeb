@@ -200,6 +200,7 @@ class ShiftApiController extends BaseController {
         $shift->clockOut = $cout->format('Y-m-d H:i:s');
         $shift->save();
       }
+      Shift::sendNotificationEmail($forgottenShifts);
     }
 
     //will update the clockin and clockout times for a shift by id 
