@@ -30,9 +30,24 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
   	//retrieves shifts in specified range
     getShiftsInRange : function(rangeStart, rangeEnd) {
-        ShiftManagerTab.shiftList.fetch({data: {start: rangeStart , end: rangeEnd}});
-        //reset the shiftList to ensure everything is up to date
+      //if search value is not empty
+      if ($('#searchText').val() !== '')
+      {
+        //sends the string to escapeHTML inorder to sanitize the special characters in the string 
+        var input = ShiftManagerTab.ShiftManagerController.escapeHtml($('#searchText').val());
+        //gets a new shiftList that is sorted and only contains shifts with the searched for term
+        ShiftManagerTab.shiftList.fetch({data: { start: rangeStart, end: rangeEnd, sort: ShiftManagerTab.sort, search: input}});
+        //have to reset the shiftList to redisplay in the list
         ShiftManagerTab.shiftList.reset();
+      }
+      //if the text area is empty,
+      else 
+      {
+        //gets a new shiftList that doesn't have any search term
+        ShiftManagerTab.shiftList.fetch({data: { start: rangeStart, end: rangeEnd, sort: ShiftManagerTab.sort}});
+        //have to reset the shiftList to redisplay in the list
+        ShiftManagerTab.shiftList.reset();
+      }
     },
 
   	//used to show a modal box to modify the selected shift

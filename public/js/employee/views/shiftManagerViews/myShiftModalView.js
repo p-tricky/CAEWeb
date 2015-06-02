@@ -105,7 +105,8 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //closes the dialog
       			$(this).dialog("close");
             //get updated shift list and diplays it
-      			ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
+            console.log($('#datepicker1').val() +" "+ $('#datepicker2').val());
+      			ShiftManagerTab.ShiftManagerController.getShiftsInRange($('#datepicker1').val(), $('#datepicker2').val());
     			},
     			Cancel: function() {
             //closes the dialog

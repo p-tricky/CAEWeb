@@ -15,11 +15,6 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         ShiftManagerTab.sort = 'default';
     },
 
-    onShow : function() {
-        //gets a new set of shifts before displaying them. 
-        ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
-    },
-
     id:'shiftListTable',
 
     itemViewContainer: "tbody",
