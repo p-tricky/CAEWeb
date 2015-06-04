@@ -21,10 +21,6 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         model : ShiftManagerTab.ShiftModel,
         url: 'api/getallshifts',
         
-        comparator: function(shift) {
-            return (Number(shift.get('id')));
-        }
-        
     });
 
 });
