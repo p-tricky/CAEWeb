@@ -43,12 +43,12 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         }
 
         //if sorted by name descending, then it switches to descending
-        if (ShiftManagerTab.sort == 'nameDes')
+        if (ShiftManagerTab.sort == 'nameAsc')
         {
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'nameAsc';
+            ShiftManagerTab.sort = 'nameDes';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {
@@ -69,7 +69,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //removes the arrows from the header regardless of which one has it
             ShiftManagerTab.ShiftManagerController.clearSort();
             //set the global sort variable to the new sort method
-            ShiftManagerTab.sort = 'nameDes';
+            ShiftManagerTab.sort = 'nameAsc';
             //if the search bar isn't empty
             if ($('#searchText').val() !== '')
             {
