@@ -211,12 +211,6 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     //Define which model to use
     model : InventoryTab.ItemModel,
     //define url for persistance
-    url : 'api/items',
-
-    //provide comparator function for sorting the collection
-    comparator: function(item) {
-     return (Number(item.get('id')));
-    }
-
+    url : 'api/items'
   });
 });
