@@ -68,6 +68,7 @@ class TimesheetApiController extends BaseController
                 case 3:
                     //has to offset by the index of the first space +1
                     $pos = strpos($shift->name, ' ', strpos($shift->name, ' ')+1);
+                    break;
                 default:
                     //if someone has more than names, it will just sort by the second name 
                     $pos = strpos($shift->name, ' ');
