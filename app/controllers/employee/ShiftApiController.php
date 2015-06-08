@@ -238,6 +238,7 @@ class ShiftApiController extends BaseController {
 
         //if we have met all previous requirements, get shift from db
         $thisShift = Shift::find($shiftId);
+        $thisShift->eid = Input::get('eid');
         
         // Before saving we should make sure no one is over clocking (i.e.,
         // the updated shift times don't overlap with existing shift times);

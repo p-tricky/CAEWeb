@@ -13,6 +13,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         shiftFilterSection: '#shiftFilterSection',
         shiftListSection: '#shiftListSection',
         shiftSearchSection: '#shiftSearchSection',
+        newShiftSection: '#newShiftSection',
     },
 
     //gives the view an id tag for css

@@ -2,11 +2,15 @@
 EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, Marionette, $, _) {
   ShiftManagerTab.MyShiftModalView = Backbone.Marionette.CompositeView.extend({
 
-    //define the tag that this view lives in
-  	tagName: 'div',
-
     //gets the template for the modal
   	initialize : function() {
+      Handlebars.registerHelper('ifNewShift', function(block) {
+        if (this.newShift) {
+          return block.fn(this);
+        } else {
+          return block.inverse(this);
+        }
+      });
       this.template = Handlebars.compile(tpl.get('shiftManager/shiftModal'));
     },
 
@@ -23,6 +27,8 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     onShow : function() {
       ShiftManagerTab.MyShiftModalView.prototype.populateDatePickerWidget(this.model.get('clockIn'), $('#datetimeholder1'), '#modalclockin');
       ShiftManagerTab.MyShiftModalView.prototype.populateDatePickerWidget(this.model.get('clockOut'), $('#datetimeholder2'), '#modalclockout');
+      if (this.model.attributes.newShift)
+        this.$el.addClass('newShiftModalContainer');
 
       //needed for other functions in the view
       //easy access to "this" without having to worry about conflits
@@ -31,11 +37,15 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //saves the shift to the data base with the new clockin and clockout times.
     saveShift : function() {
+      if (this.model.attributes.newShift) {
+        this.model.attributes.eid = $('select.select-user-id').val();
+        this.model.attributes.newShift = false;
+      }
       var clockIn = $('#modalclockin').val();
       var clockOut = $('#modalclockout').val();
       var modalBox = $('#modalBox');
       if (!clockOut) clockOut = "0000-00-00 00:00:00";
-      ShiftManagerTab.ShiftManagerController.updateShift(ShiftManagerTab.MyShiftModalView.thisModel.get('id'), clockIn, clockOut,
+      ShiftManagerTab.ShiftManagerController.updateShift(this.model.get('id'), this.model.get('eid'), clockIn, clockOut,
           function(response) {
             errorResponse = JSON.parse(response);
             if (errorResponse.error === 'none') {
@@ -105,8 +115,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             //closes the dialog
       			$(this).dialog("close");
             //get updated shift list and diplays it
-            console.log($('#datepicker1').val() +" "+ $('#datepicker2').val());
-      			ShiftManagerTab.ShiftManagerController.getShiftsInRange($('#datepicker1').val(), $('#datepicker2').val());
+      			ShiftManagerTab.ShiftManagerController.getShiftsInRange($('datepicker1').val(), $('#datepicker2').val());
     			},
     			Cancel: function() {
             //closes the dialog

@@ -16,7 +16,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
   	  	//get shift data
       	if (typeof ShiftManagerTab.shiftList === "undefined") {
         	//console.log('Getting shift data...');
-        	ShiftManagerTab.shiftList = new EmployeeApp.ShiftManagerTab.ShiftCollection();
+        	ShiftManagerTab.shiftList = new ShiftManagerTab.ShiftCollection();
         	//get all shifts for current user
         	ShiftManagerTab.shiftList.fetch({success : callback, data: {}});
       	} else {
@@ -27,6 +27,11 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
           callback();
       	}
   	},
+
+    getUserCollection : function(callback) {
+        ShiftManagerTab.userList = new ShiftManagerTab.UserCollection();
+        ShiftManagerTab.userList.fetch({success : callback});
+    },
 
   	//retrieves shifts in specified range
     getShiftsInRange : function(rangeStart, rangeEnd) {
@@ -52,12 +57,13 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
   	//used to show a modal box to modify the selected shift
     showShiftModal : function(theModel) {
+      //debugger;
         //dims the background material
         $('#fade').addClass('fade');
         //shows the modal that allows users to edit shifts
         $('#modalBox').addClass('modalBox');
-        var theModalView = new ShiftManagerTab.MyShiftModalView({model: theModel});
-        App.tabDiv.modalArea.show(theModalView);
+        var shiftModalView = new ShiftManagerTab.MyShiftModalView({model: theModel});
+        App.tabDiv.modalArea.show(shiftModalView);
         //if the shift that is being edited is still clocked in
         if (theModel.get('clockOut') === "0000-00-00 00:00:00") {
           //removes all of the clockout options that wont be used
@@ -73,14 +79,29 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
             "position": "absolute",
             "left": (((modalBox.parent().width() - modalBox.outerWidth()) / 2) + modalBox.parent().scrollLeft() + "px"),
           });
-        }
+        } 
+    },
+
+    showNewShift: function(theModel) {
+        //dims the background material
+        $('#fade').addClass('fade');
+        //shows the modal that allows users to edit shifts
+        $('#modalBox').addClass('modalBox');
+        var newShiftModalView = new ShiftManagerTab.NewShiftModalView({'newShift':theModel.attributes.newShift});
+        App.tabDiv.modalArea.show(newShiftModalView);
+        var shiftModalView = new ShiftManagerTab.MyShiftModalView({model: theModel});
+        newShiftModalView.shiftContent.show(shiftModalView);
+        var users = ShiftManagerTab.ShiftManagerController.getUserCollection(function() {
+          var dropDown = new ShiftManagerTab.UserCompositeView({collection: ShiftManagerTab.userList,'contentName':'shiftManager/userDropDown'});
+          newShiftModalView.userDropDownContent.show(dropDown);
+        });
     },
 
   	//called by myShiftModalView in order to update a shift's clockin and clockout
-    updateShift : function(id, clockin, clockout, callback) {
+    updateShift : function(id, eid, clockin, clockout, callback) {
         $.ajax({
             url: 'api/updateshift',
-            data: {id: id, clockin: clockin, clockout: clockout},
+            data: {id: id, eid: eid, clockin: clockin, clockout: clockout},
             wait: true
         }).done(function(response) {
           if (response && callback) callback(response);
@@ -116,6 +137,9 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         EmployeeApp.shiftManagerContent.shiftSearchSection.show(searchContent);
         $('#datepicker1').datepicker();
         $('#datepicker2').datepicker();
+        //shows the newShift view
+        var newShiftContent = new ShiftManagerTab.NewShiftView({'contentName': 'shiftManager/newShift'});
+        EmployeeApp.shiftManagerContent.newShiftSection.show(newShiftContent);
     },
 
   	//returns a string with time in hours & minutes (converted from miliseconds)
