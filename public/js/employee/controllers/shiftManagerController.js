@@ -57,7 +57,6 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
   	//used to show a modal box to modify the selected shift
     showShiftModal : function(theModel) {
-      //debugger;
         //dims the background material
         $('#fade').addClass('fade');
         //shows the modal that allows users to edit shifts
@@ -137,9 +136,13 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         EmployeeApp.shiftManagerContent.shiftSearchSection.show(searchContent);
         $('#datepicker1').datepicker();
         $('#datepicker2').datepicker();
-        //shows the newShift view
-        var newShiftContent = new ShiftManagerTab.NewShiftView({'contentName': 'shiftManager/newShift'});
-        EmployeeApp.shiftManagerContent.newShiftSection.show(newShiftContent);
+        //shows the newShiftButton in super user's shiftFilter 
+        EmployeeApp.EmployeeTab.EmployeeController._getUserPermissions(function() {
+          if (EmployeeApp.currentUser.get('acc_super_user') === '1') {
+            var newShiftContent = new ShiftManagerTab.NewShiftView({'contentName': 'shiftManager/newShift'});
+            EmployeeApp.shiftManagerContent.newShiftSection.show(newShiftContent);
+          }
+        });
     },
 
   	//returns a string with time in hours & minutes (converted from miliseconds)
