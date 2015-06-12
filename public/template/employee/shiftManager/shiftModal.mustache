@@ -1,8 +1,5 @@
-{{#ifNewShift}}
-{{else}}
 <div class='div-table'>
   <div class="div=table-header"><label style="font-weight: bold; font-size: 16pt">  {{ name }} </label></div>
-{{/ifNewShift}}
   <div class="div-table-row">
     <div class="div-table-col-data"><label>Clock In:</label></div>
     <div class="div-table-col-data" id=shiftManagerShiftModalClockOutLabel><label>Clock Out:</label></div>    
@@ -28,13 +25,10 @@
         Delete
       </button>
     </div>
-{{#ifNewShift}}
-{{else}}
     <div class="div-table-col-rightBtns">
       <button id="cancel" class='cancel div-table-button'>
         Cancel
       </button>
     </div>
   </div>
-{{/ifNewShift}}
 </div>

@@ -238,19 +238,15 @@ class ShiftApiController extends BaseController {
 
         //if we have met all previous requirements, get shift from db
         $thisShift = Shift::find($shiftId);
-        $thisShift->eid = Input::get('eid');
         
         // Before saving we should make sure no one is over clocking (i.e.,
         // the updated shift times don't overlap with existing shift times);
         // To do this we query for conflicting shifts and reject if query
         // returns shifts. The query is pretty ugly, but it's really not 
         // very complex. 4 steps total:
-        //  1) Get shifts for only the user who is updating his/her shifts.
-        //     This seems obvious, but I forgot this the first time, and spent
-        //     10 minutes wondering why I couldn't save shifts for any other
-        //     users during the periods when I was clocked in lol.
+        //  1) Get shifts for the user who is updating his/her shifts.
         //  2) Filter out the id of the shift that we are updating. Obviously
-        //     the updated shift might conflict with itself, but that's not a 
+        //     the updated shift will conflict with itself, but that's not a 
         //     problem
         //  3) Find any shifts with clockin or clockout times that fall within the
         //     updated shift times. If updated shift time is 2-3pm, this finds any
@@ -284,5 +280,71 @@ class ShiftApiController extends BaseController {
         $thisShift->save();
         return json_encode(['error' => 'none']);
     }
+
+    //will update the clockin and clockout times for a shift by id 
+    public function newShift() {
+        //gets the input values
+        $eid = Input::get('eid');
+        $clockin = Input::get('clockin');
+        $clockout = Input::get('clockout');
+
+        // need date time for comparisons
+        $clockinAsDateTime = new DateTime($clockin);
+        $clockoutAsDateTime = new DateTime($clockout);
+        $curDateTime = new DateTime();
+
+        // can't clock negative hours
+        if ($clockoutAsDateTime < $clockinAsDateTime)
+          return json_encode(['error' => 'negative hours', 'info' => 'Clock in time must be before the current time and before the clock out time.']);
+
+        // wait til you have worked shift to clock it
+        if ($clockoutAsDateTime > $curDateTime && $clockinAsDateTime > $curDateTime)
+          return json_encode(['error' => 'future shift', 'info' => 'Please log only shifts that you have worked, not ones that you expect to work.']);
+
+        // can't clock more than 24 hours
+        $min_clockin = date_sub($clockoutAsDateTime, date_interval_create_from_date_string('1 day'));
+        if ($clockinAsDateTime < $min_clockin)
+          return json_encode(['error' => 'too long', 'info' => 'The max shift time is 24 hours']);
+
+        // Before saving we should make sure no one is over clocking (i.e.,
+        // the new shift times don't overlap with existing shift times);
+        // To do this we query for conflicting shifts and reject if the query
+        // returns shifts. The query is pretty ugly, but it's really not 
+        // very complex. 4 steps total:
+        //  1) Get shifts for the user who is updating his/her shifts.
+        //  2) Find any shifts with clockin or clockout times that fall within the
+        //     updated shift times. If updated shift time is 2-3pm, this finds any
+        //     shift whose clockin or clockout is between 2pm and 3pm.
+        //  3) Find any shifts that extend the updated shift times. If updated
+        //     shift time is 2-3pm and another shift is 1:30-3:30pm this finds
+        //     it.
+        $conflictingShiftClockInTimes = Shift::where('eid', $eid) //1
+          ->where(function($query) use($clockin, $clockout)
+          {
+            $query->whereBetween('clockIn', [$clockin, $clockout])   //2
+                  ->orWhereBetween('clockOut', [$clockin, $clockout])
+                  ->orWhere(function($query) use ($clockin, $clockout)
+                  {
+                    $query->where('clockOut', '>', $clockout) //3
+                          ->where('clockIn', '<', $clockin);
+                  });
+          })
+          ->select('clockIn')
+          ->get();
+
+        // if there are conflicting shifts return them as a string
+        if (!$conflictingShiftClockInTimes->isEmpty()) {
+          $conflicts = "";
+          foreach($conflictingShiftClockInTimes as $time) $conflicts .= $time->clockIn . "<br>";
+          return json_encode(['error' => 'conflict', 'info' => $conflicts]);
+        }
+        $newShift = new Shift;
+        $newShift->eid = $eid;
+        $newShift->clockIn = $clockin;
+        $newShift->clockout = $clockout;
+        $newShift->save();
+        return json_encode(['error' => 'none']);
+    }
+
 
 }

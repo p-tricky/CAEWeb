@@ -13,11 +13,7 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
     },
 
     createNew: function() {
-      var newShift = EmployeeApp.ShiftManagerTab.shiftList.create({shiftNum: ShiftManagerTab.shiftList.length_1},{wait:true});
-      newShift.attributes.newShift = true;
-      newShift.attributes.clockIn = newShift.yyyymmdd(new Date());
-      newShift.attributes.clockOut = newShift.yyyymmdd(new Date());
-      EmployeeApp.ShiftManagerTab.ShiftManagerController.showNewShift(newShift);
+      EmployeeApp.ShiftManagerTab.ShiftManagerController.showNewShiftModal(newShift);
     }
 
   });

@@ -81,26 +81,36 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
         } 
     },
 
-    showNewShift: function(theModel) {
+    showNewShiftModal: function() {
         //dims the background material
         $('#fade').addClass('fade');
         //shows the modal that allows users to edit shifts
         $('#modalBox').addClass('modalBox');
-        var newShiftModalView = new ShiftManagerTab.NewShiftModalView({'newShift':theModel.attributes.newShift});
+        //var newShiftModalView = new ShiftManagerTab.NewShiftModalView({'newShift':theModel.attributes.newShift});
+        var newShiftModalView = new ShiftManagerTab.NewShiftModalView();
         App.tabDiv.modalArea.show(newShiftModalView);
-        var shiftModalView = new ShiftManagerTab.MyShiftModalView({model: theModel});
-        newShiftModalView.shiftContent.show(shiftModalView);
         var users = ShiftManagerTab.ShiftManagerController.getUserCollection(function() {
           var dropDown = new ShiftManagerTab.UserCompositeView({collection: ShiftManagerTab.userList,'contentName':'shiftManager/userDropDown'});
           newShiftModalView.userDropDownContent.show(dropDown);
         });
     },
 
+  	//called by newShiftModalView
+    newShift : function(eid, clockin, clockout, callback) {
+        $.ajax({
+            url: 'api/newshift',
+            data: {eid: eid, clockin: clockin, clockout: clockout},
+            wait: true
+        }).done(function(response) {
+          if (response && callback) callback(response);
+        });
+    },
+
   	//called by myShiftModalView in order to update a shift's clockin and clockout
-    updateShift : function(id, eid, clockin, clockout, callback) {
+    updateShift : function(id, clockin, clockout, callback) {
         $.ajax({
             url: 'api/updateshift',
-            data: {id: id, eid: eid, clockin: clockin, clockout: clockout},
+            data: {id: id, clockin: clockin, clockout: clockout},
             wait: true
         }).done(function(response) {
           if (response && callback) callback(response);
