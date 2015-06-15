@@ -8,11 +8,9 @@ UserAdminApp.navigate = function(route,  options){
 
 UserAdminApp.UserAdminAppController = {
   userlist : function() {
-    setTimeout(function() { //uncommenting this line fixes issue where userlist doesn't render when cache is disabled
     UserAdminApp.tabDiv = new UserAdminApp.UserListTab.UserListTabView({'tabName':'userlistTab'});
     UserAdminApp.UserListTab.UserListTabController.getUserList(UserAdminApp.UserListTab.UserListTabController.showUserTable);
     UserAdminApp.tabArea.show(UserAdminApp.tabDiv);
-    }, 300);
   }
 };
 
