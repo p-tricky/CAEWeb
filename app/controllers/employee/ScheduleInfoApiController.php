@@ -26,9 +26,8 @@ class ScheduleInfoApiController extends BaseController {
   }
 
   public function getEndOfNextSemester() {
-    $now = date('Y-m-d H:i:s',time());
-    $result = DB::table('semester_start')->where('end_date', '>', $now)->orderBy('start_date')->take('1')->get();
+    $in3Weeks = date('Y-m-d H:i:s', strtotime("+3 week"));
+    $result = DB::table('semester_start')->where('end_date', '>', $in3Weeks)->orderBy('start_date')->take('2')->get();
     return json_encode($result[0]->end_date);
   }
-
 }

@@ -1573,7 +1573,7 @@ kendo_module({
                 start = that.options.start,
                 //start = EmployeeApp.EmployeeTab.semesterEndDate,
                 rule = that._value,
-                until = rule.until;
+                until = EmployeeApp.EmployeeTab.semesterEndDate;
 
             that.untilDatePicker = input.kendoDatePicker({
                 min: until && until < start ? until : start,
