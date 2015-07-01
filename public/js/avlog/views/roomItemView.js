@@ -21,7 +21,7 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
     //The main reason for this function is to assign an alternating even or odd class name to the
     //element so that css can alternate the trs in the table.
     attributes : function(){
-      var classValue = this.model.get('id');
+      var classValue = this.model.get('roomNum');
       var classProperty = '';
       if ((Number(classValue)%2) === 0) {
         classProperty = 'even';
