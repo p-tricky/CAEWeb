@@ -1156,18 +1156,17 @@ kendo_module({
             var startT;
             var endT;
 
-            if (that.startDateTimeCompareValue.getTime() !== model.start.getTime()) {
-                startT = new Date(model.start);
-                startT.setHours(startT.getHours() -1);
-                model.start = startT;
-                that.startDateTimeCompareValue = new Date(startT.getFullYear(), startT.getMonth(), startT.getDate(), startT.getHours(), startT.getMinutes(), startT.getSeconds());
-            }
-            if (that.endDateTimeCompareValue.getTime(0 !== model.end.getTime())) {
-                endT = new Date(model.end);
-                endT.setHours(endT.getHours() -1);
-                model.end = endT;
-                that.endDateTimeCompareValue = new Date(endT.getFullYear(), endT.getMonth(), endT.getDate(), endT.getHours(), endT.getMinutes(), endT.getSeconds());
-            }
+            
+            startT = new Date(model.start);
+            startT.setHours(startT.getHours() -1);
+            model.start = startT;
+            that.startDateTimeCompareValue = new Date(startT.getFullYear(), startT.getMonth(), startT.getDate(), startT.getHours(), startT.getMinutes(), startT.getSeconds());
+            
+            endT = new Date(model.end);
+            endT.setHours(endT.getHours() -1);
+            model.end = endT;
+            that.endDateTimeCompareValue = new Date(endT.getFullYear(), endT.getMonth(), endT.getDate(), endT.getHours(), endT.getMinutes(), endT.getSeconds());
+            
 
             if (container && editable && editable.end() &&
                 !that.trigger(SAVE, { container: container, model: model } )) {
@@ -1181,11 +1180,23 @@ kendo_module({
                 container = that._editContainer,
                 model;
 
+            
             if (container) {
                 model = that._modelForContainer(container);
 
                 that._removeExceptionDate(model);
-                that.dataSource.cancelChanges(model);
+                //that.dataSource.cancelChanges(model);
+                var container = that._editContainer,
+                model = that._modelForContainer(container);
+
+                //Some date manipulation code used to set the models datetime back an hour before the save.
+                var startT = new Date(model.start);
+                var endT = new Date(model.end);
+                startT.setHours(startT.getHours() -1);
+                endT.setHours(endT.getHours() -1);
+                model.start = startT;
+                model.end = endT;
+                that.dataSource.sync();
 
                 //TODO: handle the cancel in UI
 
