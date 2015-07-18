@@ -16,7 +16,7 @@ SysAdminApp.SysAdminAppController = {
       SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'VirusTrackerTab'});
       SysAdminApp.tabArea.show(SysAdminApp.tabDiv); //show the tab
       //Call the function to get the inventory, and pass the show inventory function as the callback to call on success.
-      SysAdminApp.VirusTrackerTab.VirusTrackerController.getVirusTracker(SysAdminApp.VirusTrackerTab.VirusTrackerController.showVirusTracker);
+      SysAdminApp.VirusTrackerTab.VirusTrackerController.getVirusTracker(SysAdminApp.VirusTrackerTab.VirusTrackerController.showVirusTrackerTable);
     },
 
 };
@@ -32,7 +32,8 @@ SysAdminApp.Router = new Marionette.AppRouter({
 //Setup the things that need to start when the App is started. This includes getting inital templates, and starting the history.
 SysAdminApp.on('initialize:after', function() {
   //load any inital templates that may be needed.
-  tpl.loadTemplates(['virustracker'], function() {
+  tpl.loadTemplates(['VirusTrackerTab'], function() {
+    SysAdminApp.VirusTrackerTab.scanl
     var result = Backbone.history.start({pushState: true, root: "/caeweb/systemadmin/"});//, silent:true});
   });
 });

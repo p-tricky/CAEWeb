@@ -7,7 +7,7 @@ tpl = {
     
     var loadTemplate = function(index) {
       var name = names[index];
-      $.get('../template/sysadmin/' + name + '.mustache', function(data) {
+      $.get('../template/systemadmin/' + name + '.mustache', function(data) {
         self.templates[name] = data;
         index++;
         if (index < names.length) {
@@ -25,7 +25,7 @@ tpl = {
     if (name in that) {
       return that[name];
     } else {
-      $.ajax({url:'../template/sysadmin/' + name + '.mustache',
+      $.ajax({url:'../template/systemadmin/' + name + '.mustache',
                   success: function(data) {
                     that[name] = data;
                     return that[name];

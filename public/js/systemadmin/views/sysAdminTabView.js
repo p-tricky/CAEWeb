@@ -1,7 +1,7 @@
 //Define module for the inventory tab to live in.
 SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, Marionette, $, _) {
   //Define a new layout for the tabs, tabs content, and modal box
-  VirusTrackerTab.InventoryView = Backbone.Marionette.Layout.extend({
+  VirusTrackerTab.VirusTrackerView = Backbone.Marionette.Layout.extend({
 
     //On Instanciation, this initialize function will be called
     initialize : function(options) {
@@ -23,7 +23,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     //Define events for the view. All of the events are click events on the tabs
     //The second parameter is the function to call when the first part is clicked
     events : {
-      'click .virusTracker' : 'navigateToCurrentInventory',
+      'click .virusTracker' : 'navigateToVirusTracker',
     },
     
     //All of the functions associated with the events.

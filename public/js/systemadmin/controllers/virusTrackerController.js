@@ -9,7 +9,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       //If the inventory collection does not already exist
       if (typeof VirusTrackerTab.scansList === "undefined") {
         //Instanciate a new invenory collection
-        VirusTrackerTab.scansList = new VirusTrackerApp.VirusTrackerTab.ScanCollection();
+        VirusTrackerTab.scansList = new SysAdminApp.VirusTrackerTab.ScansCollection();
         //fetch the data for the collection and call the callback on success.
         //The callback will most likely be showVirusTrackerTable
         VirusTrackerTab.scansList.fetch({success : callback});
@@ -22,7 +22,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     //Function to show the scans table.
     showVirusTrackerTable : function() {
       //Instanciate a new scans composite view and pass it the scan collection as well as the template to use
-      var tabContentDiv = new VirusTrackerTab.VirusTrackerCompositeView({collection: VirusTrackerTab.scansList,'contentName':'scansList/scansTable'});
+      var tabContentDiv = new VirusTrackerTab.VirusTrackerCompositeView({collection: VirusTrackerTab.scansList,'contentName':'virustracker/scansTable'});
       //show the view in the tab content
       App.tabDiv.tabContent.show(tabContentDiv);
     },

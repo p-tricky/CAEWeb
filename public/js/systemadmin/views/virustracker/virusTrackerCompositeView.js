@@ -4,7 +4,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
   VirusTrackerTab.VirusTrackerCompositeView = Backbone.Marionette.CompositeView.extend({
     
     //Define which Item view to associate with this composite view
-    itemView: SysAdminApp.VirusTrackerTab.VirusTrackerItemView,
+    itemView: SysAdminApp.VirusTrackerTab.ScanItemView,
 
     //When this view is intanciated, run the following function
     initialize : function(options) {
