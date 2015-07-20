@@ -24,4 +24,9 @@ class RoomListController extends BaseController {
         return $rooms->toJson();
     }
 
+    public function getAllRoomList() {
+        $rooms = CeasRooms::orderby('name')->get();
+        return $rooms->toJSON();
+    }
+
 }
