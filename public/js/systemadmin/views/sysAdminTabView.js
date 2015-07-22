@@ -24,12 +24,19 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     //The second parameter is the function to call when the first part is clicked
     events : {
       'click .virusTracker' : 'navigateToVirusTracker',
+      'click .virusUser' : 'navigateToVirusUser',
     },
     
     //All of the functions associated with the events.
     navigateToVirusTracker : function() {
       //When the event fires this function, it will navigate the app to the specified uri
-      SysAdminApp.navigate('virusTracker',true);
+      SysAdminApp.navigate('virustracker',true);
+    },
+
+    //All of the functions associated with the events.
+    navigateToVirusUser : function() {
+      //When the event fires this function, it will navigate the app to the specified uri
+      SysAdminApp.navigate('virususer',true);
     },
 
   });

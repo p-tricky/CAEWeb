@@ -19,6 +19,14 @@ SysAdminApp.SysAdminAppController = {
       SysAdminApp.VirusTrackerTab.VirusTrackerController.getVirusTracker(SysAdminApp.VirusTrackerTab.VirusTrackerController.showVirusTrackerTable);
     },
 
+    virususer : function() {
+      //Create a new tab view passing the currentInventory tab as the tabname.
+      SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'VirusUserTab'});
+      SysAdminApp.tabArea.show(SysAdminApp.tabDiv); //show the tab
+      //Call the function to get the inventory, and pass the show inventory function as the callback to call on success.
+      SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(SysAdminApp.VirusUserTab.VirusUserController.showVirusUserTable);
+    },
+
 };
 
 //Define the router that will listen to the URL, and call the correct associated function.
@@ -26,6 +34,7 @@ SysAdminApp.Router = new Marionette.AppRouter({
   controller:SysAdminApp.SysAdminAppController,
   appRoutes:{
     "virustracker" : "virustracker",
+    "virususer" : "virususer",
   } 
 });
 
