@@ -1,4 +1,4 @@
-//Define module for the inventory tab to live in.
+//Define module for the Virus User tab to live in.
 SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marionette, $, _) {
   //Define a composite view for displaying a table of the the items
   VirusUserTab.VirusUserCompositeView = Backbone.Marionette.CompositeView.extend({
@@ -27,7 +27,7 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
 
     //When the add New button is clicked, this function will run
     addNew: function() {
-      //Call the showInventoryItemAddModal function in the inventory controller
+      //Call the showUserAddModal function in the Virus User controller
       VirusUserTab.VirusUserController.showUserAddModal();
     }
     

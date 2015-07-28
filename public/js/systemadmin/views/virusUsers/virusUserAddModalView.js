@@ -1,8 +1,7 @@
-//Define module for the inventory tab to live in.
+//Define module for the virus user tab to live in.
 SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marionette, $, _) {
   //Define a composite view to be used to show the modal box that allows the user to add a new
-  //item to the inventory. A composite view is used because the vendor dropdown needs to be a item
-  //view nested inside the modal box.
+  //user to the virus users. 
   VirusUserTab.UserAddModalView = Backbone.Marionette.CompositeView.extend({
 
     //Define the tab for this view. div is default, we don't need to explicitly define it, but we are.
@@ -25,10 +24,11 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
       //Get the values from the fields and put them in an object to pass to the model
       var fields = {
         user_name:$('#name').val(),
+        //sets new Users to 0 viruses and no previous scan date
         total:0,
         last_scanned: '0000-00-00 00:00:00',
       };
-      //Send the object of parameters to the model to be saved with the addItem function.
+      //Send the object of parameters to the model to be saved with the addUser function.
       //The result will be returned to the result variable
       var result = this.model.addUser(fields);
       //If the save was successful

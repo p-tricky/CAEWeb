@@ -1,6 +1,6 @@
-//Define module for the inventory tab to live in.
+//Define module for the Virus User tab to live in.
 SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marionette, $, _) {
-  //Define a Item View to work in conjunction with the InventoryCompositeView
+  //Define a Item View to work in conjunction with the VirusUserCompositeView
   VirusUserTab.ScanUserItemView = Backbone.Marionette.ItemView.extend({
 
     //Define the tag for this view. It will be a tr instead of the default div
@@ -44,15 +44,16 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
 
     //Define events for the tr and associated functions to be called when they occur
     events : {
-      'dblclick' : 'showDetails'
+      //'dblclick' : 'showDetails'
     },
 
-    //Function to show the item details in a modal box when the user double clicks a row
+    //Function to show the User details in a modal box when the user double clicks a row
+    //not currently used
     showDetails : function(e) {
       //If the user is not double clicking on the buttons in the view
       if (e.target.nodeName !== "BUTTON") {
-        //call the showInventoryItemModal and pass it the views model
-        VirusUserTab.VirusUserController.showVirusUserItemModal(this.model);
+        //call the showUserModal and pass it the view's model
+        VirusUserTab.VirusUserController.showUserModal(this.model);
       }
     }
 

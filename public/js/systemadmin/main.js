@@ -12,18 +12,18 @@ SysAdminApp.navigate = function(route,  options){
 SysAdminApp.SysAdminAppController = {
     //function to be called when the currentinventory route is in the url
     virustracker : function() {
-      //Create a new tab view passing the currentInventory tab as the tabname.
+      //Create a new tab view passing the VirusTrackerTab tab as the tabname.
       SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'VirusTrackerTab'});
       SysAdminApp.tabArea.show(SysAdminApp.tabDiv); //show the tab
-      //Call the function to get the inventory, and pass the show inventory function as the callback to call on success.
+      //Call the function to get the virusTracker scans, and pass the show tracker table function as the callback to call on success.
       SysAdminApp.VirusTrackerTab.VirusTrackerController.getVirusTracker(SysAdminApp.VirusTrackerTab.VirusTrackerController.showVirusTrackerTable);
     },
 
     virususer : function() {
-      //Create a new tab view passing the currentInventory tab as the tabname.
+      //Create a new tab view passing the VirusUserTab tab as the tabname.
       SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'VirusUserTab'});
       SysAdminApp.tabArea.show(SysAdminApp.tabDiv); //show the tab
-      //Call the function to get the inventory, and pass the show inventory function as the callback to call on success.
+      //Call the function to get the virusUser users, and pass the show user table function as the callback to call on success.
       SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(SysAdminApp.VirusUserTab.VirusUserController.showVirusUserTable);
     },
 

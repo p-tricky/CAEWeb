@@ -1,6 +1,6 @@
-//Define module for the inventory tab to live in.
+//Define module for the virus user tab to live in.
 SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marionette, $, _) {
-  //Define the Item Model to hold information about a item
+  //Define the User Model to hold information about a item
   VirusUserTab.ScanUserModel = Backbone.Model.extend({
     //Define some defaults for new models that are created clientside
     defaults : {
@@ -32,15 +32,18 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
       });
     },
 
+    //function to add a new user
     addUser : function(modelProperties) {
+      //sets the current model's properties with the passed parameter
       this.set(modelProperties);
+      //if the save was successful, returns true. Otherwise, it will return false
       var returnValue = SysAdminApp.VirusUserTab.usersList.create(this);
       return returnValue;
     },
 
   });
 
-  //Define the collection for scans that is based on the above defined item model
+  //Define the collection for users that is based on the above defined user model
   VirusUserTab.ScanUsersCollection = Backbone.Collection.extend({
     //Define which model to use
     model : VirusUserTab.ScanUserModel,
