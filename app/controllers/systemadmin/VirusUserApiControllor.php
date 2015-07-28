@@ -52,16 +52,23 @@ class VirusUserApiController extends BaseController {
   }
 
   public function update($id) {
-  	$updateModel = Input::json()->all();
+    try {
+      $updateModel = Input::json()->all();
+      echo $updateModel['user_name'];
 
-  	$updateUser = ScansUser::find($id);
-  	$updateUser->name = $updateModel['name'];
-  	$updateUser->total = $updateModel['total'];
-  	$updateUser->last_scanned = $updateModel['last_scanned'];
+      $updateUser = ScansUser::find($id);
+      $updateUser->user_name = $updateModel['user_name'];
+      $updateUser->total = $updateModel['total'];
+      $updateUser->last_scanned = $updateModel['last_scanned'];
 
-  	$updateUser->save();
+      $updateUser->save();
 
-  	return $updateUser->toJSON();
+      return $updateUser->toJSON();
+    }
+    catch (Exception $e) {
+      return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
+    }
+  	
   }
 
   public function destroy($id) {

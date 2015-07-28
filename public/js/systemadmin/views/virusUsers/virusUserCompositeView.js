@@ -129,8 +129,8 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
         //removes the arrows from the headers
         this.clearArrows();
         //sets the global sortBy
-        VirusUserTab.sort = "totalDesc
-        //gets a new user list that is pre-sorted";
+        VirusUserTab.sort = "totalDesc";
+        //gets a new user list that is pre-sorted
         VirusUserTab.usersList.fetch({data: {sort : VirusUserTab.sort}});
         //must reset in order to see the changes
         VirusUserTab.usersList.reset();

@@ -1,0 +1,35 @@
+<div class='div-table'>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Name:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='name' name='name' type='text' value='{{user_name}}' maxlength='25' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Recent Scan Date:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" readonly id='date' name='date' type='text' value='{{last_scanned}}' maxlength='25' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Virus Total:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" readonly id='total' name='total' type='text' value='{{total}}' maxlength='25' />
+    </div>
+  </div>
+  <div class="div-table-row">
+  	<div class="div-table-col-label">
+      <button id="save" class='save div-table-button'>
+        Save
+      </button>
+      <button id="delete" class='delete div-table-button'>
+        Delete
+      </button>
+    </div>
+    <div class="div-table-col-label">
+      <button id="cancel" class='cancel div-table-button'>
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

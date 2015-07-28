@@ -44,7 +44,7 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
 
     //Define events for the tr and associated functions to be called when they occur
     events : {
-      //'dblclick' : 'showDetails'
+      'dblclick' : 'showDetails'
     },
 
     //Function to show the User details in a modal box when the user double clicks a row

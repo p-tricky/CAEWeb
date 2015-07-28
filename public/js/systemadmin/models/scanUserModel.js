@@ -13,7 +13,7 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
     },
 
     //url for the model to use to persist data to the server side
-    urlRoot : 'api/scansUser',
+    urlRoot : 'api/scansuser',
 
     //Function to setup some inital things for the model
     initialize : function() {
@@ -41,6 +41,12 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
       return returnValue;
     },
 
+    saveUser : function(modelProperties) {
+      var result = this.save(modelProperties);
+      console.log(result);
+      return result;
+    },
+
   });
 
   //Define the collection for users that is based on the above defined user model
@@ -48,6 +54,6 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
     //Define which model to use
     model : VirusUserTab.ScanUserModel,
     //define url for persistance
-    url : 'api/scansUser'
+    url : 'api/scansuser'
   });
 });
