@@ -36,6 +36,7 @@ class SystemAdminApiController extends BaseController {
 
     $addScan->save();
     $scanUser->updateTotal();
+    $scanUser->updateMostRecentScan();
 
     return $addScan->toJson();
   }
@@ -65,10 +66,13 @@ class SystemAdminApiController extends BaseController {
         $updateScan->save();
 
         $oldScanUser->updateTotal();
+        $oldScanUser->updateMostRecentScan();
         $scanUser->updateTotal();
+        $scanUser->updateMostRecentScan();
       } else {
         $updateScan->save();
         $scanUser->updateTotal();
+        $scanUser->updateMostRecentScan();
       }
 
       //send the response
@@ -82,6 +86,7 @@ class SystemAdminApiController extends BaseController {
       $deleteScanUser = $deleteScan->scansUser();
       $deleteScan->delete();
       $deleteScanUser->updateTotal();
+      $deleteScanUser->updateMostRecentScan();
       //Destroy must return the object that was destroyed for backbone to not throw an error.
       return $deleteScan->toJson();
     } catch(Exception $e) {

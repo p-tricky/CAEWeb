@@ -40,6 +40,8 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       var virusUsers = SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(function() {
         var dropDown = new VirusTrackerTab.VirusUserCompositeView({collection: SysAdminApp.VirusUserTab.usersList});
         scanDetailsModalView.userDropDownContent.show(dropDown);
+        //set the dropdown to the right value
+        $('.select-virus-user-id').val(theModel.get('uid'));
       });
     },
 

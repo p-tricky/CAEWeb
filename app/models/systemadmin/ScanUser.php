@@ -23,4 +23,11 @@ class ScansUser extends Eloquent {
     $this->save();
   }
 
+  public function updateMostRecentScan() {
+    $mostRecentScan = Scans::where('uid', '=', $this->id)->orderBy('scan_date', 'desc')->first();
+    if (is_null($mostRecentScan)) $this->last_scanned = '0000-00-00';
+    else $this->last_scanned = $mostRecentScan->scan_date;
+    $this->save();
+  }
+
 }
