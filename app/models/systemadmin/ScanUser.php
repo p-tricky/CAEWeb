@@ -10,7 +10,7 @@ class ScansUser extends Eloquent {
   protected $table = 'virus_users';
 
   public function scans() {
-    return Scans::where('user_name', '=', $this->user_name)->get();
+    return Scans::where('uid', '=', $this->id)->get();
   }
 
   public function updateTotal() {

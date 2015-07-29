@@ -4,8 +4,8 @@ class SystemAdminApiController extends BaseController {
   public function index() {
     try {
       $scans = DB::table('virus_tracker')
-        ->join('virus_users', 'virus_tracker.user_name', '=', 'virus_users.user_name')
-        ->select('virus_tracker.id', 'virus_users.id AS uid', 'virus_tracker.user_name', 'virus_tracker.mac_addr', 'virus_tracker.scan_date', 'virus_tracker.room_number',
+        ->join('virus_users', 'virus_tracker.uid', '=', 'virus_users.id')
+        ->select('virus_tracker.id', 'virus_users.id AS uid', 'virus_users.user_name', 'virus_tracker.mac_addr', 'virus_tracker.scan_date', 'virus_tracker.room_number',
                   'virus_tracker.cpu_desc', 'virus_tracker.troj_mal', 'virus_tracker.pups', 'virus_tracker.notes', 'virus_tracker.scanned_by')
         ->orderBy('scan_date')
         ->get();
@@ -22,7 +22,7 @@ class SystemAdminApiController extends BaseController {
 
     //create a new user and set attributes to inputs
     $addScan = new Scans;
-    $addScan->user_name = $addModel['user_name'];
+    $addScan->uid = $addModel['uid'];
     $addScan->mac_addr = $addModel['mac_addr'];
     $addScan->scan_date = $addModel['scan_date'];
     $addScan->room_number = $addModel['room_number'];
@@ -59,9 +59,9 @@ class SystemAdminApiController extends BaseController {
 
 
       $scanUser = ScansUser::find($updateModel['uid']);
-      if ($scanUser->user_name != $updateScan->user_name) {
+      if ($updateScan->uid != $updateModel['uid']) {
         $oldScanUser = $updateScan->scansUser();
-        $updateScan->user_name = $scanUser->user_name;
+        $updateScan->uid = $updateModel['uid'];
         $updateScan->save();
 
         $oldScanUser->updateTotal();
