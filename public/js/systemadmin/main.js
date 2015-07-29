@@ -13,7 +13,7 @@ SysAdminApp.SysAdminAppController = {
     //function to be called when the currentinventory route is in the url
     virustracker : function() {
       //Create a new tab view passing the VirusTrackerTab tab as the tabname.
-      SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'VirusTrackerTab'});
+      SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'virusTrackerTab'});
       SysAdminApp.tabArea.show(SysAdminApp.tabDiv); //show the tab
       //Call the function to get the virusTracker scans, and pass the show tracker table function as the callback to call on success.
       SysAdminApp.VirusTrackerTab.VirusTrackerController.getVirusTracker(SysAdminApp.VirusTrackerTab.VirusTrackerController.showVirusTrackerTable);
@@ -21,7 +21,7 @@ SysAdminApp.SysAdminAppController = {
 
     virususer : function() {
       //Create a new tab view passing the VirusUserTab tab as the tabname.
-      SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'VirusUserTab'});
+      SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'virusUserTab'});
       SysAdminApp.tabArea.show(SysAdminApp.tabDiv); //show the tab
       //Call the function to get the virusUser users, and pass the show user table function as the callback to call on success.
       SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(SysAdminApp.VirusUserTab.VirusUserController.showVirusUserTable);
@@ -41,7 +41,7 @@ SysAdminApp.Router = new Marionette.AppRouter({
 //Setup the things that need to start when the App is started. This includes getting inital templates, and starting the history.
 SysAdminApp.on('initialize:after', function() {
   //load any inital templates that may be needed.
-  tpl.loadTemplates(['VirusTrackerTab'], function() {
+  tpl.loadTemplates(['virusTrackerTab'], function() {
     SysAdminApp.VirusTrackerTab.scanl
     var result = Backbone.history.start({pushState: true, root: "/caeweb/systemadmin/"});//, silent:true});
   });
