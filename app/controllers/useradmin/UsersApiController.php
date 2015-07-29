@@ -31,6 +31,7 @@ class UsersApiController extends BaseController {
     $addUser->acc_inv = $addModel['acc_inv'];
     $addUser->acc_emp = $addModel['acc_emp'];
     $addUser->acc_useradm = $addModel['acc_useradm'];
+    $addUser->acc_sysadm = $addModel['acc_sysadm'];
     $addUser->acc_crud_timesheet = $addModel['acc_crud_timesheet'];
     $addUser->acc_view_timesheet = $addModel['acc_view_timesheet'];
     $addUser->acc_gen_timesheet = $addModel['acc_gen_timesheet'];
@@ -57,6 +58,7 @@ class UsersApiController extends BaseController {
       $updateUser->acc_inv = $updateModel['acc_inv'];
       $updateUser->acc_emp = $updateModel['acc_emp'];
       $updateUser->acc_useradm = $updateModel['acc_useradm'];
+      $updateUser->acc_sysadm = $updateModel['acc_sysadm'];
       $updateUser->acc_crud_timesheet = $updateModel['acc_crud_timesheet'];
       $updateUser->acc_view_timesheet = $updateModel['acc_view_timesheet'];
       $updateUser->acc_gen_timesheet = $updateModel['acc_gen_timesheet'];

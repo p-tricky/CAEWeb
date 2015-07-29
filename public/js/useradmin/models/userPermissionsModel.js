@@ -13,6 +13,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       'acc_inv':'',
       'acc_emp':'',
       'acc_useradm':'',
+      'acc_sysadm':'',
       'acc_crud_timesheet':'',
       'acc_view_timesheet':'',
       'acc_gen_timesheet':'',

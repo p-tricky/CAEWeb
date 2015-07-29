@@ -51,6 +51,9 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       if (this.model.get('acc_useradm') == 1) {
         $('input[id=acc_useradm]').prop('checked',true);
       }
+      if (this.model.get('acc_sysadm') == 1) {
+        $('input[id=acc_sysadm]').prop('checked',true);
+      }
       if (this.model.get('acc_crud_timesheet') == 1) {
         $('input[id=acc_crud_timesheet]').prop('checked',true);
       }
@@ -89,6 +92,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         acc_inv: $('#acc_inv').is(':checked') ? 1 : 0,
         acc_emp: $('#acc_emp').is(':checked') ? 1 : 0,
         acc_useradm: $('#acc_useradm').is(':checked') ? 1 : 0,
+        acc_sysadm: $('#acc_sysadm').is(':checked') ? 1 : 0,
         acc_crud_timesheet: $('#acc_crud_timesheet').is(':checked') ? 1 : 0,
         acc_view_timesheet: $('#acc_view_timesheet').is(':checked') ? 1 : 0,
         acc_gen_timesheet: $('#acc_gen_timesheet').is(':checked') ? 1 : 0,
@@ -180,6 +184,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_inv]').prop('checked',true);
         $('input[id=acc_emp]').prop('checked',true);
         $('input[id=acc_useradm]').prop('checked', false);
+        $('input[id=acc_sysadm]').prop('checked', false);
         $('input[id=acc_crud_timesheet]').prop('checked',false);
         $('input[id=acc_view_timesheet]').prop('checked',false);
         $('input[id=acc_gen_timesheet]').prop('checked',false);
@@ -193,6 +198,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_inv]').prop('checked',true);
         $('input[id=acc_emp]').prop('checked',true);
         $('input[id=acc_useradm]').prop('checked',true);
+        $('input[id=acc_sysadm]').prop('checked', true);
         $('input[id=acc_crud_timesheet]').prop('checked',true);
         $('input[id=acc_view_timesheet]').prop('checked',true);
         $('input[id=acc_gen_timesheet]').prop('checked',true);
@@ -206,6 +212,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_inv]').prop('checked',true);
         $('input[id=acc_emp]').prop('checked',true);
         $('input[id=acc_useradm]').prop('checked',true);
+        $('input[id=acc_sysadm]').prop('checked', true);
         $('input[id=acc_crud_timesheet]').prop('checked',true);
         $('input[id=acc_view_timesheet]').prop('checked',true);
         $('input[id=acc_gen_timesheet]').prop('checked',true);
@@ -219,6 +226,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         $('input[id=acc_inv]').prop('checked',true);
         $('input[id=acc_emp]').prop('checked',true);
         $('input[id=acc_useradm]').prop('checked',true);
+        $('input[id=acc_sysadm]').prop('checked', true);
         $('input[id=acc_crud_timesheet]').prop('checked',true);
         $('input[id=acc_view_timesheet]').prop('checked',true);
         $('input[id=acc_gen_timesheet]').prop('checked',true);
@@ -228,14 +236,15 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       else if ( position_id === 5 ) {
         //has all permissions by default
         $('input[id=acc_room]').prop('checked',true);
-        $('input[id=acc_avlog]').prop('checked',true);
-        $('input[id=acc_inv]').prop('checked',true);
-        $('input[id=acc_emp]').prop('checked',true);
-        $('input[id=acc_useradm]').prop('checked',true);
-        $('input[id=acc_crud_timesheet]').prop('checked',true);
+        $('input[id=acc_avlog]').prop('checked',false);
+        $('input[id=acc_inv]').prop('checked',false);
+        $('input[id=acc_emp]').prop('checked',false);
+        $('input[id=acc_useradm]').prop('checked',false);
+        $('input[id=acc_sysadm]').prop('checked', false);
+        $('input[id=acc_crud_timesheet]').prop('checked',false);
         $('input[id=acc_view_timesheet]').prop('checked',true);
         $('input[id=acc_gen_timesheet]').prop('checked',true);
-        $('input[id=acc_crud_schedule]').prop('checked',true);
+        $('input[id=acc_crud_schedule]').prop('checked',false);
       }
     }
 

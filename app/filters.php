@@ -134,6 +134,23 @@ Route::filter('auth_useradm', function()
 			return Redirect::route('login');
 	}
 });
+// System Administration Filter
+Route::filter('auth_sysadm', function()
+{
+	if(!Auth::check())
+	{
+		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_sysadm == 0)
+			return Redirect::route('login');
+	}
+});
 // CRUD Timesheet Filter
 Route::filter('auth_crud_timesheet', function()
 {
