@@ -1,0 +1,62 @@
+<div class='div-table'>
+  <div class="div=table-header"><label style="font-weight: bold; font-size: 16pt">Scan Details</label></div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>User Name:</label></div>
+    <div id="virusUserDropDownContainer" class="div-table-col-data"> </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Scan Date:</label></div>
+    <div class="div-table-col-data"> <input class='div-table-col-input' type="text" id="scan_date"></div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Room Number:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='room_number' name='room_number' type='text' value={{room_number}} />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>CPU Description:</label></div>
+    <div class="div-table-col-data">
+      <textarea maxlength='250' rows='3' class="div-table-col-input" id='cpu_desc' name='cpu_desc'>{{cpu_desc}}</textarea>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Trojans/Malware found:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='troj_mal' name='troj_mal' type='text' value='{{troj_mal}}' maxlength='5'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>PUPS found:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='pups' name='pups' type='text' value='{{pups}}' maxlength='5'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Notes:</label></div>
+    <div class="div-table-col-data">
+      <textarea maxlength='1000' rows='3' class="div-table-col-input" id='notes' name='notes'>{{notes}}</textarea>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Scanned By:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='scanned_by' name='scanned_by' type='text' value={{scanned_by}} />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label">
+      <button id="save" class='save div-table-button'>
+        Save
+      </button>
+      <button id="delete" class='delete div-table-button'>
+        Delete
+      </button>
+    </div>
+    <div class="div-table-col-label">
+      <button id="cancel" class='cancel div-table-button'>
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

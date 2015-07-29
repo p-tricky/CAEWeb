@@ -5,6 +5,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     //Define some defaults for new models that are created clientside
     defaults : {
       'id' : null,
+      'uid': null,
       'user_name' : '',
       'mac_addr' : '',
       'scan_date' : '',
@@ -36,6 +37,18 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
           },
         });
       });
+    },
+
+    //Function to save the scan to the server side. The function takes an object of properties to update
+    //as the parameter for the function
+    saveScan : function(updateModelProperties) {
+      this.set(updateModelProperties);
+      if ( this.isValid() ) {
+        result = this.save();
+        return result;
+      }
+      // if the updateModelProperties weren't valid, reset model to former state
+      this.set(this.previousAttributes());
     },
   });
 

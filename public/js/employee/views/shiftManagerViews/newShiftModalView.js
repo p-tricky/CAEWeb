@@ -26,7 +26,6 @@ EmployeeApp.module('ShiftManagerTab', function (ShiftManagerTab, App, Backbone, 
 
     //will run on loading the modal
     onShow : function() {
-      //debugger;
       ShiftManagerTab.NewShiftModalView.prototype.populateDatePickerWidget($('#datetimeholder1'), '#modalclockin');
       ShiftManagerTab.NewShiftModalView.prototype.populateDatePickerWidget($('#datetimeholder2'), '#modalclockout');
     },

@@ -52,7 +52,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       //If the user is not double clicking on the buttons in the view
       if (e.target.nodeName !== "BUTTON") {
         //call the showInventoryItemModal and pass it the views model
-        VirusTrackerTab.VirusTrackerController.showVirusTrackerItemModal(this.model);
+        VirusTrackerTab.VirusTrackerController.showScanModal(this.model);
       }
     }
 

@@ -34,9 +34,13 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       //show the modal div
       $('#modalBox').addClass('modalBox');
       //Instanciate a new modal view passing it the model that was passed into this function, and the collection of virus users
-      var modalView = new VirusTrackerTab.ScanDetailsModalView({model:theModel});
+      var scanDetailsModalView = new VirusTrackerTab.ScanDetailsModalView({model:theModel});
       //show the modal view in the modal area
-      App.tabDiv.modalArea.show(modalView);
+      App.tabDiv.modalArea.show(scanDetailsModalView);
+      var virusUsers = SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(function() {
+        var dropDown = new VirusTrackerTab.VirusUserCompositeView({collection: SysAdminApp.VirusUserTab.usersList});
+        scanDetailsModalView.userDropDownContent.show(dropDown);
+      });
     },
 
     //Function to get the vendors collection if it has not already been fetched

@@ -9,4 +9,8 @@ class Scans extends Eloquent {
    */
   protected $table = 'virus_tracker';
 
+  public function scansUser() {
+    return ScansUser::where('user_name', '=', $this->user_name)->firstOrFail();
+  }
+
 }
