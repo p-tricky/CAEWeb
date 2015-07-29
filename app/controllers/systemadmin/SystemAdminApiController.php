@@ -15,6 +15,31 @@ class SystemAdminApiController extends BaseController {
     }
   }
 
+  //called when adding a new user
+  public function store() {
+    // get all inputs
+    $addModel = Input::json()->all();
+
+    //create a new user and set attributes to inputs
+    $addScan = new Scans;
+    $addScan->user_name = $addModel['user_name'];
+    $addScan->mac_addr = $addModel['mac_addr'];
+    $addScan->scan_date = $addModel['scan_date'];
+    $addScan->room_number = $addModel['room_number'];
+    $addScan->cpu_desc = $addModel['cpu_desc'];
+    $addScan->troj_mal = $addModel['troj_mal'];
+    $addScan->pups = $addModel['pups'];
+    $addScan->notes = $addModel['notes'];
+    $addScan->scanned_by = $addModel['scanned_by'];
+
+    $scanUser = $addScan->scansUser();
+
+    $addScan->save();
+    $scanUser->updateTotal();
+
+    return $addScan->toJson();
+  }
+
   //called when editting a user
   public function update($id) {
       //get the json from the request.
@@ -48,6 +73,20 @@ class SystemAdminApiController extends BaseController {
 
       //send the response
       return $updateScan->toJson();
+  }
+
+  //called when deleting a user
+  public function destroy($id) {
+    try {
+      $deleteScan = Scans::find($id);
+      $deleteScanUser = $deleteScan->scansUser();
+      $deleteScan->delete();
+      $deleteScanUser->updateTotal();
+      //Destroy must return the object that was destroyed for backbone to not throw an error.
+      return $deleteScan->toJson();
+    } catch(Exception $e) {
+      return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
+    }
   }
 
 }

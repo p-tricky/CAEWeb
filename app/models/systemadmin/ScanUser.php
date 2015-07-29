@@ -18,7 +18,6 @@ class ScansUser extends Eloquent {
     $newTotal = 0; 
     foreach ($scans as $scan) {
       $newTotal += $scan->pups + $scan->troj_mal;
-      echo $newTotal;
     }
     $this->total = $newTotal;
     $this->save();

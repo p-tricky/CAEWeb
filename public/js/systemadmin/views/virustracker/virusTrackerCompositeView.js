@@ -22,21 +22,14 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
 
     //Define events for the view
     events: {
-      'click #addNew' : 'addNew',
-      'click #addVendor' : 'addVirusUser'
+      'click #addNewScan' : 'addNew',
     },
 
     //When the add New button is clicked, this function will run
     addNew: function() {
       //Call the showInventoryItemAddModal function in the inventory controller
-      VirusTrackerTab.VirusTrackerController.showScanAddModal(this.model);
+      VirusTrackerTab.VirusTrackerController.showScanAddModalView();
     },
-
-    //When the add New Vendor button is clicked, this function will run
-    addVirusUser: function() {
-      //call the showInventoryVendorAddModal function in the inventory controller
-      VirusTrackerTab.VirusTrackerController.showVirusUserAddModal(this.model);
-    }
     
   });
 });

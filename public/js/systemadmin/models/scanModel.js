@@ -50,6 +50,35 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       // if the updateModelProperties weren't valid, reset model to former state
       this.set(this.previousAttributes());
     },
+
+    addScan : function(addModelProperties) {
+      //sets the new model's properties to the properties that were passed
+      this.set(addModelProperties);
+      SysAdminApp.VirusTrackerTab.scansList.create(this, {
+          wait: true,
+          success: function() {
+            // close userAddModalView
+            $('#fade').removeClass('fade');
+            $('#modalBox').removeClass('modalBox');
+            App.tabDiv.modalArea.close();
+          },
+          error: function() {
+            // leave UserAddModalView open and open error dialog
+            var errorAlert = $('#confirmModalBox');
+            errorAlert.html("Sorry, there was an error");
+            errorAlert.dialog({
+              modal: true,
+              title: 'Error when saving',
+              buttons: {
+                'Ok': function() {
+                  $(this).dialog('close');
+                }
+              },
+            });
+          },
+      });
+    },
+
   });
 
   //Define the collection for scans that is based on the above defined item model

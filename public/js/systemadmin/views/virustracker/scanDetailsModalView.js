@@ -19,6 +19,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
      //event listeners; used for button clicks 
     events : {
     	'click .save' : 'saveScan',
+    	'click .delete' : 'deleteScan',
     	'click .cancel' : 'cancelAction',
     },
 
@@ -34,6 +35,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
         id: this.model.get('id'),
         user_name: dropDown.text(),
         uid: dropDown.val(),
+        mac_addr: $('#mac_addr').val(),
         scan_date: $('#scan_date').datepicker('getDate').toISOString().substring(0,10),
         room_number: $('#room_number').val(),
         cpu_desc: $('#cpu_desc').val(),
@@ -62,6 +64,60 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       modalBox.removeClass('modalBox');
       //Close the modal view
       App.tabDiv.modalArea.close();
+    },
+
+
+    //when attempting to delete the scan
+    deleteScan : function() {
+      //defines this for easy reference
+      var self = this;
+      //makes the confirm modal
+      var confirmDialogue = $('#confirmModalBox');
+      //sets the text for the confirm modal
+      confirmDialogue.html("Are you sure you want to delete this user?");
+      //this loads the modal and the options
+      confirmDialogue.dialog({
+        modal: true,
+        title: 'Delete User',
+        //'no' button
+        buttons: {
+          'No': function() {
+            //doesn't delete the user
+            $(this).dialog('close');
+          },
+          //deletes the user
+          'Yes': function() {
+            //closes the confirmModal
+            $(this).dialog('close');
+            //destroys the selected model
+            self.model.destroy({
+              wait : true,
+              //if successful closes the modal
+              success : function() {
+                $('#fade').removeClass('fade');
+                $('#modalBox').removeClass('modalBox');
+                App.tabDiv.modalArea.close();
+              },
+              //if there is an error, it alerts the user to the error
+              error : function(m,e,o) {
+                var errorAlert = $('#confirmModalBox');
+                errorAlert.html("Sorry, the deletion failed.");
+                errorAlert.dialog({
+                  modal: true,
+                  title: 'Delete Error',
+                  buttons: {
+                    'Ok': function() {
+                      $(this).dialog('close');
+                    }
+                  }
+                });
+              }
+            });
+            //gets a new scan list and displays it
+            VirusTrackerTab.VirusTrackerController.getVirusTracker(VirusTrackerTab.VirusTrackerController.showVirusTrackerTable);
+          },
+        }
+      });
     },
 
     populateDatePickerWidget : function(container, dateString) {
