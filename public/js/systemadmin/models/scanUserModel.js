@@ -7,7 +7,7 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
       'id' : null,
       'user_name' : '',
       'total' : null,
-      'last_scanned' : '0000-00-00 00:00:00',
+      'last_scanned' : '0000-00-00',
       'updateed_at' : '',
       'created_at':'',
     },

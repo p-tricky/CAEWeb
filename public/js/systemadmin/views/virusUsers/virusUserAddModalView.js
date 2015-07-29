@@ -26,7 +26,7 @@ SysAdminApp.module('VirusUserTab', function (VirusUserTab, App, Backbone, Marion
         user_name:$('#name').val(),
         //sets new Users to 0 viruses and no previous scan date
         total:0,
-        last_scanned: '0000-00-00 00:00:00',
+        last_scanned: '0000-00-00',
       };
       //Send the object of parameters to the model to be saved with the addUser function.
       //The result will be returned to the result variable
