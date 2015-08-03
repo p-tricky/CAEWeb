@@ -9,9 +9,9 @@ AssetMgmtApp.navigate = function(route,  options){
 };
 
 //Define the main controller to be used with the router listed below.
-AssetMgmtApp.SysAdminAppController = {
+AssetMgmtApp.AssetMgmtAppController = {
     //function to be called when the currentinventory route is in the url
-    assetlist : function() {
+    assetslist : function() {
       //Create a new tab view passing the VirusTrackerTab tab as the tabname.
       AssetMgmtApp.tabDiv = new AssetMgmtApp.AssetListTab.AssetListView({'tabName':'assetListTab'});
       AssetMgmtApp.tabArea.show(AssetMgmtApp.tabDiv); //show the tab
@@ -25,7 +25,7 @@ AssetMgmtApp.SysAdminAppController = {
 AssetMgmtApp.Router = new Marionette.AppRouter({
   controller:AssetMgmtApp.AssetMgmtAppController,
   appRoutes:{
-    "assetlist" : "assetlist",
+    "assetslist" : "assetslist",
   } 
 });
 
