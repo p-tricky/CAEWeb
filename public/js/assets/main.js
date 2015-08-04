@@ -16,7 +16,7 @@ AssetMgmtApp.AssetMgmtAppController = {
       AssetMgmtApp.tabDiv = new AssetMgmtApp.AssetListTab.AssetListView({'tabName':'assetListTab'});
       AssetMgmtApp.tabArea.show(AssetMgmtApp.tabDiv); //show the tab
       //Call the function to get the virusTracker scans, and pass the show tracker table function as the callback to call on success.
-      AssetMgmtApp.AssetListTab.AssetListController.getVirusTracker(AssetMgmtApp.AssetListTab.AssetListController.showVirusTrackerTable);
+      //AssetMgmtApp.AssetListTab.AssetListController.getVirusTracker(AssetMgmtApp.AssetListTab.AssetListController.showVirusTrackerTable);
     }
 
 };
