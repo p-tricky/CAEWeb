@@ -29,7 +29,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
 
     //Define events for the view
     events: {
-      //'click #addNew' : 'addNew',
+      'click #addNew' : 'addNew',
       //'click #userName' : 'sortByName',
       //'click #scanDate' : 'sortByDate',
       //'click #totalViruses' : 'sortByVirus',
@@ -37,6 +37,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
 
     //When the add New button is clicked, this function will run
     addNew: function() {
+      AssetListTab.AssetListController.showAssetsAddModal();
     },
 
     //function to sort the user's list by a different method
