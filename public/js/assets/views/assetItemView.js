@@ -44,7 +44,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
 
     //Define events for the tr and associated functions to be called when they occur
     events : {
-      //'dblclick' : 'showDetails'
+      'dblclick' : 'showDetails'
     },
 
     //Function to show the User details in a modal box when the user double clicks a row
@@ -53,7 +53,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       //If the user is not double clicking on the buttons in the view
       if (e.target.nodeName !== "BUTTON") {
         //call the showUserModal and pass it the view's model
-        VirusUserTab.VirusUserController.showUserModal(this.model);
+        AssetMgmtApp.AssetListTab.AssetListController.showAssetsModal(this.model);
       }
     }
 
