@@ -26,7 +26,6 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     //Function to be called when the save button is clicked
     save : function() {
       //Get the values from the fields and put them in an object to pass to the model
-      debugger;
       var fields = {
         brand_name : $('#brand_name').val(),
         serial_number : $('#serial_number').val(),
