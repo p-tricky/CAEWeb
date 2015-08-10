@@ -25,14 +25,35 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     //will run on loading the modal
     onShow : function() {
       VirusTrackerTab.ScanAddModalView.prototype.populateDatePickerWidget($('#scan_date'));
+      var virusUsers = [];
+      SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(function() {
+        SysAdminApp.VirusUserTab.usersList.forEach( function(vUser) {
+          virusUsers.push({
+            value: vUser.get('id'),
+            label: vUser.get('user_name')
+          });
+        });
+      });
+      $('#virusUserAutoCompleteName').autocomplete({
+        minLength: 0,
+        source: virusUsers,
+        focus: function(event, ui) {
+          $('#virusUserAutoCompleteName').val(ui.item.label);
+          return false;
+        },
+        select: function(event, ui) {
+          $( "#virusUserAutoCompleteName" ).val( ui.item.label );
+          $( "#virusUserID" ).val( ui.item.value );
+          return false;
+        }
+      });
     },
 
     //saves the shift to the data base with the new clockin and clockout times.
     addScan : function() {
-      var dropDown = $('.select-virus-user-id option:selected');
       var fields = {
-        user_name: dropDown.text(),
-        uid: dropDown.val(),
+        user_name: $('#virusUserAutoCompleteName').val(), 
+        uid: $('#virusUserID').val(),
         mac_addr: $('#mac_addr').val(),
         scan_date: $('#scan_date').datepicker('getDate').toISOString().substring(0,10),
         room_number: $('#room_number').val(),
