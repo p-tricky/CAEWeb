@@ -38,7 +38,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       //show the modal view in the modal area
       App.tabDiv.modalArea.show(modalView);
       AssetMgmtApp.AssetListTab.AssetListController.getDepartments(function() {
-        var dropDown = new AssetListTab.AssetDepartmentCompositeView({collection: AssetMgmtApp.AssetListTab.departmentList});
+        var dropDown = new AssetListTab.AssetDepartmentCompositeView({collection: AssetMgmtApp.AssetListTab.departmentList, model: theModel});
         modalView.departmentsDropDown.show(dropDown);
       });
     },

@@ -14,11 +14,17 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       departmentsDropDown: '#departmentsDropDown',
     },
 
+    onShow : function() {
+      ///////////////////// sets the department dropdown to correct value ////////////////////
+      $('option[value='+this.model.get('asset_type')+']').prop('selected', true);
+    },
+
     id:'assetDetailsModalView',
 
     //Define the events to be associated with this view
     events : {
       'click .save' : 'save',
+      'click .delete' : 'delete',
       'click .cancel' : 'cancel'
     },
 
@@ -31,9 +37,10 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         serial_number : $('#serial_number').val(),
         description : $('#description').val(),
         room : $('#room').val(),
-        department_id : $('#departmentsDropDown').val(),
+        department_id : $('#departmentsDropDown option:selected').val(),
+        department_name : $('#departmentsDropDown option:selected').text(),
         mac_address : $('#mac_address').val(),
-        asset_type : $('#asset-type-list').text(),
+        asset_type : $('#asset-type-list option:selected').text(),
         assignee_name : $('#assignee_name').val()
       };
       //Send the object of parameters to the model to be saved with the addUser function.
@@ -55,6 +62,14 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       $('#fade').removeClass('fade');
       $('#modalBox').removeClass('modalBox');
       //Close the modal box
+      App.tabDiv.modalArea.close();
+    },
+
+    delete : function() {
+      this.model.destroy();
+      $('#fade').removeClass('fade');
+      $('#modalBox').removeClass('modalBox');
+      //close the modal box view
       App.tabDiv.modalArea.close();
     }
   });

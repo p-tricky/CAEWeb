@@ -22,5 +22,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       this.setElement(this.$el);
     },
 
+    onShow : function() {
+      $('option[value='+this.model.get('department_id')+']').prop('selected', true);
+    }
+
   });
 });

@@ -5,6 +5,9 @@ class AssetManagementApiController extends BaseController {
 	{
 		try {
 			$assets = Asset::orderby('id')->get();
+			foreach ($assets as $asset) {
+				$asset->department_name = Department::where('id', '=', $asset->department_id)->pluck('name');
+			}
 			return $assets->toJSON();
 
 		} catch(Exception $e) {

@@ -31,9 +31,10 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         serial_number : $('#serial_number').val(),
         description : $('#description').val(),
         room : $('#room').val(),
-        department_id : $('#departmentsDropDown').val(),
+        department_id : $('#departmentsDropDown option:selected').val(),
+        department_name : $('#departmentsDropDown option:selected').text(),
         mac_address : $('#mac_address').val(),
-        asset_type : $('#asset-type-list').text(),
+        asset_type : $('#asset-type-list option:selected').text(),
         assignee_name : $('#assignee_name').val()
       };
       //Send the object of parameters to the model to be saved with the addUser function.
