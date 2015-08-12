@@ -18,7 +18,8 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     onShow : function()
     {
       //add an arrow to the total header when the view loads
-      //$('#totalViruses').html('&#9660 Total Viruses and PUPs');
+      $('#brand').html('&#9660 Brand Name');
+      AssetListTab.sort = 'brandAsc';
     },
 
     //Define an id field for this view. The tab for this view is a div by default
@@ -30,9 +31,11 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     //Define events for the view
     events: {
       'click #addNew' : 'addNew',
-      //'click #userName' : 'sortByName',
-      //'click #scanDate' : 'sortByDate',
-      //'click #totalViruses' : 'sortByVirus',
+      'click #brand' : 'sortByBrand',
+      'click #roomNum' : 'sortByRoom',
+      'click #dpt' : 'sortByDepartment',
+      'click #type' : 'sortByType',
+      'click #name' : 'sortByName',
     },
 
     //When the add New button is clicked, this function will run
@@ -50,11 +53,11 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         //declares the new global sortBy
         AssetListTab.sort = "nameDesc";
         //gets a new user list that is pre-sorted
-        AssetListTab.usersList.fetch({data: {sort : AssetListTab.sort}});
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset inorder to see the changes
-        AssetListTab.usersList.reset();
+        AssetListTab.assetsList.reset();
         //adds an arrow to the header
-        //$('#userName').html("&#9650 User's Name");
+        $('#name').html("&#9650 Assignee's Name");
       }
       //if it is sorted by any other method
       else
@@ -64,29 +67,29 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         //sets the global sortBy
         AssetListTab.sort = "nameAsc";
         //gets a new user list that is pre-sorted
-        AssetListTab.usersList.fetch({data: {sort : AssetListTab.sort}});
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
-        AssetListTab.usersList.reset();
+        AssetListTab.assetsList.reset();
         //adds an arrow to the header
-        //$('#userName').html("&#9660 User's Name");
+        $('#name').html("&#9660 Assignee's Name");
       }
     },
 
     //function to sort the user's list by a different method
-    sortByDate : function() {
+    sortByBrand : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
-      if (AssetListTab.sort == "dateAsc")
+      if (AssetListTab.sort == "brandAsc")
       {
         //removes the arrows from the headers
         this.clearArrows();
         //declares the new global sortBy
-        AssetListTab.sort = "dateDesc";
+        AssetListTab.sort = "brandDesc";
         //gets a new user list that is pre-sorted
-        AssetListTab.usersList.fetch({data: {sort : AssetListTab.sort}});
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset inorder to see the changes
-        AssetListTab.usersList.reset();
+        AssetListTab.assetsList.reset();
         //adds an arrow to the header
-        //$('#scanDate').html('&#9650 Most Recent Scan Date');
+        $('#brand').html('&#9650 Brand Name');
       }
       //if it is sorted by any other method
       else
@@ -94,31 +97,31 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         //removes the arrows from the headers
         this.clearArrows();
         //sets the global sortBy
-        AssetListTab.sort = "dateAsc";
+        AssetListTab.sort = "brandAsc";
         //gets a new user list that is pre-sorted
-        AssetListTab.usersList.fetch({data: {sort : AssetListTab.sort}});
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
-        AssetListTab.usersList.reset();
+        AssetListTab.assetsList.reset();
         //adds an arrow to the header
-        //$('#scanDate').html('&#9660 Most Recent Scan Date');
+        $('#brand').html('&#9660 Brand Name');
       }
     },
 
     //function to sort the user's list by a different method
-    sortByVirus : function() {
+    sortByRoom : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
-      if (AssetListTab.sort == "totalDesc")
+      if (AssetListTab.sort == "roomAsc")
       {
         //removes the arrows from the headers
         this.clearArrows();
         //declares the new global sortBy
-        AssetListTab.sort = "totalAsc";
+        AssetListTab.sort = "roomDesc";
         //gets a new user list that is pre-sorted
-        AssetListTab.usersList.fetch({data: {sort : AssetListTab.sort}});
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset inorder to see the changes
-        AssetListTab.usersList.reset();
+        AssetListTab.assetsList.reset();
         //adds an arrow to the header
-        //$('#totalViruses').html('&#9660 Total Viruses and PUPs');
+        $('#roomNum').html('&#9650 Room Number');
       }
       //if it is sorted by any other method
       else
@@ -126,22 +129,89 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         //removes the arrows from the headers
         this.clearArrows();
         //sets the global sortBy
-        AssetListTab.sort = "totalDesc";
+        AssetListTab.sort = "roomAsc";
         //gets a new user list that is pre-sorted
-        AssetListTab.usersList.fetch({data: {sort : AssetListTab.sort}});
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
-        AssetListTab.usersList.reset();
+        AssetListTab.assetsList.reset();
         //adds an arrow to the header
-        //$('#totalViruses').html('&#9650 Total Viruses and PUPs');
+        $('#roomNum').html('&#9660 Room Number');
+      }
+    },
+
+    //function to sort the user's list by a different method
+    sortByDepartment : function() {
+      //if the list is already sorted by that method, it swaps it to the reverse
+      if (AssetListTab.sort == "dptAsc")
+      {
+        //removes the arrows from the headers
+        this.clearArrows();
+        //declares the new global sortBy
+        AssetListTab.sort = "dptDesc";
+        //gets a new user list that is pre-sorted
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //must reset inorder to see the changes
+        AssetListTab.assetsList.reset();
+        //adds an arrow to the header
+        $('#dpt').html('&#9650 Department');
+      }
+      //if it is sorted by any other method
+      else
+      {
+        //removes the arrows from the headers
+        this.clearArrows();
+        //sets the global sortBy
+        AssetListTab.sort = "dptAsc";
+        //gets a new user list that is pre-sorted
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //must reset in order to see the changes
+        AssetListTab.assetsList.reset();
+        //adds an arrow to the header
+        $('#dpt').html('&#9660 Department');
+      }
+    },
+
+    //function to sort the user's list by a different method
+    sortByType : function() {
+      //if the list is already sorted by that method, it swaps it to the reverse
+      if (AssetListTab.sort == "typeAsc")
+      {
+        //removes the arrows from the headers
+        this.clearArrows();
+        //declares the new global sortBy
+        AssetListTab.sort = "typeDesc";
+        //gets a new user list that is pre-sorted
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //must reset inorder to see the changes
+        AssetListTab.assetsList.reset();
+        //adds an arrow to the header
+        $('#type').html('&#9650 Asset Type');
+      }
+      //if it is sorted by any other method
+      else
+      {
+        //removes the arrows from the headers
+        this.clearArrows();
+        //sets the global sortBy
+        AssetListTab.sort = "typeAsc";
+        //gets a new user list that is pre-sorted
+        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //must reset in order to see the changes
+        AssetListTab.assetsList.reset();
+        //adds an arrow to the header
+        $('#type').html('&#9660 Asset Type');
       }
     },
 
     //removes the arrows from the headers. This is called before resorting the users
     clearArrows : function()
     {
-      $('#userName').html("User's Name");
-      $('#scanDate').html('Most Recent Scan Date');
-      $('#totalViruses').html('Total Viruses and PUPs');
+      $('#brand').html("Brand Name");
+      $('#roomNum').html("Room Number");
+      $('#dpt').html("Department");
+      $('#type').html("Asset Type");
+      $('#name').html("Assignee's Name");
+
     }
     
   });

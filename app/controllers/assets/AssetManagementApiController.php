@@ -4,10 +4,56 @@ class AssetManagementApiController extends BaseController {
 	public function index() 
 	{
 		try {
-			$assets = Asset::orderby('id')->get();
+			$sortBy = Input::get('sort');
+			switch ($sortBy)
+			{
+				case 'brandAsc':
+					$assets = Asset::orderby('brand_name')->get();
+					break;
+				case 'brandDesc':
+					$assets = Asset::orderBy('brand_name', 'DESC')->get();
+					break;
+				case 'nameAsc':
+					$assets = Asset::orderby('assignee_name')->get();
+					break;
+				case 'nameDesc':
+					$assets = Asset::orderby('assignee_name', 'DESC')->get();
+					break;
+				case 'roomAsc':
+					$assets = Asset::orderby('room')->get();
+					break;
+				case 'roomDesc':
+					$assets = Asset::orderby('room', 'DESC')->get();
+					break;
+				case 'typeAsc':
+					$assets = Asset::orderby('asset_type')->get();
+					break;
+				case 'typeDesc':
+					$assets = Asset::orderby('asset_type', 'DESC')->get();
+					break;
+				default:
+					$assets = Asset::orderby('id')->get();
+					break;
+
+			}
+			
 			foreach ($assets as $asset) {
 				$asset->department_name = Department::where('id', '=', $asset->department_id)->pluck('name');
 			}
+
+			if ($sortBy == 'dptAsc') {
+				$assets = $assets->sortBy(function($asset){
+        	return $asset->department_name . $asset->id;
+        });
+        $assets->values();
+			} else if ($sortBy == 'dptDesc') {
+				$assets = $assets->sortBy(function($asset){
+        	return $asset->department_name . $asset->id;
+        });
+        $assets = $assets->reverse();
+        $assets->values();
+			}
+
 			return $assets->toJSON();
 
 		} catch(Exception $e) {
