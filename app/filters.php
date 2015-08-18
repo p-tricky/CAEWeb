@@ -49,6 +49,23 @@ Route::filter('auth.basic', function()
 	return Auth::basic();
 });
 
+// Assets Filter
+Route::filter('auth_crud_assets', function()
+{
+	if(!Auth::check())
+	{
+		return Redirect::route('login');
+	}
+	else
+	{
+		$uHelper = new UserHelper();
+		$uModel = $uHelper->getUserModel();
+		if(!is_object($uModel))	
+			return Redirect::route('login');
+		if($uModel->acc_crud_assets == 0)
+			return Redirect::route('login');
+	}
+});
 // Room Scheduling Filter
 Route::filter('auth_room', function()
 {

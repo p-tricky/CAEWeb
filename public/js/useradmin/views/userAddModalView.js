@@ -30,6 +30,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
         position_id: parseInt($('#position-id').val(), 10),
         schedule_color: $('#schedule_color').val(), // Assuming its the correct format
         phone: $('#phone').val(),
+        acc_crud_assets: $('#acc_crud_assets').is(':checked') ? 1 : 0,
         acc_room: $('#acc_room').is(':checked') ? 1 : 0,
         acc_avlog: $('#acc_avlog').is(':checked') ? 1 : 0,
         acc_inv: $('#acc_inv').is(':checked') ? 1 : 0,
@@ -57,9 +58,25 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
     // there is definitely a more elegant way of doing this
     updatePermissionsCheckboxes : function() {
       var position_id = parseInt($('#position-id').val(), 10);
+      //if guest is selected
+      if ( position_id === 0 ) {
+        //only has asset permissions by default
+        $('input[id=acc_crud_assets]').prop('checked',true);
+        $('input[id=acc_room]').prop('checked',false);
+        $('input[id=acc_avlog]').prop('checked',false);
+        $('input[id=acc_inv]').prop('checked',false);
+        $('input[id=acc_emp]').prop('checked',false);
+        $('input[id=acc_useradm]').prop('checked', false);
+        $('input[id=acc_sysadm]').prop('checked', false);
+        $('input[id=acc_crud_timesheet]').prop('checked',false);
+        $('input[id=acc_view_timesheet]').prop('checked',false);
+        $('input[id=acc_gen_timesheet]').prop('checked',false);
+        $('input[id=acc_crud_schedule]').prop('checked',false);
+      }
       //if attendent is selected
-      if ( position_id === 1 ) {
+      else if ( position_id === 1 ) {
         //doesn't have timesheet or edit schedule permissions by default
+        $('input[id=acc_crud_assets]').prop('checked',true);
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -74,6 +91,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       //if admin is selected
       else if ( position_id === 2 ) {
         //has all permissions by default
+        $('input[id=acc_crud_assets]').prop('checked',true);
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -88,6 +106,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       //if programmer is selected
       else if ( position_id === 3 ) {
         //has all permissions by default
+        $('input[id=acc_crud_assets]').prop('checked',true);
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -102,6 +121,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       //if director is selected
       else if ( position_id === 4 ) {
         //has all permissions by default
+        $('input[id=acc_crud_assets]').prop('checked',true);
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',true);
         $('input[id=acc_inv]').prop('checked',true);
@@ -116,6 +136,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       //if building coordinator is selected
       else if ( position_id === 5 ) {
         //has all permissions by default
+        $('input[id=acc_crud_assets]').prop('checked',true);
         $('input[id=acc_room]').prop('checked',true);
         $('input[id=acc_avlog]').prop('checked',false);
         $('input[id=acc_inv]').prop('checked',false);

@@ -26,6 +26,7 @@ class UsersApiController extends BaseController {
     if (array_key_exists('phone', $addModel))
       $addUser->phone = UsersApiController::getAllNumbers( $addModel['phone'] );
     $addUser->schedule_color = $addModel['schedule_color'];
+    $addUser->acc_crud_assets = $addModel['acc_crud_assets'];
     $addUser->acc_room = $addModel['acc_room'];
     $addUser->acc_avlog = $addModel['acc_avlog'];
     $addUser->acc_inv = $addModel['acc_inv'];
@@ -53,6 +54,7 @@ class UsersApiController extends BaseController {
         $updateUser->phone = UsersApiController::getAllNumbers( $updateModel['phone'] );
       else $updateUser->phone = NULL;
       $updateUser->schedule_color = $updateModel['schedule_color'];
+      $updateUser->acc_crud_assets = $updateModel['acc_crud_assets'];
       $updateUser->acc_room = $updateModel['acc_room'];
       $updateUser->acc_avlog = $updateModel['acc_avlog'];
       $updateUser->acc_inv = $updateModel['acc_inv'];

@@ -1,0 +1,67 @@
+<div class='div-table'>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Brand Name:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='brand_name' name='brand_name' type='text' value='{{brand_name}}' maxlength='32' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Serial Number:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='serial_number' name='serial_number' type='text' value='{{serial_number}}' maxlength='32' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Description:</label></div>
+    <div class="div-table-col-data"><textarea class="div-table-col-textarea" id='description' maxlength='250' name='description'>{{description}}</textarea></div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Room Number:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='room' name='room' type='text' value='{{room}}' maxlength='8' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Department:</label></div>
+    <div class="div-table-col-data" id='departmentsDropDown'> </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Mac/Ip Address:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='mac_address' name='mac_address' type='text' value='{{mac_address}}' maxlength='32'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Asset Type:</label></div>
+    <div class="div-table-col-data" id='asset_type'>
+      <select id="asset-type-list" class="select-asset-list">
+        <option value="PC">PC</option>
+        <option value="Monitor">Monitor</option>
+        <option value="Server">Server</option>
+        <option value="Tv">Tv</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Assignee's Name:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='assignee_name' name='assignee_name' type='text' value='{{assignee_name}}' maxlength='32'/>
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label">
+      <button id="save" class='save div-table-button'>
+        Save
+      </button>
+      <button id="delete" class='delete div-table-button'>
+        Delete
+      </button>
+    </div>
+    <div class="div-table-col-label">
+      <button id="cancel" class='cancel div-table-button'>
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>

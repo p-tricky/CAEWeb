@@ -37,12 +37,6 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       var scanDetailsModalView = new VirusTrackerTab.ScanDetailsModalView({model:theModel});
       //show the modal view in the modal area
       App.tabDiv.modalArea.show(scanDetailsModalView);
-      var virusUsers = SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(function() {
-        var dropDown = new VirusTrackerTab.VirusUserCompositeView({collection: SysAdminApp.VirusUserTab.usersList});
-        scanDetailsModalView.userDropDownContent.show(dropDown);
-        //set the dropdown to the right value
-        $('.select-virus-user-id').val(theModel.get('uid'));
-      });
     },
 
 
@@ -63,10 +57,6 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       });
       //show the modal view in the modal area
       App.tabDiv.modalArea.show(scanAddModalView);
-      var virusUsers = SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(function() {
-        var dropDown = new VirusTrackerTab.VirusUserCompositeView({collection: SysAdminApp.VirusUserTab.usersList});
-        scanAddModalView.userDropDownContent.show(dropDown);
-      });
     },
 
   };

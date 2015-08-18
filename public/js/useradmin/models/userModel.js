@@ -9,6 +9,7 @@ UserAdminApp.module('UserListTab', function (UserListTab, App, Backbone, Marione
       'email':'',
       'schedule_color':'',
       'phone':'',
+      'acc_crud_assets':'',
       'acc_room':'',
       'acc_avlog':'',
       'acc_inv':'',

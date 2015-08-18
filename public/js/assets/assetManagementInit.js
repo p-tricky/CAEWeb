@@ -1,0 +1,1 @@
+window.AssetMgmtApp = new Backbone.Marionette.Application();

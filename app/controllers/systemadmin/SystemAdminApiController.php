@@ -22,7 +22,6 @@ class SystemAdminApiController extends BaseController {
 
     //create a new user and set attributes to inputs
     $addScan = new Scans;
-    $addScan->uid = $addModel['uid'];
     $addScan->mac_addr = $addModel['mac_addr'];
     $addScan->scan_date = $addModel['scan_date'];
     $addScan->room_number = $addModel['room_number'];
@@ -32,8 +31,14 @@ class SystemAdminApiController extends BaseController {
     $addScan->notes = $addModel['notes'];
     $addScan->scanned_by = $addModel['scanned_by'];
 
-    $scanUser = $addScan->scansUser();
+    $scanUser = ScansUser::where('user_name', '=', $addModel['user_name'])->first();
+    if ($scanUser == null) {
+      $scanUser = new ScansUser;
+      $scanUser->user_name = $addModel['user_name'];
+      $scanUser->save();
+    }
 
+    $addScan->uid = $scanUser->id;
     $addScan->save();
     $scanUser->updateTotal();
     $scanUser->updateMostRecentScan();
@@ -56,13 +61,17 @@ class SystemAdminApiController extends BaseController {
       $updateScan->pups = $updateModel['pups'];
       $updateScan->notes = $updateModel['notes'];
       $updateScan->scanned_by = $updateModel['scanned_by'];
-      //save the updated user to the database
 
 
-      $scanUser = ScansUser::find($updateModel['uid']);
-      if ($updateScan->uid != $updateModel['uid']) {
+      $scanUser = ScansUser::where('user_name', '=', $updateModel['user_name'])->first();
+      if ($scanUser == null) {
+        $scanUser = new ScansUser;
+        $scanUser->user_name = $updateModel['user_name'];
+        $scanUser->save();
+      }
+      if ($updateScan->uid != $scanUser->id) {
         $oldScanUser = $updateScan->scansUser();
-        $updateScan->uid = $updateModel['uid'];
+        $updateScan->uid = $scanUser->id;
         $updateScan->save();
 
         $oldScanUser->updateTotal();

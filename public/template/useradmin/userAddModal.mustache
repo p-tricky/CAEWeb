@@ -10,6 +10,7 @@
     <div class="div-table-col-data" id='position'>
       <!-- Hardcoded values in the meantime -->
       <select id="position-id" class="select-position-id">
+        <option value="0">Guest</option>
         <option value="1">Attendant</option>
         <option value="2">Administrator</option>
         <option value="3">Programmer</option>
@@ -31,6 +32,12 @@
     </div>
   </div>
   Access Levels
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Assets:</label></div>
+    <div class="div-table-col-data">
+      <input class="div-table-col-input" id='acc_crud_assets' name='acc_crud_assets' type='checkbox' value='{{acc_crud_assets}}'/>
+    </div>
+  </div>
   <div class="div-table-row">
     <div class="div-table-col-label"><label>Room Scheduling:</label></div>
     <div class="div-table-col-data">

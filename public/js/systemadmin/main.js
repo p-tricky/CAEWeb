@@ -42,7 +42,6 @@ SysAdminApp.Router = new Marionette.AppRouter({
 SysAdminApp.on('initialize:after', function() {
   //load any inital templates that may be needed.
   tpl.loadTemplates(['virusTrackerTab'], function() {
-    SysAdminApp.VirusTrackerTab.scanl
     var result = Backbone.history.start({pushState: true, root: "/caeweb/systemadmin/"});//, silent:true});
   });
 });
