@@ -73,6 +73,7 @@ class AssetManagementApiController extends BaseController {
 			$newAsset->room = $newModel['room'];
 			$newAsset->department_id = $newModel['department_id'];
 			$newAsset->mac_address = $newModel['mac_address'];
+			$newAsset->ip_address = $newModel['ip_address'];
 			$newAsset->asset_type = $newModel['asset_type'];
 			$newAsset->assignee_name = $newModel['assignee_name'];
 
@@ -97,6 +98,7 @@ class AssetManagementApiController extends BaseController {
 			$updateAsset->room = $updateModel['room'];
 			$updateAsset->department_id = $updateModel['department_id'];
 			$updateAsset->mac_address = $updateModel['mac_address'];
+			$updateAsset->ip_address = $updateModel['ip_address'];
 			$updateAsset->asset_type = $updateModel['asset_type'];
 			$updateAsset->assignee_name = $updateModel['assignee_name'];
 

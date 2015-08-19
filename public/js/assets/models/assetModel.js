@@ -12,6 +12,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       'department_id' : 0,
       'department_name' : '',
       'mac_address' : null,
+      'ip_address' : null,
       'asset_type' : '',
       'assignee_name' : null,
       'updated_at':'',

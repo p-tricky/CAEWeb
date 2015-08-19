@@ -34,6 +34,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         department_id : $('#departmentsDropDown option:selected').val(),
         department_name : $('#departmentsDropDown option:selected').text(),
         mac_address : $('#mac_address').val(),
+        ip_address : $('#ip_address').val(),
         asset_type : $('#asset-type-list option:selected').text(),
         assignee_name : $('#assignee_name').val()
       };
