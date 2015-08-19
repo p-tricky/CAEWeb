@@ -6,8 +6,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
 
   	getAssets : function(callback) {
   		if (typeof AssetListTab.assetsList === "undefined") {
+        AssetListTab.sort = 'brandAsc';
   			AssetListTab.assetsList = new AssetMgmtApp.AssetListTab.AssetsCollection();
-  			AssetListTab.assetsList.fetch({success : callback});
+  			AssetListTab.assetsList.fetch({data: {sort: AssetListTab.sort}, success : callback});
   		} else {
   			callback();
   		}
