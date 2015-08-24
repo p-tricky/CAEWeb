@@ -8,35 +8,36 @@ class AssetManagementApiController extends BaseController {
 			switch ($sortBy)
 			{
 				case 'brandAsc':
-					$assets = Asset::orderby('brand_name')->get();
+					$assets = Asset::orderby('brand_name');
 					break;
 				case 'brandDesc':
-					$assets = Asset::orderBy('brand_name', 'DESC')->get();
+					$assets = Asset::orderBy('brand_name', 'DESC');
 					break;
 				case 'nameAsc':
-					$assets = Asset::orderby('assignee_name')->get();
+					$assets = Asset::orderby('assignee_name');
 					break;
 				case 'nameDesc':
-					$assets = Asset::orderby('assignee_name', 'DESC')->get();
+					$assets = Asset::orderby('assignee_name', 'DESC');
 					break;
 				case 'roomAsc':
-					$assets = Asset::orderby('room')->get();
+					$assets = Asset::orderby('room');
 					break;
 				case 'roomDesc':
-					$assets = Asset::orderby('room', 'DESC')->get();
+					$assets = Asset::orderby('room', 'DESC');
 					break;
 				case 'typeAsc':
-					$assets = Asset::orderby('asset_type')->get();
+					$assets = Asset::orderby('asset_type');
 					break;
 				case 'typeDesc':
-					$assets = Asset::orderby('asset_type', 'DESC')->get();
+					$assets = Asset::orderby('asset_type', 'DESC');
 					break;
 				default:
-					$assets = Asset::orderby('id')->get();
+					$assets = Asset::orderby('id');
 					break;
 
 			}
 			
+      $assets = $assets->where('active', '=', '1')->get();
 			foreach ($assets as $asset) {
 				$asset->department_name = Department::where('id', '=', $asset->department_id)->pluck('name');
 			}
@@ -65,6 +66,15 @@ class AssetManagementApiController extends BaseController {
 	{
 		try {
 			$newModel = Input::json()->all();
+      
+      $inactiveAsset = Asset::where('serial_number', '=', $newModel['serial_number'])
+        ->where('asset_type', '=', $newModel['asset_type'])
+        ->get();
+
+      if (!$inactiveAsset->isEmpty()) {
+        return Response::json(array('error' => 'Asset already exists', 
+          'inactiveAsset' => $inactiveAsset->toArray()), 500);
+      }
 
 			$newAsset = new Asset;
 			$newAsset->brand_name = $newModel['brand_name'];
@@ -76,6 +86,8 @@ class AssetManagementApiController extends BaseController {
 			$newAsset->ip_address = $newModel['ip_address'];
 			$newAsset->asset_type = $newModel['asset_type'];
 			$newAsset->assignee_name = $newModel['assignee_name'];
+			$newAsset->active = 1;
+
 
 			$newAsset->save();
 			return $newAsset->toJSON();
@@ -101,6 +113,7 @@ class AssetManagementApiController extends BaseController {
 			$updateAsset->ip_address = $updateModel['ip_address'];
 			$updateAsset->asset_type = $updateModel['asset_type'];
 			$updateAsset->assignee_name = $updateModel['assignee_name'];
+			$updateAsset->active = 1;
 
 			$updateAsset->save();
 			return $updateAsset->toJSON();
@@ -115,7 +128,8 @@ class AssetManagementApiController extends BaseController {
 	{
 		try {
 			$deleteAsset = Asset::find($id);
-			$deleteAsset->delete();
+			$deleteAsset->active = 0;
+      $deleteAsset->save();
 			return $deleteAsset->toJSON();			
 
 		} catch(Exception $e) {

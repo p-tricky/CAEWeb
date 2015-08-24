@@ -41,14 +41,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       //Send the object of parameters to the model to be saved with the addUser function.
       //The result will be returned to the result variable
       var result = this.model.addAsset(fields);
-      //If the save was successful
-      if (result) {
-        //Remove the fade overlay and modalbox
-        $('#fade').removeClass('fade');
-        $('#modalBox').removeClass('modalBox');
-        //close the modal box view
-        App.tabDiv.modalArea.close();
-      }
+      
     },
 
     //Function to be called when the cancel button is clicked

@@ -23,7 +23,10 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     },
 
     onShow : function() {
-      $('option[value='+this.model.get('department_id')+']').prop('selected', true);
+      // if there is a model, then set the dropdowns to the appropriate values
+      if (this.model) {
+        $('.select-department-id>option[value='+this.model.get('department_id')+']').prop('selected', true);
+      }
     }
 
   });
