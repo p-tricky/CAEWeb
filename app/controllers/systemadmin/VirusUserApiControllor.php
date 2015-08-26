@@ -54,7 +54,6 @@ class VirusUserApiController extends BaseController {
   public function update($id) {
     try {
       $updateModel = Input::json()->all();
-      echo $updateModel['user_name'];
 
       $updateUser = ScansUser::find($id);
       $updateUser->user_name = $updateModel['user_name'];

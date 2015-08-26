@@ -27,6 +27,12 @@ SysAdminApp.SysAdminAppController = {
       SysAdminApp.VirusUserTab.VirusUserController.getVirusUser(SysAdminApp.VirusUserTab.VirusUserController.showVirusUserTable);
     },
 
+    checkoutlab : function() {
+      SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'checkoutLabTab'});
+      SysAdminApp.tabArea.show(SysAdminApp.tabDiv);
+      SysAdminApp.CheckoutLabTab.CheckoutLabController.getCheckouts(SysAdminApp.CheckoutLabTab.CheckoutLabController.showCheckoutsTable);
+    }
+
 };
 
 //Define the router that will listen to the URL, and call the correct associated function.
@@ -35,6 +41,7 @@ SysAdminApp.Router = new Marionette.AppRouter({
   appRoutes:{
     "virustracker" : "virustracker",
     "virususer" : "virususer",
+    "checkoutlab" : "checkoutlab",
   } 
 });
 

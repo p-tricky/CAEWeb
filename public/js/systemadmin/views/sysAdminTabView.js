@@ -25,6 +25,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     events : {
       'click .virusTracker' : 'navigateToVirusTracker',
       'click .virusUser' : 'navigateToVirusUser',
+      'click .checkoutLab': 'navigateToCheckoutLab',
     },
     
     //All of the functions associated with the events.
@@ -37,6 +38,12 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     navigateToVirusUser : function() {
       //When the event fires this function, it will navigate the app to the specified uri
       SysAdminApp.navigate('virususer',true);
+    },
+
+    //All of the functions associated with the events.
+    navigateToCheckoutLab : function() {
+      //When the event fires this function, it will navigate the app to the specified uri
+      SysAdminApp.navigate('checkoutlab',true);
     },
 
   });
