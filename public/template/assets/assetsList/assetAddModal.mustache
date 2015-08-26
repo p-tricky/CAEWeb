@@ -8,12 +8,12 @@
   <div class="div-table-row">
     <div class="div-table-col-label"><label>Serial Number:</label></div>
     <div class="div-table-col-data">
-      <input class="div-table-col-input" id='serial_number' name='serial_number' type='text' value='{{serail_number}}' maxlength='32' />
+      <input class="div-table-col-input" id='serial_number' name='serial_number'  type='text' value='{{serail_number}}' maxlength='32' />
     </div>
   </div>
   <div class="div-table-row">
     <div class="div-table-col-label"><label>Description:</label></div>
-    <div class="div-table-col-data"><textarea class="div-table-col-textarea" id='description' maxlength='250' name='description'>{{description}}</textarea></div>
+    <div class="div-table-col-data"><textarea class="div-table-col-textarea" id='description' placeholder='input a serial # and asset type, then click find to see if we already have a record for the asset you are about to add' maxlength='250' name='description'>{{description}}</textarea></div>
   </div>
   <div class="div-table-row">
     <div class="div-table-col-label"><label>Room Number:</label></div>
@@ -60,6 +60,9 @@
     <div class="div-table-col-label">
       <button id="save" class='save div-table-button'>
         Save
+      </button>
+      <button id="find" class='find div-table-button'>
+        Find
       </button>
     </div>
     <div class="div-table-col-label">

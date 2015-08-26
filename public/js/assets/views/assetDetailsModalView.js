@@ -8,7 +8,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     initialize : function(options) {
       //use tpl to fetch the template, and pass it to handlebars
       this.template = Handlebars.compile(tpl.get('assetsList/assetDetailsModal'));
-      if (this.options.saveCallback) this.saveCallback = this.options.saveCallback;
+      this.saveCallback = this.options.saveCallback  ? this.options.saveCallback : function(){};
     },
 
     regions: {

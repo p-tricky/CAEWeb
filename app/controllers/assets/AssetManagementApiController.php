@@ -62,20 +62,19 @@ class AssetManagementApiController extends BaseController {
     	}
 	}
 
+  public function findAsset()
+  {
+    $queryParams = Input::get('queryParams');
+    $foundAsset = Asset::where('serial_number', '=', $queryParams['serial_number'])
+      ->where('asset_type', '=', $queryParams['asset_type'])
+      ->get();
+    return Response::json($foundAsset);
+  }
+
 	public function store()
 	{
-		try {
-			$newModel = Input::json()->all();
+			$newModel = Input::json()->all(); 
       
-      $inactiveAsset = Asset::where('serial_number', '=', $newModel['serial_number'])
-        ->where('asset_type', '=', $newModel['asset_type'])
-        ->get();
-
-      if (!$inactiveAsset->isEmpty()) {
-        return Response::json(array('error' => 'Asset already exists', 
-          'inactiveAsset' => $inactiveAsset->toArray()), 500);
-      }
-
 			$newAsset = new Asset;
 			$newAsset->brand_name = $newModel['brand_name'];
 			$newAsset->serial_number = $newModel['serial_number'];
@@ -88,14 +87,9 @@ class AssetManagementApiController extends BaseController {
 			$newAsset->assignee_name = $newModel['assignee_name'];
 			$newAsset->active = 1;
 
-
 			$newAsset->save();
 			return $newAsset->toJSON();
-			
 
-		} catch(Exception $e) {
-      		return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
-    	}
 	}
 
 	public function update($id)
@@ -121,7 +115,7 @@ class AssetManagementApiController extends BaseController {
 
 		} catch(Exception $e) {
       		return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
-    	}
+    }
 	}
 
 	public function destroy($id)

@@ -19,6 +19,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     //Define the events to be associated with this view
     events : {
       'click .save' : 'save',
+      'click .find' : 'find',
       'click .cancel' : 'cancel'
     },
 
@@ -42,6 +43,14 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       //The result will be returned to the result variable
       var result = this.model.addAsset(fields);
       
+    },
+
+    find: function() {
+      var queryParams = {
+        serial_number : $('#serial_number').val(),
+        asset_type : $('#asset-type-list option:selected').text(),
+      };
+      this.model.findAsset(queryParams);
     },
 
     //Function to be called when the cancel button is clicked
