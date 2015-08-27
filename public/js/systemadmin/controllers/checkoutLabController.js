@@ -5,7 +5,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
   CheckoutLabTab.CheckoutLabController = {
 
   	getCheckouts : function(callback) {
-  		if (CheckoutLabTab.checkoutLabList === "undefined") {
+  		if (CheckoutLabTab.checkoutLabList === undefined) {
   			CheckoutLabTab.checkoutLabList = new CheckoutLabTab.CheckoutLabCollection();
   			CheckoutLabTab.checkoutLabList.fetch({success: callback});
   		} else {
@@ -20,7 +20,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       App.tabDiv.tabContent.show(tabContentDiv);
   	},
 
-  	showUserAddModal : function() {
+  	showCheckoutAddModal : function() {
   		//Disable the add new button
       $('#addNew').prop('disabled',true);
       //Show the fade overaly
@@ -40,7 +40,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       });
   	},
 
-  	showUserDetailsModal : function(theModel) {
+  	showCheckoutDetailsModal : function(theModel) {
   		//Show the fade overlay
       $('#fade').addClass('fade');
       //show the modal div

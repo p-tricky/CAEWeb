@@ -19,6 +19,10 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       'click .cancel' : 'cancel'
     },
 
+    onShow : function() {
+      CheckoutLabTab.CheckoutLabAddModalView.prototype.populateDatePickerWidget($('#date'));
+    },
+
     //Function to be called when the save button is clicked
     save : function() {
       //Get the values from the fields and put them in an object to pass to the model
@@ -39,6 +43,21 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
         //close the modal box view
         App.tabDiv.modalArea.close();
       }
+    },
+
+    populateDatePickerWidget : function(container, dateString) {
+      //makes date objects of the clockin and clockout time
+      //Firefox needs the dates to be defined like this. It wouldn't recognize the dateTimeString of clockin/clockout
+      // if a datepicker exists, we need to destroy it before creating the new datepicker 
+      if (container.children()) container.datepicker("destroy");  
+      // loads the sliders and times into the divs with all necessary options 
+      var jsDate = new Date();
+      container.datepicker({
+        dateFormat: 'yy-mm-dd',
+        changeMonth: true,
+        changeYear: true,
+      });
+      container.datepicker('setDate', jsDate);
     },
 
     //Function to be called when the cancel button is clicked

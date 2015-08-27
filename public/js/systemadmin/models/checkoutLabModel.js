@@ -10,7 +10,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       'lab': '',
       'phone_number': '',
       'email': '',
-      'checkout_date': new Date().toLocaleDateString(),
+      'checkout_date': '',
       'updated_at':'',
       'created_at':'',
     },

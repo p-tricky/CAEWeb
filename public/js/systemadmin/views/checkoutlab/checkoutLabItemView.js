@@ -1,7 +1,7 @@
 //Define module for the Virus User tab to live in.
 SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Marionette, $, _) {
   //Define a Item View to work in conjunction with the VirusUserCompositeView
-  CheckoutLabTab.ScanUserItemView = Backbone.Marionette.ItemView.extend({
+  CheckoutLabTab.CheckoutLabItemView = Backbone.Marionette.ItemView.extend({
 
     //Define the tag for this view. It will be a tr instead of the default div
     tagName: 'tr',

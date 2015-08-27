@@ -39,8 +39,8 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
 
     //When the add New button is clicked, this function will run
     addNew: function() {
-      //Call the showUserAddModal function in the Virus User controller
-      CheckoutLabTab.CheckoutLabController.showUserAddModal();
+      //Call the showCheckoutAddModal function in the Checkout Lab controller
+      CheckoutLabTab.CheckoutLabController.showCheckoutAddModal();
     },
 
     //function to sort the user's list by a different method
