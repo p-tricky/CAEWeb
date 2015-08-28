@@ -17,7 +17,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     events : {
       'click .save' : 'save',
       'click .cancel' : 'cancel',
-      'click .delete' : 'delete'
+      'click .delete' : 'delete',
     },
 
     onShow : function() {
@@ -82,5 +82,6 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       });
       container.datepicker('setDate', jsDate);
     },
+
   });
 });

@@ -16,7 +16,8 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     //Define the events to be associated with this view
     events : {
       'click .save' : 'save',
-      'click .cancel' : 'cancel'
+      'click .cancel' : 'cancel',
+      'keyup #win' : 'removeNonNumsFromInput',
     },
 
     onShow : function() {
@@ -67,6 +68,15 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       $('#modalBox').removeClass('modalBox');
       //Close the modal box
       App.tabDiv.modalArea.close();
+    },
+
+    removeNonNumsFromInput : function(e) {
+      var input = $(e.target); //get jquery object from the amount input
+      var start = e.target.selectionStart;
+      var end = e.target.selectionEnd;
+      var inputWithoutNonNumChars = input.val().replace(/[^0-9]/g, '');
+      input.val(inputWithoutNonNumChars);
+      e.target.setSelectionRange(start, end);
     }
   });
 });
