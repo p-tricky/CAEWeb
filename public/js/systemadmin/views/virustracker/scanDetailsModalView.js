@@ -68,7 +68,6 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
         scanned_by: $('#scanned_by').val(),
       };
 
-      //TODO: only close modal view if save succeeds
       var result = this.model.saveScan(fields);
       if (result) {
         $('#fade').removeClass('fade');
@@ -120,6 +119,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
                 $('#fade').removeClass('fade');
                 $('#modalBox').removeClass('modalBox');
                 App.tabDiv.modalArea.close();
+                SysAdminApp.VirusUserTab.usersList.fetch();
               },
               //if there is an error, it alerts the user to the error
               error : function(m,e,o) {

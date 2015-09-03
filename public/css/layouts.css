@@ -166,6 +166,11 @@ a {
 		#jsddm li ul li a:hover
 		{	background: #F9F2E1}
 
-
+/* added a class for selecting text from table cols */
+.selectableText {
+  -moz-user-select: text;
+  -webkit-user-select: text;
+  -ms-user-select: text;
+}
 
 

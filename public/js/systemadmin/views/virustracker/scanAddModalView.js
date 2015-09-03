@@ -64,7 +64,6 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
         scanned_by: $('#scanned_by').val(),
       };
 
-      //TODO: only close modal view if save succeeds
       var result = this.model.addScan(fields);
     },
 

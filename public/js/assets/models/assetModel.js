@@ -49,7 +49,6 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
           $('#modalBox').removeClass('modalBox');
           //close the modal box view
           App.tabDiv.modalArea.close();
-          console.log('success');
         },
         error: function() {
           var errorAlert = $('#confirmModalBox');
@@ -98,30 +97,42 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     },
 
     //function to see if a new asset already exists but was deleted
+    // query params = serial number and asset type
     findAsset : function(queryParams) {
+      // send a get request to the find api
+      // the asset controller in the laravel backend will find an asset with
+      // specified serial number and type (if that asset exists) and return it
       $.ajax({
         type: "GET",
         url: 'api/find',
         data: {queryParams: queryParams},
       }).done(function(response) {
         if (response[0]) {
+          // if an asset was found and returned
+          // then create a marionette model in the javascript
+          // and open a modal view to edit the model
           var foundAsset = new AssetListTab.AssetModel(response[0]);
           var modalView = new AssetListTab.AssetDetailsModalView({
             model: foundAsset,
             saveCallback: function() {
+              // this callback is passed to the modal view 
+              // if the asset is saved then we call this function to update the assetlist to
+              // show the activated modal view
               AssetListTab.assetsList.fetch({data: {sort: AssetListTab.sort}, success: AssetListTab.AssetListController.showAssetsTable});
             }
           });
-          //show the modal view in the modal area
+          //show the modal view for the found asset in the modal area
           App.tabDiv.modalArea.show(modalView);
           AssetMgmtApp.AssetListTab.AssetListController.getDepartments(function() {
+            // fill out department drop down in modal view
             var dropDown = new AssetListTab.AssetDepartmentCompositeView({collection: AssetMgmtApp.AssetListTab.departmentList, model: foundAsset});
             modalView.departmentsDropDown.show(dropDown);
           });
         } else {
-          var errorAlert = $('#confirmModalBox');
-          errorAlert.html('Sorry.  No record exists.  Please create one.');
-          errorAlert.dialog({
+          // we don't have an asset that matches the given serial number and type
+          var notFoundAlert = $('#confirmModalBox');
+          notFoundAlert.html('Sorry.  No record exists.  Please create one.');
+          notFoundAlert.dialog({
             modal: true,
             title: 'No records found',
             buttons: {

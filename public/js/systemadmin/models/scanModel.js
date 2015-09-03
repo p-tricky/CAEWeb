@@ -39,16 +39,34 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       });
     },
 
+
     //Function to save the scan to the server side. The function takes an object of properties to update
     //as the parameter for the function
     saveScan : function(updateModelProperties) {
-      this.set(updateModelProperties);
-      if ( this.isValid() ) {
-        result = this.save();
-        return result;
-      }
-      // if the updateModelProperties weren't valid, reset model to former state
-      this.set(this.previousAttributes());
+      this.save(updateModelProperties, {
+        success: function() {
+          //Remove the fade overlay and modalbox
+          $('#fade').removeClass('fade');
+          $('#modalBox').removeClass('modalBox');
+          //close the modal box view
+          App.tabDiv.modalArea.close();
+          // update user list
+          SysAdminApp.VirusUserTab.usersList.fetch();
+        },
+        error: function() {
+          var errorAlert = $('#confirmModalBox');
+          errorAlert.html("Sorry, there was an error");
+          errorAlert.dialog({
+            modal: true,
+            title: 'Error when saving',
+            buttons: {
+              'Ok': function() {
+                $(this).dialog('close');
+              }
+            },
+          });
+        },
+      });
     },
 
     addScan : function(addModelProperties) {
@@ -61,6 +79,9 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
             $('#fade').removeClass('fade');
             $('#modalBox').removeClass('modalBox');
             App.tabDiv.modalArea.close();
+            // the save was successful, so we need to update the
+            // virus users to display the changes that we just made
+            SysAdminApp.VirusUserTab.usersList.fetch();
           },
           error: function() {
             // leave UserAddModalView open and open error dialog
