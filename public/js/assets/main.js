@@ -10,12 +10,12 @@ AssetMgmtApp.navigate = function(route,  options){
 
 //Define the main controller to be used with the router listed below.
 AssetMgmtApp.AssetMgmtAppController = {
-    //function to be called when the currentinventory route is in the url
+    //function to be called when the assetslist route is in the url
     assetslist : function() {
-      //Create a new tab view passing the VirusTrackerTab tab as the tabname.
+      //Create a new tab view passing the assetListTab tab as the tabname.
       AssetMgmtApp.tabDiv = new AssetMgmtApp.AssetListTab.AssetListView({'tabName':'assetListTab'});
       AssetMgmtApp.tabArea.show(AssetMgmtApp.tabDiv); //show the tab
-      //Call the function to get the virusTracker scans, and pass the show tracker table function as the callback to call on success.
+      //Call the function to get the assets list scans, and pass the show assets table function as the callback to call on success.
       AssetMgmtApp.AssetListTab.AssetListController.getAssets(AssetMgmtApp.AssetListTab.AssetListController.showAssetsTable);
     }
 
@@ -33,7 +33,7 @@ AssetMgmtApp.Router = new Marionette.AppRouter({
 AssetMgmtApp.on('initialize:after', function() {
   //load any inital templates that may be needed.
   tpl.loadTemplates(['assetListTab'], function() {
-    var result = Backbone.history.start({pushState: true, root: "/caeweb/assets/"});//, silent:true});
+    var result = Backbone.history.start({pushState: true, root: "/caeweb/assets/"});
   });
 });
 

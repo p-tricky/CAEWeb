@@ -1,4 +1,4 @@
-//Define module for the Virus User tab to live in.
+//Define module for the asset list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
   //Define a composite view for displaying a table of the the items
   AssetListTab.AssetsCompositeView = Backbone.Marionette.CompositeView.extend({
@@ -17,8 +17,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     //will be called when the view is shown
     onShow : function()
     {
-      //add an arrow to the total header when the view loads
+      //add an arrow to the brand name header when the view loads
       $('#brand').html('&#9660 Brand Name');
+      //define a global 'sort' variable to remember how the table is currently sorted
       AssetListTab.sort = 'brandAsc';
     },
 
@@ -43,7 +44,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       AssetListTab.AssetListController.showAssetsAddModal();
     },
 
-    //function to sort the user's list by a different method
+    //function to sort the asset's list by a different method
     sortByName : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
       if (AssetListTab.sort == "nameAsc")
@@ -52,9 +53,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "nameDesc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
-        //must reset inorder to see the changes
+        //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
         $('#name').html("&#9650 Assignee's Name");
@@ -66,7 +67,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "nameAsc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
@@ -75,7 +76,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       }
     },
 
-    //function to sort the user's list by a different method
+    //function to sort the asset's list by a different method
     sortByBrand : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
       if (AssetListTab.sort == "brandAsc")
@@ -84,9 +85,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "brandDesc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
-        //must reset inorder to see the changes
+        //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
         $('#brand').html('&#9650 Brand Name');
@@ -98,7 +99,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "brandAsc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
@@ -107,7 +108,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       }
     },
 
-    //function to sort the user's list by a different method
+    //function to sort the asset's list by a different method
     sortByRoom : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
       if (AssetListTab.sort == "roomAsc")
@@ -116,9 +117,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "roomDesc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
-        //must reset inorder to see the changes
+        //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
         $('#roomNum').html('&#9650 Room Number');
@@ -130,7 +131,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "roomAsc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
@@ -139,7 +140,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       }
     },
 
-    //function to sort the user's list by a different method
+    //function to sort the asset's list by a different method
     sortByDepartment : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
       if (AssetListTab.sort == "dptAsc")
@@ -148,9 +149,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "dptDesc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
-        //must reset inorder to see the changes
+        //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
         $('#dpt').html('&#9650 Department');
@@ -162,7 +163,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "dptAsc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
@@ -171,7 +172,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       }
     },
 
-    //function to sort the user's list by a different method
+    //function to sort the asset's list by a different method
     sortByType : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
       if (AssetListTab.sort == "typeAsc")
@@ -180,9 +181,9 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "typeDesc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
-        //must reset inorder to see the changes
+        //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
         $('#type').html('&#9650 Asset Type');
@@ -194,7 +195,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "typeAsc";
-        //gets a new user list that is pre-sorted
+        //gets a new asset list that is pre-sorted
         AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
@@ -203,7 +204,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       }
     },
 
-    //removes the arrows from the headers. This is called before resorting the users
+    //removes the arrows from the headers. This is called before resorting the assets
     clearArrows : function()
     {
       $('#brand').html("Brand Name");

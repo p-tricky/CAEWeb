@@ -1,6 +1,6 @@
-//Define module for the inventory tab to live in.
+//Define module for the asset list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
-  //Define the Item Model to hold information about a item
+  //Define the Department Model to hold information about a department
   AssetListTab.DepartmentModel = Backbone.Model.extend({
     //Define some defaults for new models that are created clientside
     defaults : {
@@ -15,7 +15,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       
   });
   
-  //Define the collection for scans that is based on the above defined item model
+  //Define the collection for Department that is based on the above defined department model
   AssetListTab.DepartmentCollection = Backbone.Collection.extend({
     //Define which model to use
     model : AssetListTab.DepartmentModel,

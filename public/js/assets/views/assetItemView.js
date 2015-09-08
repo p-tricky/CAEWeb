@@ -1,6 +1,6 @@
-//Define module for the Virus User tab to live in.
+//Define module for the asset list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
-  //Define a Item View to work in conjunction with the VirusUserCompositeView
+  //Define a Item View to work in conjunction with the AssetListCompositeView
   AssetListTab.AssetItemView = Backbone.Marionette.ItemView.extend({
 
     //Define the tag for this view. It will be a tr instead of the default div
@@ -52,7 +52,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     showDetails : function(e) {
       //If the user is not double clicking on the buttons in the view
       if (e.target.nodeName !== "BUTTON") {
-        //call the showUserModal and pass it the view's model
+        //call the showAssetsModal and pass it the view's model
         AssetMgmtApp.AssetListTab.AssetListController.showAssetsModal(this.model);
       }
     }

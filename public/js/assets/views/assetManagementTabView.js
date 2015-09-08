@@ -1,4 +1,4 @@
-//Define module for the inventory tab to live in.
+//Define module for the assets list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
   //Define a new layout for the tabs, tabs content, and modal box
   AssetListTab.AssetListView = Backbone.Marionette.Layout.extend({

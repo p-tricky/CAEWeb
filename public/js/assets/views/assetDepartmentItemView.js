@@ -1,4 +1,4 @@
-//Define module for the inventory tab to live in.
+//Define module for the asset list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
   //Define a Department Item View to be used in conjunction with the Composite view: assetDepartmentCompositeView
   AssetListTab.AssetDepartmentItemView = Backbone.Marionette.ItemView.extend({

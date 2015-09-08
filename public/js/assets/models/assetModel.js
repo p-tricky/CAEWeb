@@ -1,6 +1,6 @@
-//Define module for the inventory tab to live in.
+//Define module for the asset list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
-  //Define the Item Model to hold information about a item
+  //Define the Asset Model to hold information about an asset
   AssetListTab.AssetModel = Backbone.Model.extend({
     //Define some defaults for new models that are created clientside
     defaults : {
@@ -39,7 +39,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       });
     },
 
-    //Function to save the scan to the server side. The function takes an object of properties to update
+    //Function to save the asset to the server side. The function takes an object of properties to update
     //as the parameter for the function
     saveAsset : function(updateModelProperties) {
       this.save(updateModelProperties, {
@@ -67,6 +67,8 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       });
     },
 
+    //this function is called when a new model is created
+    //tries to save the model. If unsuccessful, it alerts the user 
     addAsset : function(addModelProperties) {
       //sets the new model's properties to the properties that were passed
       this.set(addModelProperties);
@@ -95,6 +97,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       });
     },
 
+    //function to see if a new asset already exists but was deleted
     findAsset : function(queryParams) {
       $.ajax({
         type: "GET",
@@ -132,7 +135,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     },
   });
 
-  //Define the collection for scans that is based on the above defined item model
+  //Define the collection for assets that is based on the above defined asset model
   AssetListTab.AssetsCollection = Backbone.Collection.extend({
     //Define which model to use
     model : AssetListTab.AssetModel,

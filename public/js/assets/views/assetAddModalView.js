@@ -1,7 +1,7 @@
-//Define module for the virus user tab to live in.
+//Define module for the asset list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
   //Define a composite view to be used to show the modal box that allows the user to add a new
-  //user to the virus users. 
+  //asset to the assets list. 
   AssetListTab.AssetAddModalView = Backbone.Marionette.Layout.extend({
 
     //When this view is instanciated, run this function
@@ -10,10 +10,12 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       this.template = Handlebars.compile(tpl.get('assetsList/assetAddModal'));
     },
 
+    //define regions that other views can use
     regions: {
       departmentsDropDown: '#departmentsDropDown',
     },
 
+    //id for the view
     id:'assetAddModalView',
 
     //Define the events to be associated with this view
@@ -22,7 +24,6 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       'click .find' : 'find',
       'click .cancel' : 'cancel'
     },
-
 
     //Function to be called when the save button is clicked
     save : function() {
@@ -39,12 +40,13 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         asset_type : $('#asset-type-list option:selected').text(),
         assignee_name : $('#assignee_name').val()
       };
-      //Send the object of parameters to the model to be saved with the addUser function.
+      //Send the object of parameters to the model to be saved with the addAsset function.
       //The result will be returned to the result variable
       var result = this.model.addAsset(fields);
       
     },
 
+    //checks to see if the new asset was previously deleted
     find: function() {
       var queryParams = {
         serial_number : $('#serial_number').val(),

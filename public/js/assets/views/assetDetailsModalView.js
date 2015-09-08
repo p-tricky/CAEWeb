@@ -1,7 +1,7 @@
-//Define module for the virus user tab to live in.
+//Define module for the asset list tab to live in.
 AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Marionette, $, _) {
-  //Define a composite view to be used to show the modal box that allows the user to add a new
-  //user to the virus users. 
+  //Define a composite view to be used to show the modal box that allows the user to edit an existing
+  //asset in the assets collection. 
   AssetListTab.AssetDetailsModalView = Backbone.Marionette.Layout.extend({
 
     //When this view is instanciated, run this function
@@ -11,12 +11,15 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       this.saveCallback = this.options.saveCallback  ? this.options.saveCallback : function(){};
     },
 
+    //define region for the department drop down
     regions: {
       departmentsDropDown: '#departmentsDropDown',
     },
 
+    //id for the view
     id:'assetDetailsModalView',
 
+    //when the view is shown, it selects the correct item in the asset type drop down
     onShow: function() {
         $('#asset-type-list>option[value='+this.model.get('asset_type')+']').prop('selected', true);
     },
