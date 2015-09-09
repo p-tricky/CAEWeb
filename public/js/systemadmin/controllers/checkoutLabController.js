@@ -49,6 +49,28 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       var modalView = new CheckoutLabTab.CheckoutLabDetailsModalView({model:theModel});
       //show the modal view in the modal area
       App.tabDiv.modalArea.show(modalView);
+  	},
+
+  	showOpenTaskListModal : function(theModel) {
+  		//Show the fade overlay
+      $('#fade').addClass('fade');
+      //show the modal div
+      $('#modalBox').addClass('modalBox');
+      //Instanciate a new modal view passing it the model that was passed into this function, and the collection of virus users
+      var modalView = new CheckoutLabTab.OpenTaskListModalView({model:theModel});
+      //show the modal view in the modal area
+      App.tabDiv.modalArea.show(modalView);
+  	},
+
+  	showCloseTaskListModal : function(theModel) {
+  		//Show the fade overlay
+      $('#fade').addClass('fade');
+      //show the modal div
+      $('#modalBox').addClass('modalBox');
+      //Instanciate a new modal view passing it the model that was passed into this function, and the collection of virus users
+      var modalView = new CheckoutLabTab.CloseTaskListModalView({model:theModel});
+      //show the modal view in the modal area
+      App.tabDiv.modalArea.show(modalView);
   	}
   };
 });

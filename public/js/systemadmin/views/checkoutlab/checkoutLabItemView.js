@@ -44,6 +44,8 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
 
     //Define events for the tr and associated functions to be called when they occur
     events : {
+      'click #openTask': 'openTask',
+      'click #closeTask': 'closeTask',
       'dblclick' : 'showDetails'
     },
 
@@ -55,7 +57,15 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
         //call the showUserModal and pass it the view's model
         CheckoutLabTab.CheckoutLabController.showCheckoutDetailsModal(this.model);
       }
-    }
+    },
+
+    openTask: function() {
+      CheckoutLabTab.CheckoutLabController.showOpenTaskListModal(this.model);
+    },
+      
+    closeTask: function() {
+      CheckoutLabTab.CheckoutLabController.showCloseTaskListModal(this.model);
+    },
 
   });
 });

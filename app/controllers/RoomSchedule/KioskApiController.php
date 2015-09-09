@@ -52,7 +52,7 @@ class KioskApiController extends BaseController {
   }
 
   private function getEventsForRoom($roomNumber) {
-    $roomInfo = CeasRooms::where('name', '=', $roomNumber)->orderBy('type')->first();
+    $roomInfo = CeasRooms::where('name', '=', $roomNumber)->first();
     if ($roomInfo !== null) {
       switch($roomInfo->type) {
         case 1:

@@ -1,5 +1,5 @@
 <div class='div-table'>
-<div class="div-table-row">
+  <div class="div-table-row">
     <div class="div-table-col-label"><label>Name:</label></div>
     <div class="div-table-col-data">
       <input class="div-table-col-input" readonly id='name' name='name' type='text' value='{{name}}' maxlength='32' />
@@ -33,6 +33,15 @@
     <div class="div-table-col-label"><label>Email:</label></div>
     <div class="div-table-col-data">
       <input class="div-table-col-input" readonly id='email' name='email' type='text' value='{{email}}' maxlength='32' />
+    </div>
+  </div>
+  <div class="div-table-row">
+    <div class="div-table-col-label"><label>Opened by:</label></div>
+    <div class="div-table-col-data">
+      <input id='opened_by' name='opened_by' type='text' value='{{opened_by}}' maxlength='20' />
+      <button id="open_details" class='open_details div-table-button'>
+        Details
+      </button>
     </div>
   </div>
   <div class="div-table-row">

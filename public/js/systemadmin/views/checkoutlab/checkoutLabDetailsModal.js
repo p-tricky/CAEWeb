@@ -1,4 +1,3 @@
-//Define module for the virus user tab to live in.
 SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Marionette, $, _) {
   //Define a composite view to be used to show the modal box that allows the user to add a new
   //user to the virus users. 
@@ -37,7 +36,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       };
       //Send the object of parameters to the model to be saved with the addUser function.
       //The result will be returned to the result variable
-      var result = this.model.addCheckout(fields);
+      var result = this.model.saveCheckout(fields);
       //If the save was successful
       if (result) {
         //Remove the fade overlay and modalbox

@@ -11,6 +11,23 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       'phone_number': '',
       'email': '',
       'checkout_date': '',
+      'cico_system_on': '',
+      'printers_on': '',
+      'print_stations_on': '',
+      'open_main_doors': '',
+      'open_side_doors': '',
+      'opened_by': '',
+      'cico_system_off': '',
+      'printers_off': '',
+      'print_stations_off': '',
+      'close_main_doors': '',
+      'close_side_doors': '',
+      'refill_printer_paper': '',
+      'push_in_chairs': '',
+      'turn_off_machines': '',
+      'recycle_prints': '',
+      'lock_cae_office_doors': '',
+      'closed_by': '',
       'updated_at':'',
       'created_at':'',
     },
@@ -35,7 +52,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       });
     },
 
-    //Function to save the scan to the server side. The function takes an object of properties to update
+    //Function to save the scan to the server side. 
     //as the parameter for the function
     saveCheckout : function(updateModelProperties) {
       this.set(updateModelProperties);
