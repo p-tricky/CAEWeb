@@ -128,10 +128,24 @@ input {
   width:166px;
   text-align: right;
 }
+.div-table-col-checkbox-label{
+  float:left;/*fix for  buggy browsers*/
+  display:table-cell;         
+  width:266px;
+  text-align: right;
+}
 .div-table-col-data{
   float:left;/*fix for  buggy browsers*/
   display:table-cell;         
   width:430px;
+  text-align: left;
+  padding-left: 4px;
+  margin-left: 4px;
+}
+.div-table-col-checkbox{
+  float:left;/*fix for  buggy browsers*/
+  display:table-cell;         
+  width:330px;
   text-align: left;
   padding-left: 4px;
   margin-left: 4px;
