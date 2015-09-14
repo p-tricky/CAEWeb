@@ -56,6 +56,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
 
       //re-render the schduler with the applied filter.
       scheduler.view(scheduler.view().name);
+      AdminScheduleTab.AdminScheduleController.updateEmails();
     }
     
   });

@@ -95,4 +95,19 @@ class UsersApiController extends BaseController {
     $nums = preg_replace('/\D+/', '', $phoneNumber);
     return $nums;
   }
+
+  public function getEmails() {
+    try {
+      $uids = Input::get('id');
+      //echo print_r($uids);
+      $emails = "";
+      foreach ($uids as $uid) {
+        $emails .= User::where('id', '=', $uid)->pluck('email') . ", ";
+      }
+      $emails = substr($emails, 0, strlen($emails)-2);
+      return $emails;
+    } catch(Exception $e) {
+      return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
+    }
+  }
 }

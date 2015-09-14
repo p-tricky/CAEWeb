@@ -56,7 +56,10 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
 
       //re-render the schduler with the applied filter.
       scheduler.view(scheduler.view().name);
-    }
+      AttendantScheduleTab.AttendantScheduleController.updateEmails();
+    },
+
+    
     
   });
 });

@@ -38,6 +38,8 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
       AttendantScheduleTab.attendantList.each(function(model) {
         AttendantScheduleTab.employeeFilter.push(model.get('id'));
       });
+
+      AttendantScheduleTab.AttendantScheduleController.updateEmails();
     
       //create a new employee select section view. This is the view that allows the users to be removed and added from the schedule view.
       AttendantScheduleTab.employeeSelectSection = new App.AttendantScheduleTab.EmployeeSelectSectionCollectionView({collection:AttendantScheduleTab.attendantList});
@@ -313,6 +315,17 @@ EmployeeApp.module('AttendantScheduleTab', function (AttendantScheduleTab, App, 
         }
       });
 
+    }, 
+
+    updateEmails : function() {
+      var empIds = EmployeeApp.AttendantScheduleTab.employeeFilter;
+      $.ajax({
+          type: "GET",
+          url: 'api/getemails',
+          data: {id: empIds},
+        }).done(function(response) {
+          EmployeeApp.emails = response;
+        });
     }
 
   };

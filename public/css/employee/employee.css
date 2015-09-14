@@ -291,7 +291,7 @@ input {
   display: none;
 }
 
-#print {
+#print, #getEmails {
   float: right;
   padding: 3px;
   padding-right: 6px;

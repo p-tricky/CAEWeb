@@ -38,6 +38,8 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
         AdminScheduleTab.employeeFilter.push(model.get('id'));
       });
 
+      AdminScheduleTab.AdminScheduleController.updateEmails();
+
       //create a new employee select section view. This is the view that allows the users to be removed and added from the schedule view.
       AdminScheduleTab.employeeSelectSection = new AdminScheduleTab.EmployeeSelectSectionCollectionView({collection:AdminScheduleTab.adminList});
       //show the employee select section view
@@ -352,9 +354,18 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
         self.addClass( "time" + time + "" );
         if (count % numOfCells === 0)
           time++;
-      });
+      });      
+    }, 
 
-      
+    updateEmails : function() {
+      var empIds = EmployeeApp.AdminScheduleTab.employeeFilter;
+      $.ajax({
+          type: "GET",
+          url: 'api/getemails',
+          data: {id: empIds},
+        }).done(function(response) {
+          EmployeeApp.emails = response;
+        });
     }
   };
 });

@@ -38,6 +38,8 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
       ProgrammerScheduleTab.programmerList.each(function(model) {
         ProgrammerScheduleTab.employeeFilter.push(model.get('id'));
       });
+
+      ProgrammerScheduleTab.ProgrammerScheduleController.updateEmails();
     
       //create a new employee select section view. This is the view that allows the users to be removed and added from the schedule view.
       ProgrammerScheduleTab.employeeSelectSection = new App.ProgrammerScheduleTab.EmployeeSelectSectionCollectionView({collection:ProgrammerScheduleTab.programmerList});
@@ -312,6 +314,17 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
         }
       });
 
+    },
+
+    updateEmails : function() {
+      var empIds = EmployeeApp.ProgrammerScheduleTab.employeeFilter;
+      $.ajax({
+          type: "GET",
+          url: 'api/getemails',
+          data: {id: empIds},
+        }).done(function(response) {
+          EmployeeApp.emails = response;
+        });
     }
   };
 });
