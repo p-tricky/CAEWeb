@@ -40,6 +40,7 @@ class AssetManagementApiController extends BaseController {
 					break;
 			}
 			
+      $assets = $assets->get();
       //sets the department name for each asset
 			foreach ($assets as $asset) {
 				$asset->department_name = Department::where('id', '=', $asset->department_id)->pluck('name');
