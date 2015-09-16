@@ -38,6 +38,12 @@ RoomScheduleApp.RoomController = {
       RoomScheduleApp.tabDiv = new RoomScheduleApp.RoomTabsList.RoomView({'tabName':'specialroomTab'});
       RoomScheduleApp.tabArea.show(RoomScheduleApp.tabDiv);
       RoomScheduleApp.RoomScheduleSpecialRoomTab.SpecialRoomController.showRoomSchedule();
+    },
+
+    //function to be called when the uploadschedule route is in the url
+    uploadschedule : function() {
+      RoomScheduleApp.tabDiv = new RoomScheduleApp.RoomTabsList.UploadScheduleView({'tabName':'uploadscheduleTab'});
+      RoomScheduleApp.tabArea.show(RoomScheduleApp.tabDiv);
     }
 };
 
@@ -49,13 +55,14 @@ RoomScheduleApp.Router = new Marionette.AppRouter({
       "computerclassroom" : "computerclassroom",
       "breakoutroom" : "breakoutroom",
       "specialroom" : "specialroom",
+      "uploadschedule" : "uploadschedule",
     }
 });
 
 //Setup the things that need to start when the App is started. This includes getting inital templates, and starting the history.
 RoomScheduleApp.on('initialize:after', function() {
   //load any initial templates that may be needed.
-  tpl.loadTemplates(['classroomTab','computerclassroomTab','breakoutroomTab','specialroomTab'], function() {
+  tpl.loadTemplates(['classroomTab','computerclassroomTab','breakoutroomTab','specialroomTab', 'uploadscheduleTab'], function() {
     //start the backbone history
     var result = Backbone.history.start({pushState: true, root: "/caeweb/roomschedule/"});//, silent:true});
   });

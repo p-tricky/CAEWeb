@@ -2,7 +2,7 @@
 RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Marionette, $, _) {
 
   //Define a layout to be used
-  RoomTabsList.RoomView = Backbone.Marionette.ItemView.extend({
+  RoomTabsList.UploadScheduleView = Backbone.Marionette.ItemView.extend({
 
     //When this view is initalized, do the following things
     initialize : function(options) {
@@ -26,7 +26,19 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
       'click .specialroom':'navigateToSpecialRoom',
       'click .uploadschedule':'navigateToUploadSchedule'
     },
-    
+
+    onShow: function() {
+      $('#fileupload').fileupload({
+        url: 'uploadschedule',
+        dataType: 'json', 
+        done: function (e, data) { 
+          $.each(data.result.files, function (index, file) {
+            $('<p/>').text(file.name).appendTo(document.body);
+          });
+        }
+      });
+    },
+
     //Functions to be run from the events setup right above.
     navigateToClassroom : function() {
       RoomScheduleApp.navigate('classroom',true);
