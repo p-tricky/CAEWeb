@@ -52,7 +52,12 @@ class ShiftApiController extends BaseController {
         $shiftNumber = 1;
 
         //get shifts in specified range
-        $shifts = Shift::where('eid', '=', $userid)->where('clockOut', '<=', $end)->where('clockIn', '>=', $start)->orderBy('clockIn')->get();
+        //will always add on a still clocked in shift
+        $shifts = Shift::where(function($query) use ($userid, $start, $end) {
+            $query->where('eid', '=', $userid)->where('clockOut', '<=', $end)->where('clockIn', '>=', $start);
+        })->orWhere(function($query) use ($userid){
+            $query->where('eid', '=', $userid)->where('clockout', '=', '0000-00-00 00:00:00');
+        })->orderBy('clockIn')->get();
         foreach($shifts as $shift) {
             $startTime = new DateTime($shift->clockIn);
             $endTime = new DateTime($shift->clockOut);

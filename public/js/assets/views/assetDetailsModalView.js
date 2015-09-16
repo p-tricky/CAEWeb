@@ -37,6 +37,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       var fields = {
         brand_name : $('#brand_name').val(),
         serial_number : $('#serial_number').val(),
+        asset_tag : $('#asset_tag').val(),
         description : $('#description').val(),
         room : $('#room').val(),
         department_id : $('#departmentsDropDown option:selected').val(),

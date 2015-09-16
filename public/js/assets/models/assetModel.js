@@ -7,6 +7,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       'id' : null,
       'brand_name' : '',
       'serial_number' : '',
+      'asset_tag' : null,
       'description' : '',
       'room' : '',
       'department_id' : 0,
