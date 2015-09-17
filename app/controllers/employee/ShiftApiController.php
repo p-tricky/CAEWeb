@@ -190,18 +190,12 @@ class ShiftApiController extends BaseController {
         Shift::where('id', '=', $shiftId)->delete();
     }
 
-    //There is a 24 hour time limit on shifts.  If someone has been
-    //clocked in for more than 24 hours, we assume that that person
-    //forgot to clock out
+    //This will clockout everyone still clocked in when this function is called. There is a script on Dolby
+    //that will call this URL every night at 2:00 am. It will clockout everyone then. 
     public function endForgottenShifts() {
-      $today = new DateTime();
-      $yesterday = date_sub($today, date_interval_create_from_date_string('1 day'));
-      $forgottenShifts = Shift::where('clockOut', '=', '0000-00-00 00:00:00')
-        ->where('clockIn', '<', $yesterday)
-        ->get();
+      $forgottenShifts = Shift::where('clockOut', '=', '0000-00-00 00:00:00')->get();
       foreach($forgottenShifts as $shift) {
-        $cin = new DateTime($shift->clockIn);
-        $cout = date_add($cin, date_interval_create_from_date_string('1 day'));
+        $cout = new DateTime();
         $shift->clockOut = $cout->format('Y-m-d H:i:s');
         $shift->save();
       }
