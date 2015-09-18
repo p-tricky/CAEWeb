@@ -81,6 +81,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
         console.log('Copying text command was ' + msg);
       } catch (err) {
         console.log('Oops, unable to copy');
+        window.prompt("Copy to clipboard: Ctrl+C, Enter", EmployeeApp.emails);
       }
 
       document.body.removeChild(textArea);
