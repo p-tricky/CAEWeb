@@ -5,8 +5,9 @@
 	"license": "MIT",
 	"require": {
 		"laravel/framework": "4.0.0",
-	"conarwelsh/mustache-l4": "dev-master",
-    "DJBarnes/l4-ldap-auth" : "dev-master"
+  	"conarwelsh/mustache-l4": "dev-master",
+    "DJBarnes/l4-ldap-auth" : "dev-master",
+    "phpoffice/phpexcel": "1.8.1"
 	},
 	"repositories": [
 	{

@@ -1,6 +1,8 @@
 <?php
  
 use Illuminate\Database\Eloquent\Collection as BaseCollection;
+require_once(base_path() . '/vendor/autoload.php'); //import Excell helper classes
+
 
 class UploadScheduleController extends BaseController {
   /*
@@ -9,48 +11,19 @@ class UploadScheduleController extends BaseController {
   $data = null;
   //which semester this is for
   $semester = null;
-  //starting line number for each day
-  $days = null;
   */
 
   public function fillInSchedule() {
-
-    //require_once "../reader.php";
-
-    // info is stored in the $_FILES array
-    // upload a small file and view the uploadschedule response to see the
-    // contents of $_FILES and the file
-    echo '$_Files: ' . print_r($_FILES, true);
-
     $uploadName = $_FILES['file']['tmp_name'];
-    $upload = fopen($uploadName, 'r');
-    echo fread($upload, filesize($uploadName));
-    fclose($upload);
+    $excelReader = PHPExcel_IOFactory::createReaderForFile($uploadName);
+    $excelReader->setReadDataOnly();
+    $excelReader->setLoadSheetsOnly('Sheet1');
+    $excelObj = $excelReader->load($uploadName);
+    $spreadsheet = $excelObj->getActiveSheet()->toArray(null, true,true,true);
 
-    /*
-    //this is the way I plan on writing the program
-    //Note: psudocode. most likely improper syntax
-    if ($this->data = $this->validateFile($file) == false)
-      return "Error: Invalid file";
-    else
-    {
-      $selectedSemester = $this->data->sheets[0]['cells'][1]['G'];
-      $this->getSemester($selectedSemester);
-
-      $classrooms = $this->getClassRooms();
-
-      foreach ($this->days as $day)
-      {
-        foreach($classrooms as $cell => $classroom)
-        {
-          $this->createEvents($day, $cell, $classroom)
-        }
-      }
-    }
-
-    //close the file
-    
-    */
+    $formattedArray = $this->parseSpreadsheet($spreadsheet);
+    Log::info("formattedArray:\n" . print_r($formattedArray, true));
+        
   }
 
   private function createEvents($day, $cell, $classroom)
@@ -92,23 +65,6 @@ class UploadScheduleController extends BaseController {
     }
   }
 
-  private function validateFile($file)
-  {
-    /*
-    //Note: rough psudocode. improper syntax
-    if (!file.endsWith ".xls")
-      return false;
-    else
-    {
-      $this->data = new Spreadsheet_Excel_Reader();
-      $this->data->read($file);
-      //check for header data
-      //check that lab type is in 1D
-      //check that semester is in 1G
-      //check for days in A#
-    }
-    */
-  }
 
   private function getSemester($selectedSemester)
   {
@@ -119,10 +75,216 @@ class UploadScheduleController extends BaseController {
     $this->semester = Semester::where('id', '=', $selectedSemester)->first();
   }
 
-  private function getClassRooms()
+
+  //
+  // inputs the spreadsheet
+  // returns an array formatted like so:
+  //   Array
+  //   (
+  //       [AE4600] => Array
+  //           (
+  //               [0] => Array
+  //                   (
+  //                       [startT] => Array
+  //                           (
+  //                               [H] => 8
+  //                               [M] => 30
+  //                           )
+  //                       [endT] => Array
+  //                           (
+  //                               [H] => 10
+  //                               [M] => 30
+  //                           )
+  //                       [room] => C-122
+  //                       [day] => MO
+  //                   )
+  //               [1] => Array
+  //                   (
+  //                       [startT] => Array
+  //                           (
+  //                               [H] => 8
+  //                               [M] => 30
+  //                           )
+  //                       [endT] => Array
+  //                           (
+  //                               [H] => 10
+  //                               [M] => 30
+  //                           )
+  //                       [room] => C-122
+  //                       [day] => WE
+  //                   )
+  //               [2] => ...
+  //       [ECE 3710] => ...
+  // Yes, it's ugly. I'm sorry.
+  //
+  private function parseSpreadsheet(&$spreadSheet)
   {
-    //the first set of classrooms should be in 2C and continue until there is an empty cell. 
-    //store the classrooms in an array and return the array
-    //array should look like ['C' -> 'D-210', 'D' -> 'D-212'] where the letter is the cell letter and the data is the room number
+    $formattedArray = array(); //return value
+    // this function has some local vars:
+    // $day holds current day
+    // $roomList holds is an associative array where column is key and room is val
+    //    array('C' => 'C-208', 'D' => 'C-220'...
+    // afternoon boolean tells program whether or not to add 12 hours to time
+    // startTime and endTime are assigned to every class
+    $day = $roomList = $afternoon = $startTime = $endTime = false; 
+    foreach ($spreadSheet as $rowNum=>$row)
+    {
+      if (trim($row['A']) == "skip") continue;  //skip rows where the first col is "skip"
+      elseif (!$day and !$roomList) {           //if day and roomList aren't set keep looking for the header
+        //header is the row with cols formatted like |<day name>|Room|<room name>|<room name>|...
+        $this->setDayAndRoomList($row, $day, $roomList);  //checks to see if the row is a header, if so it sets day and roomList
+      }
+      else 
+      // the day and roomList have been set, so lets add some classes
+      {
+        $this->setTimes($rowNum, $spreadSheet, $startTime, $endTime, $afternoon);  //looks in time col for current classes start and end time
+        if ($startTime and $endTime) //if we found a start time and end time for this row of schedule, add classes in the row to the formatted array
+        {
+          foreach($roomList as $col=>$room)
+          {
+            $className = trim($row[$col]);
+            if ($className) 
+              $this->addClassInfo($className, $day, $room, $startTime, $endTime, $formattedArray);
+          }
+        } else { //we didn't find start time and end time for this row, so this schedule block must have ended
+          $day = $roomList = $afternoon = $startTime = $endTime = false; //reset local vars
+          $this->setDayAndRoomList($row, $day, $roomList); //check to see if row is header for the next block
+        }
+      }
+    }
+    return $formattedArray;
+  }
+
+  // like a lot of the parse spreadsheet functions this uses pass by reference
+  // we pass the formatted class array ($cArray) by reference so that the
+  // changes we make to it persist outside the scope of this function
+  private function addClassInfo($cName, $cDay, $cRoom, $cStartT, $cEndT, &$cArray) 
+  {
+    // if we don't have an existing time block for the class, add one
+    if (!isset($cArray[$cName]))
+      $cArray[$cName] = [
+        ['startT' => $cStartT, 
+         'endT'   => $cEndT, 
+         'room'   => $cRoom, 
+         'day'  => $cDay]
+      ];
+    else {
+      // we are either extending an existing class block or creating a new class
+      // block entirely
+      $startNewClassBlock = true;
+      // cycle through all the existing  time blocks for that class
+      foreach ($cArray[$cName] as &$classBlock) {
+        // if the new entries startT and day matches an existing class block's endT and day, 
+        if ($classBlock['endT'] == $cStartT and $classBlock['day'] == $cDay and $classBlock['room'] == $cRoom) {
+          // then extend the existing class block 
+          // and signal that a new class block shouldn't be created
+          $classBlock['endT'] = $cEndT;
+          $startNewClassBlock = false;
+          break;
+        }
+      }
+      if ($startNewClassBlock) 
+        array_push($cArray[$cName], 
+          ['startT' => $cStartT, 
+           'endT'   => $cEndT, 
+           'room'   => $cRoom, 
+           'day'  => $cDay]);
+    }
+  }
+
+  //pass $day and $roomList by reference so that changes persist
+  //if the first 2 cells in the row match |<day name>|Room| format
+  //then add the following cells to the room list
+  public function setDayAndRoomList($row, &$day, &$roomList)
+  {
+    if (($day = $this->getDay($row['A'])) and $this->isRoom($row['B'])) {
+      foreach(array_slice($row, 2) as $col=>$room) {
+        if ($room == "") break;
+        $roomList[$col] = $room;
+      } 
+    } else {
+      $day = false;
+      $roomList = false;
+    }
+  }
+
+  // set $startTime, $endTime, and $afternoon variables for the parseSpreadsheet function
+  // the $startTime and $endTime are associative arrays. 9:20 would give:
+  // [ 'H' => 9, 'M' => 20 ]
+  // afternoon is a boolean
+  //
+  // all of the class times should be in column B of the spreadsheet (row['B'])
+  // the start time for the classes in the row is held in column 'B'
+  // the end time is held in the next row that does not contain skip in the first col
+  private function setTimes($curRowNum, &$excelSpreadsheet, &$startTime, &$endTime, &$afternoon)
+  {
+    $nextRowNum = $curRowNum + 1;
+    // cycle through rows until we find one that does not contain "skip" in first cell
+    // make sure to check that things are set isset so that we don't go off end of spreadsheet and get null errors
+    while (isset($excelSpreadsheet[$nextRowNum]) and trim($excelSpreadsheet[$nextRowNum]['A']) == "skip") $nextRowNum++;
+    if (isset($excelSpreadsheet[$nextRowNum])) {
+      $curRowTimeCell = trim($excelSpreadsheet[$curRowNum]['B']);
+      $nextRowTimeCell = trim($excelSpreadsheet[$nextRowNum]['B']);
+      // check that time cells match the HH:MM format
+      if (preg_match('/^\d{1,2}:\d{2}$/m', $curRowTimeCell) and preg_match('/^\d{1,2}:\d{2}$/m', $nextRowTimeCell))
+      {
+        $startA = explode(':', $curRowTimeCell);
+        $endA = explode(':', $nextRowTimeCell);
+        $startTime = ['H'=>(int)$startA[0],
+                      'M'=>(int)$startA[1]];
+        $endTime = ['H'=>(int)$endA[0],
+          'M'=>(int)$endA[1]];
+        if ($afternoon) //if afternoon is set, then we need to add 12 hrs so class times don't conflict with am classes
+        {
+          if ($startTime['H'] < 12) $startTime['H'] += 12;
+          if ($endTime['H'] < 12) $endTime['H'] += 12;
+        } elseif ($endTime['H'] < $startTime['H']) {
+          $endTime['H'] += 12;
+          $afternoon = true;
+        }
+      } else {
+        // the 'B' cols didn't match the HH:MM format
+        // we can assume the current schedule block has ended
+        // unset variables so that parse spreadshet function knows to start
+        // looking for new schedule block
+        $startTime = $endTime = $afternoon = false; 
+      }
+    }
+    // we went of the end of the spreadsheet
+    else $startTime = $endTime = $afternoon = false;
+  }
+
+  // cells containing room text mark the start of the roomList
+  // this function does a case insensitive match on the $room string
+  // a tailing . is optional
+  // some accepted $room strings are "Room", "room.", "RoOm."
+  private function isRoom($room) 
+  {
+    $room = trim($room); //trim surrounding white space
+    if (preg_match( '/^room\.?$/im', $room))
+      return true;
+    else
+      return false;
+  }
+
+  //checks to see if column contains a day
+  //acceptable formats for days are case insensitive and may have a single
+  //trailing period
+  //for example, some of the acceptable monday strings are:
+  //  "monday."
+  //  "MondAy"
+  //  "MON."
+  //  "mon"
+  private function getDay($day) 
+  {
+    $day = trim($day); // trim surrounding white space
+    if (preg_match( '/^mon(day)?\.?$/im', $day)) return 'MO';
+    if (preg_match( '/^tues(day)?\.?$/im', $day)) return 'TU';
+    if (preg_match( '/^wed(nesday)?\.?$/im', $day)) return 'WE';
+    if (preg_match( '/^thur(sday)?\.?$/im', $day)) return 'TH';
+    if (preg_match( '/^fri(day)?\.?$/im', $day)) return 'FR';
+    if (preg_match( '/^sat(urday)?\.?$/im', $day)) return 'SA';
+    if (preg_match( '/^sun(day)?\.?$/im', $day)) return 'SU';
+    return false;
   }
 }
