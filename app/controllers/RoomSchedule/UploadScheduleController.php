@@ -22,20 +22,71 @@ class UploadScheduleController extends BaseController {
     $spreadsheet = $excelObj->getActiveSheet()->toArray(null, true,true,true);
 
     $formattedArray = $this->parseSpreadsheet($spreadsheet);
-    Log::info("formattedArray:\n" . print_r($formattedArray, true));
+    $this->createEvents($formattedArray);
         
   }
 
-  private function createEvents($day, $cell, $classroom)
+  // fill in database from schedule
+  // $classData contains $classes
+  // $classes contain $classBlocks
+  // each $classBlock is the equivalent of
+  //    a single class meeting.
+  //    so if cs 101 meets 9-11 MWF
+  //    cs 101 will have 2 class blocks,
+  //    one for M, one for W, and one for F
+  private function createEvents($classData)
   {
-    //get class name for this event
+    foreach ($classData as $class=>$classBlocks)
+      foreach ($classBlocks as $classBlock)
+        $this->createEvent($class, $classBlock);
+        
+  }
 
-    //create a model that can be added to the database
+  private function createEvent($class, $classBlock) {
+    $startDatetime = new DateTime();
+    $endDatetime = new DateTime();
+    
+    $Eastern = new DateTimeZone('America/Detroit');
+    $startDatetime->setTimezone($Eastern);
+    $endDatetime->setTimezone($Eastern);
 
-    //check to see if that model exists
-    //if so, then add another BYDAY to it
+    // get the dayBefore the first day of semester
+    $dayBeforSemesterStart = strtotime('-1 day', $this->getSemester(null));
 
-    //Otherwise, create the RecurrenceRule and save the model
+    // get the first day of the semester
+    $firstDayOfClass = strtotime('next '. $classBlock['day'], $dayBeforSemesterStart);
+    // calculate lo
+    // all the db times are 4 hours behind. not sure why
+    $startDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['startT']['H']-4)+$classBlock['startT']['M']));
+    $endDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['endT']['H']-4)+$classBlock['endT']['M']));
+
+    $room = CeasRooms::where('name', '=', $classBlock['room'])->first();
+    if ($room) {
+      switch($room->type)
+      {
+      case "1":
+        $newClassroom = new Classroom;
+        break;
+      case "2":
+        $newClassroom = new ComputerClassroom;
+        break;
+      case "3":
+        $newClassroom = new BreakoutRoom;
+        break;
+      case "4":
+        $newClassroom = new SpecialRoom;
+        break;
+      default:
+        return;
+
+      }
+
+      $newClassroom->RoomId = $room->id;
+      $newClassroom->Title = $class;
+      $newClassroom->Start = $startDatetime->format('Y-m-d H:i:s');
+      $newClassroom->End = $endDatetime->format('Y-m-d H:i:s');
+      $newClassroom->save();
+    }
   }
 
   private function checkDuplicates($modelToBeAdded, $table) {
@@ -68,11 +119,17 @@ class UploadScheduleController extends BaseController {
 
   private function getSemester($selectedSemester)
   {
+    /*
     //replaces spaces
     str_replace(' ', '', $selectedSemester);
     //converts to all lowercase. this should match the id in the database
     $selectedSemester = strtolower($selectedSemester);
     $this->semester = Semester::where('id', '=', $selectedSemester)->first();
+     */
+
+    $now = date("Y-m-d H:i:s");
+    $semesterStart = Semester::where('start_date', '<', $now)->orderBy('start_date', 'desc')->pluck('start_date');
+    return strtotime($semesterStart);
   }
 
 
@@ -278,13 +335,13 @@ class UploadScheduleController extends BaseController {
   private function getDay($day) 
   {
     $day = trim($day); // trim surrounding white space
-    if (preg_match( '/^mon(day)?\.?$/im', $day)) return 'MO';
-    if (preg_match( '/^tues(day)?\.?$/im', $day)) return 'TU';
-    if (preg_match( '/^wed(nesday)?\.?$/im', $day)) return 'WE';
-    if (preg_match( '/^thur(sday)?\.?$/im', $day)) return 'TH';
-    if (preg_match( '/^fri(day)?\.?$/im', $day)) return 'FR';
-    if (preg_match( '/^sat(urday)?\.?$/im', $day)) return 'SA';
-    if (preg_match( '/^sun(day)?\.?$/im', $day)) return 'SU';
+    if (preg_match( '/^mon(day)?\.?$/im', $day)) return 'Monday';
+    if (preg_match( '/^tues(day)?\.?$/im', $day)) return 'Tuesday';
+    if (preg_match( '/^wed(nesday)?\.?$/im', $day)) return 'Wednesday';
+    if (preg_match( '/^thu(r(sday)?)?\.?$/im', $day)) return 'Thurseday';
+    if (preg_match( '/^fri(day)?\.?$/im', $day)) return 'Friday';
+    if (preg_match( '/^sat(urday)?\.?$/im', $day)) return 'Saturday';
+    if (preg_match( '/^sun(day)?\.?$/im', $day)) return 'Sunday';
     return false;
   }
 }
