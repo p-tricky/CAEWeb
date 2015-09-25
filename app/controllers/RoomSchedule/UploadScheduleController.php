@@ -46,15 +46,14 @@ class UploadScheduleController extends BaseController {
     $startDatetime = new DateTime();
     $endDatetime = new DateTime();
     
-    $Eastern = new DateTimeZone('America/Detroit');
-    $startDatetime->setTimezone($Eastern);
-    $endDatetime->setTimezone($Eastern);
-
-    // get the dayBefore the first day of semester
-    $dayBeforSemesterStart = strtotime('-1 day', $this->getSemester(null));
+    // get the dayBefore the first and the day after the last day of the
+    // semester
+    $semester = $this->getSemester(null);
+    $dayBeforeSemesterStart = strtotime('-1 day', strtotime($semester['start_date']));
+    $dayAfterLastDayOfSemester = strtotime('+1 day', strtotime($semester['end_date']));
 
     // get the first day of the semester
-    $firstDayOfClass = strtotime('next '. $classBlock['day'], $dayBeforSemesterStart);
+    $firstDayOfClass = strtotime('next '. $classBlock['day'], $dayBeforeSemesterStart);
     // calculate lo
     // all the db times are 4 hours behind. not sure why
     $startDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['startT']['H']-4)+$classBlock['startT']['M']));
@@ -85,6 +84,7 @@ class UploadScheduleController extends BaseController {
       $newClassroom->Title = $class;
       $newClassroom->Start = $startDatetime->format('Y-m-d H:i:s');
       $newClassroom->End = $endDatetime->format('Y-m-d H:i:s');
+      $newClassroom->RecurrenceRule = "FREQ=WEEKLY;UNTIL=".date("Y-m-d\TH:i:s\Z", $dayAfterLastDayOfSemester).";BYDAY=".substr($classBlock['day'], 0, 2);
       $newClassroom->save();
     }
   }
@@ -119,17 +119,9 @@ class UploadScheduleController extends BaseController {
 
   private function getSemester($selectedSemester)
   {
-    /*
-    //replaces spaces
-    str_replace(' ', '', $selectedSemester);
-    //converts to all lowercase. this should match the id in the database
-    $selectedSemester = strtolower($selectedSemester);
-    $this->semester = Semester::where('id', '=', $selectedSemester)->first();
-     */
-
     $now = date("Y-m-d H:i:s");
-    $semesterStart = Semester::where('start_date', '<', $now)->orderBy('start_date', 'desc')->pluck('start_date');
-    return strtotime($semesterStart);
+    $semester = Semester::where('start_date', '<', $now)->orderBy('start_date', 'desc')->first();
+    return $semester;
   }
 
 
