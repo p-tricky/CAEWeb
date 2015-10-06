@@ -2,3 +2,96 @@
   font-size: 12px;
   text-align: center;
 }
+button
+{
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+input[type="file"]
+{
+    border-radius: 6px;
+    color: #331900;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+select 
+{
+	width: auto;
+	margin: 5px;
+	padding: 5px;
+}
+.div-table{
+  display:table;         
+  width:100%;         
+  background-color:#d4b77d;
+  color: #331900;         
+  border:1px solid  #666666;         
+  border-spacing:5px;
+  border-radius: 5px;
+  font-size: 16px;
+  table-layout: fixed;
+  margin: 10px;
+}
+.div-table-row{
+  display:table-row;
+  width:auto;
+  clear:both;
+}
+.div-table-col-rightBtns {
+  float:right;
+  display:table-cell;         
+  width:166px;
+}
+.div-table-col-leftBtns {
+  float:left;
+  display:table-cell;         
+  width:166px;
+}
+.div-table-col-label{
+  float:left;
+  display:table-cell;         
+  width:266px;
+  text-align: right;
+}
+.div-table-col-data{
+  float:left;
+  display:table-cell;         
+  width:350px;
+  text-align: left;
+  padding-left: 4px;
+  margin-left: 4px;
+}
+.div-table-col-input{
+  font-size: 16px;
+  width: 166px;
+  background-color: #ebd29b;
+  border-color: #663300;
+}
+.div-table-col-textarea{
+  font-size: 16px;
+  height: 200px;
+  width: 400px;
+  background-color: #ebd29b;
+  border-color: #663300;
+}
+.div-table-button{
+  font-size: 16px;
+  border-radius: 8px;
+  background-color: #ebd29b;
+  border-color: #663300;
+  color: #331900;
+  padding: 6px;
+}
+#room-header{
+	font-size: 20px;
+}
+#confirmModalBox {
+  display: none;
+}

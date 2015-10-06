@@ -24,7 +24,12 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
       'click .computerclassroom':'navigateToComputerClassroom',
       'click .breakoutroom':'navigateToBreakoutRoom',
       'click .specialroom':'navigateToSpecialRoom',
-      'click .uploadschedule':'navigateToUploadSchedule'
+      'click .uploadschedule':'navigateToUploadSchedule',
+
+      'click #delClassroom' : 'deleteClassroom',
+      'click #delComputer' : 'deleteComputer',
+      'click #delBreakout' : 'deleteBreakout',
+      'click #delSpecial' : 'deleteSpecial',
     },
 
     onShow: function() {
@@ -36,6 +41,19 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
             $('<p/>').text(file.name).appendTo(document.body);
           });
         }
+      });
+
+      $.ajax({
+        type: "GET",
+        url: 'api/getsemesters',
+      }).done(function(response) {
+        var array = JSON.parse("[" + response + "]");
+        $.each(array[0], function(value,key){
+          $('#classroomSelect').append($("<option></option>").attr("value",value).text(key));
+          $('#computerSelect').append($("<option></option>").attr("value",value).text(key));
+          $('#breakoutSelect').append($("<option></option>").attr("value",value).text(key));
+          $('#specialSelect').append($("<option></option>").attr("value",value).text(key));
+        });        
       });
     },
 
@@ -58,6 +76,47 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
 
     navigateToUploadSchedule : function() {
       RoomScheduleApp.navigate('uploadschedule',true);
+    },
+
+    deleteClassroom : function() {
+      this.doubleCheck("Classroom", $('#classroomSelect option:selected').attr("value"));
+    },
+
+    deleteComputer : function() {
+      this.doubleCheck("Computer", $('#computerSelect option:selected').attr("value"));
+    },
+
+    deleteBreakout : function() {
+      this.doubleCheck("Breakout", $('#breakoutSelect option:selected').attr("value"));
+    },
+
+    deleteSpecial : function() {
+      this.doubleCheck("Special", $('#specialSelect option:selected').attr("value"));
+    },
+    
+    doubleCheck : function(rooms, semester) {
+      $('#confirmModalBox').html("Are you sure you want to delete all the events for " + rooms + " for the " + semester + " semester?");
+      $('#confirmModalBox').dialog({
+        modal:true,
+        wait: true,
+        title: 'Delete Events?',
+        buttons: {
+          'Cancel': function() {
+            $(this).dialog('close');
+            return false;
+          },
+          'Ok': function() {
+            $.ajax({
+              type: "GET",
+              url: 'api/deletesemesterevents',
+              data: {semester: semester, roomType: rooms}
+            });
+            $(this).dialog('close');
+            return true;
+          }
+        },
+      });
     }
+
   });
 });

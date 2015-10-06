@@ -6,5 +6,54 @@
   <li id="uploadschedule" class="uploadschedule selectedTab">Upload Schedule</li>
 </ul>
 <div id="tabsContent" class="tab-content">
-<input id="fileupload" type="file" name="file">
+	<div class='div-table'>
+		<div class="div-table-row">
+    		<div><label>Upload New Schedule (must be .xls or .xlsx)<label></div>
+  		</div>
+  		<div class="div-table-row">
+    		<div><input id="fileupload" type="file" name="file"></div>
+  		</div>
+	</div>
+	<div class='div-table'>
+		<div class="div-table-row">
+    		<div id="room-header" class="div-table-col-label"><label>Delete Current Room Schedules</label></div>
+  		</div>
+  		<div class="div-table-row">
+    		<div class="div-table-col-label"><label>Classsrooms:</label></div>
+    		<div class="div-table-col-data" id='asset_type'>
+      		<select class="select-semester-list" id="classroomSelect"></select>
+      		<button id="delClassroom" class='delete div-table-button'>
+        		Delete
+      		</button>
+    		</div>
+  		</div>
+  		<div class="div-table-row">
+    		<div class="div-table-col-label"><label>Computer Classrooms:</label></div>
+    		<div class="div-table-col-data" id='asset_type'>
+      		<select class="select-semester-list" id="computerSelect"></select>
+      		<button id="delComputer" class='delete div-table-button'>
+        		Delete
+      		</button>
+    		</div>
+  		</div>
+  		<div class="div-table-row">
+    		<div class="div-table-col-label"><label>Breakout Rooms:</label></div>
+    		<div class="div-table-col-data" id='asset_type'>
+      		<select class="select-semester-list" id="breakoutSelect"></select>
+      		<button id="delBreakout" class='delete div-table-button'>
+        		Delete
+      		</button>
+    		</div>
+  		</div>
+  		<div class="div-table-row">
+    		<div class="div-table-col-label"><label>Special Rooms:</label></div>
+    		<div class="div-table-col-data" id='asset_type'>
+      		<select class="select-semester-list" id="specialSelect"></select>
+      		<button id="delSpecial" class='delete div-table-button'>
+        		Delete
+      		</button>
+    		</div>
+  		</div>
+	</div>
 </div>
+<div id="confirmModalBox"></div>

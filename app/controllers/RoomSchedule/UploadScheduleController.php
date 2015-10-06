@@ -5,13 +5,6 @@ require_once(base_path() . '/vendor/autoload.php'); //import Excell helper class
 
 
 class UploadScheduleController extends BaseController {
-  /*
-  //global variable for this class
-  //excel reader
-  $data = null;
-  //which semester this is for
-  $semester = null;
-  */
 
   public function fillInSchedule() {
     $uploadName = $_FILES['file']['tmp_name'];
@@ -32,7 +25,7 @@ class UploadScheduleController extends BaseController {
   // each $classBlock is the equivalent of
   //    a single class meeting.
   //    so if cs 101 meets 9-11 MWF
-  //    cs 101 will have 2 class blocks,
+  //    cs 101 will have 3 class blocks,
   //    one for M, one for W, and one for F
   private function createEvents($classData)
   {
@@ -335,5 +328,29 @@ class UploadScheduleController extends BaseController {
     if (preg_match( '/^sat(urday)?\.?$/im', $day)) return 'Saturday';
     if (preg_match( '/^sun(day)?\.?$/im', $day)) return 'Sunday';
     return false;
+  }
+
+  //returns the semsters that will populate the drop down for upload schedule
+  public function getSemesters() {
+    $semesters = Semester::select('id')->get();
+    $output = array();
+    foreach ($semesters as $id => $semester) {
+      if (strpos($semester, "i2") === false)
+      {
+        $temp = strtoupper(substr($semester['id'], 0,1)) . substr($semester['id'], 1, strlen($semester['id'])-5) . " " . substr($semester['id'], -4, 4);
+        $output[$semester['id']] = $temp;
+      }
+      else if (strpos($semester, "ii2") === false)
+      {
+        $temp = strtoupper(substr($semester['id'], 0,1)) . substr($semester['id'], 1, strlen($semester['id'])-6) . " " . strtoupper(substr($semester['id'], -5, 1)) . " " . substr($semester['id'], -4, 4);
+        $output[$semester['id']] = $temp;      
+      }
+      else
+      {        
+        $temp = strtoupper(substr($semester['id'], 0,1)) . substr($semester['id'], 1, strlen($semester['id'])-7) . " " . strtoupper(substr($semester['id'], -6, 2)) . " " . substr($semester['id'], -4, 4);
+        $output[$semester['id']] = $temp;
+      }
+    }
+    return json_encode($output);
   }
 }

@@ -29,4 +29,29 @@ class RoomListController extends BaseController {
         return $rooms->toJSON();
     }
 
+    public function deleteEvents() {
+        $input = Input::all();
+        $semester = Semester::find($input['semester']);
+        switch ($input['roomType']) {
+            case 'Classroom':
+                $events = Classroom::where('Start', '>', $semester->start_date)->where('End', '<', $semester->end_date)->get();
+                break;
+            case 'Breakout':
+                $events = BreakoutRoom::where('Start', '>', $semester->start_date)->where('End', '<', $semester->end_date)->get();
+                break;
+            case 'Computer':
+                $events = ComputerClassroom::where('Start', '>', $semester->start_date)->where('End', '<', $semester->end_date)->get();
+                break;
+            case 'Special':
+                $events = SpecialRoom::where('Start', '>', $semester->start_date)->where('End', '<', $semester->end_date)->get();
+                break;
+        }
+        echo $events->toJSON();
+        foreach ($events as $event) {
+            $event->delete();
+        }
+        echo $events->toJSON();
+
+    }
+
 }
