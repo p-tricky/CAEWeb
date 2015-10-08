@@ -29,23 +29,89 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
     
     //Functions to be run from the events setup right above.
     navigateToClassroom : function() {
-      RoomScheduleApp.navigate('classroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          RoomScheduleApp.navigate('classroom',true);
+        }
+      });      
+      
     },
 
     navigateToComputerClassroom : function() {
-      RoomScheduleApp.navigate('computerclassroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          RoomScheduleApp.navigate('computerclassroom',true);
+        }
+      });      
     },
 
     navigateToBreakoutRoom : function() {
-      RoomScheduleApp.navigate('breakoutroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          RoomScheduleApp.navigate('breakoutroom',true);
+        }
+      });      
     },
 
     navigateToSpecialRoom : function() {
-      RoomScheduleApp.navigate('specialroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          RoomScheduleApp.navigate('specialroom',true);
+        }
+      });      
     },
 
     navigateToUploadSchedule : function() {
-      RoomScheduleApp.navigate('uploadschedule',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          RoomScheduleApp.navigate('uploadschedule',true);
+        }
+      });
     }
   });
 });

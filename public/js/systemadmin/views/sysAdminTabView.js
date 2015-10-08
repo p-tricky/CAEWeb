@@ -31,19 +31,59 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
     //All of the functions associated with the events.
     navigateToVirusTracker : function() {
       //When the event fires this function, it will navigate the app to the specified uri
-      SysAdminApp.navigate('virustracker',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          SysAdminApp.navigate('virustracker',true);
+        }
+      });      
+      
     },
 
     //All of the functions associated with the events.
     navigateToVirusUser : function() {
       //When the event fires this function, it will navigate the app to the specified uri
-      SysAdminApp.navigate('virususer',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          SysAdminApp.navigate('virususer',true);
+        }
+      });      
     },
 
     //All of the functions associated with the events.
     navigateToCheckoutLab : function() {
       //When the event fires this function, it will navigate the app to the specified uri
-      SysAdminApp.navigate('checkoutlab',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          SysAdminApp.navigate('checkoutlab',true);
+        }
+      });      
     },
 
   });

@@ -18,4 +18,11 @@ class UserPermissionsApiController extends BaseController {
   public function destroy($id) {
     //stub for deletes. Should not be needed.
   }
+
+  public function checkLogin() {
+    if (Auth::check())
+      return "true";
+    else
+      return "false";
+  }
 }

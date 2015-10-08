@@ -33,23 +33,88 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     //All of the functions associated with the events.
     navigateToCurrentInventory : function() {
       //When the event fires this function, it will navigate the app to the specified uri
-      InventoryApp.navigate('currentinventory',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          InventoryApp.navigate('currentinventory',true);
+        }
+      });
     },
 
     navigateToViewOrders : function() {
-      InventoryApp.navigate('vieworders',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          InventoryApp.navigate('vieworders',true);
+        }
+      });
     },
 
     navigateToPlaceOrders : function() {
-      InventoryApp.navigate('placeorder',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          InventoryApp.navigate('placeorder',true);
+        }
+      });
     },
 
     navigateToViewLog : function() {
-      InventoryApp.navigate('viewlog',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          InventoryApp.navigate('viewlog', true);
+        }
+      });
     },
 
     navigateToVendor : function() {
-      InventoryApp.navigate('vendor', true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          InventoryApp.navigate('vendor', true);
+        }
+      });
     }
   });
 });

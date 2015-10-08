@@ -36,23 +36,88 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
     
     //Functions to be run from the events setup right above.
     navigateToClassroom : function() {
-      AVLogApp.navigate('classroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          AVLogApp.navigate('classroom',true);
+        }
+      });      
     },
 
     navigateToComputerClassroom : function() {
-      AVLogApp.navigate('computerclassroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          AVLogApp.navigate('computerclassroom',true);
+        }
+      });
     },
 
     navigateToBreakoutRoom : function() {
-      AVLogApp.navigate('breakoutroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          AVLogApp.navigate('breakoutroom',true);
+        }
+      });
     },
 
     navigateToSpecialRoom : function() {
-      AVLogApp.navigate('specialroom',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          AVLogApp.navigate('specialroom',true);
+        }
+      });
     },
 
     navigateToRecentEvents : function() {
-      AVLogApp.navigate('recentevents', true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          AVLogApp.navigate('recentevents',true);
+        }
+      });
     }
   });
 });

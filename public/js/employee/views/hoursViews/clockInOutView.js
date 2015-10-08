@@ -16,7 +16,20 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
 
     //calls the clockout function in the controller
     clockOut : function() {
-        EmployeeApp.MyHoursTab.MyHoursController.clockOut();
+        $.ajax({
+          type: "GET",
+          url: 'api/checklogin',
+        }).done(function(response) {
+          if (response == "false")
+          {
+            window.location.href = "/caeweb/";
+          }       
+          else
+          {
+            EmployeeApp.MyHoursTab.MyHoursController.clockOut();
+          }
+        });
+        
     },
 
     //calls the clockin function in the controller

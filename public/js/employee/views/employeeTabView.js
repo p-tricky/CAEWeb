@@ -35,8 +35,20 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       //current time on the client side. If it isn't canceled, it will continue to throw
       //errors when navigating to a different page.
       clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
-      //Do the navigate
-      EmployeeApp.navigate('myhours',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          EmployeeApp.navigate('myhours',true);
+        }
+      });      
     },
 
     navigateToAdminSchedule : function() {
@@ -44,8 +56,20 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       //current time on the client side. If it isn't canceled, it will continue to throw
       //errors when navigating to a different page.
       clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
-      //Do the navigate
-      EmployeeApp.navigate('adminschedule',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          EmployeeApp.navigate('adminschedule',true);
+        }
+      });
     },
 
     navigateToAttendentSchedule : function() {
@@ -53,8 +77,20 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       //current time on the client side. If it isn't canceled, it will continue to throw
       //errors when navigating to a different page.
       clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
-      //Do the navigate
-      EmployeeApp.navigate('attendantschedule',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          EmployeeApp.navigate('attendantschedule',true);
+        }
+      });
     },
 
     navigateToProgrammerSchedule : function() {
@@ -62,8 +98,20 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       //current time on the client side. If it isn't canceled, it will continue to throw
       //errors when navigating to a different page.
       clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
-      //Do the navigate
-      EmployeeApp.navigate('programmerschedule',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          EmployeeApp.navigate('programmerschedule',true);
+        }
+      });
     },
 
     navigateToTimesheet : function() {
@@ -71,8 +119,20 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       //current time on the client side. If it isn't canceled, it will continue to throw
       //errors when navigating to a different page.
       clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
-      //Do the navigate
-      EmployeeApp.navigate('timesheet',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          EmployeeApp.navigate('timesheet',true);
+        }
+      });
     },
 
     navigateToShiftManager : function() {
@@ -80,8 +140,20 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
       //current time on the client side. If it isn't canceled, it will continue to throw
       //errors when navigating to a different page.
       clearInterval(EmployeeApp.EmployeeTab.minuteTimer);
-      //Do the navigate
-      EmployeeApp.navigate('shiftmanager',true);
+      $.ajax({
+        type: "GET",
+        url: 'api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          EmployeeApp.navigate('shiftmanager',true);
+        }
+      });
     }
     
   });
