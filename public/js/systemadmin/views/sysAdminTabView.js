@@ -33,7 +33,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       //When the event fires this function, it will navigate the app to the specified uri
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -53,7 +53,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       //When the event fires this function, it will navigate the app to the specified uri
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -72,7 +72,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       //When the event fires this function, it will navigate the app to the specified uri
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {

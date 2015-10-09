@@ -38,7 +38,7 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
     navigateToClassroom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -55,7 +55,7 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
     navigateToComputerClassroom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -72,7 +72,7 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
     navigateToBreakoutRoom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -89,7 +89,7 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
     navigateToSpecialRoom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -106,7 +106,7 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
     navigateToRecentEvents : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {

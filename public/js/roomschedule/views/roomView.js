@@ -31,7 +31,7 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
     navigateToClassroom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -49,7 +49,7 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
     navigateToComputerClassroom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -66,7 +66,7 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
     navigateToBreakoutRoom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -83,7 +83,7 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
     navigateToSpecialRoom : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -100,7 +100,7 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
     navigateToUploadSchedule : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {

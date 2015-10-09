@@ -35,7 +35,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
       //When the event fires this function, it will navigate the app to the specified uri
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -52,7 +52,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     navigateToViewOrders : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -69,7 +69,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     navigateToPlaceOrders : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -86,7 +86,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     navigateToViewLog : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
@@ -103,7 +103,7 @@ InventoryApp.module('InventoryTab', function (InventoryTab, App, Backbone, Mario
     navigateToVendor : function() {
       $.ajax({
         type: "GET",
-        url: 'api/checklogin',
+        url: '../employee/api/checklogin',
       }).done(function(response) {
         if (response == "false")
         {
