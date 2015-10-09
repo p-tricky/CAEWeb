@@ -7,6 +7,12 @@ require_once(base_path() . '/vendor/autoload.php'); //import Excell helper class
 class UploadScheduleController extends BaseController {
 
   public function fillInSchedule() {
+    $response = array("nonExistantRooms" => []);
+    $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+    if (!preg_match('/^(csv|xlsx?)$/im', $ext)) 
+      return Response::json(array(
+        'message' => "Only xls, xlsx, and csv files are accepted."
+      ), 400);
     $uploadName = $_FILES['file']['tmp_name'];
     $excelReader = PHPExcel_IOFactory::createReaderForFile($uploadName);
     $excelReader->setReadDataOnly();
@@ -15,7 +21,9 @@ class UploadScheduleController extends BaseController {
     $spreadsheet = $excelObj->getActiveSheet()->toArray(null, true,true,true);
 
     $formattedArray = $this->parseSpreadsheet($spreadsheet);
-    $this->createEvents($formattedArray);
+    $this->createEvents($formattedArray, $response);
+    
+    return Response::json($response, 200);
         
   }
 
@@ -27,15 +35,15 @@ class UploadScheduleController extends BaseController {
   //    so if cs 101 meets 9-11 MWF
   //    cs 101 will have 3 class blocks,
   //    one for M, one for W, and one for F
-  private function createEvents($classData)
+  private function createEvents($classData, &$response)
   {
     foreach ($classData as $class=>$classBlocks)
       foreach ($classBlocks as $classBlock)
-        $this->createEvent($class, $classBlock);
+        $this->createEvent($class, $classBlock, $response);
         
   }
 
-  private function createEvent($class, $classBlock) {
+  private function createEvent($class, $classBlock, &$response) {
     $startDatetime = new DateTime();
     $endDatetime = new DateTime();
     
@@ -79,6 +87,9 @@ class UploadScheduleController extends BaseController {
       $newClassroom->End = $endDatetime->format('Y-m-d H:i:s');
       $newClassroom->RecurrenceRule = "FREQ=WEEKLY;UNTIL=".date("Y-m-d\TH:i:s\Z", $dayAfterLastDayOfSemester).";BYDAY=".substr($classBlock['day'], 0, 2);
       $newClassroom->save();
+    } else {
+      if (!in_array($classBlock['room'], $response["nonExistantRooms"]))
+        array_push($response["nonExistantRooms"], $classBlock['room']);
     }
   }
 

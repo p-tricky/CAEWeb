@@ -35,11 +35,20 @@ RoomScheduleApp.module('RoomTabsList', function (RoomTabsList, App, Backbone, Ma
     onShow: function() {
       $('#fileupload').fileupload({
         url: 'uploadschedule',
-        dataType: 'json', 
+        dataType: 'json',
+        type: 'POST',
         done: function (e, data) { 
-          $.each(data.result.files, function (index, file) {
-            $('<p/>').text(file.name).appendTo(document.body);
+          $.each(data.files, function (index, file) {
+            $('<p/>').text(file.name).appendTo($('#tabsContent'));
           });
+          if (data.result.nonExistantRooms.length !== 0)
+            alert("Schedules were not added for the following rooms: " + 
+                data.result.nonExistantRooms.join(", ") + ". " +
+                "We do not have a record of those rooms in our database. " +
+                "Talk to the CAE programmers, if you want to have the rooms added.");
+        },
+        error: function(e, data) {
+          alert(e.responseJSON.message);
         }
       });
 
