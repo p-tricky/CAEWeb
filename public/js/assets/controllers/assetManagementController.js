@@ -27,11 +27,25 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       }
   	},
   	
+    showAssetsContent : function() {
+      //Make the view that defines the two regions for the tab
+      AssetMgmtApp.assetsContent = new AssetListTab.AssetSectionsView({'tabName' : 'assetsList/assetSections'});
+      App.tabDiv.tabContent.show(AssetMgmtApp.assetsContent);
+
+      AssetMgmtApp.AssetListTab.AssetListController.showAssetsTable();
+      AssetMgmtApp.AssetListTab.AssetListController.showAssetsFilter();
+    },
+
     //show the assets table view and then show it in the tabContent
   	showAssetsTable : function() {
   		var tabContentDiv = new AssetListTab.AssetsCompositeView({collection: AssetListTab.assetsList, 'contentName':'assetsList/assetTable'});
-  		App.tabDiv.tabContent.show(tabContentDiv);
+      AssetMgmtApp.assetsContent.assetListSection.show(tabContentDiv);
   	},
+
+    showAssetsFilter : function() {
+      var filterContent = new AssetListTab.AssetsFilterView({'tabName' : 'assetsList/assetFilter'});
+      AssetMgmtApp.assetsContent.assetFilterSection.show(filterContent);
+    },
 
   	//Function to show the asset details modal for an existing model in the asset collection
     showAssetsModal: function(theModel) {

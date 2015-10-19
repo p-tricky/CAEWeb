@@ -8,6 +8,7 @@ class AssetManagementApiController extends BaseController {
 		try {
 			//gets the passed 'sort' variable
 			$sortBy = Input::get('sort');
+			$input = Input::all();
 			//gets the list of assets sorted based on the input
 			switch ($sortBy)
 			{
@@ -16,6 +17,12 @@ class AssetManagementApiController extends BaseController {
 					break;
 				case 'brandDesc':
 					$assets = Asset::where('active', '=', '1')->orderBy('brand_name', 'DESC');
+					break;
+				case 'tagAsc':
+					$assets = Asset::where('active', '=', '1')->orderby('asset_tag');
+					break;
+				case 'tagDesc':
+					$assets = Asset::where('active', '=', '1')->orderby('asset_tag', 'DESC');
 					break;
 				case 'nameAsc':
 					$assets = Asset::where('active', '=', '1')->orderby('assignee_name');
@@ -66,12 +73,110 @@ class AssetManagementApiController extends BaseController {
         $assets->values();
 			}
 
+			if (isset($input['search']))
+				$assets = $this->searchAssets($assets, $input);
+			else
+			{
+				$assetNumber = 1;
+				foreach ($assets as $asset)
+				{
+					$asset->assetNumber = $assetNumber;
+					$assetNumber+=1;
+				}
+			}
+
 			//returns the sorted assets list
 			return $assets->toJSON();
 
 		} catch(Exception $e) {
       		return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
     	}
+	}
+
+	private function searchAssets($assets, $input)
+	{
+		$assetNumber = 1;
+		foreach ($assets as $asset) {
+			$found = false;
+			if ($input['brand'] == 1)
+			{
+				if (stripos($asset->brand_name, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['serial'] == 1 && !$found)
+			{
+				if (stripos($asset->serial_number, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['tag'] == 1 && !$found)
+			{
+				if (stripos($asset->asset_tag, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['room'] == 1 && !$found)
+			{
+				if (stripos($asset->room, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['dpt'] == 1 && !$found)
+			{
+				if (stripos($asset->department_name, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['mac'] == 1 && !$found)
+			{
+				if (stripos($asset->mac_address, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['ip'] == 1 && !$found)
+			{
+				if (stripos($asset->ip_address, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['type'] == 1 && !$found)
+			{
+				if (stripos($asset->asset_type, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+			if ($input['assignee'] == 1 && !$found)
+			{
+				if (stripos($asset->assignee_name, $input['search']) !== false)
+				{
+					$found = true;
+				}
+			}
+
+			if ($found)
+			{
+				$asset->assetNumber = $assetNumber;
+				$assetNumber+=1;
+			}
+			else
+			{
+				$assets->forget($assetNumber-1);
+				$assets->values();
+			}
+
+		}
+
+
+		return $assets;
 	}
 
 	//this function is used to see if a new asset already exists but was soft deleted. 

@@ -1,3 +1,30 @@
+#left {
+    float:left;
+    width:25%;
+    background: #d4b77d;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+
+}
+#right {
+    float:right;
+    width:70%;
+    background: #d4b77d;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 10px;
+}
+#assetContent {
+  margin: 20px;
+}
+#tabsContent {
+  padding: 15px;
+  display:table;
+  background: #ebd29b;
+  padding-bottom: 20px;
+}
+
 #content { 
   font-size: 12px;
   text-align: center;
@@ -21,13 +48,18 @@
   margin-left: auto;
   margin-right: auto;
 }
+#assetsTable {
+    width: 100%;
+    font-size: 16pt;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.even {
+  background-color: #d4b77d;
+}
 
 .odd {
   background-color: #ebd29b;
-}
-
-.even {
-  background-color: #d4b77d;
 }
 
 .number {
@@ -183,4 +215,47 @@ input {
 }
 #confirmModalBox {
   display: none;
+}
+#searchBtn {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  float:left;
+  border-radius: 6px;
+  color: #331900;
+  background-color: #BFA163;
+  font-size: 12px;
+  font-weight: bold;
+  border-color:#bc9b6a;
+  padding: 5px;
+}
+input[type=text]
+{
+  border-radius: 5px;
+  color: #331900;
+  background-color: #d4b77d;
+  font-size: 14px;
+  font-weight: bold;
+  border-color:#bc9b6a;
+}
+fieldset {
+  background:#ebd29b;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding:5px;
+  margin-bottom: 10px;
+}
+
+legend {
+  border-radius: 6px;
+  color: #331900;
+  background-color: #BFA163;
+  font-size: 14px;
+  letter-spacing: 1px;
+  border-color:#bc9b6a;
+  padding: 0px 10px;
+  border: 1px solid black;
+  font-family: Arial;
+}
+.searchDataRow {
+  padding-left: 20px;
 }

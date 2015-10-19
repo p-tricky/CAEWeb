@@ -15,8 +15,9 @@ AssetMgmtApp.AssetMgmtAppController = {
       //Create a new tab view passing the assetListTab tab as the tabname.
       AssetMgmtApp.tabDiv = new AssetMgmtApp.AssetListTab.AssetListView({'tabName':'assetListTab'});
       AssetMgmtApp.tabArea.show(AssetMgmtApp.tabDiv); //show the tab
+      
       //Call the function to get the assets list scans, and pass the show assets table function as the callback to call on success.
-      AssetMgmtApp.AssetListTab.AssetListController.getAssets(AssetMgmtApp.AssetListTab.AssetListController.showAssetsTable);
+      AssetMgmtApp.AssetListTab.AssetListController.getAssets(AssetMgmtApp.AssetListTab.AssetListController.showAssetsContent);
     }
 
 };

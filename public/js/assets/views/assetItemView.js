@@ -25,7 +25,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     //with an id that is the same as the id of the model.
     attributes : function(){
       //Get the model id in the client side collection
-      var classValue = AssetListTab.assetsList.indexOf(this.model);
+      var classValue = this.model.get('assetNumber');
       //define the classProperty
       var classProperty = '';
       //if the row is even, set classProperty to even, else odd

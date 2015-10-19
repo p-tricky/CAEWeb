@@ -37,6 +37,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       'click #dpt' : 'sortByDepartment',
       'click #type' : 'sortByType',
       'click #name' : 'sortByName',
+      'click #tag' : 'sortByTag'
     },
 
     //When the add New button is clicked, this function will run
@@ -53,10 +54,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "nameDesc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
-        //must reset in order to see the changes
-        AssetListTab.assetsList.reset();
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //adds an arrow to the header
         $('#name').html("&#9650 Assignee's Name");
       }
@@ -67,8 +82,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "nameAsc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -85,8 +116,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "brandDesc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -99,8 +146,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "brandAsc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -117,8 +180,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "roomDesc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -131,8 +210,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "roomAsc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -149,8 +244,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "dptDesc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -163,8 +274,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "dptAsc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -181,8 +308,24 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //declares the new global sortBy
         AssetListTab.sort = "typeDesc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
@@ -195,12 +338,92 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
         this.clearArrows();
         //sets the global sortBy
         AssetListTab.sort = "typeAsc";
-        //gets a new asset list that is pre-sorted
-        AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}});
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
         //must reset in order to see the changes
         AssetListTab.assetsList.reset();
         //adds an arrow to the header
         $('#type').html('&#9660 Asset Type');
+      }
+    },
+
+    //function to sort the asset's list by a different method
+    sortByTag : function() {
+      //if the list is already sorted by that method, it swaps it to the reverse
+      if (AssetListTab.sort == "tagAsc")
+      {
+        //removes the arrows from the headers
+        this.clearArrows();
+        //declares the new global sortBy
+        AssetListTab.sort = "tagDesc";
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
+        //must reset in order to see the changes
+        AssetListTab.assetsList.reset();
+        //adds an arrow to the header
+        $('#tag').html("&#9650 Asset Tag");
+      }
+      //if it is sorted by any other method
+      else
+      {
+        //removes the arrows from the headers
+        this.clearArrows();
+        //sets the global sortBy
+        AssetListTab.sort = "tagAsc";
+        //if the search field is empty, then it will just get the whole list and sort that
+        if ($('#searchTxt').val() == "")
+          AssetListTab.assetsList.fetch({data: {sort : AssetListTab.sort}, success: AssetListTab.assetsList.reset()});
+        //otherwise, it will send in the search parameters as well as the sort parameters
+        else
+          AssetListTab.assetsList.fetch({data: {
+            sort: AssetListTab.sort, 
+            search:$('#searchTxt').val(), 
+            brand: $('#brandCheck').prop('checked') ? 1 : 0,
+            serial: $('#serialCheck').prop('checked') ? 1 : 0,
+            tag: $('#tagCheck').prop('checked') ? 1 : 0,
+            room: $('#roomCheck').prop('checked') ? 1 : 0,
+            dpt: $('#dptCheck').prop('checked') ? 1 : 0,
+            mac: $('#macCheck').prop('checked') ? 1 : 0,
+            ip: $('#ipCheck').prop('checked') ? 1 : 0,
+            type: $('#typeCheck').prop('checked') ? 1 : 0,
+            assignee: $('#nameCheck').prop('checked') ? 1 : 0,
+          }, success: AssetListTab.assetsList.reset()});
+        //must reset in order to see the changes
+        AssetListTab.assetsList.reset();
+        //adds an arrow to the header
+        $('#tag').html("&#9660 Asset Tag");
       }
     },
 
@@ -212,7 +435,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       $('#dpt').html("Department");
       $('#type').html("Asset Type");
       $('#name').html("Assignee's Name");
-
+      $('#tag').html("Asset Tag");
     }
     
   });
