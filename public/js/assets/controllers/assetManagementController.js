@@ -84,10 +84,16 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       App.tabDiv.modalArea.show(modalView);
       //get the departments list and make the view for the drop down
       AssetMgmtApp.AssetListTab.AssetListController.getDepartments(function() {
-        //make the drop down for the departments by sending in the collection
-        var dropDown = new AssetListTab.AssetDepartmentCompositeView({collection: AssetMgmtApp.AssetListTab.departmentList});
-        //show the drop down
-        modalView.departmentsDropDown.show(dropDown);
+        $.ajax({
+          type: "GET",
+          url: 'api/getalltemplates',
+        }).done(function(response){
+          AssetListTab.templateList = JSON.parse("[" + response + "]");
+          //make the drop down for the departments by sending in the collection
+          var dropDown = new AssetListTab.AssetDepartmentCompositeView({collection: AssetMgmtApp.AssetListTab.departmentList});
+          //show the drop down
+          modalView.departmentsDropDown.show(dropDown);
+        });
       });
     },
 

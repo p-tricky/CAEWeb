@@ -20,9 +20,11 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
 
     //Define the events to be associated with this view
     events : {
-      'click .save' : 'save',
-      'click .find' : 'find',
-      'click .cancel' : 'cancel'
+      'click #save' : 'save',
+      'click #find' : 'find',
+      'click #cancel' : 'cancel',
+      'click #saveTemplate' : 'saveTemplate',
+      'click #loadTemplate' : 'loadTemplate'
     },
 
     //Function to be called when the save button is clicked
@@ -63,6 +65,82 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
       $('#modalBox').removeClass('modalBox');
       //Close the modal box
       App.tabDiv.modalArea.close();
+    },
+
+    saveTemplate : function() {
+      this.save;
+      var that = this;
+      var lastId = AssetListTab.assetsList.last().get('id');
+      $("#confirmModalBox").html("Enter a Name for this Template: <input id='templateName' type='text'/>");
+      $('#confirmModalBox').dialog({
+        modal:true,
+        title: 'Template Name',
+        buttons: {
+          'Ok': function() {
+            that.templateName = $('#templateName').val();
+            $.ajax({
+              type: "GET",
+              url: 'api/createtemplate',
+              data: {aid: id, name: name}
+            });
+            $(this).dialog('close');
+          }
+        },
+      });
+    },
+
+    loadTemplate : function() {
+      var that = this;
+      if (AssetListTab.templateList[0].length == 0)
+      {
+        $("#confirmModalBox").html("There aren't any stored templates");
+        $('#confirmModalBox').dialog({
+          modal:true,
+          title: 'Missing Templates',
+          buttons: {
+            'Ok': function() {
+              $(this).dialog('close');
+            }
+          },
+        });
+      }
+      else
+      {
+        $("#confirmModalBox").html("Select a Template to Load: <select id='templateSelect'/>");
+        $('#confirmModalBox').dialog({
+          modal:true,
+          title: 'Template Name',
+          //this will add all of the templates to a drop down that the user can select from
+          open : function() {
+            for (var i = 0; i < AssetListTab.templateList[0].length; i++) {
+              $('#templateSelect').append($("<option></option>").attr("value",AssetListTab.templateList[0][i].aid).text(AssetListTab.templateList[0][i].name));
+            };
+          },
+          buttons: {
+            'Ok': function() {
+              that.applyTemplate($('#templateSelect option:selected').attr("value"));
+              $(this).dialog('close');
+            }
+          },
+        });
+      }
+      
+    },
+
+    applyTemplate : function(template) {
+      $.ajax({
+          type: "GET",
+          data: {aid: template},
+          url: 'api/gettemplate',
+        }).done(function(response){
+          var defaults = JSON.parse("[" + response + "]");
+          $('#brand_name').val(defaults[0].brand_name);
+          $('#description').val(defaults[0].description);
+          $('#room').val(defaults[0].room);
+          $('#assignee_name').val(defaults[0].assignee_name);
+          $('.select-department-id option[value='+defaults[0].department_id+']').prop('selected', true);
+        });
     }
+
   });
 });

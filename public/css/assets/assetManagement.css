@@ -188,6 +188,7 @@ input {
   border-color: #663300;
   color: #331900;
   padding: 6px;
+  margin-bottom: 5px;
 }
 .select-vendor-list {
   font-size: 16px;
@@ -206,8 +207,11 @@ input {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#996633', endColorstr='#996633',GradientType=0 ); /* IE6-9 */
   border-radius: 10px;
 }
-.cancel {
-  margin-left: 340px;
+.find {
+  margin-left: 290px;
+}
+.load {
+  margin-left: 245px;
 }
 .accept-div {
   width:166px;

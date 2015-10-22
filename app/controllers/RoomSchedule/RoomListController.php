@@ -46,12 +46,9 @@ class RoomListController extends BaseController {
                 $events = SpecialRoom::where('Start', '>', $semester->start_date)->where('End', '<', $semester->end_date)->get();
                 break;
         }
-        echo $events->toJSON();
         foreach ($events as $event) {
             $event->delete();
         }
-        echo $events->toJSON();
-
     }
 
 }

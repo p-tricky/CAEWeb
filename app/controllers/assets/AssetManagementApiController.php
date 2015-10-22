@@ -288,4 +288,27 @@ class AssetManagementApiController extends BaseController {
     	}
 	}
 
+	public function createTemplate()
+	{
+		$input = Input::all();
+		$newTemplate = new AssetTemplate;
+		$newTemplate->name = $input['name'];
+		$newTemplate->aid = $input['id'];
+		$newTemplate->save();
+		return $newTemplate->toJSON();
+	}
+
+	public function getAllTemplates()
+	{
+		$templates = AssetTemplate::all();
+		return $templates->toJSON();
+	}
+
+	public function getTemplate()
+	{
+		$id = Input::get('aid');
+		$template = Asset::select(array('brand_name', 'description', 'room', 'department_id', 'assignee_name'))->find($id);
+		echo $template->toJSON();
+	}
+
 }

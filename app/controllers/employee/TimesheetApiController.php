@@ -46,7 +46,8 @@ class TimesheetApiController extends BaseController
         $end = date('Y-m-d', strtotime($end));
         $end = date('Y-m-d', strtotime($end . ' + 1 day'));
         $end = new DateTime($end);
-        $end->add(new DateInterval('PT2H'));
+        //this will make the clockout time anything before 2:30 am on Monday. 
+        $end->add(new DateInterval('PT2H30M'));
 
         //get shifts in specified range
         $shifts = Shift::where('clockOut', '<=', $end)->where('clockIn', '>=', $start)->get();
