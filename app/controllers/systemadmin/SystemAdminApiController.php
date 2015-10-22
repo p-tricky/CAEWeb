@@ -7,7 +7,7 @@ class SystemAdminApiController extends BaseController {
       $scans = Scans::orderBy('scan_date')->get();
       //sets the user name from the scan user table
       foreach ($scans as $scan) {
-        $scan->user_name = ScansUser::find($scan->uid)->pluck('user_name');
+        $scan->user_name = ScansUser::where('id', '=', $scan->uid)->pluck('user_name');
       }
       return $scans->toJson();
     } catch(Exception $e) {
