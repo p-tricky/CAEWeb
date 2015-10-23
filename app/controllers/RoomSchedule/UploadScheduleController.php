@@ -334,7 +334,7 @@ class UploadScheduleController extends BaseController {
     if (preg_match( '/^mon(day)?\.?$/im', $day)) return 'Monday';
     if (preg_match( '/^tues(day)?\.?$/im', $day)) return 'Tuesday';
     if (preg_match( '/^wed(nesday)?\.?$/im', $day)) return 'Wednesday';
-    if (preg_match( '/^thu(r(sday)?)?\.?$/im', $day)) return 'Thurseday';
+    if (preg_match( '/^thu(r(sday)?)?\.?$/im', $day)) return 'Thursday';
     if (preg_match( '/^fri(day)?\.?$/im', $day)) return 'Friday';
     if (preg_match( '/^sat(urday)?\.?$/im', $day)) return 'Saturday';
     if (preg_match( '/^sun(day)?\.?$/im', $day)) return 'Sunday';
