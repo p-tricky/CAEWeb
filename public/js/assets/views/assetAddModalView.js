@@ -139,6 +139,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
           $('#room').val(defaults[0].room);
           $('#assignee_name').val(defaults[0].assignee_name);
           $('.select-department-id option[value='+defaults[0].department_id+']').prop('selected', true);
+          $('#asset-type-list option[value='+defaults[0].asset_type+']').prop('selected', true);
         });
     }
 

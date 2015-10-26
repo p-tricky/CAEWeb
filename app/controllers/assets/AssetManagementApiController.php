@@ -307,7 +307,7 @@ class AssetManagementApiController extends BaseController {
 	public function getTemplate()
 	{
 		$id = Input::get('aid');
-		$template = Asset::select(array('brand_name', 'description', 'room', 'department_id', 'assignee_name'))->find($id);
+		$template = Asset::select(array('brand_name', 'description', 'room', 'department_id', 'assignee_name', 'asset_type'))->find($id);
 		echo $template->toJSON();
 	}
 
