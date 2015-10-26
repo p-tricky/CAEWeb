@@ -6,6 +6,9 @@ require_once(base_path() . '/vendor/autoload.php'); //import Excell helper class
 
 class UploadScheduleController extends BaseController {
 
+  private $dayBeforeSemesterStart = null;
+  private $dayAfterLastDayOfSemester = null;
+
   public function fillInSchedule() {
     $response = array("nonExistantRooms" => []);
     $ext = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
@@ -20,6 +23,11 @@ class UploadScheduleController extends BaseController {
     $excelObj = $excelReader->load($uploadName);
     $spreadsheet = $excelObj->getActiveSheet()->toArray(null, true,true,true);
 
+    $this->setSemester($spreadsheet[1]);
+    if ($this->dayBeforeSemesterStart < strtotime("01/01/1970")) 
+      return Response::json(array(
+        'message' => "Sorry.  That semester is not in the database.  Please make sure you are formatting the spreadsheet correctly.  If you're trying to schedule classes for a semester that is more than a month away, we probably haven't yet created a record for the semester in our database.  Please wait a while and try again closer to the semester start date."
+      ), 400);
     $formattedArray = $this->parseSpreadsheet($spreadsheet);
     $this->createEvents($formattedArray, $response);
     
@@ -47,15 +55,9 @@ class UploadScheduleController extends BaseController {
     $startDatetime = new DateTime();
     $endDatetime = new DateTime();
     
-    // get the dayBefore the first and the day after the last day of the
-    // semester
-    $semester = $this->getSemester(null);
-    $dayBeforeSemesterStart = strtotime('-1 day', strtotime($semester['start_date']));
-    $dayAfterLastDayOfSemester = strtotime('+1 day', strtotime($semester['end_date']));
-
     // get the first day of the semester
-    $firstDayOfClass = strtotime('next '. $classBlock['day'], $dayBeforeSemesterStart);
-    // calculate lo
+    $firstDayOfClass = strtotime('next '. $classBlock['day'], $this->dayBeforeSemesterStart);
+
     // all the db times are 4 hours behind. not sure why
     $startDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['startT']['H']-4)+$classBlock['startT']['M']));
     $endDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['endT']['H']-4)+$classBlock['endT']['M']));
@@ -85,7 +87,8 @@ class UploadScheduleController extends BaseController {
       $newClassroom->Title = $class;
       $newClassroom->Start = $startDatetime->format('Y-m-d H:i:s');
       $newClassroom->End = $endDatetime->format('Y-m-d H:i:s');
-      $newClassroom->RecurrenceRule = "FREQ=WEEKLY;UNTIL=".date("Y-m-d\TH:i:s\Z", $dayAfterLastDayOfSemester).";BYDAY=".substr($classBlock['day'], 0, 2);
+      $newClassroom->RecurrenceRule = "FREQ=WEEKLY;UNTIL=".date("Y-m-d\TH:i:s\Z", $this->dayAfterLastDayOfSemester).";BYDAY=".substr($classBlock['day'], 0, 2);
+      $newClassroom->attendee = 1;
       $newClassroom->save();
     } else {
       if (!in_array($classBlock['room'], $response["nonExistantRooms"]))
@@ -121,12 +124,24 @@ class UploadScheduleController extends BaseController {
   }
 
 
+  // pass in semester name and fetch dates from db
   private function getSemester($selectedSemester)
   {
-    $now = date("Y-m-d H:i:s");
-    $semester = Semester::where('start_date', '<', $now)->orderBy('start_date', 'desc')->first();
+    $semester = Semester::where('id', '=', $selectedSemester)->first();
     return $semester;
   }
+
+  // set the semester class variable from data in the spreadsheet.
+  // the semester name (e.g., Fall 2015) should be in first two cells of spreadsheet
+  private function setSemester($firstRow)
+  {
+    $semesterName = trim($firstRow['A']) . trim($firstRow['B']);
+    $semesterDBEntry = $this->getSemester($semesterName);
+    // get the dayBefore the first and the day after the last day of the semester
+    $this->dayBeforeSemesterStart = strtotime('-1 day', strtotime($semesterDBEntry['start_date']));
+    $this->dayAfterLastDayOfSemester = strtotime('+1 day', strtotime($semesterDBEntry['end_date']));
+  }
+
 
 
   //
@@ -332,7 +347,7 @@ class UploadScheduleController extends BaseController {
   {
     $day = trim($day); // trim surrounding white space
     if (preg_match( '/^mon(day)?\.?$/im', $day)) return 'Monday';
-    if (preg_match( '/^tues(day)?\.?$/im', $day)) return 'Tuesday';
+    if (preg_match( '/^tue(s(day)?)?\.?$/im', $day)) return 'Tuesday';
     if (preg_match( '/^wed(nesday)?\.?$/im', $day)) return 'Wednesday';
     if (preg_match( '/^thu(r(sday)?)?\.?$/im', $day)) return 'Thursday';
     if (preg_match( '/^fri(day)?\.?$/im', $day)) return 'Friday';
