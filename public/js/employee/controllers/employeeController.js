@@ -42,7 +42,7 @@ EmployeeApp.module('EmployeeTab', function (EmployeeTab, App, Backbone, Marionet
         //fetch the user model from the server, and on success call the callback
         EmployeeApp.currentUser.fetch({success : callback});
       } else { //already have the the current user. Just call the callback.    
-        callback(); // 05/20/15--Pretty sure this line will never run.
+        callback();
       }
     },
 

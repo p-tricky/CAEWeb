@@ -9,12 +9,31 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       this.options = options || {};
       //use tpl to get the template specified in options and then pass it to handlebars
       this.template = Handlebars.compile(tpl.get(this.options.tabName));
+
     },
 
     //Define regions of the template that can be popluated later.
     regions: {
         tabContent: '#tabsContent',
         modalArea: '#modalBox'
+    },
+
+    //this will show the other tabs of the user has sys admin permissions
+    //TODO: we should probably change this to the same way that the employee app
+    //does it. Its more efficent and looks better than this, since this just seems to pop in the tabs
+    onShow: function() {
+      $.ajax({
+        type: "GET",
+        url: '../employee/api/userpermissions',
+      }).done(function(response) {
+        this.user = JSON.parse("[" + response + "]");
+        if(this.user[0].acc_sysadm == 1)
+        {
+          $("#virusTracker").css('visibility', 'visible');
+          $("#virusUser").css('visibility', 'visible');
+        }
+      });
+      
     },
 
     //Define the id for this view, which is a DIV by default.

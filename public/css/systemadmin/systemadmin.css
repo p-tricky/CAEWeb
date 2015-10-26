@@ -4,6 +4,10 @@
   min-height: 1010px;
   height: auto;
 }
+li#virusTracker, li#virusUser {
+  visibility: hidden;
+}
+
 
 #loadingDiv {
   height: 500px;
