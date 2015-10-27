@@ -236,7 +236,7 @@ class AssetManagementApiController extends BaseController {
 			//sets the properties of the existing asset to the new properties
 			$updateAsset->brand_name = $updateModel['brand_name'];
 			$updateAsset->serial_number = $updateModel['serial_number'];
-			$updateModel->asset_tag = $updateModel['asset_tag'];
+			$updateAsset->asset_tag = $updateModel['asset_tag'];
 			$updateAsset->description = $updateModel['description'];
 			$updateAsset->room = $updateModel['room'];
 			$updateAsset->department_id = $updateModel['department_id'];
