@@ -31,6 +31,12 @@ SysAdminApp.SysAdminAppController = {
       SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'checkoutLabTab'});
       SysAdminApp.tabArea.show(SysAdminApp.tabDiv);
       SysAdminApp.CheckoutLabTab.CheckoutLabController.getCheckouts(SysAdminApp.CheckoutLabTab.CheckoutLabController.showCheckoutsTable);
+    },
+
+    openclosechecklist : function() {
+      SysAdminApp.tabDiv = new SysAdminApp.VirusTrackerTab.VirusTrackerView({'tabName':'openCloseChecklistTab'});
+      SysAdminApp.tabArea.show(SysAdminApp.tabDiv);
+      SysAdminApp.OpenCloseChecklistTab.OpenCloseChecklistController.getChecklists(SysAdminApp.OpenCloseChecklistTab.OpenCloseChecklistController.showContent);
     }
 
 };
@@ -42,6 +48,7 @@ SysAdminApp.Router = new Marionette.AppRouter({
     "virustracker" : "virustracker",
     "virususer" : "virususer",
     "checkoutlab" : "checkoutlab",
+    "openclosechecklist" : "openclosechecklist",
   } 
 });
 

@@ -45,6 +45,7 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       'click .virusTracker' : 'navigateToVirusTracker',
       'click .virusUser' : 'navigateToVirusUser',
       'click .checkoutLab': 'navigateToCheckoutLab',
+      'click .openClose': 'navigateToOpenCloseChecklist',
     },
     
     //All of the functions associated with the events.
@@ -101,6 +102,25 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
         {
           //Do the navigate
           SysAdminApp.navigate('checkoutlab',true);
+        }
+      });      
+    },
+
+    //All of the functions associated with the events.
+    navigateToOpenCloseChecklist : function() {
+      //When the event fires this function, it will navigate the app to the specified uri
+      $.ajax({
+        type: "GET",
+        url: '../employee/api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          SysAdminApp.navigate('openclosechecklist',true);
         }
       });      
     },

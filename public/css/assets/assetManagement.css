@@ -65,24 +65,7 @@
 .number {
   text-align: right;
 }
-
-.inventory, .orders, .log {
-  border-spacing: 0;
-  width: 100%;
-}
-
-.addQty, .removeQty {
-  height: 26px;
-  width: 26px;
-  border-radius: 13px;
-  color: #331900;
-  background-color: #BFA163;
-  font-size: 19px;
-  font-weight: bold;
-  border-color:#bc9b6a;
-}
-
-.addNew, .addVendor, .placeOrder {
+.addNew{
   border-radius: 6px;
   color: #331900;
   background-color: #BFA163;
