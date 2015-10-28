@@ -16,7 +16,6 @@ SysAdminApp.module('OpenCloseChecklistTab', function (OpenCloseChecklistTab, App
 
   	showContent : function()
   	{
-  		console.log('made it');
   		SysAdminApp.checklistContent = new OpenCloseChecklistTab.OpenCloseChecklistSectionsView({'tabName' : 'openclosechecklist/checklistSections'});
   		App.tabDiv.tabContent.show(SysAdminApp.checklistContent);
 

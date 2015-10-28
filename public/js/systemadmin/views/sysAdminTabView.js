@@ -45,9 +45,9 @@ SysAdminApp.module('VirusTrackerTab', function (VirusTrackerTab, App, Backbone, 
       'click .virusTracker' : 'navigateToVirusTracker',
       'click .virusUser' : 'navigateToVirusUser',
       'click .checkoutLab': 'navigateToCheckoutLab',
-      'click .openClose': 'navigateToOpenCloseChecklist',
+      'click .openCloseChecklist': 'navigateToOpenCloseChecklist',
     },
-    
+
     //All of the functions associated with the events.
     navigateToVirusTracker : function() {
       //When the event fires this function, it will navigate the app to the specified uri
