@@ -8,7 +8,6 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
     //Refer to classroomController.js for some more information.
     getRoomList : function(callback) {
       if (typeof AVLogClassroomTab.specialRoomList === "undefined") {
-        console.log('Getting Special Room Data');
         AVLogClassroomTab.specialRoomList = new AVLogApp.AVLogClassroomTab.ClassroomCollection();
         AVLogClassroomTab.specialRoomList.fetch({data: {type:'4'}, success : callback});
       } else {

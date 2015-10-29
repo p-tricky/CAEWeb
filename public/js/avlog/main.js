@@ -40,6 +40,13 @@ AVLogApp.AVLogAppController = {
     AVLogApp.AVLogClassroomTab.SpecialRoomController.getRoomList(AVLogApp.AVLogClassroomTab.SpecialRoomController.showRoomTable);
   },
 
+  //function to be called when the specialroom route is in the url
+  otherroom : function() {
+    AVLogApp.tabDiv = new AVLogApp.AVLogTab.AVLogTabView({'tabName':'otherroomTab'});
+    AVLogApp.tabArea.show(AVLogApp.tabDiv);
+    AVLogApp.AVLogClassroomTab.OtherRoomController.getRoomList(AVLogApp.AVLogClassroomTab.OtherRoomController.showRoomTable);
+  },
+
   recentevents : function() {
     AVLogApp.tabDiv = new AVLogApp.AVLogTab.AVLogTabView({'tabName':'recentEventsTab'});
     AVLogApp.tabArea.show(AVLogApp.tabDiv);
@@ -55,6 +62,7 @@ AVLogApp.Router = new Marionette.AppRouter({
     "computerclassroom" : "computerclassroom",
     "breakoutroom" : "breakoutroom",
     "specialroom" : "specialroom",
+    "otherroom" : "otherroom",
     "recentevents" : "recentevents",
   }
 });

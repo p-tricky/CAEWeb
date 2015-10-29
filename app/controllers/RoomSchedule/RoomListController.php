@@ -24,8 +24,14 @@ class RoomListController extends BaseController {
         return $rooms->toJson();
     }
 
+    public function getOtherRoomList()
+    {
+        $rooms = CeasRooms::where('type', '=', '5')->orderBy('name')->get();
+        return $rooms->toJson();
+    }
+
     public function getAllRoomList() {
-        $rooms = CeasRooms::orderby('name')->get();
+        $rooms = CeasRooms::orderby('name')->where('type', '<', 5)->get();
         return $rooms->toJSON();
     }
 
@@ -49,6 +55,24 @@ class RoomListController extends BaseController {
         foreach ($events as $event) {
             $event->delete();
         }
+    }
+
+    public function createRoom() {
+        $newModelName = Input::get('name');
+
+        $existingRoom = CeasRooms::where('name', '=', $newModelName)->first();
+        if ($existingRoom == null)
+        {
+            $newRoom = new CeasRooms;
+            $newRoom->name = $newModelName;
+            $newRoom->capacity = 0;
+            $newRoom->type = 5;
+            $newRoom->save();
+
+            return $newRoom->toJSON();
+        }
+        else
+            return "Room Already Exists";
     }
 
 }

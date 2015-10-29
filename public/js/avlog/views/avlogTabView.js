@@ -31,7 +31,16 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
       'click .computerclassroom':'navigateToComputerClassroom',
       'click .breakoutroom':'navigateToBreakoutRoom',
       'click .specialroom':'navigateToSpecialRoom',
-      'click .recentevents' : 'navigateToRecentEvents'
+      'click .otherroom':'navigateToOtherRoom',
+      'click .recentevents' : 'navigateToRecentEvents',
+      'click .addNewRoom' : 'addNewRoom'
+    },
+
+    //I don't know why this needs to be here. Its the only area that would fire the event properly
+    //only needed for Other Room Tab
+    addNewRoom : function()
+    {
+      AVLogApp.AVLogClassroomTab.OtherRoomController.showAddRoomModal();
     },
     
     //Functions to be run from the events setup right above.
@@ -99,6 +108,23 @@ AVLogApp.module('AVLogTab', function (AVLogTab, App, Backbone, Marionette, $, _)
         {
           //Do the navigate
           AVLogApp.navigate('specialroom',true);
+        }
+      });
+    },
+
+    navigateToOtherRoom : function() {
+      $.ajax({
+        type: "GET",
+        url: '../employee/api/checklogin',
+      }).done(function(response) {
+        if (response == "false")
+        {
+          window.location.href = "/caeweb/";
+        }       
+        else
+        {
+          //Do the navigate
+          AVLogApp.navigate('otherroom',true);
         }
       });
     },

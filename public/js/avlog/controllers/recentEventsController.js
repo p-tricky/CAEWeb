@@ -8,7 +8,6 @@ AVLogApp.module('AVLogClassroomTab', function (AVLogClassroomTab, App, Backbone,
     //Refer to classroomController.js for some more information.
     getEventsList : function(callback) {
       if (typeof AVLogClassroomTab.recentEventsList === "undefined") {
-        console.log('Getting Recent Events Data');
         AVLogClassroomTab.recentEventsList = new AVLogApp.AVLogClassroomTab.RecentEventCollection();
         AVLogClassroomTab.recentEventsList.fetch({success : callback});
       } else {

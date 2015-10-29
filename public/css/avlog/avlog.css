@@ -102,7 +102,7 @@ tr.selectedRoom {
   border-color:#bc9b6a;
 }
 
-.addNew, .placeOrder {
+.addNew, .placeOrder, .addNewRoom {
   border-radius: 6px;
   color: #331900;
   background-color: #BFA163;
