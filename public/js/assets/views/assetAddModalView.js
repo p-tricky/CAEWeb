@@ -68,9 +68,8 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
     },
 
     saveTemplate : function() {
-      this.save;
+      this.save();
       var that = this;
-      var lastId = AssetListTab.assetsList.last().get('id');
       $("#confirmModalBox").html("Enter a Name for this Template: <input id='templateName' type='text'/>");
       $('#confirmModalBox').dialog({
         modal:true,
@@ -81,7 +80,7 @@ AssetMgmtApp.module('AssetListTab', function (AssetListTab, App, Backbone, Mario
             $.ajax({
               type: "GET",
               url: 'api/createtemplate',
-              data: {aid: id, name: name}
+              data: {aid: AssetListTab.assetsList.last().get('id'), name: that.templateName}
             });
             $(this).dialog('close');
           }

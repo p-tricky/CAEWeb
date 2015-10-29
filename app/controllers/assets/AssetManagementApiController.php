@@ -293,7 +293,7 @@ class AssetManagementApiController extends BaseController {
 		$input = Input::all();
 		$newTemplate = new AssetTemplate;
 		$newTemplate->name = $input['name'];
-		$newTemplate->aid = $input['id'];
+		$newTemplate->aid = $input['aid'];
 		$newTemplate->save();
 		return $newTemplate->toJSON();
 	}
