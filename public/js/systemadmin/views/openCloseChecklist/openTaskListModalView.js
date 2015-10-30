@@ -1,6 +1,6 @@
-SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Marionette, $, _) {
+SysAdminApp.module('OpenCloseChecklistTab', function (OpenCloseChecklistTab, App, Backbone, Marionette, $, _) {
   //Define a composite view to be used to show the modal box that allows the user to update tasks
-  CheckoutLabTab.OpenTaskListModalView = Backbone.Marionette.CompositeView.extend({
+  OpenCloseChecklistTab.OpenTaskListModalView = Backbone.Marionette.CompositeView.extend({
 
     //Define the tab for this view. div is default, we don't need to explicitly define it, but we are.
     tagName : "div",
@@ -8,7 +8,7 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     //When this view is instanciated, run this function
     initialize : function() {
       //use tpl to fetch the template, and pass it to handlebars
-      this.template = Handlebars.compile(tpl.get('checkoutlab/openTaskListModal'));
+      this.template = Handlebars.compile(tpl.get('openclosechecklist/openTaskListModal'));
     },
 
     //Define the events to be associated with this view
@@ -45,6 +45,8 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       this.model.attributes.print_stations_on = $('#print_stations_on').is(':checked') ? '1' : '0';
       this.model.attributes.open_main_doors = $('#open_main_doors').is(':checked') ? '1' : '0';
       this.model.attributes.open_side_doors = $('#open_side_doors').is(':checked') ? '1' : '0';
+
+      this.model.updateModel();
 
       //Remove the fade overlay and modal box
       $('#fade').removeClass('fade');

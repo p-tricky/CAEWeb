@@ -22,9 +22,39 @@ SysAdminApp.module('OpenCloseChecklistTab', function (OpenCloseChecklistTab, App
 
     //Define events for the view
     events: {
-
+      'click #addNew': 'newChecklist',
     },
 
+    newChecklist: function() {
+      //sets the new model's date to the current day
+      var today = new Date().toISOString();
+      var data = {
+        "task_date": today.substr(0, today.indexOf('T')),
+      };
+      OpenCloseChecklistTab.openCloseChecklist.create(data, {
+        wait: true,
+        success: function() { 
+        },
+        error: function(model, response) {
+          // leave UserAddModalView open and open error dialog
+          var msg = response.responseJSON.error.message;
+          var errorAlert = $('#confirmModalBox');
+          if (msg.indexOf("SQLSTATE[23000]") >= 0) 
+            errorAlert.html("A checklist already exists for that date.  Please edit the existing checklist.");
+          else
+            errorAlert.html("Sorry, there was an error");
+          errorAlert.dialog({
+            modal: true,
+            title: 'Error when saving',
+            buttons: {
+              'Ok': function() {
+                $(this).dialog('close');
+              }
+            },
+          });
+        },
+      });
+    },
 
   });
 });

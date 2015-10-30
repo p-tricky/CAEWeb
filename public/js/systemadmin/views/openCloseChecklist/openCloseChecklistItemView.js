@@ -44,6 +44,8 @@ SysAdminApp.module('OpenCloseChecklistTab', function (OpenCloseChecklistTab, App
 
     //Define events for the tr and associated functions to be called when they occur
     events : {
+      'click #openTask': 'openTask',
+      'click #closeTask': 'closeTask',
       'dblclick' : 'showDetails'
     },
 
@@ -52,10 +54,18 @@ SysAdminApp.module('OpenCloseChecklistTab', function (OpenCloseChecklistTab, App
     showDetails : function(e) {
       //If the user is not double clicking on the buttons in the view
       if (e.target.nodeName !== "BUTTON") {
-        //call the showAssetsModal and pass it the view's model
-        
+        OpenCloseChecklistTab.OpenCloseChecklistController.showOpenCloseChecklistDetailsModal(this.model);
       }
-    }
+    },
+
+    openTask: function() {
+      OpenCloseChecklistTab.OpenCloseChecklistController.showOpenTaskListModal(this.model);
+    },
+
+    closeTask: function() {
+      OpenCloseChecklistTab.OpenCloseChecklistController.showCloseTaskListModal(this.model);
+    },
+      
 
   });
 });
