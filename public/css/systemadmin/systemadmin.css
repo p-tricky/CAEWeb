@@ -24,7 +24,12 @@
 li#virusTracker, li#virusUser {
   visibility: hidden;
 }
-
+#tabsContent {
+  padding: 15px;
+  display:table;
+  background: #ebd29b;
+  padding-bottom: 20px;
+}
 
 #loadingDiv {
   height: 500px;
@@ -199,6 +204,53 @@ input {
   width:166px;
   height:34px;
 }
+input[type=text]
+{
+  border-radius: 5px;
+  color: #331900;
+  background-color: #d4b77d;
+  font-size: 14px;
+  font-weight: bold;
+  border-color:#bc9b6a;
+}
+fieldset {
+  background:#ebd29b;
+  border: 1px solid black;
+  border-radius: 10px;
+  padding:5px;
+  margin-bottom: 10px;
+}
+
+legend {
+  border-radius: 6px;
+  color: #331900;
+  background-color: #BFA163;
+  font-size: 14px;
+  letter-spacing: 1px;
+  border-color:#bc9b6a;
+  padding: 0px 10px;
+  border: 1px solid black;
+  font-family: Arial;
+}
 #confirmModalBox {
   display: none;
+}
+button[type=reset] {
+    border-radius: 6px;
+    color: #331900;
+    background-color: #BFA163;
+    font-size: 12px;
+    font-weight: bold;
+    border-color:#bc9b6a;
+    padding: 5px;
+}
+button[type=button] {
+  float: right;
+  border-radius: 6px;
+  color: #331900;
+  background-color: #BFA163;
+  font-size: 12px;
+  font-weight: bold;
+  border-color:#bc9b6a;
+  padding: 5px;
 }
