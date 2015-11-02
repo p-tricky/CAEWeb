@@ -162,7 +162,8 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         });
     },
 
-      //called by myShiftModalView in order to delete a shift
+    //called by myShiftModalView in order to delete a shift
+    //TODO: change this to use backbone's built in delete function in the model
     deleteShift : function(id) {
       $.ajax({
         url: 'api/deleteshift',
@@ -170,7 +171,9 @@ EmployeeApp.module('MyHoursTab', function (MyHoursTab, App, Backbone, Marionette
         wait: true
       });
     },
-      //called by myShiftModalView in order to update a shift's clockin and clockout
+    
+    //called by myShiftModalView in order to update a shift's clockin and clockout
+    //TODO: change this to use backbone's built in update function in the model
     updateShift : function(id, clockin, clockout, callback) {
       $.ajax({
         url: 'api/updateshift',

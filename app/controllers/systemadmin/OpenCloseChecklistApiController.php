@@ -3,7 +3,53 @@ class OpenCloseChecklistApiController extends BaseController {
 
   public function index() {
     try {
-      return OpenCloseChecklist::all();
+      //get pay period
+      $today = date('w');
+      $thisweek = date('W');
+
+      if($thisweek%2==0) { //even week = first week of pay period
+        //if today is Sunday, then it calculates the pay period in a different way because the 0 and week number
+        if ($today == 0)
+        {
+            $payPeriodStart = date('m/d/Y', strtotime('-6 days'));
+            $payPeriodEnd = date('m/d/Y', strtotime('+7 days'));
+        }
+        //if its any other day of the week
+        else
+        {
+            $payPeriodStart = date('m/d/Y', strtotime('-' . ($today - 1) . ' days'));
+            $payPeriodEnd = date('m/d/Y', strtotime('+' . (14 - $today) . ' days'));
+        }
+        
+      }
+      else {
+        if ($today == 0)
+        {
+            $payPeriodStart = date('m/d/Y', strtotime('-13 days'));
+            $payPeriodEnd = date('m/d/Y', strtotime('+0 days'));
+        }
+        else
+        {
+            $payPeriodStart = date('m/d/Y', strtotime('-' . ($today + 6) . ' days'));
+            $payPeriodEnd = date('m/d/Y', strtotime('+' . (7 - $today) . ' days'));
+        }            
+      }
+
+      //set query values to either defaulting pay period range or input filter range
+      $start = Input::get('start', $payPeriodStart);
+      $end = Input::get('end', $payPeriodEnd);
+
+      //sets the start and end date differently since Firefox wouldn't recognize some strings
+      $start = date('Y-m-d', strtotime($start));
+      $end = date('Y-m-d', strtotime($end));    
+
+      $checklist = OpenCloseChecklist::where('task_date', '<=', $end)->where('task_date', '>=', $start)->get();
+      $checklistNumber = 1;
+      foreach ($checklist as $checklistItem) {
+        $checklistItem->checklistNumber = $checklistNumber;
+        $checklistNumber+=1;
+      }
+      return $checklist->toJSON();
     } catch(Exception $e) {
       return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
     }
