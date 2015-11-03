@@ -34,6 +34,34 @@ SysAdminApp.module('OpenCloseChecklistTab', function (OpenCloseChecklistTab, App
       if (this.model.get('open_side_doors') == 1) {
         $('#open_side_doors').prop('checked',true);
       }
+
+      $.ajax({
+        type: "GET",
+        url: '../useradmin/api/users',
+      }).done(function(response) {
+        var array = JSON.parse(response);
+        var userNames = [];
+        console.log(array);
+
+        $.each(array, function(object) {
+          userNames.push({
+            value: array[object].fullname
+          })
+        });
+        console.log(userNames);
+        $('#opened_by').autocomplete({
+          minLength: 0,
+          source: userNames,
+          focus: function(event, ui) {
+            $('#opened_by').val(ui.item.value);
+            return false;
+          },
+          select: function(event, ui) {
+            $( "#opened_by" ).val( ui.item.value );
+            return false;
+          }
+        });
+      }); 
     },
 
     //Function to be called when the save button is clicked
