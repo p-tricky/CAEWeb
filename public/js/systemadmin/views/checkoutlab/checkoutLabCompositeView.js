@@ -12,15 +12,13 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       this.options = options || {};
       //Define the template to use for this view by using tpl to fetch it and pass it to handlbars
       this.template = Handlebars.compile(tpl.get(this.options.contentName));
-      CheckoutLabTab.sortBy = "totalDesc";
-      $('#totalViruses').html('&#9660 Total Viruses and PUPs');
     },
 
     //will be called when the view is shown
     onShow : function()
     {
-      //add an arrow to the total header when the view loads
-      //$('#totalViruses').html('&#9660 Total Viruses and PUPs');
+      CheckoutLabTab.sortBy = "dateDesc";
+      $('#checkoutDate').html('&#9660 Checkout Date');
     },
 
     //Define an id field for this view. The tab for this view is a div by default
@@ -32,9 +30,9 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     //Define events for the view
     events: {
       'click #addNewCheckout' : 'addNew',
-      //'click #userName' : 'sortByName',
-      //'click #scanDate' : 'sortByDate',
-      //'click #totalViruses' : 'sortByVirus',
+      'click #checkoutDate' : 'sortByDate',
+      'click #labNumber' : 'sortByLab',
+      'click #checkoutName' : 'sortByName',
     },
 
     //When the add New button is clicked, this function will run
@@ -46,18 +44,18 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     //function to sort the user's list by a different method
     sortByName : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
-      if (VirusUserTab.sort == "nameAsc")
+      if (CheckoutLabTab.sort == "nameDesc")
       {
         //removes the arrows from the headers
         this.clearArrows();
         //declares the new global sortBy
-        VirusUserTab.sort = "nameDesc";
+        CheckoutLabTab.sort = "nameAsc";
         //gets a new user list that is pre-sorted
-        VirusUserTab.usersList.fetch({data: {sort : VirusUserTab.sort}});
+        CheckoutLabTab.checkoutLabList.fetch({data: {sort : CheckoutLabTab.sort}});
         //must reset inorder to see the changes
-        VirusUserTab.usersList.reset();
+        CheckoutLabTab.checkoutLabList.reset();
         //adds an arrow to the header
-        $('#userName').html("&#9650 User's Name");
+        $('#checkoutName').html("&#9650 Name");
       }
       //if it is sorted by any other method
       else
@@ -65,31 +63,31 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
         //removes the arrows from the headers
         this.clearArrows();
         //sets the global sortBy
-        VirusUserTab.sort = "nameAsc";
+        CheckoutLabTab.sort = "nameDesc";
         //gets a new user list that is pre-sorted
-        VirusUserTab.usersList.fetch({data: {sort : VirusUserTab.sort}});
+        CheckoutLabTab.checkoutLabList.fetch({data: {sort : CheckoutLabTab.sort}});
         //must reset in order to see the changes
-        VirusUserTab.usersList.reset();
+        CheckoutLabTab.checkoutLabList.reset();
         //adds an arrow to the header
-        $('#userName').html("&#9660 User's Name");
+        $('#checkoutName').html("&#9660 Name");
       }
     },
 
     //function to sort the user's list by a different method
     sortByDate : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
-      if (VirusUserTab.sort == "dateAsc")
+      if (CheckoutLabTab.sort == "dateDesc")
       {
         //removes the arrows from the headers
         this.clearArrows();
         //declares the new global sortBy
-        VirusUserTab.sort = "dateDesc";
+        CheckoutLabTab.sort = "dateAsc";
         //gets a new user list that is pre-sorted
-        VirusUserTab.usersList.fetch({data: {sort : VirusUserTab.sort}});
+        CheckoutLabTab.checkoutLabList.fetch({data: {sort : CheckoutLabTab.sort}});
         //must reset inorder to see the changes
-        VirusUserTab.usersList.reset();
+        CheckoutLabTab.checkoutLabList.reset();
         //adds an arrow to the header
-        $('#scanDate').html('&#9650 Most Recent Scan Date');
+        $('#checkoutDate').html('&#9650 Checkout Date');
       }
       //if it is sorted by any other method
       else
@@ -97,31 +95,31 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
         //removes the arrows from the headers
         this.clearArrows();
         //sets the global sortBy
-        VirusUserTab.sort = "dateAsc";
+        CheckoutLabTab.sort = "dateDesc";
         //gets a new user list that is pre-sorted
-        VirusUserTab.usersList.fetch({data: {sort : VirusUserTab.sort}});
+        CheckoutLabTab.checkoutLabList.fetch({data: {sort : CheckoutLabTab.sort}});
         //must reset in order to see the changes
-        VirusUserTab.usersList.reset();
+        CheckoutLabTab.checkoutLabList.reset();
         //adds an arrow to the header
-        $('#scanDate').html('&#9660 Most Recent Scan Date');
+        $('#checkoutDate').html('&#9660 Checkout Date');
       }
     },
 
     //function to sort the user's list by a different method
-    sortByVirus : function() {
+    sortByLab : function() {
       //if the list is already sorted by that method, it swaps it to the reverse
-      if (VirusUserTab.sort == "totalDesc")
+      if (CheckoutLabTab.sort == "labDesc")
       {
         //removes the arrows from the headers
         this.clearArrows();
         //declares the new global sortBy
-        VirusUserTab.sort = "totalAsc";
+        CheckoutLabTab.sort = "labAsc";
         //gets a new user list that is pre-sorted
-        VirusUserTab.usersList.fetch({data: {sort : VirusUserTab.sort}});
+        CheckoutLabTab.checkoutLabList.fetch({data: {sort : CheckoutLabTab.sort}});
         //must reset inorder to see the changes
-        VirusUserTab.usersList.reset();
+        CheckoutLabTab.checkoutLabList.reset();
         //adds an arrow to the header
-        $('#totalViruses').html('&#9660 Total Viruses and PUPs');
+        $('#labNumber').html('&#9650 Lab');
       }
       //if it is sorted by any other method
       else
@@ -129,20 +127,22 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
         //removes the arrows from the headers
         this.clearArrows();
         //sets the global sortBy
-        VirusUserTab.sort = "totalDesc";
+        CheckoutLabTab.sort = "labDesc";
         //gets a new user list that is pre-sorted
-        VirusUserTab.usersList.fetch({data: {sort : VirusUserTab.sort}});
+        CheckoutLabTab.checkoutLabList.fetch({data: {sort : CheckoutLabTab.sort}});
         //must reset in order to see the changes
-        VirusUserTab.usersList.reset();
+        CheckoutLabTab.checkoutLabList.reset();
         //adds an arrow to the header
-        $('#totalViruses').html('&#9650 Total Viruses and PUPs');
+        $('#labNumber').html('&#9660 Lab');
       }
     },
 
     //removes the arrows from the headers. This is called before resorting the users
     clearArrows : function()
     {
-      
+      $('#labNumber').html('Lab');
+      $('#checkoutName').html("Name");
+      $('#checkoutDate').html('Checkout Date');
     }
     
   });

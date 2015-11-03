@@ -6,8 +6,9 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
 
   	getCheckouts : function(callback) {
   		if (CheckoutLabTab.checkoutLabList === undefined) {
+        CheckoutLabTab.sortBy = "dateDesc";
   			CheckoutLabTab.checkoutLabList = new CheckoutLabTab.CheckoutLabCollection();
-  			CheckoutLabTab.checkoutLabList.fetch({success: callback});
+  			CheckoutLabTab.checkoutLabList.fetch({data: {sort: CheckoutLabTab.sortBy}, success: callback});
   		} else {
   			callback();
   		}
