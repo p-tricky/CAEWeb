@@ -307,3 +307,14 @@ input {
   border-color:#bc9b6a;
 }
 
+.totalHours {
+  float: right;
+  padding: 3px;
+  padding-right: 6px;
+  padding-left: 6px;
+  margin: 6px;
+  margin-right: 15px;
+  font-size: 16px;
+  font-weight: bold;
+}
+

@@ -249,6 +249,7 @@ EmployeeApp.module('ProgrammerScheduleTab', function (ProgrammerScheduleTab, App
 
       //convert the hours and minutes to a timestring correctly formatted.
       var timeString = ProgrammerScheduleTab.ProgrammerScheduleController._getTimeString(totalHours);
+      $("#total").text(timeString);
 
       //For each property in the hoursObject, which essentially means for each employee in the hoursObject
       for (var prop in hourObject) {

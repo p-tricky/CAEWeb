@@ -250,6 +250,7 @@ EmployeeApp.module('AdminScheduleTab', function (AdminScheduleTab, App, Backbone
       
       //convert the hours and minutes to a timestring correctly formatted.
       var timeString = AdminScheduleTab.AdminScheduleController._getTimeString(totalHours);
+      $("#total").text(timeString);
 
       //For each property in the hoursObject, which essentially means for each employee
       for (var prop in hourObject) {
