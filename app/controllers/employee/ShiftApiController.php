@@ -88,32 +88,34 @@ class ShiftApiController extends BaseController {
     //returns the start and end of the current pay period
     public function getPayPeriod() {
         //get pay period
-        $today = date('w');
-        $thisweek = date('W');
+        $day = date('w');
+        $startofweeks = strtotime('2015-01-05 00:00:00');
+        $today = strtotime(date('m/d/Y h:m:s'));
+        $weeknum = floor(($today - $startofweeks) / (60 * 60 * 24 * 7));
 
-        if($thisweek%2==0) { //even week = first week of pay period
-            if ($today == 0)
+        if($weeknum%2==0) { //even week = first week of pay period
+            if ($day == 0)
             {
                 $payPeriodStart = date('m/d/Y', strtotime('-6 days'));
                 $payPeriodEnd = date('m/d/Y', strtotime('+7 days'));
             }
             else
             {
-                $payPeriodStart = date('m/d/Y', strtotime('-' . ($today - 1) . ' days'));
-                $payPeriodEnd = date('m/d/Y', strtotime('+' . (14 - $today) . ' days'));
+                $payPeriodStart = date('m/d/Y', strtotime('-' . ($day - 1) . ' days'));
+                $payPeriodEnd = date('m/d/Y', strtotime('+' . (14 - $day) . ' days'));
             }
             
         }
         else {
-            if ($today == 0)
+            if ($day == 0)
             {
                 $payPeriodStart = date('m/d/Y', strtotime('-13 days'));
                 $payPeriodEnd = date('m/d/Y', strtotime('+0 days'));
             }
             else
             {
-                $payPeriodStart = date('m/d/Y', strtotime('-' . ($today + 6) . ' days'));
-                $payPeriodEnd = date('m/d/Y', strtotime('+' . (7 - $today) . ' days'));
+                $payPeriodStart = date('m/d/Y', strtotime('-' . ($day + 6) . ' days'));
+                $payPeriodEnd = date('m/d/Y', strtotime('+' . (7 - $day) . ' days'));
             }            
         }
 
