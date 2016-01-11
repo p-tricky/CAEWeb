@@ -8,34 +8,34 @@ class ShiftApiController extends BaseController {
         $userid = $uModel->id;
         
         //get pay period
-        $today = date('w');
-        $thisweek = date('W');
+        $day = date('w');
+        $startofweeks = strtotime('2015-01-05 00:00:00');
+        $today = strtotime(date('m/d/Y h:m:s'));
+        $weeknum = floor(($today - $startofweeks) / (60 * 60 * 24 * 7));
 
-        if($thisweek%2==0) { //even week = first week of pay period
-            //if today is Sunday, then it calculates the pay period in a different way because the 0 and week number
-            if ($today == 0)
+        if($weeknum%2==0) { //even week = first week of pay period
+            if ($day == 0)
             {
                 $payPeriodStart = date('m/d/Y', strtotime('-6 days'));
                 $payPeriodEnd = date('m/d/Y', strtotime('+7 days'));
             }
-            //if its any other day of the week
             else
             {
-                $payPeriodStart = date('m/d/Y', strtotime('-' . ($today - 1) . ' days'));
-                $payPeriodEnd = date('m/d/Y', strtotime('+' . (14 - $today) . ' days'));
+                $payPeriodStart = date('m/d/Y', strtotime('-' . ($day - 1) . ' days'));
+                $payPeriodEnd = date('m/d/Y', strtotime('+' . (14 - $day) . ' days'));
             }
             
         }
         else {
-            if ($today == 0)
+            if ($day == 0)
             {
                 $payPeriodStart = date('m/d/Y', strtotime('-13 days'));
                 $payPeriodEnd = date('m/d/Y', strtotime('+0 days'));
             }
             else
             {
-                $payPeriodStart = date('m/d/Y', strtotime('-' . ($today + 6) . ' days'));
-                $payPeriodEnd = date('m/d/Y', strtotime('+' . (7 - $today) . ' days'));
+                $payPeriodStart = date('m/d/Y', strtotime('-' . ($day + 6) . ' days'));
+                $payPeriodEnd = date('m/d/Y', strtotime('+' . (7 - $day) . ' days'));
             }            
         }
 
