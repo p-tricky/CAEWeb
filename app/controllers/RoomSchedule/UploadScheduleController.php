@@ -54,13 +54,17 @@ class UploadScheduleController extends BaseController {
   private function createEvent($class, $classBlock, &$response) {
     $startDatetime = new DateTime();
     $endDatetime = new DateTime();
-    
+
     // get the first day of the semester
     $firstDayOfClass = strtotime('next '. $classBlock['day'], $this->dayBeforeSemesterStart);
 
-    // all the db times are 4 hours behind. not sure why
-    $startDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['startT']['H']-4)+$classBlock['startT']['M']));
-    $endDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['endT']['H']-4)+$classBlock['endT']['M']));
+    // the kendo front end library must be on a different timezone setting,
+    // because all db times that are used by kendo calendars need to be 4-5
+    // (5 if daylight savings time is not currently in effect) hours earlier
+    // than the time displayed by kendo
+    $kendoReadjust = 5-date('I');
+    $startDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['startT']['H']-$kendoReadjust)+$classBlock['startT']['M']));
+    $endDatetime->setTimestamp($firstDayOfClass + 60*(60*($classBlock['endT']['H']-$kendoReadjust)+$classBlock['endT']['M']));
 
     $room = CeasRooms::where('name', '=', $classBlock['room'])->first();
     if ($room) {
