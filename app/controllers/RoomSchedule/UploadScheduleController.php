@@ -365,12 +365,12 @@ class UploadScheduleController extends BaseController {
     $semesters = Semester::select('id')->get();
     $output = array();
     foreach ($semesters as $id => $semester) {
-      if (strpos($semester, "i2") === false)
+      if (strpos($semester, "i2") == false)
       {
         $temp = strtoupper(substr($semester['id'], 0,1)) . substr($semester['id'], 1, strlen($semester['id'])-5) . " " . substr($semester['id'], -4, 4);
         $output[$semester['id']] = $temp;
       }
-      else if (strpos($semester, "ii2") === false)
+      else if (strpos($semester, "ii2") == false)
       {
         $temp = strtoupper(substr($semester['id'], 0,1)) . substr($semester['id'], 1, strlen($semester['id'])-6) . " " . strtoupper(substr($semester['id'], -5, 1)) . " " . substr($semester['id'], -4, 4);
         $output[$semester['id']] = $temp;      

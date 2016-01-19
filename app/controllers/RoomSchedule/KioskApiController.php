@@ -20,7 +20,7 @@ class KioskApiController extends BaseController {
     $startTimestamp = strtotime($startdate);
     $endTimestamp = strtotime($enddate);
 
-    if ($roomNumber === 'all') {
+    if ($roomNumber == 'all') {
       $events = Classroom::all();
     } else {
       $events = $this->getEventsForRoom($roomNumber);
@@ -93,10 +93,10 @@ class KioskApiController extends BaseController {
 
   private function expandEvents($event, $filterStart, $filterEnd) {
     $returnEvents = array();
-    if ($event['freq'] === 'daily') {
+    if ($event['freq'] == 'daily') {
       //Repeats Daily
       return $this->expandDailyEvents($event, $filterStart, $filterEnd);
-    } elseif ($event['freq'] === 'weekly') {
+    } elseif ($event['freq'] == 'weekly') {
       //Repeats Weekly
       return $this->expandWeeklyEvents($event, $filterStart, $filterEnd);
     } else {
@@ -208,7 +208,7 @@ class KioskApiController extends BaseController {
     while ($start <= $end) {
       //add event to array
       foreach ($event['weekDays'] as $eventDay) {
-        if (date('N', $start) === $dayArray[$eventDay]) {
+        if (date('N', $start) == $dayArray[$eventDay]) {
 
           $eventStartEndDate = date('Y-m-d', $start);
           $eventStartTime = date('H:i:s', strtotime($event['start']));
@@ -239,7 +239,7 @@ class KioskApiController extends BaseController {
 
       //get next event
       $start = $start + 86400;
-      if (date('N', $start) === $startDay && isset($event['interval'])) {
+      if (date('N', $start) == $startDay && isset($event['interval'])) {
         $start = $start + (86400 * 7 * ($event['interval'] - 1));
       }
     }
@@ -299,7 +299,7 @@ class KioskApiController extends BaseController {
   }
 
   private function getEventType($type) {
-    if ($type === '1') {
+    if ($type == '1') {
       return "Class";
     } else {
       return "Event";
