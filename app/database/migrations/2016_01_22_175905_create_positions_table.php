@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreatePositionTable extends Migration {
+class CreatePositionsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,13 +12,14 @@ class CreatePositionTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('positions', function($t)
+		Schema::create('positions', function(Blueprint $table)
 		{
-			$t->increments('id');
-			$t->string('position_name', 30);
-			$t->timestamps();
+			$table->increments('id');
+			$table->string('position_name', 30);
+			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.

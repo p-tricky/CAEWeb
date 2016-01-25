@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateShiftsTable extends Migration {
+class CreateTransLogTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,14 +12,16 @@ class CreateShiftsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('shifts', function($table) {
+		Schema::create('trans_log', function(Blueprint $table)
+		{
 			$table->increments('id');
-			$table->integer('eid');
-			$table->dateTime('clockIn');
-			$table->dateTime('clockOut');
+			$table->string('username', 30);
+			$table->string('itemname', 25);
+			$table->string('action');
 			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -27,7 +30,7 @@ class CreateShiftsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('shifts');
+		Schema::drop('trans_log');
 	}
 
 }

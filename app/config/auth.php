@@ -16,7 +16,7 @@ return array(
 	*/
 
 	// 'driver' => 'eloquent',
-	'driver' => 'l4-ldap-auth',
+	'driver' => 'eloquent',
 
 	/*
 	|--------------------------------------------------------------------------

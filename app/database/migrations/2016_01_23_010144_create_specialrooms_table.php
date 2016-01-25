@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateComputerclassroomTable extends Migration {
+class CreateSpecialroomsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,7 +12,8 @@ class CreateComputerclassroomTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('computerclassrooms', function($table) {
+		Schema::create('specialrooms', function(Blueprint $table)
+		{
 			$table->increments('id');
 			$table->integer('RoomId');
 			$table->string('Title');
@@ -19,13 +21,14 @@ class CreateComputerclassroomTable extends Migration {
 			$table->dateTime('End');
 			$table->integer('Attendee');
 			$table->string('Host');
-			$table->string('RecurrenceId')->nullable;
-			$table->string('RecurrenceRule')->nullable;
-			$table->string('RecurrenceException')->nullable;
+			$table->string('RecurrenceId');
+			$table->string('RecurrenceRule');
+			$table->string('RecurrenceException');
 			$table->date('updated_at');
 			$table->date('created_at');
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.
@@ -34,7 +37,7 @@ class CreateComputerclassroomTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('computerclassrooms');
+		Schema::drop('specialrooms');
 	}
 
 }

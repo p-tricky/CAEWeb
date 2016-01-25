@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
-class CreateAdminScheduleTable extends Migration {
+class CreateAdminscheduleTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -11,19 +12,21 @@ class CreateAdminScheduleTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('adminschedule', function($table) {
+		Schema::create('adminschedule', function(Blueprint $table)
+		{
 			$table->increments('id');
 			$table->string('Title');
 			$table->integer('Availability');
 			$table->dateTime('Start');
 			$table->dateTime('End');
 			$table->integer('Employee');
-			$table->string('RecurrenceId')->nullable;
-			$table->string('RecurrenceRule')->nullable;
-			$table->string('RecurrenceException')->nullable;
+			$table->string('RecurrenceId');
+			$table->string('RecurrenceRule');
+			$table->string('RecurrenceException');
 			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.

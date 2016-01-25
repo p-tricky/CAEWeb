@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
 
 class CreateSemesterStartTable extends Migration {
 
@@ -11,15 +12,15 @@ class CreateSemesterStartTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('semester_start', function($table) {
-			$table->string('id');
+		Schema::create('semester_start', function(Blueprint $table)
+		{
+			$table->string('id')->primary();
 			$table->date('start_date');
 			$table->date('end_date');
-			$table->dateTime('updated_at');
-			$table->dateTime('created_at');
-			$table->primary('id');
+			$table->timestamps();
 		});
 	}
+
 
 	/**
 	 * Reverse the migrations.

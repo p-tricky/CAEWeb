@@ -2,9 +2,7 @@
 class UserPermissionsApiController extends BaseController {
 
   public function index() {
-    $uHelper = new UserHelper();
-    $uModel = $uHelper->getUserModel();
-    return $uModel->toJson();
+    return Auth::user()->toJson();
   }
   
   public function store() {

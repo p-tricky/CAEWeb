@@ -52,13 +52,10 @@ class LogApiController extends BaseController {
       $newModel = Input::json()->all();
       //select the vendor name of the new selected vendor
 
-      $newLog = new Trans_Log;
-      $uHelper = new UserHelper();
-
       $newLog->itemname = $newModel['itemname'];
       $newLog->action = $newModel['action'];
 
-      $newLog->username = $uHelper->getWmuName();
+      $newLog->username = Auth::user()->fullname;
 
       $newLog->save();
 

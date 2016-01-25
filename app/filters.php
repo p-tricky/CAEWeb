@@ -56,15 +56,6 @@ Route::filter('auth_crud_assets', function()
 	{
 		return Redirect::route('login');
 	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_crud_assets == 0)
-			return Redirect::route('login');
-	}
 });
 // Room Scheduling Filter
 Route::filter('auth_room', function()
@@ -72,15 +63,6 @@ Route::filter('auth_room', function()
 	if(!Auth::check())
 	{
 		return Redirect::route('login');
-	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_room == 0)
-			return Redirect::route('login');
 	}
 });
 // Audio/Visual Filter
@@ -90,15 +72,6 @@ Route::filter('auth_avlog', function()
 	{
 		return Redirect::route('login');
 	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_avlog == 0)
-			return Redirect::route('login');
-	}
 });
 // Inventory Filter
 Route::filter('auth_inv', function()
@@ -106,15 +79,6 @@ Route::filter('auth_inv', function()
 	if(!Auth::check())
 	{
 		return Redirect::route('login');
-	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_inv == 0)
-			return Redirect::route('login');
 	}
 });
 // Employee Filter
@@ -124,15 +88,6 @@ Route::filter('auth_emp', function()
 	{
 		return Redirect::route('login');
 	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_emp == 0)
-			return Redirect::route('login');
-	}
 });
 // User Administration Filter
 Route::filter('auth_useradm', function()
@@ -140,15 +95,6 @@ Route::filter('auth_useradm', function()
 	if(!Auth::check())
 	{
 		return Redirect::route('login');
-	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_useradm == 0)
-			return Redirect::route('login');
 	}
 });
 // System Administration Filter
@@ -158,15 +104,6 @@ Route::filter('auth_sysadm', function()
 	{
 		return Redirect::route('login');
 	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_sysadm == 0)
-			return Redirect::route('login');
-	}
 });
 // CRUD Timesheet Filter
 Route::filter('auth_crud_timesheet', function()
@@ -174,15 +111,6 @@ Route::filter('auth_crud_timesheet', function()
 	if(!Auth::check())
 	{
 		return Redirect::route('login');
-	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_crud_timesheet == 0)
-			return Redirect::route('login');
 	}
 });
 // View Timesheet Filter
@@ -192,15 +120,6 @@ Route::filter('auth_view_timesheet', function()
 	{
 		return Redirect::route('login');
 	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_view_timesheet == 0)
-			return Redirect::route('login');
-	}
 });
 // Generate Timesheet Filter
 Route::filter('auth_gen_timesheet', function()
@@ -209,15 +128,6 @@ Route::filter('auth_gen_timesheet', function()
 	{
 		return Redirect::route('login');
 	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_gen_timesheet == 0)
-			return Redirect::route('login');
-	}
 });
 // CRUD Schedule Filter
 Route::filter('auth_crud_schedule', function()
@@ -225,15 +135,6 @@ Route::filter('auth_crud_schedule', function()
 	if(!Auth::check())
 	{
 		return Redirect::route('login');
-	}
-	else
-	{
-		$uHelper = new UserHelper();
-		$uModel = $uHelper->getUserModel();
-		if(!is_object($uModel))	
-			return Redirect::route('login');
-		if($uModel->acc_crud_schedule == 0)
-			return Redirect::route('login');
 	}
 });
 

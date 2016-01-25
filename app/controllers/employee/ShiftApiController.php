@@ -3,9 +3,7 @@ class ShiftApiController extends BaseController {
 
     public function getShifts(){
         //get logged-in user info
-        $uHelper = new UserHelper();
-        $uModel = $uHelper->getUserModel();
-        $userid = $uModel->id;
+        $userid = Auth::user()->id;
         
         //get pay period
         $day = date('w');
@@ -167,8 +165,7 @@ class ShiftApiController extends BaseController {
         $newShift = new Shift;
 
         //gets the current userHelperModel
-        $uHelper = new UserHelper();
-        $uModel = $uHelper->getUserModel();
+        $uModel = Auth::user();
 
         //sets the user id for the shift
         $newShift->eid = $uModel->id;
