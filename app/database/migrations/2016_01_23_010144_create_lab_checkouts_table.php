@@ -16,7 +16,6 @@ class CreateLabCheckoutsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('name', 50);
-			$table->string('win', 12);
 			$table->string('lab', 10);
 			$table->string('phone_number', 15);
 			$table->string('email', 50);
