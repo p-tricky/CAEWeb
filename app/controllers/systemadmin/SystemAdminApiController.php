@@ -42,9 +42,6 @@ class SystemAdminApiController extends BaseController {
     //sets the uid fof scan user
     $addScan->uid = $scanUser->id;
     $addScan->save();
-    //updates the virus total for the user and the most recent scan
-    $scanUser->updateTotal();
-    $scanUser->updateMostRecentScan();
 
     //returns the scan
     return $addScan->toJson();
@@ -75,7 +72,7 @@ class SystemAdminApiController extends BaseController {
       }
       //if the user for the update and the old user are different, then update each one
       if ($updateScan->uid != $scanUser->id) {
-        $oldScanUser = $updateScan->scansUser();
+        $oldScanUser = $updateScan->getScansUserById();
         $updateScan->uid = $scanUser->id;
         $updateScan->save();
 
@@ -100,7 +97,7 @@ class SystemAdminApiController extends BaseController {
       //get the scan to be deleted
       $deleteScan = Scans::find($id);
       //get the scan user for this scan
-      $deleteScanUser = $deleteScan->scansUser();
+      $deleteScanUser = $deleteScan->getScansUserById();
       //delete the scan
       $deleteScan->delete();
       //update the totals and most recent scan for the user
