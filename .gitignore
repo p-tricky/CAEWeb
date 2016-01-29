@@ -1,10 +1,12 @@
 /bootstrap/compiled.php
-/vendor
+vendor/
 composer.phar
 composer.lock
 .DS_Store
 tags
-.tern_project
+.tern-project
 *.vim
 pl_test.*
 *.sql
+.env
+.agignore
