@@ -49,6 +49,7 @@ class LogApiController extends BaseController {
 
   public function store() {
     try {
+      $newLog = new Trans_Log;
       $newModel = Input::json()->all();
       //select the vendor name of the new selected vendor
 

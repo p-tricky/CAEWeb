@@ -17,7 +17,6 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     events : {
       'click .save' : 'save',
       'click .cancel' : 'cancel',
-      'keyup #win' : 'removeNonNumsFromInput',
     },
 
     onShow : function() {
@@ -28,7 +27,6 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     save : function() {
       //Get the values from the fields and put them in an object to pass to the model
       var fields = {
-        win:$('#win').val(),
         lab:$('#lab').val(),
         checkout_date:$('#date').val(),
         phone_number:$('#phone').val(),

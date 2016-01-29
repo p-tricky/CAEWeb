@@ -28,7 +28,6 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
       //Get the values from the fields and put them in an object to pass to the model
       var fields = {
         name:$('#name').val(),
-        win:$('#win').val(),
         lab:$('#lab').val(),
         checkout_date:$('#date').val(),
         phone_number:$('#phone').val(),

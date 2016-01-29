@@ -6,7 +6,6 @@ SysAdminApp.module('CheckoutLabTab', function (CheckoutLabTab, App, Backbone, Ma
     defaults : {
       'id' : null,
       'name' : '',
-      'win': '',
       'lab': '',
       'phone_number': '',
       'email': '',

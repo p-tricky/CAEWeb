@@ -164,7 +164,6 @@ class ShiftApiController extends BaseController {
         //makes a new shift
         $newShift = new Shift;
 
-        //gets the current userHelperModel
         $uModel = Auth::user();
 
         //sets the user id for the shift

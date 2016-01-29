@@ -5,6 +5,13 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 
 class User extends Eloquent implements UserInterface, RemindableInterface {
 
+  /**
+   *  Indicates if the model should be timestamped.
+   *  
+   *  @var bool
+   */                  
+  public $timestamps = true;
+
 	/**
 	 * The database table used by the model.
 	 *

@@ -20,8 +20,8 @@ class UsersApiController extends BaseController {
     //creates a new user and sets all the properties
     $addUser = new User;
     $addUser->username = $addModel['username'];
-    $addUser->fullname = UserHelper::sGetWmuName($addUser->username);
-    $addUser->email = UserHelper::sGetWmuEmail($addUser->username);
+    $addUser->fullname = $addModel['fullname'];
+    $addUser->email = $addModel['email'];
     $addUser->position_id = $addModel['position_id'];
     if (array_key_exists('phone', $addModel))
       $addUser->phone = UsersApiController::getAllNumbers( $addModel['phone'] );
@@ -99,12 +99,11 @@ class UsersApiController extends BaseController {
   public function getEmails() {
     try {
       $uids = Input::get('id');
-      //echo print_r($uids);
       $emails = "";
-      foreach ($uids as $uid) {
+      foreach ((array)$uids as $uid) {
         $emails .= User::where('id', '=', $uid)->pluck('email') . ", ";
       }
-      $emails = substr($emails, 0, strlen($emails)-2);
+      if (strlen($emails) > 1) $emails = substr($emails, 0, strlen($emails)-2);
       return $emails;
     } catch(Exception $e) {
       return json_encode('{"error":{"text":' . $e->getMessage() . '}}');
