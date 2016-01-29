@@ -1,5 +1,7 @@
 <?php
 
+$_ENV = require base_path().'/.env';
+
 /*
 |--------------------------------------------------------------------------
 | Register The Laravel Class Loader
