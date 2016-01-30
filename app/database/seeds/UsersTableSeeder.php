@@ -1,0 +1,136 @@
+<?php
+
+class UsersTableSeeder extends Seeder {
+
+	/**
+	 * Auto generated seed file
+	 *
+	 * @return void
+	 */
+	public function run()
+	{
+		\DB::table('users')->delete();
+        
+		\DB::table('users')->insert(array (
+			0 => 
+			array (
+				'id' => '1',
+				'username' => 'LabAttendant',
+				'password' => Hash::make('password'),
+				'fullname' => 'Asok',
+				'position_id' => '2',
+				'email' => 'asok@company.com',
+				'phone' => '5555555555',
+				'schedule_color' => '#ffd500',
+				'acc_crud_assets' => '0',
+				'acc_room' => '0',
+				'acc_avlog' => '1',
+				'acc_inv' => '1',
+				'acc_emp' => '1',
+				'acc_useradm' => '0',
+				'acc_crud_timesheet' => '0',
+				'acc_view_timesheet' => '0',
+				'acc_gen_timesheet' => '0',
+				'acc_crud_schedule' => '0',
+				'acc_notifications' => '1',
+				'acc_super_user' => '0',
+				'acc_sysadm' => '0',
+			),
+			1 => 
+			array (
+				'id' => '2',
+				'username' => 'Programmer',
+				'password' => Hash::make('password'),
+				'fullname' => 'Dilbert',
+				'position_id' => '4',
+				'email' => 'dilbert@company.com',
+				'phone' => '5555555555',
+				'schedule_color' => '#7a7dfe',
+				'acc_crud_assets' => '0',
+				'acc_room' => '0',
+				'acc_avlog' => '0',
+				'acc_inv' => '0',
+				'acc_emp' => '1',
+				'acc_useradm' => '1',
+				'acc_crud_timesheet' => '1',
+				'acc_view_timesheet' => '1',
+				'acc_gen_timesheet' => '1',
+				'acc_crud_schedule' => '1',
+				'acc_notifications' => '1',
+				'acc_super_user' => '0',
+				'acc_sysadm' => '0',
+			),
+			2 => 
+			array (
+				'id' => '3',
+				'username' => 'Director',
+				'password' => Hash::make('password'),
+				'fullname' => 'Pointy-Haired Boss',
+				'position_id' => '5',
+				'email' => 'pointy-haired.boss@company.com',
+				'phone' => '5555555555',
+				'schedule_color' => '#f02213',
+				'acc_crud_assets' => '1',
+				'acc_room' => '1',
+				'acc_avlog' => '1',
+				'acc_inv' => '1',
+				'acc_emp' => '1',
+				'acc_useradm' => '1',
+				'acc_crud_timesheet' => '1',
+				'acc_view_timesheet' => '1',
+				'acc_gen_timesheet' => '1',
+				'acc_crud_schedule' => '1',
+				'acc_notifications' => '1',
+				'acc_super_user' => '1',
+				'acc_sysadm' => '1',
+			),
+			array (
+				'id' => '4',
+				'username' => 'System Admin',
+				'password' => Hash::make('password'),
+				'fullname' => 'Alice',
+				'position_id' => '3',
+				'email' => 'alice@company.com',
+				'phone' => '5555555555',
+				'schedule_color' => '#03e3fc',
+				'acc_crud_assets' => '1',
+				'acc_room' => '0',
+				'acc_avlog' => '1',
+				'acc_inv' => '1',
+				'acc_emp' => '1',
+				'acc_useradm' => '1',
+				'acc_crud_timesheet' => '1',
+				'acc_view_timesheet' => '1',
+				'acc_gen_timesheet' => '1',
+				'acc_crud_schedule' => '1',
+				'acc_notifications' => '1',
+				'acc_super_user' => '0',
+				'acc_sysadm' => '1',
+			),
+			array (
+				'id' => '5',
+				'username' => 'Coordinator',
+				'password' => Hash::make('password'),
+				'fullname' => 'Loud Howard',
+				'position_id' => '6',
+				'email' => 'howard@company.com',
+				'phone' => '5555555555',
+				'schedule_color' => '#3cdc1f',
+				'acc_crud_assets' => '1',
+				'acc_room' => '1',
+				'acc_avlog' => '1',
+				'acc_inv' => '1',
+				'acc_emp' => '1',
+				'acc_useradm' => '0',
+				'acc_crud_timesheet' => '0',
+				'acc_view_timesheet' => '1',
+				'acc_gen_timesheet' => '1',
+				'acc_crud_schedule' => '0',
+				'acc_notifications' => '1',
+				'acc_super_user' => '0',
+				'acc_sysadm' => '0',
+			),
+		));
+	}
+
+}

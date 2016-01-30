@@ -56,6 +56,8 @@ Route::filter('auth_crud_assets', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_crud_assets)
+		return Redirect::route('login');
 });
 // Room Scheduling Filter
 Route::filter('auth_room', function()
@@ -64,6 +66,8 @@ Route::filter('auth_room', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_room)
+		return Redirect::route('login');
 });
 // Audio/Visual Filter
 Route::filter('auth_avlog', function()
@@ -72,6 +76,8 @@ Route::filter('auth_avlog', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_avlog)
+		return Redirect::route('login');
 });
 // Inventory Filter
 Route::filter('auth_inv', function()
@@ -80,6 +86,8 @@ Route::filter('auth_inv', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_inv)
+		return Redirect::route('login');
 });
 // Employee Filter
 Route::filter('auth_emp', function()
@@ -88,6 +96,8 @@ Route::filter('auth_emp', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_emp)
+		return Redirect::route('login');
 });
 // User Administration Filter
 Route::filter('auth_useradm', function()
@@ -96,6 +106,8 @@ Route::filter('auth_useradm', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_useradm)
+		return Redirect::route('login');
 });
 // System Administration Filter
 Route::filter('auth_sysadm', function()
@@ -104,6 +116,8 @@ Route::filter('auth_sysadm', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_sysadm)
+		return Redirect::route('login');
 });
 // CRUD Timesheet Filter
 Route::filter('auth_crud_timesheet', function()
@@ -112,6 +126,8 @@ Route::filter('auth_crud_timesheet', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_crud_timesheet)
+		return Redirect::route('login');
 });
 // View Timesheet Filter
 Route::filter('auth_view_timesheet', function()
@@ -120,6 +136,8 @@ Route::filter('auth_view_timesheet', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_view_timesheet)
+		return Redirect::route('login');
 });
 // Generate Timesheet Filter
 Route::filter('auth_gen_timesheet', function()
@@ -128,6 +146,8 @@ Route::filter('auth_gen_timesheet', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_gen_timesheet)
+		return Redirect::route('login');
 });
 // CRUD Schedule Filter
 Route::filter('auth_crud_schedule', function()
@@ -136,6 +156,16 @@ Route::filter('auth_crud_schedule', function()
 	{
 		return Redirect::route('login');
 	}
+  if (!Auth::user()->acc_crud_schedule)
+		return Redirect::route('login');
+});
+// SU Filter
+Route::filter('auth_super_user', function()
+{
+	if(!Auth::check())
+	return Redirect::route('login');
+	if(!Auth::check())
+	return Redirect::route('login');
 });
 
 /*
