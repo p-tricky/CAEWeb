@@ -1,21 +1,12 @@
-## Laravel PHP Framework
+## CAEWeb
 
-[![Latest Stable Version](https://poser.pugx.org/laravel/framework/version.png)](https://packagist.org/packages/laravel/framework) [![Total Downloads](https://poser.pugx.org/laravel/framework/d/total.png)](https://packagist.org/packages/laravel/framework) [![Build Status](https://travis-ci.org/laravel/framework.png)](https://travis-ci.org/laravel/framework)
+CAEWeb is a collection of web applications used by employees at a university's computer-aided engineering lab.  
+The application makes it easy for the employees to update and organize inventories, work schedules, lab schedules, and other
+important internal records.  The easiest way to figure out how the application works is playing around with the 
+[demo app](https://loftythoughts.me/caeweb).  The demo app implements most of the original's functionalities but 
+with a few alterations to eliminate features that depended on university-specific software.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as authentication, routing, sessions, and caching.
+CAEWeb uses [Laravel 4](https://laravel.com/docs/4.2) to serve several client-side [Backbone-marionette](http://marionettejs.com)
+applications.  We used [Kendo UI](www.terlerik.com/kenod-ui) to build the room and employee schedulers.  If you want to know more
+about how it works, feel free to browse the [source](https://loftythoughts.me) and adapt it for your own use.
 
-Laravel aims to make the development process a pleasing one for the developer without sacrificing application functionality. Happy developers make the best code. To this end, we've attempted to combine the very best of what we have seen in other web frameworks, including frameworks implemented in other languages, such as Ruby on Rails, ASP.NET MVC, and Sinatra.
-
-Laravel is accessible, yet powerful, providing powerful tools needed for large, robust applications. A superb inversion of control container, expressive migration system, and tightly integrated unit testing support give you the tools you need to build any application with which you are tasked.
-
-## Official Documentation
-
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
-
-### License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
